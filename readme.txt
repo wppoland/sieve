@@ -8,7 +8,7 @@ Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Fast, accessible faceted filtering for WooCommerce and WordPress. Beautiful facet widgets, AJAX filtering with no page reload, a mobile filter drawer, and Core Web Vitals by design.
+Fast, accessible faceted product filtering for WooCommerce: AJAX filters, a mobile drawer, and Core Web Vitals by design.
 
 == Description ==
 
@@ -28,7 +28,8 @@ This is an early release (MVP). Documentation: https://plogins.com/sieve/docs/
 
 1. Install and activate WooCommerce.
 2. Install Sieve and activate it.
-3. Open the Sieve menu, build a facet, and place the filter via the block or shortcode.
+3. Open the Sieve menu, rebuild the index, and adjust the facet set if needed.
+4. Place the filter on any page with the `[sieve]` shortcode or the "Sieve Filter" block.
 
 == Frequently Asked Questions ==
 
@@ -38,7 +39,10 @@ Yes, this early version targets WooCommerce product archives.
 = Does filtering reload the page? =
 No. Filtering happens via AJAX with the URL kept in sync so results are shareable.
 
+= How do I add the filter to a page? =
+Use the `[sieve]` shortcode or the "Sieve Filter" block. Both render the facets, the results grid, sorting, active-filter chips and pagination together.
+
 == Changelog ==
 
 = 0.1.0 =
-* Initial MVP release.
+* Initial MVP release: pre-built index, AJAX filtering with URL state, dependent facet counts, checkboxes / radio / dropdown / range / search facets, sorting, active-filter chips, pagination, mobile filter drawer, React facet builder, `[sieve]` shortcode and "Sieve Filter" block.

@@ -1,0 +1,256 @@
+/**
+ * Sieve frontend styles. Mobile-first, accessible, and tuned for Core Web Vitals:
+ * facet groups use content-visibility, the results area reserves height during a
+ * fetch, and focus states are always visible.
+ */
+
+.sieve-app {
+	--sieve-gap: 1.5rem;
+	--sieve-border: #e2e4e7;
+	--sieve-accent: #2563eb;
+	--sieve-muted: #6b7280;
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--sieve-gap);
+}
+
+@media (min-width: 783px) {
+	.sieve-app {
+		grid-template-columns: minmax(220px, 280px) 1fr;
+		align-items: start;
+	}
+}
+
+/* ---- Facets sidebar ---- */
+.sieve-filters {
+	margin: 0;
+}
+
+.sieve-facet {
+	padding: 0 0 1rem;
+	margin: 0 0 1rem;
+	border-bottom: 1px solid var(--sieve-border);
+	content-visibility: auto;
+	contain-intrinsic-size: auto 120px;
+}
+
+.sieve-facet__title {
+	font-size: 0.95rem;
+	font-weight: 600;
+	margin: 0 0 0.6rem;
+}
+
+.sieve-choices {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	max-height: 16rem;
+	overflow-y: auto;
+}
+
+.sieve-choice label {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.2rem 0;
+	cursor: pointer;
+	font-size: 0.9rem;
+}
+
+.sieve-choice__label {
+	flex: 1;
+}
+
+.sieve-choice__count {
+	color: var(--sieve-muted);
+	font-size: 0.8rem;
+	font-variant-numeric: tabular-nums;
+}
+
+.sieve-dropdown,
+.sieve-search {
+	width: 100%;
+	padding: 0.45rem 0.6rem;
+	border: 1px solid var(--sieve-border);
+	border-radius: 6px;
+	font-size: 0.9rem;
+}
+
+/* ---- Range ---- */
+.sieve-range__inputs {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.sieve-range__min,
+.sieve-range__max {
+	width: 100%;
+	padding: 0.4rem 0.5rem;
+	border: 1px solid var(--sieve-border);
+	border-radius: 6px;
+	font-size: 0.85rem;
+}
+
+.sieve-range__sep {
+	color: var(--sieve-muted);
+}
+
+/* ---- Toolbar ---- */
+.sieve-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+	min-height: 2.25rem;
+}
+
+.sieve-toolbar__right {
+	margin-inline-start: auto;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.sieve-count {
+	color: var(--sieve-muted);
+	font-size: 0.9rem;
+}
+
+.sieve-chips {
+	flex-basis: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.sieve-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.25rem 0.6rem;
+	background: #f3f4f6;
+	border: 1px solid var(--sieve-border);
+	border-radius: 999px;
+	font-size: 0.8rem;
+	cursor: pointer;
+}
+
+.sieve-chip__x {
+	font-size: 1rem;
+	line-height: 1;
+}
+
+.sieve-reset {
+	background: none;
+	border: none;
+	color: var(--sieve-accent);
+	cursor: pointer;
+	font-size: 0.85rem;
+	text-decoration: underline;
+}
+
+/* ---- Results ---- */
+.sieve-results {
+	transition: opacity 0.15s ease;
+}
+
+.sieve-app.is-loading .sieve-results {
+	opacity: 0.55;
+	pointer-events: none;
+}
+
+/* ---- Pagination ---- */
+.sieve-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	margin-top: 1.5rem;
+}
+
+.sieve-page {
+	min-width: 2.25rem;
+	padding: 0.4rem 0.6rem;
+	border: 1px solid var(--sieve-border);
+	background: #fff;
+	border-radius: 6px;
+	cursor: pointer;
+	font-variant-numeric: tabular-nums;
+}
+
+.sieve-page.is-current {
+	background: var(--sieve-accent);
+	border-color: var(--sieve-accent);
+	color: #fff;
+}
+
+/* ---- Focus visibility (WCAG 2.2) ---- */
+.sieve-app :focus-visible {
+	outline: 2px solid var(--sieve-accent);
+	outline-offset: 2px;
+}
+
+/* ---- Mobile drawer ---- */
+.sieve-drawer-toggle,
+.sieve-drawer-apply {
+	display: none;
+}
+
+@media (max-width: 782px) {
+	.sieve-drawer-toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.55rem 1rem;
+		border: 1px solid var(--sieve-border);
+		border-radius: 6px;
+		background: #fff;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.sieve-facets {
+		position: fixed;
+		inset: 0 15% 0 0;
+		z-index: 1000;
+		background: #fff;
+		padding: 1.25rem;
+		overflow-y: auto;
+		transform: translateX(-105%);
+		transition: transform 0.2s ease;
+		box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+	}
+
+	.sieve-app.is-drawer-open .sieve-facets {
+		transform: translateX(0);
+	}
+
+	.sieve-app.is-drawer-open .sieve-drawer-apply {
+		display: block;
+		position: fixed;
+		inset: auto 0 0 0;
+		z-index: 1001;
+		padding: 0.75rem;
+		background: #fff;
+		border-top: 1px solid var(--sieve-border);
+	}
+
+	.sieve-drawer-apply button {
+		width: 100%;
+		padding: 0.75rem;
+		background: var(--sieve-accent);
+		color: #fff;
+		border: none;
+		border-radius: 6px;
+		font-weight: 600;
+		cursor: pointer;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sieve-facets,
+	.sieve-results {
+		transition: none;
+	}
+}

@@ -7,6 +7,17 @@ parameters:
         - sieve.php
         - src
         - config
+    excludePaths:
+        - vendor/
     bootstrapFiles:
-        - sieve.php
+        - tests/phpstan/constants.php
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
     treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Table names use $wpdb->prefix; the SQL template is not a PHP literal-string.
+        -
+            message: '~Parameter #1 \$query of method wpdb::prepare\(\) expects literal-string~'
+        # The WooCommerce stub types wc_set_loop_prop()'s value as string; it accepts mixed.
+        -
+            message: '~Parameter #2 \$value of function wc_set_loop_prop expects string~'

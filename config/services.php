@@ -5,18 +5,117 @@ declare(strict_types=1);
 defined('ABSPATH') || exit;
 
 use Sieve\Container;
+use Sieve\Hook\AdminHooks;
+use Sieve\Hook\BlockHooks;
+use Sieve\Hook\FrontendHooks;
+use Sieve\Hook\IndexerHooks;
+use Sieve\Hook\RestHooks;
 use Sieve\Migrator;
 use Sieve\Repository\IndexRepository;
-use Sieve\Hook\AdminHooks;
+use Sieve\Rest\AdminController;
+use Sieve\Rest\FilterController;
+use Sieve\Service\FacetCatalog;
+use Sieve\Service\FacetCountService;
+use Sieve\Service\FacetRenderer;
+use Sieve\Service\FilterEngine;
+use Sieve\Service\FilterService;
+use Sieve\Service\ProductIndexer;
+use Sieve\Service\ResultsRenderer;
+use Sieve\Service\Settings;
+use Sieve\Service\UrlService;
+use Sieve\Shortcode\FilterShortcode;
 
 /**
  * Service registration. Returns a callable that binds every service into the
- * container. Keep bindings lazy: nothing is constructed until first resolved.
+ * container. Bindings are lazy: nothing is constructed until first resolved.
  */
 return static function (Container $c): void {
+    // Infrastructure.
     $c->singleton(Migrator::class, static fn (): Migrator => new Migrator());
     $c->singleton(IndexRepository::class, static fn (): IndexRepository => new IndexRepository());
 
+    // Domain services.
+    $c->singleton(Settings::class, static fn (): Settings => new Settings());
+    $c->singleton(FacetCatalog::class, static fn (): FacetCatalog => new FacetCatalog());
+    $c->singleton(UrlService::class, static fn (): UrlService => new UrlService());
+    $c->singleton(FacetRenderer::class, static fn (): FacetRenderer => new FacetRenderer());
+    $c->singleton(ResultsRenderer::class, static fn (): ResultsRenderer => new ResultsRenderer());
+
+    $c->singleton(
+        ProductIndexer::class,
+        static fn (): ProductIndexer => new ProductIndexer($c->get(IndexRepository::class)),
+    );
+    $c->singleton(
+        FilterService::class,
+        static fn (): FilterService => new FilterService($c->get(IndexRepository::class)),
+    );
+    $c->singleton(
+        FacetCountService::class,
+        static fn (): FacetCountService => new FacetCountService(
+            $c->get(IndexRepository::class),
+            $c->get(FilterService::class),
+        ),
+    );
+    $c->singleton(
+        FilterEngine::class,
+        static fn (): FilterEngine => new FilterEngine(
+            $c->get(Settings::class),
+            $c->get(FilterService::class),
+            $c->get(FacetCountService::class),
+            $c->get(FacetRenderer::class),
+            $c->get(ResultsRenderer::class),
+        ),
+    );
+
+    // REST controllers.
+    $c->singleton(
+        FilterController::class,
+        static fn (): FilterController => new FilterController(
+            $c->get(FilterEngine::class),
+            $c->get(UrlService::class),
+        ),
+    );
+    $c->singleton(
+        AdminController::class,
+        static fn (): AdminController => new AdminController(
+            $c->get(Settings::class),
+            $c->get(FacetCatalog::class),
+            $c->get(ProductIndexer::class),
+            $c->get(IndexRepository::class),
+        ),
+    );
+
     // Hook subscribers.
     $c->singleton(AdminHooks::class, static fn (): AdminHooks => new AdminHooks());
+    $c->singleton(
+        FrontendHooks::class,
+        static fn (): FrontendHooks => new FrontendHooks(),
+    );
+    $c->singleton(
+        RestHooks::class,
+        static fn (): RestHooks => new RestHooks(
+            $c->get(FilterController::class),
+            $c->get(AdminController::class),
+        ),
+    );
+    $c->singleton(
+        IndexerHooks::class,
+        static fn (): IndexerHooks => new IndexerHooks($c->get(ProductIndexer::class)),
+    );
+    $c->singleton(
+        FilterShortcode::class,
+        static fn (): FilterShortcode => new FilterShortcode(
+            $c->get(FilterEngine::class),
+            $c->get(UrlService::class),
+            $c->get(FrontendHooks::class),
+        ),
+    );
+    $c->singleton(
+        BlockHooks::class,
+        static fn (): BlockHooks => new BlockHooks(
+            $c->get(FilterEngine::class),
+            $c->get(UrlService::class),
+            $c->get(FrontendHooks::class),
+        ),
+    );
 };

@@ -22,7 +22,11 @@ enum FacetType: string
     case Reset = 'reset';
     case ActiveChips = 'active_chips';
 
-    /** Facet types shipped in the FREE MVP. */
+    /**
+     * Facet types shipped in the FREE MVP.
+     *
+     * @return array<int, self>
+     */
     public static function mvp(): array
     {
         return [

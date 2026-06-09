@@ -50,10 +50,19 @@ Incumbents' real weakness is setup friction, query/index reliability, accessibil
 - Add one `PluginEntry` to `packages/registry/src/plugins.config.ts`; docs under `apps/docs/src/content/docs/sieve/docs/*` (+ locales). Doc IA: Getting Started, How It Works, Facet Types (one page each), Integrations, Templating, Developers (hooks/JS API/REST/shortcodes), Troubleshooting, FAQ.
 
 ## Status
-- [ ] Scaffold foundation (this commit)
-- [ ] MVP core (index, FilterService, facet types, REST)
-- [ ] Admin facet builder (React) + live preview
-- [ ] Frontend (AJAX, URL state, mobile drawer, CWV)
-- [ ] WooCommerce integration
-- [ ] Gates + Playwright + CWV smoke
-- [ ] Testable build (FREE MVP)
+- [x] Scaffold foundation
+- [x] MVP core (index, FilterService, FacetCountService, facet types, REST)
+- [x] Admin facet builder (React) - add/reorder/retype/remove facets, rebuild index
+- [x] Frontend (AJAX, URL state + History API, mobile drawer, zero-CLS, debounced)
+- [x] WooCommerce integration (categories, tags, attributes, price, stock, on sale, rating)
+- [x] Build tooling parity (Vite admin/frontend IIFE, wp-scripts block, phpcs/phpstan/plugin-check)
+- [x] Gates: phpcs + phpstan green; bundles build clean
+- [ ] wp-env load + Plugin Check + Playwright e2e + CWV smoke (in progress)
+- [ ] GitHub repos + wp.org slug + first testable release
+
+### Build & test
+- `composer cs` / `composer analyse` - PHP gates (green).
+- `npm run build` - admin + frontend (Vite IIFE) + block (wp-scripts) into `build/`.
+- `npm run env:start` then `bash scripts/plugin-check.sh` - WordPress.org Plugin Check.
+- `bash scripts/build-zip.sh` - installable `/tmp/sieve.zip` for manual testing.
+- Place `[sieve]` on a page (or the "Sieve Filter" block) to use it.

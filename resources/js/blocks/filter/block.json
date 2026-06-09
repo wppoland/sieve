@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "sieve/filter",
+  "version": "0.1.0",
+  "title": "Sieve Filter",
+  "category": "woocommerce",
+  "icon": "filter",
+  "description": "Fast, accessible faceted product filtering with a results grid.",
+  "keywords": ["filter", "facet", "woocommerce", "search"],
+  "textdomain": "sieve",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./index.js"
+}
