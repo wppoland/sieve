@@ -33,6 +33,9 @@ while IFS= read -r pattern; do
     rm -rf "${DIST_DIR}/${pattern#/}"
 done < "${ROOT_DIR}/.distignore"
 
+# macOS regenerates .DS_Store constantly; rsync excludes can miss nested ones, so
+# purge them explicitly (wp.org rejects hidden files).
+find "${DIST_DIR}" -name '.DS_Store' -delete
 find "${DIST_DIR}" -type d -empty -delete
 
 echo "Prepared WordPress.org trunk package in: ${DIST_DIR}"

@@ -16,5 +16,7 @@ rsync -a --exclude-from="${ROOT_DIR}/.distignore" \
     --exclude '.DS_Store' \
     "${ROOT_DIR}/" "${STAGE}/"
 
+find "${STAGE}" -name '.DS_Store' -delete
+
 ( cd "${OUT_DIR}" && zip -rq /tmp/sieve.zip sieve )
 echo "Built /tmp/sieve.zip from ${STAGE}"

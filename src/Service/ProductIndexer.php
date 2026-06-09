@@ -57,7 +57,6 @@ final class ProductIndexer
             'posts_per_page' => -1,
             'fields' => 'ids',
             'no_found_rows' => true,
-            'suppress_filters' => true,
         ]);
 
         $count = 0;
