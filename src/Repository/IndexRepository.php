@@ -108,6 +108,64 @@ final class IndexRepository
     }
 
     /**
+     * Object IDs whose '_search' token starts with the given folded token
+     * (prefix match), used for the primary predictive-search prefix tier.
+     *
+     * @return array<int, int>
+     */
+    public function searchPrefix(string $foldedToken, int $limit): array
+    {
+        global $wpdb;
+
+        if ('' === $foldedToken) {
+            return [];
+        }
+
+        $like = $wpdb->esc_like($foldedToken) . '%';
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $ids = $wpdb->get_col(
+            $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT DISTINCT object_id FROM {$this->table} WHERE facet_slug = '_search' AND value LIKE %s ORDER BY object_id ASC LIMIT %d",
+                $like,
+                $limit,
+            )
+        );
+
+        return array_map('intval', $ids);
+    }
+
+    /**
+     * Distinct '_search' token values that start with the given folded prefix,
+     * used to build a candidate vocabulary for the fuzzy (Levenshtein) tier.
+     *
+     * @return array<int, string>
+     */
+    public function vocabularyForPrefix(string $prefix, int $cap): array
+    {
+        global $wpdb;
+
+        if ('' === $prefix) {
+            return [];
+        }
+
+        $like = $wpdb->esc_like($prefix) . '%';
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $values = $wpdb->get_col(
+            $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT DISTINCT value FROM {$this->table} WHERE facet_slug = '_search' AND value LIKE %s ORDER BY value ASC LIMIT %d",
+                $like,
+                $cap,
+            )
+        );
+
+        return array_map('strval', $values);
+    }
+
+    /**
      * Object IDs whose numeric value for a facet falls within [min, max].
      *
      * @return array<int, int>

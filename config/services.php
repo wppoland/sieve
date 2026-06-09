@@ -45,7 +45,10 @@ return static function (Container $c): void {
     $c->singleton(UrlService::class, static fn (): UrlService => new UrlService());
     $c->singleton(FacetRenderer::class, static fn (): FacetRenderer => new FacetRenderer());
     $c->singleton(ResultsRenderer::class, static fn (): ResultsRenderer => new ResultsRenderer());
-    $c->singleton(SuggestService::class, static fn (): SuggestService => new SuggestService());
+    $c->singleton(
+        SuggestService::class,
+        static fn (): SuggestService => new SuggestService($c->get(IndexRepository::class)),
+    );
     $c->singleton(SearchRenderer::class, static fn (): SearchRenderer => new SearchRenderer());
 
     $c->singleton(
