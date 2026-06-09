@@ -141,6 +141,24 @@
 	color: var(--sieve-search-muted);
 }
 
+.sieve-search__heading {
+	padding: 0.5rem 0.75rem 0.25rem;
+	font-size: 0.7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--sieve-search-muted);
+}
+
+.sieve-search__item--category .sieve-search__name {
+	font-weight: 600;
+}
+
+.sieve-search__count {
+	font-size: 0.75rem;
+	color: var(--sieve-search-muted);
+}
+
 .sieve-search__all {
 	display: block;
 	padding: 0.6rem 0.75rem;

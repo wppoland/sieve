@@ -101,6 +101,10 @@ final class FrontendHooks implements HasHooks
                 'noResults' => __('No products found.', 'sieve'),
                 'viewAll' => __('View all results', 'sieve'),
                 'searching' => __('Searching…', 'sieve'),
+                'productsHeading' => __('Products', 'sieve'),
+                'categoriesHeading' => __('Categories', 'sieve'),
+                /* translators: %d: number of products in a category. */
+                'categoryCount' => __('%d products', 'sieve'),
             ],
         ]);
     }

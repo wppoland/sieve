@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Fast, accessible faceted product filtering for WooCommerce: AJAX filters, a mobi
 Sieve lets shoppers narrow down products instantly with checkboxes, ranges, search and sort, without a page reload. It is built to be pleasant to use and fast: accessible widgets, a mobile filter drawer, and a rendering approach designed for Core Web Vitals (no layout shift when results update).
 
 * AJAX filtering with no page reload, with shareable, bookmarkable URLs
-* Predictive product search: an instant typeahead dropdown with thumbnails, prices and keyboard navigation
+* Predictive product search: an instant typeahead dropdown with thumbnails, prices, SKU and category matches, and keyboard navigation
 * Facet types: checkboxes, radio, searchable dropdown, color and image swatches, hierarchical (tree) categories, autocomplete (searchable options), A-Z index, range slider, search, sort, pagination, reset, active-filter chips
 * WooCommerce: categories, tags, attributes, price, stock status, on sale
 * A pre-built index for fast filtered queries on large catalogs
@@ -53,6 +53,9 @@ Use the `[sieve_search]` shortcode or the "Sieve Search" block. As shoppers type
 3. The facet builder: add, reorder and retype facets, set the layout, and rebuild the index.
 
 == Changelog ==
+
+= 0.5.0 =
+* Predictive search now looks beyond product titles: a partial SKU pass surfaces a product by its code even when the title misses, and matching product categories appear as their own group in the dropdown so a shopper can jump straight to the filtered archive. Results and categories are grouped with headings, and keyboard navigation moves through both.
 
 = 0.4.0 =
 * New facet types: Autocomplete (a search box that filters a facet's own options as you type, for facets with many values) and A-Z index (an alphabetical bar that filters options by first letter). Both filter client-side with no extra request, and degrade to a plain option list without JavaScript.

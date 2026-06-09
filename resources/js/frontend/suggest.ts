@@ -18,8 +18,16 @@ interface SuggestResult {
 	price_html: string;
 }
 
+interface SuggestCategory {
+	id: number;
+	name: string;
+	url: string;
+	count: number;
+}
+
 interface SuggestResponse {
 	results: SuggestResult[];
+	categories: SuggestCategory[];
 	search_url: string;
 }
 
@@ -30,6 +38,9 @@ interface SieveSearchData {
 		noResults: string;
 		viewAll: string;
 		searching: string;
+		productsHeading: string;
+		categoriesHeading: string;
+		categoryCount: string;
 	};
 }
 
@@ -123,8 +134,9 @@ function setup( widget: HTMLElement ): void {
 
 	const render = ( payload: SuggestResponse ): void => {
 		const { i18n } = data;
+		const categories = payload.categories ?? [];
 
-		if ( payload.results.length === 0 ) {
+		if ( payload.results.length === 0 && categories.length === 0 ) {
 			results.innerHTML = `<div class="sieve-search__empty">${ escapeHtml(
 				i18n.noResults
 			) }</div>`;
@@ -134,30 +146,72 @@ function setup( widget: HTMLElement ): void {
 			return;
 		}
 
-		const items = payload.results
-			.map( ( product, index ) => {
-				const optId = `${ listId }-opt-${ index }`;
-				const thumb = product.image
-					? `<span class="sieve-search__thumb"><img src="${ escapeHtml(
-							product.image
-					  ) }" alt="" loading="lazy" width="44" height="44"></span>`
-					: '';
-				const sku = product.sku
-					? `<span class="sieve-search__sku">${ escapeHtml(
-							product.sku
-					  ) }</span>`
-					: '';
-				// price_html is trusted WooCommerce output.
-				const price = product.price_html
-					? `<span class="sieve-search__price">${ product.price_html }</span>`
-					: '';
-				return `<a id="${ optId }" class="sieve-search__item" role="option" aria-selected="false" href="${ escapeHtml(
-					product.url
-				) }">${ thumb }<span class="sieve-search__meta"><span class="sieve-search__name">${ escapeHtml(
-					product.name
-				) }</span>${ sku }${ price }</span></a>`;
-			} )
-			.join( '' );
+		// Show the group headings only when both kinds of result are present,
+		// so a single-group dropdown stays uncluttered.
+		const showHeadings = categories.length > 0 && payload.results.length > 0;
+		let optIndex = 0;
+
+		const categoryGroup = categories.length
+			? `<div class="sieve-search__group" role="group" aria-label="${ escapeHtml(
+					i18n.categoriesHeading
+			  ) }">${
+					showHeadings
+						? `<div class="sieve-search__heading" role="presentation">${ escapeHtml(
+								i18n.categoriesHeading
+						  ) }</div>`
+						: ''
+			  }${ categories
+					.map( ( category ) => {
+						const optId = `${ listId }-opt-${ optIndex++ }`;
+						const count = i18n.categoryCount.replace(
+							'%d',
+							String( category.count )
+						);
+						return `<a id="${ optId }" class="sieve-search__item sieve-search__item--category" role="option" aria-selected="false" href="${ escapeHtml(
+							category.url
+						) }"><span class="sieve-search__meta"><span class="sieve-search__name">${ escapeHtml(
+							category.name
+						) }</span><span class="sieve-search__count">${ escapeHtml(
+							count
+						) }</span></span></a>`;
+					} )
+					.join( '' ) }</div>`
+			: '';
+
+		const productGroup = payload.results.length
+			? `<div class="sieve-search__group" role="group" aria-label="${ escapeHtml(
+					i18n.productsHeading
+			  ) }">${
+					showHeadings
+						? `<div class="sieve-search__heading" role="presentation">${ escapeHtml(
+								i18n.productsHeading
+						  ) }</div>`
+						: ''
+			  }${ payload.results
+					.map( ( product ) => {
+						const optId = `${ listId }-opt-${ optIndex++ }`;
+						const thumb = product.image
+							? `<span class="sieve-search__thumb"><img src="${ escapeHtml(
+									product.image
+							  ) }" alt="" loading="lazy" width="44" height="44"></span>`
+							: '';
+						const sku = product.sku
+							? `<span class="sieve-search__sku">${ escapeHtml(
+									product.sku
+							  ) }</span>`
+							: '';
+						// price_html is trusted WooCommerce output.
+						const price = product.price_html
+							? `<span class="sieve-search__price">${ product.price_html }</span>`
+							: '';
+						return `<a id="${ optId }" class="sieve-search__item" role="option" aria-selected="false" href="${ escapeHtml(
+							product.url
+						) }">${ thumb }<span class="sieve-search__meta"><span class="sieve-search__name">${ escapeHtml(
+							product.name
+						) }</span>${ sku }${ price }</span></a>`;
+					} )
+					.join( '' ) }</div>`
+			: '';
 
 		const viewAll = payload.search_url
 			? `<a class="sieve-search__all" href="${ escapeHtml(
@@ -165,7 +219,7 @@ function setup( widget: HTMLElement ): void {
 			  ) }">${ escapeHtml( i18n.viewAll ) }</a>`
 			: '';
 
-		results.innerHTML = items + viewAll;
+		results.innerHTML = categoryGroup + productGroup + viewAll;
 		options = Array.from(
 			results.querySelectorAll< HTMLElement >( '.sieve-search__item' )
 		);
