@@ -62,9 +62,10 @@ final class FilterEngine
     public function container(array $request): string
     {
         $parts = $this->run($request);
+        $columns = max(1, (int) $this->settings->all()['columns']);
 
         return sprintf(
-            '<div class="sieve-app" data-sieve-app>'
+            '<div class="sieve-app" data-sieve-app style="--sieve-cols:%7$d">'
                 . '<form class="sieve-filters" data-sieve-form>'
                 . '<button type="button" class="sieve-drawer-toggle" data-sieve-open aria-expanded="false">%1$s</button>'
                 . '<div class="sieve-facets" data-sieve-facets>%2$s</div>'
@@ -82,6 +83,7 @@ final class FilterEngine
             $parts['results_html'],
             $parts['pagination_html'],
             esc_html__('Show results', 'sieve'),
+            $columns,
         );
     }
 

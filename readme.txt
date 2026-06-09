@@ -42,6 +42,12 @@ No. Filtering happens via AJAX with the URL kept in sync so results are shareabl
 = How do I add the filter to a page? =
 Use the `[sieve]` shortcode or the "Sieve Filter" block. Both render the facets, the results grid, sorting, active-filter chips and pagination together.
 
+== Screenshots ==
+
+1. Faceted filtering on a product page: categories, price range, availability and on-sale facets with live dependent counts, active-filter chips and a results grid.
+2. Mobile filter drawer with a sticky "Show results" bar.
+3. The facet builder: add, reorder and retype facets, set the layout, and rebuild the index.
+
 == Changelog ==
 
 = 0.1.0 =
