@@ -103,8 +103,9 @@ final class FrontendHooks implements HasHooks
                 'searching' => __('Searching…', 'sieve'),
                 'productsHeading' => __('Products', 'sieve'),
                 'categoriesHeading' => __('Categories', 'sieve'),
-                /* translators: %d: number of products in a category. */
-                'categoryCount' => __('%d products', 'sieve'),
+                'oneResult' => __('1 result found', 'sieve'),
+                /* translators: %d: number of search results found. */
+                'manyResults' => __('%d results found', 'sieve'),
             ],
         ]);
     }

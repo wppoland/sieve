@@ -55,6 +55,12 @@ final class SearchRenderer
             esc_attr($config['results_label']),
         );
 
+        // Out-of-band polite live region: announces the searching state and the
+        // result count to assistive tech. The listbox itself cannot carry a
+        // perceivable empty / "N results" message (a non-option child is invalid
+        // and pruned by screen readers).
+        $status = '<span class="screen-reader-text" role="status" aria-live="polite" data-sieve-search-status></span>';
+
         $inner = sprintf(
             '<div class="sieve-search__inner">%s%s%s</div>',
             $input,
@@ -69,7 +75,7 @@ final class SearchRenderer
             $config['min_chars'],
             $config['in_stock_only'] ? '1' : '0',
             $form,
-            $inner . $results,
+            $inner . $status . $results,
         );
     }
 

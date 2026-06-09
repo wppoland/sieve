@@ -23,6 +23,7 @@ interface SuggestCategory {
 	name: string;
 	url: string;
 	count: number;
+	count_label: string;
 }
 
 interface SuggestResponse {
@@ -40,7 +41,8 @@ interface SieveSearchData {
 		searching: string;
 		productsHeading: string;
 		categoriesHeading: string;
-		categoryCount: string;
+		oneResult: string;
+		manyResults: string;
 	};
 }
 
@@ -73,7 +75,9 @@ ready( () => {
 function escapeHtml( value: string ): string {
 	const div = document.createElement( 'div' );
 	div.textContent = value;
-	return div.innerHTML;
+	// textContent/innerHTML escapes &, <, > but not quotes; escape them too so a
+	// value is safe inside a double-quoted attribute (defence in depth).
+	return div.innerHTML.replace( /"/g, '&quot;' ).replace( /'/g, '&#39;' );
 }
 
 function setup( widget: HTMLElement ): void {
@@ -83,9 +87,18 @@ function setup( widget: HTMLElement ): void {
 	const results = widget.querySelector< HTMLElement >(
 		'[data-sieve-search-results]'
 	);
+	const status = widget.querySelector< HTMLElement >(
+		'[data-sieve-search-status]'
+	);
 	if ( ! input || ! results || ! data ) {
 		return;
 	}
+
+	const announce = ( message: string ): void => {
+		if ( status ) {
+			status.textContent = message;
+		}
+	};
 
 	const limit = Number( widget.dataset.limit ) || 6;
 	const minChars = Number( widget.dataset.minChars ) || 2;
@@ -103,6 +116,7 @@ function setup( widget: HTMLElement ): void {
 		results.innerHTML = '';
 		input.setAttribute( 'aria-expanded', 'false' );
 		input.removeAttribute( 'aria-activedescendant' );
+		announce( '' );
 		options = [];
 		active = -1;
 	};
@@ -135,59 +149,58 @@ function setup( widget: HTMLElement ): void {
 	const render = ( payload: SuggestResponse ): void => {
 		const { i18n } = data;
 		const categories = payload.categories ?? [];
+		const productResults = payload.results ?? [];
 
-		if ( payload.results.length === 0 && categories.length === 0 ) {
-			results.innerHTML = `<div class="sieve-search__empty">${ escapeHtml(
+		if ( productResults.length === 0 && categories.length === 0 ) {
+			// Visible message for sighted users, marked role="presentation" so
+			// it is not an invalid (and screen-reader-pruned) listbox child; the
+			// live region carries the same message to assistive tech.
+			results.innerHTML = `<div class="sieve-search__empty" role="presentation">${ escapeHtml(
 				i18n.noResults
 			) }</div>`;
 			options = [];
 			active = -1;
+			announce( i18n.noResults );
 			open();
 			return;
 		}
 
-		// Show the group headings only when both kinds of result are present,
-		// so a single-group dropdown stays uncluttered.
-		const showHeadings = categories.length > 0 && payload.results.length > 0;
+		// Both group headings are always rendered as the single source of each
+		// group's accessible name (via aria-labelledby), but are visually hidden
+		// unless both kinds of result are present, keeping the dropdown uncluttered.
+		const showHeadings = categories.length > 0 && productResults.length > 0;
+		const catHeadingId = `${ listId }-cat-h`;
+		const prodHeadingId = `${ listId }-prod-h`;
 		let optIndex = 0;
 
+		const heading = ( id: string, text: string ): string =>
+			`<div id="${ id }" class="sieve-search__heading${
+				showHeadings ? '' : ' screen-reader-text'
+			}" role="presentation">${ escapeHtml( text ) }</div>`;
+
 		const categoryGroup = categories.length
-			? `<div class="sieve-search__group" role="group" aria-label="${ escapeHtml(
+			? `<div class="sieve-search__group" role="group" aria-labelledby="${ catHeadingId }">${ heading(
+					catHeadingId,
 					i18n.categoriesHeading
-			  ) }">${
-					showHeadings
-						? `<div class="sieve-search__heading" role="presentation">${ escapeHtml(
-								i18n.categoriesHeading
-						  ) }</div>`
-						: ''
-			  }${ categories
+			  ) }${ categories
 					.map( ( category ) => {
 						const optId = `${ listId }-opt-${ optIndex++ }`;
-						const count = i18n.categoryCount.replace(
-							'%d',
-							String( category.count )
-						);
 						return `<a id="${ optId }" class="sieve-search__item sieve-search__item--category" role="option" aria-selected="false" href="${ escapeHtml(
 							category.url
 						) }"><span class="sieve-search__meta"><span class="sieve-search__name">${ escapeHtml(
 							category.name
 						) }</span><span class="sieve-search__count">${ escapeHtml(
-							count
+							category.count_label
 						) }</span></span></a>`;
 					} )
 					.join( '' ) }</div>`
 			: '';
 
-		const productGroup = payload.results.length
-			? `<div class="sieve-search__group" role="group" aria-label="${ escapeHtml(
+		const productGroup = productResults.length
+			? `<div class="sieve-search__group" role="group" aria-labelledby="${ prodHeadingId }">${ heading(
+					prodHeadingId,
 					i18n.productsHeading
-			  ) }">${
-					showHeadings
-						? `<div class="sieve-search__heading" role="presentation">${ escapeHtml(
-								i18n.productsHeading
-						  ) }</div>`
-						: ''
-			  }${ payload.results
+			  ) }${ productResults
 					.map( ( product ) => {
 						const optId = `${ listId }-opt-${ optIndex++ }`;
 						const thumb = product.image
@@ -213,17 +226,25 @@ function setup( widget: HTMLElement ): void {
 					.join( '' ) }</div>`
 			: '';
 
+		// "View all" is a real role="option" so arrow keys reach it and Enter
+		// activates it, instead of a role-less anchor stranded in the listbox.
 		const viewAll = payload.search_url
-			? `<a class="sieve-search__all" href="${ escapeHtml(
+			? `<a id="${ listId }-opt-${ optIndex++ }" class="sieve-search__item sieve-search__all" role="option" aria-selected="false" href="${ escapeHtml(
 					payload.search_url
 			  ) }">${ escapeHtml( i18n.viewAll ) }</a>`
 			: '';
 
 		results.innerHTML = categoryGroup + productGroup + viewAll;
 		options = Array.from(
-			results.querySelectorAll< HTMLElement >( '.sieve-search__item' )
+			results.querySelectorAll< HTMLElement >( '[role="option"]' )
 		);
 		active = -1;
+		const matches = categories.length + productResults.length;
+		announce(
+			matches === 1
+				? i18n.oneResult
+				: i18n.manyResults.replace( '%d', String( matches ) )
+		);
 		open();
 	};
 
@@ -238,6 +259,7 @@ function setup( widget: HTMLElement ): void {
 		controller = new AbortController();
 		const current = ++requestId;
 		results.setAttribute( 'aria-busy', 'true' );
+		announce( data.i18n.searching );
 
 		const url = new URL( data.restUrl );
 		url.searchParams.set( 'q', term );

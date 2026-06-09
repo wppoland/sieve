@@ -20,7 +20,7 @@ final class SuggestService
     /**
      * @return array{
      *     results: array<int, array{id: int, name: string, url: string, image: string, sku: string, price_html: string}>,
-     *     categories: array<int, array{id: int, name: string, url: string, count: int}>,
+     *     categories: array<int, array{id: int, name: string, url: string, count: int, count_label: string}>,
      *     search_url: string
      * }
      */
@@ -69,9 +69,14 @@ final class SuggestService
         $args = array_merge($criteria, [
             'limit' => $limit,
             'status' => 'publish',
-            'orderby' => 'relevance',
             'return' => 'objects',
         ]);
+        // Relevance ordering is only generated for keyword ('s') searches; for
+        // the SKU pass WooCommerce produces no relevance SQL, so request it only
+        // when a search term is present and let WC use its default otherwise.
+        if (isset($criteria['s'])) {
+            $args['orderby'] = 'relevance';
+        }
         if (! $includeOutOfStock) {
             $args['stock_status'] = 'instock';
         }
@@ -120,7 +125,7 @@ final class SuggestService
      * Product categories whose name partially matches the term, so a shopper can
      * jump straight to the filtered archive instead of an individual product.
      *
-     * @return array<int, array{id: int, name: string, url: string, count: int}>
+     * @return array<int, array{id: int, name: string, url: string, count: int, count_label: string}>
      */
     private function matchCategories(string $term): array
     {
@@ -146,12 +151,25 @@ final class SuggestService
             if (! $cat instanceof \WP_Term) {
                 continue;
             }
+            // Skip a category whose permalink cannot be resolved: it would
+            // render as a dead, selectable suggestion linking nowhere.
             $link = get_term_link($cat);
+            if (! is_string($link) || '' === $link) {
+                continue;
+            }
+            $count = (int) $cat->count;
             $categories[] = [
                 'id' => $cat->term_id,
                 'name' => $cat->name,
-                'url' => is_string($link) ? $link : '',
-                'count' => (int) $cat->count,
+                'url' => $link,
+                'count' => $count,
+                // Pluralised server-side so every locale's plural rules apply,
+                // rather than filling a single "%d products" template in JS.
+                'count_label' => sprintf(
+                    /* translators: %d: number of products in a category. */
+                    _n('%d product', '%d products', $count, 'sieve'),
+                    $count,
+                ),
             ];
         }
 
