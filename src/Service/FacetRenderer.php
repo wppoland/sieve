@@ -29,6 +29,8 @@ final class FacetRenderer
             FacetType::Dropdown => $this->renderDropdown($facet, $counts, $selected),
             FacetType::Swatch => $this->renderSwatch($facet, $counts, $selected),
             FacetType::Hierarchy => $this->renderHierarchy($facet, $counts, $selected),
+            FacetType::Autocomplete => $this->renderAutocomplete($facet, $counts, $selected),
+            FacetType::AzIndex => $this->renderAzIndex($facet, $counts, $selected),
             default => $this->renderChoices($facet, $counts, $selected),
         };
 
@@ -104,6 +106,81 @@ final class FacetRenderer
         }
 
         return '<ul class="sieve-choices" role="group">' . $items . '</ul>';
+    }
+
+    /**
+     * A checkbox list with a search box that filters the visible options as the
+     * shopper types. The filtering is purely client-side (no request), so it is
+     * instant and works for facets with many values; without JavaScript it
+     * degrades to a plain checkbox list.
+     *
+     * @param array<string, int> $counts
+     * @param array<int, string> $selected
+     */
+    private function renderAutocomplete(Facet $facet, array $counts, array $selected): string
+    {
+        $choices = $this->renderChoices($facet, $counts, $selected);
+        if ('' === $choices) {
+            return '';
+        }
+
+        $input = sprintf(
+            '<input type="search" class="sieve-autocomplete__input" placeholder="%1$s"'
+                . ' aria-label="%2$s" autocomplete="off" data-sieve-filter-options>',
+            esc_attr__('Filter options', 'sieve'),
+            /* translators: %s: facet label. */
+            esc_attr(sprintf(__('Filter %s options', 'sieve'), $facet->label)),
+        );
+
+        return '<div class="sieve-autocomplete" data-sieve-autocomplete>' . $input . $choices . '</div>';
+    }
+
+    /**
+     * A checkbox list preceded by an A-Z bar that filters the visible options to
+     * those whose label starts with the chosen letter. Only letters actually
+     * present are shown; filtering is client-side and degrades to a plain list.
+     *
+     * @param array<string, int> $counts
+     * @param array<int, string> $selected
+     */
+    private function renderAzIndex(Facet $facet, array $counts, array $selected): string
+    {
+        $choices = $this->renderChoices($facet, $counts, $selected);
+        if ('' === $choices) {
+            return '';
+        }
+
+        $letters = [];
+        foreach (array_keys($counts) as $value) {
+            $label = $this->valueLabel($facet, (string) $value);
+            $first = function_exists('mb_strtoupper')
+                ? mb_strtoupper(function_exists('mb_substr') ? mb_substr($label, 0, 1) : substr($label, 0, 1))
+                : strtoupper(substr($label, 0, 1));
+            if ('' !== $first) {
+                $letters[$first] = true;
+            }
+        }
+        $keys = array_keys($letters);
+        sort($keys);
+
+        $buttons = sprintf(
+            '<button type="button" class="sieve-az__letter is-active" data-letter="all">%s</button>',
+            esc_html__('All', 'sieve'),
+        );
+        foreach ($keys as $letter) {
+            $buttons .= sprintf(
+                '<button type="button" class="sieve-az__letter" data-letter="%1$s">%1$s</button>',
+                esc_html((string) $letter),
+            );
+        }
+
+        $bar = sprintf(
+            '<div class="sieve-az__bar" role="group" aria-label="%s" data-sieve-az>%s</div>',
+            esc_attr__('Filter options by first letter', 'sieve'),
+            $buttons,
+        );
+
+        return '<div class="sieve-az">' . $bar . $choices . '</div>';
     }
 
     /**

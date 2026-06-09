@@ -65,6 +65,10 @@ function setup( app: HTMLElement ): void {
 
 	app.addEventListener( 'change', ( event ) => {
 		const target = event.target as HTMLElement;
+		// The autocomplete option-filter box is visual only; never treat it as a filter value.
+		if ( target.hasAttribute( 'data-sieve-filter-options' ) ) {
+			return;
+		}
 		if ( target.closest( '[data-sieve-facets]' ) || target.closest( '[data-sieve-sort]' ) ) {
 			syncRanges( app );
 			schedule( true );
@@ -73,6 +77,10 @@ function setup( app: HTMLElement ): void {
 
 	app.addEventListener( 'input', ( event ) => {
 		const target = event.target as HTMLElement;
+		if ( target.hasAttribute( 'data-sieve-filter-options' ) ) {
+			filterOptions( target as HTMLInputElement );
+			return;
+		}
 		if ( target.classList.contains( 'sieve-range__min' ) || target.classList.contains( 'sieve-range__max' ) || target.classList.contains( 'sieve-search' ) ) {
 			syncRanges( app );
 			schedule( true );
@@ -91,6 +99,13 @@ function setup( app: HTMLElement ): void {
 
 function onClick( app: HTMLElement, event: Event ): void {
 	const el = event.target as HTMLElement;
+
+	const letter = el.closest< HTMLElement >( '.sieve-az__letter' );
+	if ( letter ) {
+		event.preventDefault();
+		filterByLetter( letter );
+		return;
+	}
 
 	const chip = el.closest< HTMLElement >( '[data-sieve-chip]' );
 	if ( chip ) {
@@ -128,6 +143,37 @@ function onClick( app: HTMLElement, event: Event ): void {
 	if ( el.closest( '[data-sieve-close]' ) ) {
 		closeDrawer( app );
 	}
+}
+
+/**
+ * Autocomplete facet: hide options whose label does not contain the typed text.
+ * Purely client-side; the checkbox values are untouched so an active filter
+ * stays applied even if its option is hidden by the search.
+ */
+function filterOptions( input: HTMLInputElement ): void {
+	const q = input.value.trim().toLowerCase();
+	const wrap = input.closest( '.sieve-autocomplete' );
+	wrap?.querySelectorAll< HTMLElement >( '.sieve-choice' ).forEach( ( item ) => {
+		const label = item.querySelector( '.sieve-choice__label' )?.textContent?.toLowerCase() ?? '';
+		item.hidden = q !== '' && ! label.includes( q );
+	} );
+}
+
+/**
+ * A-Z facet: show only options whose label starts with the chosen letter ("all"
+ * shows everything). Client-side display filter; checkbox values are untouched.
+ */
+function filterByLetter( btn: HTMLElement ): void {
+	const wrap = btn.closest( '.sieve-az' );
+	if ( ! wrap ) {
+		return;
+	}
+	const letter = btn.dataset.letter ?? 'all';
+	wrap.querySelectorAll( '.sieve-az__letter' ).forEach( ( b ) => b.classList.toggle( 'is-active', b === btn ) );
+	wrap.querySelectorAll< HTMLElement >( '.sieve-choice' ).forEach( ( item ) => {
+		const label = ( item.querySelector( '.sieve-choice__label' )?.textContent ?? '' ).trim().toUpperCase();
+		item.hidden = letter !== 'all' && label.charAt( 0 ) !== letter;
+	} );
 }
 
 function closeDrawer( app: HTMLElement ): void {

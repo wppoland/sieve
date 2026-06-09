@@ -190,6 +190,57 @@
 	font-size: 0.9rem;
 }
 
+/* ---- Autocomplete facet ---- */
+.sieve-autocomplete__input {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.4rem 0.6rem;
+	margin: 0 0 0.5rem;
+	border: 1px solid var(--sieve-border);
+	border-radius: 0.35rem;
+	font-size: 0.9rem;
+}
+
+.sieve-autocomplete__input:focus-visible {
+	outline: 2px solid var(--sieve-accent);
+	outline-offset: 1px;
+}
+
+/* ---- A-Z index facet ---- */
+.sieve-az__bar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.15rem;
+	margin: 0 0 0.6rem;
+}
+
+.sieve-az__letter {
+	min-width: 1.5rem;
+	padding: 0.15rem 0.3rem;
+	border: 1px solid var(--sieve-border);
+	border-radius: 0.25rem;
+	background: #fff;
+	color: var(--sieve-muted);
+	font-size: 0.78rem;
+	line-height: 1.2;
+	cursor: pointer;
+}
+
+.sieve-az__letter:hover {
+	border-color: var(--sieve-accent);
+}
+
+.sieve-az__letter.is-active {
+	background: var(--sieve-accent);
+	border-color: var(--sieve-accent);
+	color: #fff;
+}
+
+.sieve-az__letter:focus-visible {
+	outline: 2px solid var(--sieve-accent);
+	outline-offset: 1px;
+}
+
 /* ---- Toolbar ---- */
 .sieve-toolbar {
 	display: flex;

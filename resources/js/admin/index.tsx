@@ -51,6 +51,8 @@ const TYPE_OPTIONS = [
 	{ label: __( 'Dropdown', 'sieve' ), value: 'dropdown' },
 	{ label: __( 'Swatches (color / image)', 'sieve' ), value: 'swatch' },
 	{ label: __( 'Hierarchy (tree)', 'sieve' ), value: 'hierarchy' },
+	{ label: __( 'Autocomplete (searchable options)', 'sieve' ), value: 'autocomplete' },
+	{ label: __( 'A-Z index', 'sieve' ), value: 'az_index' },
 	{ label: __( 'Range slider', 'sieve' ), value: 'range_slider' },
 	{ label: __( 'Search box', 'sieve' ), value: 'search' },
 ];

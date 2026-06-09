@@ -27,3 +27,6 @@
 .DS_Store
 /assets
 /SUBMISSION.md
+/test-results
+/playwright-report
+/.playwright-mcp

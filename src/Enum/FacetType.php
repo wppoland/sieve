@@ -17,6 +17,8 @@ enum FacetType: string
     case Dropdown = 'dropdown';
     case Swatch = 'swatch';
     case Hierarchy = 'hierarchy';
+    case Autocomplete = 'autocomplete';
+    case AzIndex = 'az_index';
     case RangeSlider = 'range_slider';
     case Search = 'search';
     case Sort = 'sort';
@@ -37,6 +39,8 @@ enum FacetType: string
             self::Dropdown,
             self::Swatch,
             self::Hierarchy,
+            self::Autocomplete,
+            self::AzIndex,
             self::RangeSlider,
             self::Search,
             self::Sort,
@@ -54,6 +58,8 @@ enum FacetType: string
             self::Dropdown => __('Dropdown', 'sieve'),
             self::Swatch => __('Swatches (color / image)', 'sieve'),
             self::Hierarchy => __('Hierarchy (tree)', 'sieve'),
+            self::Autocomplete => __('Autocomplete (searchable options)', 'sieve'),
+            self::AzIndex => __('A-Z index', 'sieve'),
             self::RangeSlider => __('Range slider', 'sieve'),
             self::Search => __('Search', 'sieve'),
             self::Sort => __('Sort', 'sieve'),
