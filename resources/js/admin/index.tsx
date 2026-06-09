@@ -49,6 +49,8 @@ const TYPE_OPTIONS = [
 	{ label: __( 'Checkboxes', 'sieve' ), value: 'checkbox' },
 	{ label: __( 'Radio', 'sieve' ), value: 'radio' },
 	{ label: __( 'Dropdown', 'sieve' ), value: 'dropdown' },
+	{ label: __( 'Swatches (color / image)', 'sieve' ), value: 'swatch' },
+	{ label: __( 'Hierarchy (tree)', 'sieve' ), value: 'hierarchy' },
 	{ label: __( 'Range slider', 'sieve' ), value: 'range_slider' },
 	{ label: __( 'Search box', 'sieve' ), value: 'search' },
 ];

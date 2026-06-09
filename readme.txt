@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ Fast, accessible faceted product filtering for WooCommerce: AJAX filters, a mobi
 Sieve lets shoppers narrow down products instantly with checkboxes, ranges, search and sort, without a page reload. It is built to be pleasant to use and fast: accessible widgets, a mobile filter drawer, and a rendering approach designed for Core Web Vitals (no layout shift when results update).
 
 * AJAX filtering with no page reload, with shareable, bookmarkable URLs
-* Facet types: checkboxes, radio, searchable dropdown, range slider, search, sort, pagination, reset, active-filter chips
+* Facet types: checkboxes, radio, searchable dropdown, color and image swatches, hierarchical (tree) categories, range slider, search, sort, pagination, reset, active-filter chips
 * WooCommerce: categories, tags, attributes, price, stock status, on sale
 * A pre-built index for fast filtered queries on large catalogs
 * Mobile filter drawer with a sticky Apply bar
@@ -49,6 +49,9 @@ Use the `[sieve]` shortcode or the "Sieve Filter" block. Both render the facets,
 3. The facet builder: add, reorder and retype facets, set the layout, and rebuild the index.
 
 == Changelog ==
+
+= 0.2.0 =
+* New facet types: color and image swatches (with per-term color/image, plus an automatic color guess from common color names) and hierarchical (tree) category facets that show only branches leading to results.
 
 = 0.1.0 =
 * Initial MVP release: pre-built index, AJAX filtering with URL state, dependent facet counts, checkboxes / radio / dropdown / range / search facets, sorting, active-filter chips, pagination, mobile filter drawer, React facet builder, `[sieve]` shortcode and "Sieve Filter" block.

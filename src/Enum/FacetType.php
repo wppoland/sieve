@@ -15,6 +15,8 @@ enum FacetType: string
     case Checkbox = 'checkbox';
     case Radio = 'radio';
     case Dropdown = 'dropdown';
+    case Swatch = 'swatch';
+    case Hierarchy = 'hierarchy';
     case RangeSlider = 'range_slider';
     case Search = 'search';
     case Sort = 'sort';
@@ -33,6 +35,8 @@ enum FacetType: string
             self::Checkbox,
             self::Radio,
             self::Dropdown,
+            self::Swatch,
+            self::Hierarchy,
             self::RangeSlider,
             self::Search,
             self::Sort,
@@ -48,6 +52,8 @@ enum FacetType: string
             self::Checkbox => __('Checkboxes', 'sieve'),
             self::Radio => __('Radio', 'sieve'),
             self::Dropdown => __('Dropdown', 'sieve'),
+            self::Swatch => __('Swatches (color / image)', 'sieve'),
+            self::Hierarchy => __('Hierarchy (tree)', 'sieve'),
             self::RangeSlider => __('Range slider', 'sieve'),
             self::Search => __('Search', 'sieve'),
             self::Sort => __('Sort', 'sieve'),
