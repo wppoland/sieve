@@ -4,8 +4,8 @@ Submit at: https://wordpress.org/plugins/developers/add/ (logged in as **wppolan
 
 ## The package
 
-- **Upload this zip:** `/tmp/sieve.zip` (built from a clean trunk, ~46 KB, top folder `sieve/`).
-- Rebuild it any time with: `npm run build && bash scripts/prepare-wporg-release.sh && (cd /tmp/sieve-submit 2>/dev/null || (rm -rf /tmp/sieve-submit && mkdir -p /tmp/sieve-submit/sieve && cp -R /tmp/sieve-wporg-trunk/. /tmp/sieve-submit/sieve/)) && (cd /tmp/sieve-submit && zip -rqX /tmp/sieve.zip sieve)`
+- **Upload this zip:** `/tmp/sieve.zip` (built from a clean trunk, ~46 KB, top folder `sieve/`, no `.DS_Store`).
+- Rebuild it any time with: `npm run build && bash scripts/prepare-wporg-release.sh && rm -rf /tmp/sieve-submit && mkdir -p /tmp/sieve-submit/sieve && cp -R /tmp/sieve-wporg-trunk/. /tmp/sieve-submit/sieve/ && (cd /tmp/sieve-submit && zip -rqX /tmp/sieve.zip sieve -x '*.DS_Store')`
 
 ## Description to paste in the form
 

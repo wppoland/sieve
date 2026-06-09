@@ -18,5 +18,7 @@ rsync -a --exclude-from="${ROOT_DIR}/.distignore" \
 
 find "${STAGE}" -name '.DS_Store' -delete
 
-( cd "${OUT_DIR}" && zip -rq /tmp/sieve.zip sieve )
+# Exclude .DS_Store at the zip layer too: macOS/Spotlight can recreate it between
+# the find above and the zip, so -x is the only bulletproof guard.
+( cd "${OUT_DIR}" && zip -rqX /tmp/sieve.zip sieve -x '*.DS_Store' )
 echo "Built /tmp/sieve.zip from ${STAGE}"
