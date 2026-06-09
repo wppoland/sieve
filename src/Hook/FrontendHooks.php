@@ -57,6 +57,11 @@ final class FrontendHooks implements HasHooks
             'restUrl' => esc_url_raw(rest_url('sieve/v1/filter')),
             'nonce' => wp_create_nonce('wp_rest'),
             'prefix' => 'sf_',
+            'i18n' => [
+                /* translators: %d: number of matching options. */
+                'optionsCount' => __('%d options', 'sieve'),
+                'noOptions' => __('No matching options', 'sieve'),
+            ],
         ]);
     }
 

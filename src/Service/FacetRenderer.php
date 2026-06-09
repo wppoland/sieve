@@ -132,7 +132,9 @@ final class FacetRenderer
             esc_attr(sprintf(__('Filter %s options', 'sieve'), $facet->label)),
         );
 
-        return '<div class="sieve-autocomplete" data-sieve-autocomplete>' . $input . $choices . '</div>';
+        $status = '<span class="screen-reader-text" role="status" aria-live="polite" data-sieve-filter-status></span>';
+
+        return '<div class="sieve-autocomplete" data-sieve-autocomplete>' . $input . $status . $choices . '</div>';
     }
 
     /**
@@ -152,24 +154,27 @@ final class FacetRenderer
 
         $letters = [];
         foreach (array_keys($counts) as $value) {
-            $label = $this->valueLabel($facet, (string) $value);
+            // Trim first so the first letter matches the client-side filter
+            // (which trims too) and we never emit a phantom whitespace button.
+            $label = trim($this->valueLabel($facet, (string) $value));
+            if ('' === $label) {
+                continue;
+            }
             $first = function_exists('mb_strtoupper')
                 ? mb_strtoupper(function_exists('mb_substr') ? mb_substr($label, 0, 1) : substr($label, 0, 1))
                 : strtoupper(substr($label, 0, 1));
-            if ('' !== $first) {
-                $letters[$first] = true;
-            }
+            $letters[$first] = true;
         }
         $keys = array_keys($letters);
         sort($keys);
 
         $buttons = sprintf(
-            '<button type="button" class="sieve-az__letter is-active" data-letter="all">%s</button>',
+            '<button type="button" class="sieve-az__letter is-active" aria-pressed="true" data-letter="all">%s</button>',
             esc_html__('All', 'sieve'),
         );
         foreach ($keys as $letter) {
             $buttons .= sprintf(
-                '<button type="button" class="sieve-az__letter" data-letter="%1$s">%1$s</button>',
+                '<button type="button" class="sieve-az__letter" aria-pressed="false" data-letter="%1$s">%1$s</button>',
                 esc_html((string) $letter),
             );
         }
@@ -180,7 +185,9 @@ final class FacetRenderer
             $buttons,
         );
 
-        return '<div class="sieve-az">' . $bar . $choices . '</div>';
+        $status = '<span class="screen-reader-text" role="status" aria-live="polite" data-sieve-filter-status></span>';
+
+        return '<div class="sieve-az">' . $bar . $status . $choices . '</div>';
     }
 
     /**

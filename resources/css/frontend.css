@@ -190,6 +190,22 @@
 	font-size: 0.9rem;
 }
 
+/* Visually hidden but available to assistive tech (status announcements, labels).
+   Self-contained so accessibility never depends on the active theme. */
+.sieve-app .screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	word-wrap: normal;
+}
+
 /* ---- Autocomplete facet ---- */
 .sieve-autocomplete__input {
 	width: 100%;
@@ -234,6 +250,8 @@
 	background: var(--sieve-accent);
 	border-color: var(--sieve-accent);
 	color: #fff;
+	/* Non-colour cue too, so the active letter is not conveyed by colour alone. */
+	font-weight: 700;
 }
 
 .sieve-az__letter:focus-visible {

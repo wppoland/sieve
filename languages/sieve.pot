@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-09T17:18:39+00:00\n"
+"POT-Creation-Date: 2026-06-09T17:30:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sieve\n"
@@ -113,16 +113,26 @@ msgstr ""
 msgid "Sieve"
 msgstr ""
 
-#: src/Hook/FrontendHooks.php:96
+#. translators: %d: number of matching options.
+#: src/Hook/FrontendHooks.php:62
+#, php-format
+msgid "%d options"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:63
+msgid "No matching options"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:101
 #: src/Service/ResultsRenderer.php:133
 msgid "No products found."
 msgstr ""
 
-#: src/Hook/FrontendHooks.php:97
+#: src/Hook/FrontendHooks.php:102
 msgid "View all results"
 msgstr ""
 
-#: src/Hook/FrontendHooks.php:98
+#: src/Hook/FrontendHooks.php:103
 msgid "Searching…"
 msgstr ""
 
@@ -181,41 +191,41 @@ msgstr ""
 msgid "Filter %s options"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:168
+#: src/Service/FacetRenderer.php:173
 msgid "All"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:179
+#: src/Service/FacetRenderer.php:184
 msgid "Filter options by first letter"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:197
+#: src/Service/FacetRenderer.php:204
 msgid "Any"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:247
+#: src/Service/FacetRenderer.php:254
 msgid "Minimum price"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:248
+#: src/Service/FacetRenderer.php:255
 msgid "Maximum price"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:262
+#: src/Service/FacetRenderer.php:269
 #: src/Service/SearchRenderer.php:83
 #: src/Service/SearchRenderer.php:84
 msgid "Search products"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:500
+#: src/Service/FacetRenderer.php:507
 msgid "In stock"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:501
+#: src/Service/FacetRenderer.php:508
 msgid "Out of stock"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:502
+#: src/Service/FacetRenderer.php:509
 msgid "On backorder"
 msgstr ""
 

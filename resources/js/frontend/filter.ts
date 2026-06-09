@@ -13,6 +13,7 @@ interface SieveData {
 	restUrl: string;
 	nonce: string;
 	prefix: string;
+	i18n?: { optionsCount: string; noOptions: string };
 }
 
 interface FilterResponse {
@@ -153,10 +154,19 @@ function onClick( app: HTMLElement, event: Event ): void {
 function filterOptions( input: HTMLInputElement ): void {
 	const q = input.value.trim().toLowerCase();
 	const wrap = input.closest( '.sieve-autocomplete' );
-	wrap?.querySelectorAll< HTMLElement >( '.sieve-choice' ).forEach( ( item ) => {
+	if ( ! wrap ) {
+		return;
+	}
+	let visible = 0;
+	wrap.querySelectorAll< HTMLElement >( '.sieve-choice' ).forEach( ( item ) => {
 		const label = item.querySelector( '.sieve-choice__label' )?.textContent?.toLowerCase() ?? '';
-		item.hidden = q !== '' && ! label.includes( q );
+		const hide = q !== '' && ! label.includes( q );
+		item.hidden = hide;
+		if ( ! hide ) {
+			visible++;
+		}
 	} );
+	announceCount( wrap, visible );
 }
 
 /**
@@ -169,11 +179,36 @@ function filterByLetter( btn: HTMLElement ): void {
 		return;
 	}
 	const letter = btn.dataset.letter ?? 'all';
-	wrap.querySelectorAll( '.sieve-az__letter' ).forEach( ( b ) => b.classList.toggle( 'is-active', b === btn ) );
-	wrap.querySelectorAll< HTMLElement >( '.sieve-choice' ).forEach( ( item ) => {
-		const label = ( item.querySelector( '.sieve-choice__label' )?.textContent ?? '' ).trim().toUpperCase();
-		item.hidden = letter !== 'all' && label.charAt( 0 ) !== letter;
+	wrap.querySelectorAll( '.sieve-az__letter' ).forEach( ( b ) => {
+		const on = b === btn;
+		b.classList.toggle( 'is-active', on );
+		b.setAttribute( 'aria-pressed', String( on ) );
 	} );
+	let visible = 0;
+	wrap.querySelectorAll< HTMLElement >( '.sieve-choice' ).forEach( ( item ) => {
+		const label = ( item.querySelector( '.sieve-choice__label' )?.textContent ?? '' ).trim();
+		// First code point (not UTF-16 unit), to match the PHP mb_substr letters.
+		const first = ( [ ...label ][ 0 ] ?? '' ).toUpperCase();
+		item.hidden = letter !== 'all' && first !== letter;
+		if ( ! item.hidden ) {
+			visible++;
+		}
+	} );
+	announceCount( wrap, visible );
+}
+
+/**
+ * Update a facet's visually-hidden live region with the remaining option count,
+ * so screen-reader users hear the effect of typing / picking a letter.
+ */
+function announceCount( wrap: Element, visible: number ): void {
+	const status = wrap.querySelector( '[data-sieve-filter-status]' );
+	if ( ! status ) {
+		return;
+	}
+	status.textContent = visible === 0
+		? ( data?.i18n?.noOptions ?? 'No matching options' )
+		: ( data?.i18n?.optionsCount ?? '%d options' ).replace( '%d', String( visible ) );
 }
 
 function closeDrawer( app: HTMLElement ): void {
@@ -429,10 +464,62 @@ async function run( app: HTMLElement, pushHistory = true ): Promise< void > {
 }
 
 function applyFragments( app: HTMLElement, payload: FilterResponse ): void {
+	const facets = app.querySelector< HTMLElement >( '[data-sieve-facets]' );
+	// The server re-renders facets with fresh counts but cannot know the client
+	// -only display state (autocomplete text, active A-Z letter); capture it,
+	// then re-apply it to the new nodes so it survives the swap.
+	const display = snapshotDisplayFilters( facets );
 	setHtml( app, '[data-sieve-facets]', payload.facets_html );
+	restoreDisplayFilters( facets, display );
 	setHtml( app, '[data-sieve-toolbar]', payload.toolbar_html );
 	setHtml( app, '[data-sieve-results]', payload.results_html );
 	setHtml( app, '[data-sieve-pagination]', payload.pagination_html );
+}
+
+interface DisplayFilters {
+	autocomplete: Map< string, string >; // facet slug -> typed text
+	az: Map< string, string >; // facet slug -> active letter
+}
+
+function snapshotDisplayFilters( facets: HTMLElement | null ): DisplayFilters {
+	const autocomplete = new Map< string, string >();
+	const az = new Map< string, string >();
+	facets?.querySelectorAll< HTMLElement >( '.sieve-facet--autocomplete' ).forEach( ( f ) => {
+		const value = f.querySelector< HTMLInputElement >( '[data-sieve-filter-options]' )?.value ?? '';
+		if ( value && f.dataset.sieveFacet ) {
+			autocomplete.set( f.dataset.sieveFacet, value );
+		}
+	} );
+	facets?.querySelectorAll< HTMLElement >( '.sieve-facet--az_index' ).forEach( ( f ) => {
+		const letter = f.querySelector< HTMLElement >( '.sieve-az__letter.is-active' )?.dataset.letter ?? 'all';
+		if ( letter !== 'all' && f.dataset.sieveFacet ) {
+			az.set( f.dataset.sieveFacet, letter );
+		}
+	} );
+	return { autocomplete, az };
+}
+
+function restoreDisplayFilters( facets: HTMLElement | null, state: DisplayFilters ): void {
+	if ( ! facets ) {
+		return;
+	}
+	state.autocomplete.forEach( ( value, slug ) => {
+		const input = facets.querySelector< HTMLInputElement >(
+			`.sieve-facet--autocomplete[data-sieve-facet="${ slug }"] [data-sieve-filter-options]`
+		);
+		if ( input ) {
+			input.value = value;
+			filterOptions( input );
+		}
+	} );
+	state.az.forEach( ( letter, slug ) => {
+		const btn = facets.querySelector< HTMLElement >(
+			`.sieve-facet--az_index[data-sieve-facet="${ slug }"] .sieve-az__letter[data-letter="${ letter }"]`
+		);
+		if ( btn ) {
+			filterByLetter( btn );
+		}
+	} );
 }
 
 function setHtml( app: HTMLElement, selector: string, html: string ): void {
