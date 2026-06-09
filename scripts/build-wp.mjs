@@ -20,13 +20,14 @@ const ROOT = resolve(import.meta.dirname, '..');
 const ENTRIES = {
     admin: 'resources/js/admin/index.tsx',
     'frontend-filter': 'resources/js/frontend/filter.ts',
+    'frontend-suggest': 'resources/js/frontend/suggest.ts',
 };
 
 // Bundles that need WordPress React deps in their .asset.php.
-const ASSET_PHP = new Set(['admin', 'frontend-filter']);
+const ASSET_PHP = new Set(['admin', 'frontend-filter', 'frontend-suggest']);
 
 // Framework-free bundles: emit an empty dependency list.
-const VANILLA = new Set(['frontend-filter']);
+const VANILLA = new Set(['frontend-filter', 'frontend-suggest']);
 
 const GLOBALS = {
     react: 'React',

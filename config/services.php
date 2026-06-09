@@ -10,10 +10,12 @@ use Sieve\Hook\BlockHooks;
 use Sieve\Hook\FrontendHooks;
 use Sieve\Hook\IndexerHooks;
 use Sieve\Hook\RestHooks;
+use Sieve\Hook\SearchBlockHooks;
 use Sieve\Migrator;
 use Sieve\Repository\IndexRepository;
 use Sieve\Rest\AdminController;
 use Sieve\Rest\FilterController;
+use Sieve\Rest\SuggestController;
 use Sieve\Service\FacetCatalog;
 use Sieve\Service\FacetCountService;
 use Sieve\Service\FacetRenderer;
@@ -21,9 +23,12 @@ use Sieve\Service\FilterEngine;
 use Sieve\Service\FilterService;
 use Sieve\Service\ProductIndexer;
 use Sieve\Service\ResultsRenderer;
+use Sieve\Service\SearchRenderer;
 use Sieve\Service\Settings;
+use Sieve\Service\SuggestService;
 use Sieve\Service\UrlService;
 use Sieve\Shortcode\FilterShortcode;
+use Sieve\Shortcode\SearchShortcode;
 
 /**
  * Service registration. Returns a callable that binds every service into the
@@ -40,6 +45,8 @@ return static function (Container $c): void {
     $c->singleton(UrlService::class, static fn (): UrlService => new UrlService());
     $c->singleton(FacetRenderer::class, static fn (): FacetRenderer => new FacetRenderer());
     $c->singleton(ResultsRenderer::class, static fn (): ResultsRenderer => new ResultsRenderer());
+    $c->singleton(SuggestService::class, static fn (): SuggestService => new SuggestService());
+    $c->singleton(SearchRenderer::class, static fn (): SearchRenderer => new SearchRenderer());
 
     $c->singleton(
         ProductIndexer::class,
@@ -84,6 +91,12 @@ return static function (Container $c): void {
             $c->get(IndexRepository::class),
         ),
     );
+    $c->singleton(
+        SuggestController::class,
+        static fn (): SuggestController => new SuggestController(
+            $c->get(SuggestService::class),
+        ),
+    );
 
     // Hook subscribers.
     $c->singleton(AdminHooks::class, static fn (): AdminHooks => new AdminHooks());
@@ -96,6 +109,7 @@ return static function (Container $c): void {
         static fn (): RestHooks => new RestHooks(
             $c->get(FilterController::class),
             $c->get(AdminController::class),
+            $c->get(SuggestController::class),
         ),
     );
     $c->singleton(
@@ -115,6 +129,20 @@ return static function (Container $c): void {
         static fn (): BlockHooks => new BlockHooks(
             $c->get(FilterEngine::class),
             $c->get(UrlService::class),
+            $c->get(FrontendHooks::class),
+        ),
+    );
+    $c->singleton(
+        SearchShortcode::class,
+        static fn (): SearchShortcode => new SearchShortcode(
+            $c->get(SearchRenderer::class),
+            $c->get(FrontendHooks::class),
+        ),
+    );
+    $c->singleton(
+        SearchBlockHooks::class,
+        static fn (): SearchBlockHooks => new SearchBlockHooks(
+            $c->get(SearchRenderer::class),
             $c->get(FrontendHooks::class),
         ),
     );

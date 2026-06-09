@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 0.2.0\n"
+"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 0.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sieve\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-09T13:40:12+00:00\n"
+"POT-Creation-Date: 2026-06-09T14:04:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sieve\n"
@@ -80,6 +80,7 @@ msgid "Range slider"
 msgstr ""
 
 #: src/Enum/FacetType.php:58
+#: src/Service/SearchRenderer.php:87
 msgid "Search"
 msgstr ""
 
@@ -102,6 +103,19 @@ msgstr ""
 #: src/Hook/AdminHooks.php:31
 #: src/Hook/AdminHooks.php:32
 msgid "Sieve"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:96
+#: src/Service/ResultsRenderer.php:133
+msgid "No products found."
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:97
+msgid "View all results"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:98
+msgid "Searching…"
 msgstr ""
 
 #: src/Service/FacetCatalog.php:25
@@ -162,6 +176,8 @@ msgid "Maximum price"
 msgstr ""
 
 #: src/Service/FacetRenderer.php:185
+#: src/Service/SearchRenderer.php:83
+#: src/Service/SearchRenderer.php:84
 msgid "Search products"
 msgstr ""
 
@@ -217,10 +233,6 @@ msgstr ""
 msgid "Clear all"
 msgstr ""
 
-#: src/Service/ResultsRenderer.php:133
-msgid "No products found."
-msgstr ""
-
 #. translators: %s: number of products.
 #: src/Service/ResultsRenderer.php:138
 #, php-format
@@ -229,12 +241,40 @@ msgid_plural "%s products"
 msgstr[0] ""
 msgstr[1] ""
 
+#: src/Service/SearchRenderer.php:85
+msgid "Product search results"
+msgstr ""
+
 #: src/Service/Settings.php:83
 msgid "Category"
 msgstr ""
 
 #: src/Service/Settings.php:95
 msgid "Availability"
+msgstr ""
+
+#: resources/js/blocks/search/index.js:25
+msgid "Search settings"
+msgstr ""
+
+#: resources/js/blocks/search/index.js:27
+msgid "Placeholder"
+msgstr ""
+
+#: resources/js/blocks/search/index.js:32
+msgid "Show submit button"
+msgstr ""
+
+#: resources/js/blocks/search/index.js:37
+msgid "Max results"
+msgstr ""
+
+#: resources/js/blocks/search/index.js:44
+msgid "Minimum characters"
+msgstr ""
+
+#: resources/js/blocks/search/index.js:51
+msgid "In-stock products only"
 msgstr ""
 
 #: resources/js/blocks/filter/block.json
@@ -258,11 +298,38 @@ msgid "facet"
 msgstr ""
 
 #: resources/js/blocks/filter/block.json
+#: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "woocommerce"
 msgstr ""
 
 #: resources/js/blocks/filter/block.json
+#: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "search"
+msgstr ""
+
+#: resources/js/blocks/search/block.json
+msgctxt "block title"
+msgid "Sieve Search"
+msgstr ""
+
+#: resources/js/blocks/search/block.json
+msgctxt "block description"
+msgid "Predictive product search with an instant, accessible typeahead dropdown."
+msgstr ""
+
+#: resources/js/blocks/search/block.json
+msgctxt "block keyword"
+msgid "typeahead"
+msgstr ""
+
+#: resources/js/blocks/search/block.json
+msgctxt "block keyword"
+msgid "autocomplete"
+msgstr ""
+
+#: resources/js/blocks/search/block.json
+msgctxt "block keyword"
+msgid "product"
 msgstr ""
