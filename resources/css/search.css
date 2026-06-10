@@ -202,3 +202,22 @@
 .sieve-search__all:hover {
 	background: #f3f4f6;
 }
+
+/* ===== Appearance presets (0.8.0). Inert unless data-sieve-style is set. ===== */
+.sieve-search[data-sieve-style="minimal"] .sieve-search__input,
+.sieve-search[data-sieve-style="minimal"] .sieve-search__results {
+	border-radius: 4px;
+}
+.sieve-search[data-sieve-style="bordered"] .sieve-search__input,
+.sieve-search[data-sieve-style="bordered"] .sieve-search__results {
+	border: 1px solid var(--sieve-search-border);
+	border-radius: 8px;
+}
+.sieve-search[data-sieve-style="soft"] .sieve-search__input {
+	border-radius: 8px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.sieve-search[data-sieve-style="soft"] .sieve-search__results {
+	border-radius: 12px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
