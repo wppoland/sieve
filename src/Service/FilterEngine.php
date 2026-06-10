@@ -22,6 +22,7 @@ final class FilterEngine
         private readonly FacetRenderer $facetRenderer,
         private readonly ResultsRenderer $resultsRenderer,
         private readonly SearchResolver $resolver,
+        private readonly AppearanceService $appearance,
     ) {
     }
 
@@ -71,10 +72,16 @@ final class FilterEngine
     public function container(array $request): string
     {
         $parts = $this->run($request);
-        $columns = max(1, (int) $this->settings->all()['columns']);
+        $config = $this->settings->all();
+        $columns = max(1, (int) $config['columns']);
+
+        $preset = $this->appearance->resolveFrom($config)['preset'];
+        $styleAttr = 'default' === $preset
+            ? ''
+            : ' data-sieve-style="' . esc_attr($preset) . '"';
 
         return sprintf(
-            '<div class="sieve-app" data-sieve-app style="--sieve-cols:%7$d">'
+            '<div class="sieve-app" data-sieve-app%8$s style="--sieve-cols:%7$d">'
                 . '<form class="sieve-filters" data-sieve-form>'
                 . '<button type="button" class="sieve-drawer-toggle" data-sieve-open aria-expanded="false">%1$s</button>'
                 . '<div class="sieve-facets" data-sieve-facets>%2$s</div>'
@@ -93,6 +100,7 @@ final class FilterEngine
             $parts['pagination_html'],
             esc_html__('Show results', 'sieve'),
             $columns,
+            $styleAttr,
         );
     }
 
