@@ -16,6 +16,7 @@ use Sieve\Repository\IndexRepository;
 use Sieve\Rest\AdminController;
 use Sieve\Rest\FilterController;
 use Sieve\Rest\SuggestController;
+use Sieve\Service\AppearanceService;
 use Sieve\Service\FacetCatalog;
 use Sieve\Service\FacetCountService;
 use Sieve\Service\FacetRenderer;
@@ -41,7 +42,11 @@ return static function (Container $c): void {
     $c->singleton(IndexRepository::class, static fn (): IndexRepository => new IndexRepository());
 
     // Domain services.
-    $c->singleton(Settings::class, static fn (): Settings => new Settings());
+    $c->singleton(AppearanceService::class, static fn (): AppearanceService => new AppearanceService());
+    $c->singleton(
+        Settings::class,
+        static fn (): Settings => new Settings($c->get(AppearanceService::class)),
+    );
     $c->singleton(FacetCatalog::class, static fn (): FacetCatalog => new FacetCatalog());
     $c->singleton(UrlService::class, static fn (): UrlService => new UrlService());
     $c->singleton(FacetRenderer::class, static fn (): FacetRenderer => new FacetRenderer());
@@ -56,7 +61,13 @@ return static function (Container $c): void {
             $c->get(SearchResolver::class),
         ),
     );
-    $c->singleton(SearchRenderer::class, static fn (): SearchRenderer => new SearchRenderer());
+    $c->singleton(
+        SearchRenderer::class,
+        static fn (): SearchRenderer => new SearchRenderer(
+            $c->get(AppearanceService::class),
+            $c->get(Settings::class),
+        ),
+    );
 
     $c->singleton(
         ProductIndexer::class,
@@ -82,6 +93,7 @@ return static function (Container $c): void {
             $c->get(FacetRenderer::class),
             $c->get(ResultsRenderer::class),
             $c->get(SearchResolver::class),
+            $c->get(AppearanceService::class),
         ),
     );
 
@@ -115,7 +127,10 @@ return static function (Container $c): void {
     $c->singleton(AdminHooks::class, static fn (): AdminHooks => new AdminHooks());
     $c->singleton(
         FrontendHooks::class,
-        static fn (): FrontendHooks => new FrontendHooks(),
+        static fn (): FrontendHooks => new FrontendHooks(
+            $c->get(Settings::class),
+            $c->get(AppearanceService::class),
+        ),
     );
     $c->singleton(
         RestHooks::class,

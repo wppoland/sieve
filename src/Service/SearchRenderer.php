@@ -14,12 +14,23 @@ defined('ABSPATH') || exit;
  */
 final class SearchRenderer
 {
+    public function __construct(
+        private readonly AppearanceService $appearance,
+        private readonly Settings $settings,
+    ) {
+    }
+
     /**
      * @param array<string, mixed> $atts
      */
     public function render(array $atts): string
     {
         $config = $this->normalise($atts);
+
+        $preset = $this->appearance->resolveFrom($this->settings->all())['preset'];
+        $styleAttr = 'default' === $preset
+            ? ''
+            : ' data-sieve-style="' . esc_attr($preset) . '"';
         $id = wp_unique_id('sieve-suggest-');
         $listId = $id . '-list';
 
@@ -69,13 +80,14 @@ final class SearchRenderer
         );
 
         return sprintf(
-            '<div class="sieve-search" data-sieve-search data-limit="%1$d" data-min-chars="%2$d"'
+            '<div class="sieve-search" data-sieve-search%6$s data-limit="%1$d" data-min-chars="%2$d"'
                 . ' data-in-stock-only="%3$s">%4$s%5$s</form></div>',
             $config['limit'],
             $config['min_chars'],
             $config['in_stock_only'] ? '1' : '0',
             $form,
             $inner . $status . $results,
+            $styleAttr,
         );
     }
 

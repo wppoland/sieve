@@ -24,6 +24,10 @@ import {
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
+import AppearancePanel, {
+	DEFAULT_APPEARANCE,
+	type Appearance,
+} from './AppearancePanel';
 
 interface Facet {
 	slug: string;
@@ -36,6 +40,7 @@ interface Settings {
 	facets: Facet[];
 	per_page: number;
 	columns: number;
+	appearance: Appearance;
 }
 
 interface Source {
@@ -77,8 +82,11 @@ function App() {
 	} | null >( null );
 
 	useEffect( () => {
-		apiFetch< Settings >( { path: 'sieve/v1/settings' } ).then(
-			setSettings
+		apiFetch< Settings >( { path: 'sieve/v1/settings' } ).then( ( data ) =>
+			setSettings( {
+				...data,
+				appearance: data.appearance ?? DEFAULT_APPEARANCE,
+			} )
 		);
 		apiFetch< { sources: Source[]; indexed_rows: number } >( {
 			path: 'sieve/v1/catalog',
@@ -273,6 +281,12 @@ function App() {
 						</FlexItem>
 					</Flex>
 				</PanelBody>
+				<AppearancePanel
+					appearance={ settings.appearance }
+					onChange={ ( appearance: Appearance ) =>
+						update( { appearance } )
+					}
+				/>
 			</Panel>
 
 			<h2>{ __( 'Facets', 'sieve' ) }</h2>
