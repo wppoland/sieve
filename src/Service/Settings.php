@@ -17,8 +17,12 @@ final class Settings
 {
     public const OPTION = 'sieve_settings';
 
+    public function __construct(private readonly AppearanceService $appearance)
+    {
+    }
+
     /**
-     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int}
+     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int, appearance: array{preset: string, colors: array<string, string>}}
      */
     public function all(): array
     {
@@ -31,6 +35,9 @@ final class Settings
             'facets' => is_array($stored['facets']) ? array_values($stored['facets']) : [],
             'per_page' => isset($stored['per_page']) ? max(1, (int) $stored['per_page']) : 12,
             'columns' => isset($stored['columns']) ? max(1, (int) $stored['columns']) : 3,
+            'appearance' => isset($stored['appearance']) && is_array($stored['appearance'])
+                ? $this->appearance->normalize($stored['appearance'])
+                : $this->appearance->defaults(),
         ];
     }
 
@@ -52,6 +59,9 @@ final class Settings
             'facets' => $facets,
             'per_page' => isset($value['per_page']) ? max(1, (int) $value['per_page']) : 12,
             'columns' => isset($value['columns']) ? max(1, (int) $value['columns']) : 3,
+            'appearance' => $this->appearance->normalize(
+                isset($value['appearance']) && is_array($value['appearance']) ? $value['appearance'] : [],
+            ),
         ]);
     }
 
@@ -72,7 +82,7 @@ final class Settings
     /**
      * The default "WooCommerce shop" preset.
      *
-     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int}
+     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int, appearance: array{preset: string, colors: array<string, string>}}
      */
     public function defaults(): array
     {
@@ -105,6 +115,7 @@ final class Settings
             ],
             'per_page' => 12,
             'columns' => 3,
+            'appearance' => $this->appearance->defaults(),
         ];
     }
 }
