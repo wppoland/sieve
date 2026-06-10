@@ -55,12 +55,22 @@ final class FrontendHooks implements HasHooks
 
         wp_localize_script('sieve-frontend', 'sieveData', [
             'restUrl' => esc_url_raw(rest_url('sieve/v1/filter')),
+            // The suggest endpoint, supplied explicitly so the in-grid combobox
+            // never has to derive it from the filter URL by string surgery.
+            'suggestUrl' => esc_url_raw(rest_url('sieve/v1/suggest')),
             'nonce' => wp_create_nonce('wp_rest'),
             'prefix' => 'sf_',
             'i18n' => [
                 /* translators: %d: number of matching options. */
                 'optionsCount' => __('%d options', 'sieve'),
                 'noOptions' => __('No matching options', 'sieve'),
+                'searching' => __('Searching…', 'sieve'),
+                /* translators: %d: number of matching products (singular). */
+                'oneResult' => __('%d product', 'sieve'),
+                /* translators: %d: number of matching products. */
+                'manyResults' => __('%d products', 'sieve'),
+                'noResults' => __('No results', 'sieve'),
+                'suggestionsLabel' => __('Product suggestions', 'sieve'),
             ],
         ]);
     }

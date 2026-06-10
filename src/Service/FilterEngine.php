@@ -21,6 +21,7 @@ final class FilterEngine
         private readonly FacetCountService $counts,
         private readonly FacetRenderer $facetRenderer,
         private readonly ResultsRenderer $resultsRenderer,
+        private readonly SearchResolver $resolver,
     ) {
     }
 
@@ -34,18 +35,26 @@ final class FilterEngine
         $facets = $this->settings->facets();
         $filters = $request['filters'];
 
-        $resolved = $this->filter->resolve($facets, $filters);
+        // Resolve the search term to ids ONCE via the shared resolver, then thread
+        // the same id set into the grid query and every dependent count so the
+        // grid, the counts and the dropdown can never disagree. null = search
+        // inactive, [] = matched nothing, int[] = ids.
+        $searchIds = $this->resolver->resolve($request['search']);
+
+        $resolved = $this->filter->resolve($facets, $filters, null, $searchIds);
         $results = $this->resultsRenderer->render(
             $resolved,
             $request['orderby'],
             $request['paged'],
-            $request['search'],
+            // Pass '' deliberately: the folded index is authoritative for grid
+            // search, so no diacritic-sensitive native 's' runs here.
+            '',
             (int) $config['per_page'],
             (int) $config['columns'],
         );
 
         return [
-            'facets_html' => $this->renderFacets($facets, $filters, $request['search']),
+            'facets_html' => $this->renderFacets($facets, $filters, $request['search'], $searchIds),
             'toolbar_html' => $this->renderToolbar($facets, $filters, $request, $results['count_text']),
             'results_html' => $results['html'],
             'pagination_html' => $this->renderPagination($request['paged'], $results['max_pages']),
@@ -90,8 +99,10 @@ final class FilterEngine
     /**
      * @param array<int, Facet> $facets
      * @param array<string, string> $filters
+     * @param array<int, int>|null $searchIds Resolved once in run() and threaded
+     *        here so counts are search-aware without recomputing per facet.
      */
-    private function renderFacets(array $facets, array $filters, string $search): string
+    private function renderFacets(array $facets, array $filters, string $search, ?array $searchIds): string
     {
         $html = '';
         foreach ($facets as $facet) {
@@ -109,7 +120,7 @@ final class FilterEngine
                 continue;
             }
 
-            $counts = $this->counts->countsFor($facet, $facets, $filters);
+            $counts = $this->counts->countsFor($facet, $facets, $filters, $searchIds);
             $html .= $this->facetRenderer->render($facet, $counts, $selected);
         }
 

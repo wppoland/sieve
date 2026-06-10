@@ -6,73 +6,65 @@ namespace Sieve\Service;
 
 defined('ABSPATH') || exit;
 
-use Sieve\Repository\IndexRepository;
 use Sieve\Support\Normalizer;
 
 /**
- * Powers the predictive product search ([sieve_search]). Given a partial term it
- * returns a small, ranked set of matching products with everything the dropdown
- * needs (title, URL, thumbnail, price, SKU).
+ * Powers the predictive product search ([sieve_search]) and the in-grid search
+ * combobox. Given a partial term it returns a small, ranked set of matching
+ * products with everything the dropdown needs (title, URL, thumbnail, price, SKU).
  *
- * Matching is diacritic-insensitive and typo-tolerant: it runs against a
- * pre-built '_search' token index of diacritic-folded title/SKU tokens (so
- * "lozko" finds "łóżko"), with a bounded Levenshtein fuzzy tier for small typos,
- * and falls back to WooCommerce's own relevance search so description/content
- * matches stay reachable and the post-upgrade reindex window is covered.
+ * Matching is diacritic-insensitive and typo-tolerant: term -> id resolution is
+ * delegated to the shared SearchResolver (a folded '_search' token index plus a
+ * bounded Levenshtein fuzzy tier, so "lozko" finds "łóżko"). When NOT scoped, an
+ * empty index hit falls back to WooCommerce's own relevance search so
+ * description/content matches stay reachable and the post-upgrade reindex window
+ * is covered. When scoped to a facet selection, no WC fallback runs (out-of-scope
+ * results would mislead).
  */
 final class SuggestService
 {
     private const MAX_LIMIT = 20;
     private const MAX_CATEGORIES = 4;
-    private const PREFIX_CAP = 200;
-    private const VOCAB_CAP = 400;
-    private const FUZZY_TOKEN_CAP = 8;
     // How many ordered ids to hydrate: a window wider than $limit so that, when
     // the top matches are filtered out by the stock constraint, lower-ranked
     // index-tier matches still fill the dropdown (rather than ceding to the WC
     // fallback). Trimmed back to $limit after hydration + ordering.
     private const HYDRATE_CAP = 50;
 
-    public function __construct(private readonly IndexRepository $index)
-    {
+    public function __construct(
+        private readonly SearchResolver $resolver,
+    ) {
     }
 
     /**
+     * @param array<int, int>|null $constrainIds When non-null, suggestions are
+     *        intersected with this id set (the active grid scope): categories and
+     *        the WC fallback are skipped so an out-of-scope match never appears.
      * @return array{
      *     results: array<int, array{id: int, name: string, url: string, image: string, sku: string, price_html: string}>,
      *     categories: array<int, array{id: int, name: string, url: string, count: int, count_label: string}>,
      *     search_url: string
      * }
      */
-    public function suggest(string $term, int $limit = 6, bool $includeOutOfStock = false): array
+    public function suggest(string $term, int $limit = 6, bool $includeOutOfStock = false, ?array $constrainIds = null): array
     {
         $term = trim($term);
         $limit = max(1, min(self::MAX_LIMIT, $limit));
+        $scoped = null !== $constrainIds;
 
         $empty = ['results' => [], 'categories' => [], 'search_url' => $this->searchUrl($term)];
         if ('' === $term || ! function_exists('wc_get_products')) {
             return $empty;
         }
 
-        // Fold the query the same way the index was built. Without tokens (e.g.
-        // a query of only punctuation) we cannot use the token tiers and fall
-        // straight through to the WooCommerce relevance passes below.
-        $queryTokens = Normalizer::tokens($term);
+        // Resolve the term to ids via the shared resolver (same path the grid
+        // uses, so the dropdown and the grid can never disagree). null => the
+        // term was untokenizable; treat as no index hit.
+        $orderedIds = $this->resolver->resolve($term) ?? [];
 
-        /** @var array<int, int> $orderedIds Discovery-ordered, deduped match ids. */
-        $orderedIds = [];
-
-        if ([] !== $queryTokens) {
-            // TIER 1 (prefix): every query token must prefix-match some token of
-            // a product (multi-word AND), intersected in PHP.
-            $orderedIds = $this->prefixTier($queryTokens);
-
-            // TIER 2 (fuzzy): only when the prefix tier is short and the last
-            // token is long enough to make Levenshtein meaningful.
-            $lastToken = $queryTokens[count($queryTokens) - 1];
-            if (count($orderedIds) < $limit && mb_strlen($lastToken, 'UTF-8') >= 3) {
-                $orderedIds = $this->appendUnique($orderedIds, $this->fuzzyTier($lastToken));
-            }
+        // Scoped: intersect with the active grid id set ("shoes within red").
+        if ($scoped) {
+            $orderedIds = array_values(array_intersect($orderedIds, $constrainIds));
         }
 
         // Hydrate the index-tier ids in order. The index can hold a now-out-of-
@@ -89,83 +81,26 @@ final class SuggestService
             $results = $this->orderByIds($results, $orderedIds);
         }
 
-        // FINAL FALLBACK: only when the index tier found NOTHING. Keeping the
-        // fast index path authoritative for the common case is the Web-Vitals
-        // win (no per-keystroke WP_Query); when the index has no hit at all we
-        // fall back to WooCommerce's own search so description/content matches
-        // stay reachable and the post-upgrade reindex window is covered.
-        if ([] === $results) {
+        // FINAL FALLBACK: only when unscoped AND the index tier found NOTHING.
+        // Keeping the fast index path authoritative for the common case is the
+        // Web-Vitals win (no per-keystroke WP_Query); when the index has no hit
+        // at all we fall back to WooCommerce's own search so description/content
+        // matches stay reachable and the post-upgrade reindex window is covered.
+        // A scoped search skips this: out-of-scope WC results would mislead.
+        if (! $scoped && [] === $results) {
             $results = $this->mergeShortfall($results, $this->query(['s' => $term], $limit, $includeOutOfStock), $limit);
         }
-        if ([] === $results) {
+        if (! $scoped && [] === $results) {
             $results = $this->mergeShortfall($results, $this->query(['sku' => $term], $limit, $includeOutOfStock), $limit);
         }
 
         return [
             'results' => array_values(array_slice($results, 0, $limit, true)),
-            'categories' => $this->matchCategories($term),
+            // Categories are facets in the in-grid combobox, so a scoped search
+            // never returns them; the standalone widget keeps them.
+            'categories' => $scoped ? [] : $this->matchCategories($term),
             'search_url' => $this->searchUrl($term),
         ];
-    }
-
-    /**
-     * TIER 1: prefix-match each query token against the '_search' index and
-     * intersect the id sets in PHP, so a multi-word query is an AND of prefixes.
-     *
-     * @param array<int, string> $queryTokens
-     * @return array<int, int> discovery-ordered, deduped
-     */
-    private function prefixTier(array $queryTokens): array
-    {
-        $sets = [];
-        foreach ($queryTokens as $token) {
-            $sets[] = $this->index->searchPrefix($token, self::PREFIX_CAP);
-        }
-        if ([] === $sets) {
-            return [];
-        }
-
-        // Preserve the discovery order of the first set, then intersect.
-        $primary = array_shift($sets);
-        foreach ($sets as $set) {
-            $lookup = array_flip($set);
-            $primary = array_values(array_filter($primary, static fn (int $id): bool => isset($lookup[$id])));
-        }
-
-        return array_values(array_unique($primary));
-    }
-
-    /**
-     * TIER 2: bounded Levenshtein over the vocabulary sharing the last token's
-     * first folded letter. Accepts candidates within a length-scaled distance,
-     * sorts by closeness, and resolves the best tokens to object ids.
-     *
-     * @return array<int, int>
-     */
-    private function fuzzyTier(string $lastToken): array
-    {
-        $vocab = $this->index->vocabularyForPrefix(mb_substr($lastToken, 0, 1, 'UTF-8'), self::VOCAB_CAP);
-        if ([] === $vocab) {
-            return [];
-        }
-
-        $maxDistance = mb_strlen($lastToken, 'UTF-8') <= 4 ? 1 : 2;
-
-        $accepted = [];
-        foreach ($vocab as $candidate) {
-            $distance = levenshtein($lastToken, $candidate);
-            if ($distance <= $maxDistance) {
-                $accepted[$candidate] = $distance;
-            }
-        }
-        if ([] === $accepted) {
-            return [];
-        }
-
-        asort($accepted);
-        $tokens = array_slice(array_keys($accepted), 0, self::FUZZY_TOKEN_CAP);
-
-        return $this->index->objectsForValues('_search', $tokens);
     }
 
     /**
@@ -185,25 +120,6 @@ final class SuggestService
             }
         }
         return $ordered;
-    }
-
-    /**
-     * Append ids not already present, preserving the existing order first.
-     *
-     * @param array<int, int> $base
-     * @param array<int, int> $extra
-     * @return array<int, int>
-     */
-    private function appendUnique(array $base, array $extra): array
-    {
-        $seen = array_flip($base);
-        foreach ($extra as $id) {
-            if (! isset($seen[$id])) {
-                $base[] = $id;
-                $seen[$id] = true;
-            }
-        }
-        return $base;
     }
 
     /**

@@ -26,9 +26,11 @@ final class FilterService
      * @param array<int, Facet> $facets   Configured facets.
      * @param array<string, string> $filters Raw filter values keyed by facet slug.
      * @param string|null $exclude         Slug to ignore (for dependent counts).
+     * @param array<int, int>|null $searchIds Resolved search ids: null = search
+     *        inactive (no constraint), [] = search matched nothing, int[] = ids.
      * @return array<int, int>|null        Matching IDs, or null when unrestricted.
      */
-    public function resolve(array $facets, array $filters, ?string $exclude = null): ?array
+    public function resolve(array $facets, array $filters, ?string $exclude = null, ?array $searchIds = null): ?array
     {
         $sets = [];
 
@@ -48,15 +50,25 @@ final class FilterService
         }
 
         if (empty($sets)) {
-            return null;
+            $result = null;
+        } else {
+            $result = array_shift($sets);
+            foreach ($sets as $set) {
+                $result = array_values(array_intersect($result, $set));
+                if (empty($result)) {
+                    $result = [];
+                    break;
+                }
+            }
         }
 
-        $result = array_shift($sets);
-        foreach ($sets as $set) {
-            $result = array_values(array_intersect($result, $set));
-            if (empty($result)) {
-                return [];
-            }
+        // Search arrives as already-resolved ids (not as a facet). Intersect it
+        // into the facet result so the grid and dependent counts apply it
+        // identically. null => search inactive; [] => constrain to nothing.
+        if (null !== $searchIds) {
+            $result = (null === $result)
+                ? $searchIds
+                : array_values(array_intersect($result, $searchIds));
         }
 
         return $result;

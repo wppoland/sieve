@@ -536,3 +536,114 @@
 		transition: none;
 	}
 }
+
+/* ---- In-grid search combobox ----
+   A thin keyboard/a11y assist anchored under the input. Absolutely positioned so
+   it never reserves layout space (zero CLS). Class names mirror search.css so the
+   look stays consistent with the standalone predictive search widget. */
+.sieve-search__wrap {
+	position: relative;
+}
+
+.sieve-search__dropdown {
+	position: absolute;
+	top: calc(100% + 0.35rem);
+	left: 0;
+	right: 0;
+	z-index: 40;
+	max-height: 60vh;
+	overflow-y: auto;
+	background: #fff;
+	border: 1px solid var(--sieve-border);
+	border-radius: 6px;
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.sieve-search__dropdown .sieve-search__item {
+	display: grid;
+	grid-template-columns: 44px 1fr;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.5rem 0.75rem;
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+	border-bottom: 1px solid var(--sieve-border);
+}
+
+.sieve-search__dropdown .sieve-search__item:last-child {
+	border-bottom: 0;
+}
+
+.sieve-search__dropdown .sieve-search__item.is-active,
+.sieve-search__dropdown .sieve-search__item:hover {
+	background: #f3f4f6;
+}
+
+/* Keyboard-active option: a non-colour cue (inset accent border) on top of the
+   background, so the highlight is not conveyed by colour alone (WCAG 1.4.1 /
+   1.4.11) and stays distinct from hover. */
+.sieve-search__dropdown .sieve-search__item.is-active {
+	box-shadow: inset 3px 0 0 var(--sieve-accent);
+	font-weight: 600;
+}
+
+@media (forced-colors: active) {
+	.sieve-search__dropdown .sieve-search__item.is-active {
+		outline: 2px solid Highlight;
+		outline-offset: -2px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sieve-search__dropdown,
+	.sieve-search__dropdown .sieve-search__item {
+		transition: none;
+	}
+}
+
+.sieve-search__thumb {
+	width: 44px;
+	height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: 0.3rem;
+	background: #f3f4f6;
+}
+
+.sieve-search__thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.sieve-search__meta {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem;
+	min-width: 0;
+}
+
+.sieve-search__name {
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sieve-search__sku,
+.sieve-search__price {
+	font-size: 0.8rem;
+	color: var(--sieve-muted);
+}
+
+.sieve-search__price del {
+	opacity: 0.6;
+}
+
+.sieve-search__empty {
+	padding: 0.75rem;
+	color: var(--sieve-muted);
+}

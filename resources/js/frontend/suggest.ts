@@ -297,7 +297,10 @@ function setup( widget: HTMLElement ): void {
 	input.addEventListener( 'input', schedule );
 
 	input.addEventListener( 'focus', () => {
-		if ( results.innerHTML.trim() !== '' && input.value.trim().length >= minChars ) {
+		if (
+			results.innerHTML.trim() !== '' &&
+			input.value.trim().length >= minChars
+		) {
 			open();
 		}
 	} );

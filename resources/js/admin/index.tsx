@@ -51,7 +51,10 @@ const TYPE_OPTIONS = [
 	{ label: __( 'Dropdown', 'sieve' ), value: 'dropdown' },
 	{ label: __( 'Swatches (color / image)', 'sieve' ), value: 'swatch' },
 	{ label: __( 'Hierarchy (tree)', 'sieve' ), value: 'hierarchy' },
-	{ label: __( 'Autocomplete (searchable options)', 'sieve' ), value: 'autocomplete' },
+	{
+		label: __( 'Autocomplete (searchable options)', 'sieve' ),
+		value: 'autocomplete',
+	},
 	{ label: __( 'A-Z index', 'sieve' ), value: 'az_index' },
 	{ label: __( 'Range slider', 'sieve' ), value: 'range_slider' },
 	{ label: __( 'Search box', 'sieve' ), value: 'search' },
@@ -68,27 +71,33 @@ function App() {
 	const [ newSource, setNewSource ] = useState< string >( '' );
 	const [ saving, setSaving ] = useState( false );
 	const [ reindexing, setReindexing ] = useState( false );
-	const [ notice, setNotice ] = useState< { type: string; text: string } | null >( null );
+	const [ notice, setNotice ] = useState< {
+		type: string;
+		text: string;
+	} | null >( null );
 
 	useEffect( () => {
-		apiFetch< Settings >( { path: 'sieve/v1/settings' } ).then( setSettings );
-		apiFetch< { sources: Source[]; indexed_rows: number } >( { path: 'sieve/v1/catalog' } ).then(
-			( data ) => {
-				setSources( data.sources );
-				setIndexedRows( data.indexed_rows );
-			}
+		apiFetch< Settings >( { path: 'sieve/v1/settings' } ).then(
+			setSettings
 		);
+		apiFetch< { sources: Source[]; indexed_rows: number } >( {
+			path: 'sieve/v1/catalog',
+		} ).then( ( data ) => {
+			setSources( data.sources );
+			setIndexedRows( data.indexed_rows );
+		} );
 	}, [] );
 
 	if ( ! settings ) {
 		return (
 			<div style={ { padding: '2rem' } }>
-				<Spinner /> { __( 'Loading Sieve...', 'sieve' ) }
+				<Spinner /> { __( 'Loading Sieve…', 'sieve' ) }
 			</div>
 		);
 	}
 
-	const update = ( patch: Partial< Settings > ) => setSettings( { ...settings, ...patch } );
+	const update = ( patch: Partial< Settings > ) =>
+		setSettings( { ...settings, ...patch } );
 
 	const updateFacet = ( index: number, patch: Partial< Facet > ) => {
 		const facets = settings.facets.map( ( facet, i ) =>
@@ -103,7 +112,10 @@ function App() {
 			return;
 		}
 		const facets = [ ...settings.facets ];
-		[ facets[ index ], facets[ target ] ] = [ facets[ target ], facets[ index ] ];
+		[ facets[ index ], facets[ target ] ] = [
+			facets[ target ],
+			facets[ index ],
+		];
 		update( { facets } );
 	};
 
@@ -120,13 +132,21 @@ function App() {
 		}
 		const slug = slugFromSource( source.source );
 		if ( settings.facets.some( ( f ) => f.slug === slug ) ) {
-			setNotice( { type: 'warning', text: __( 'That facet is already added.', 'sieve' ) } );
+			setNotice( {
+				type: 'warning',
+				text: __( 'That facet is already added.', 'sieve' ),
+			} );
 			return;
 		}
 		update( {
 			facets: [
 				...settings.facets,
-				{ slug, label: source.label, type: source.suggested_type, source: source.source },
+				{
+					slug,
+					label: source.label,
+					type: source.suggested_type,
+					source: source.source,
+				},
 			],
 		} );
 		setNewSource( '' );
@@ -141,7 +161,10 @@ function App() {
 		} )
 			.then( ( saved ) => {
 				setSettings( saved );
-				setNotice( { type: 'success', text: __( 'Settings saved.', 'sieve' ) } );
+				setNotice( {
+					type: 'success',
+					text: __( 'Settings saved.', 'sieve' ),
+				} );
 			} )
 			.finally( () => setSaving( false ) );
 	};
@@ -156,26 +179,39 @@ function App() {
 				setIndexedRows( data.indexed_rows );
 				setNotice( {
 					type: 'success',
-					text: __( 'Re-indexed ', 'sieve' ) + data.indexed_products + __( ' products.', 'sieve' ),
+					text:
+						__( 'Re-indexed', 'sieve' ) +
+						data.indexed_products +
+						__( 'products.', 'sieve' ),
 				} );
 			} )
 			.finally( () => setReindexing( false ) );
 	};
 
 	const availableSources = sources.filter(
-		( s ) => ! settings.facets.some( ( f ) => f.slug === slugFromSource( s.source ) )
+		( s ) =>
+			! settings.facets.some(
+				( f ) => f.slug === slugFromSource( s.source )
+			)
 	);
 
 	return (
 		<div style={ { maxWidth: 880, margin: '1rem 0' } }>
 			<h1>{ __( 'Sieve', 'sieve' ) }</h1>
 			<p>
-				{ __( 'Place the filter anywhere with the shortcode', 'sieve' ) }{ ' ' }
-				<code>[sieve]</code> { __( 'or the "Sieve Filter" block.', 'sieve' ) }
+				{ __(
+					'Place the filter anywhere with the shortcode',
+					'sieve'
+				) }{ ' ' }
+				<code>[sieve]</code>{ ' ' }
+				{ __( 'or the "Sieve Filter" block.', 'sieve' ) }
 			</p>
 
 			{ notice && (
-				<Notice status={ notice.type } onRemove={ () => setNotice( null ) }>
+				<Notice
+					status={ notice.type }
+					onRemove={ () => setNotice( null ) }
+				>
 					{ notice.text }
 				</Notice>
 			) }
@@ -187,11 +223,16 @@ function App() {
 				<CardBody>
 					<Flex align="center">
 						<FlexBlock>
-							{ __( 'Indexed rows: ', 'sieve' ) }
+							{ __( 'Indexed rows:', 'sieve' ) }
 							<strong>{ indexedRows }</strong>
 						</FlexBlock>
 						<FlexItem>
-							<Button variant="secondary" onClick={ reindex } isBusy={ reindexing } disabled={ reindexing }>
+							<Button
+								variant="secondary"
+								onClick={ reindex }
+								isBusy={ reindexing }
+								disabled={ reindexing }
+							>
 								{ __( 'Rebuild index', 'sieve' ) }
 							</Button>
 						</FlexItem>
@@ -200,14 +241,21 @@ function App() {
 			</Card>
 
 			<Panel>
-				<PanelBody title={ __( 'Layout', 'sieve' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Layout', 'sieve' ) }
+					initialOpen={ true }
+				>
 					<Flex>
 						<FlexItem>
 							<NumberControl
 								label={ __( 'Products per page', 'sieve' ) }
 								value={ settings.per_page }
 								min={ 1 }
-								onChange={ ( v?: string ) => update( { per_page: parseInt( v || '12', 10 ) } ) }
+								onChange={ ( v?: string ) =>
+									update( {
+										per_page: parseInt( v || '12', 10 ),
+									} )
+								}
 							/>
 						</FlexItem>
 						<FlexItem>
@@ -216,7 +264,11 @@ function App() {
 								value={ settings.columns }
 								min={ 1 }
 								max={ 6 }
-								onChange={ ( v?: string ) => update( { columns: parseInt( v || '3', 10 ) } ) }
+								onChange={ ( v?: string ) =>
+									update( {
+										columns: parseInt( v || '3', 10 ),
+									} )
+								}
 							/>
 						</FlexItem>
 					</Flex>
@@ -225,14 +277,20 @@ function App() {
 
 			<h2>{ __( 'Facets', 'sieve' ) }</h2>
 			{ settings.facets.map( ( facet, index ) => (
-				<Card key={ facet.slug } size="small" style={ { marginBottom: '0.75rem' } }>
+				<Card
+					key={ facet.slug }
+					size="small"
+					style={ { marginBottom: '0.75rem' } }
+				>
 					<CardBody>
 						<Flex align="flex-end" gap={ 3 }>
 							<FlexBlock>
 								<TextControl
 									label={ __( 'Label', 'sieve' ) }
 									value={ facet.label }
-									onChange={ ( label: string ) => updateFacet( index, { label } ) }
+									onChange={ ( label: string ) =>
+										updateFacet( index, { label } )
+									}
 								/>
 							</FlexBlock>
 							<FlexBlock>
@@ -240,16 +298,31 @@ function App() {
 									label={ __( 'Type', 'sieve' ) }
 									value={ facet.type }
 									options={ TYPE_OPTIONS }
-									onChange={ ( type: string ) => updateFacet( index, { type } ) }
+									onChange={ ( type: string ) =>
+										updateFacet( index, { type } )
+									}
 								/>
 							</FlexBlock>
 							<FlexItem>
 								<code>{ facet.source }</code>
 							</FlexItem>
 							<FlexItem>
-								<Button icon="arrow-up-alt2" label={ __( 'Move up', 'sieve' ) } onClick={ () => move( index, -1 ) } />
-								<Button icon="arrow-down-alt2" label={ __( 'Move down', 'sieve' ) } onClick={ () => move( index, 1 ) } />
-								<Button icon="trash" isDestructive label={ __( 'Remove', 'sieve' ) } onClick={ () => remove( index ) } />
+								<Button
+									icon="arrow-up-alt2"
+									label={ __( 'Move up', 'sieve' ) }
+									onClick={ () => move( index, -1 ) }
+								/>
+								<Button
+									icon="arrow-down-alt2"
+									label={ __( 'Move down', 'sieve' ) }
+									onClick={ () => move( index, 1 ) }
+								/>
+								<Button
+									icon="trash"
+									isDestructive
+									label={ __( 'Remove', 'sieve' ) }
+									onClick={ () => remove( index ) }
+								/>
 							</FlexItem>
 						</Flex>
 					</CardBody>
@@ -262,21 +335,36 @@ function App() {
 						label={ __( 'Add a facet', 'sieve' ) }
 						value={ newSource }
 						options={ [
-							{ label: __( 'Select a source...', 'sieve' ), value: '' },
-							...availableSources.map( ( s ) => ( { label: s.label, value: s.source } ) ),
+							{
+								label: __( 'Select a source…', 'sieve' ),
+								value: '',
+							},
+							...availableSources.map( ( s ) => ( {
+								label: s.label,
+								value: s.source,
+							} ) ),
 						] }
 						onChange={ setNewSource }
 					/>
 				</FlexBlock>
 				<FlexItem>
-					<Button variant="secondary" onClick={ addFacet } disabled={ ! newSource }>
+					<Button
+						variant="secondary"
+						onClick={ addFacet }
+						disabled={ ! newSource }
+					>
 						{ __( 'Add', 'sieve' ) }
 					</Button>
 				</FlexItem>
 			</Flex>
 
 			<div style={ { marginTop: '1.5rem' } }>
-				<Button variant="primary" onClick={ save } isBusy={ saving } disabled={ saving }>
+				<Button
+					variant="primary"
+					onClick={ save }
+					isBusy={ saving }
+					disabled={ saving }
+				>
 					{ __( 'Save settings', 'sieve' ) }
 				</Button>
 			</div>

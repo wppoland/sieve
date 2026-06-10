@@ -262,12 +262,26 @@ final class FacetRenderer
     private function renderSearch(Facet $facet, array $selected): string
     {
         $current = $selected[0] ?? '';
+        // Stable per-request id so the listbox can be associated with the input.
+        $listId = 'sieve-grid-suggest-' . wp_unique_id();
+
+        // The combobox ARIA is rendered server-side but inert without JS; the
+        // frontend script (setupSearchCombobox) takes over. name="sf_q" keeps the
+        // no-JS GET-form fallback working on the shop archive.
         return sprintf(
-            '<input type="search" class="sieve-search" name="%1$s" value="%2$s" placeholder="%3$s" aria-label="%4$s">',
+            '<div class="sieve-search__wrap" data-sieve-search>'
+                . '<input type="search" class="sieve-search" name="%1$s" value="%2$s" placeholder="%3$s" aria-label="%4$s"'
+                . ' autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list"'
+                . ' aria-controls="%5$s" aria-haspopup="listbox">'
+                . '<div id="%5$s" class="sieve-search__dropdown" role="listbox" aria-label="%6$s" hidden></div>'
+                . '<span class="screen-reader-text" role="status" aria-live="polite" data-sieve-search-status></span>'
+                . '</div>',
             esc_attr(UrlService::PREFIX . 'q'),
             esc_attr($current),
             esc_attr__('Search products', 'sieve'),
             esc_attr($facet->label),
+            esc_attr($listId),
+            esc_attr__('Product suggestions', 'sieve'),
         );
     }
 

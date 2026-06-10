@@ -26,7 +26,8 @@ registerBlockType( metadata.name, {
 					createElement( TextControl, {
 						label: __( 'Placeholder', 'sieve' ),
 						value: attributes.placeholder,
-						onChange: ( placeholder ) => setAttributes( { placeholder } ),
+						onChange: ( placeholder ) =>
+							setAttributes( { placeholder } ),
 					} ),
 					createElement( ToggleControl, {
 						label: __( 'Show submit button', 'sieve' ),
@@ -45,7 +46,8 @@ registerBlockType( metadata.name, {
 						value: attributes.min_chars,
 						min: 1,
 						max: 10,
-						onChange: ( min_chars ) => setAttributes( { min_chars } ),
+						onChange: ( min_chars ) =>
+							setAttributes( { min_chars } ),
 					} ),
 					createElement( ToggleControl, {
 						label: __( 'In-stock products only', 'sieve' ),

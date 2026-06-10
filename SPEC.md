@@ -42,6 +42,12 @@ Incumbents' real weakness is setup friction, query/index reliability, accessibil
 - Gutenberg block + shortcode for placement.
 - Gates: phpcs (WPCS) + phpstan + Plugin Check green; Playwright e2e (build facet, filter, mobile); CWV smoke (no CLS on filter, INP budget).
 
+## Search-as-filter (0.7.0)
+- Shared `SearchResolver` (`src/Service/SearchResolver.php`) is the single folded prefix+fuzzy term->id path consumed by both the predictive dropdown (`SuggestService`) and the live grid (`FilterService`/`FilterEngine`), so the dropdown and the grid can never disagree. Contract: `null` = search inactive, `[]` = matched nothing, `int[]` = ids (capped to `RESOLVE_CAP = 2000`, filterable via `sieve_search_resolve_cap`).
+- Grid search is INDEX-ONLY (title + SKU folded tokens): `FilterEngine::run()` resolves the term once and threads the ids into `FilterService::resolve(..., $searchIds)` (results) and `FacetCountService::countsFor(..., $searchIds)` (search-aware dependent counts). No native `'s'` in the grid. The standalone `[sieve_search]` dropdown keeps its WooCommerce `s`/`sku` fallback when unscoped.
+- `GET /sieve/v1/suggest` gains an optional `scope` (serialized other-facet query) so in-grid suggestions are constrained to the active grid; scoped searches skip categories and the WC fallback.
+- `FacetRenderer::renderSearch()` emits an ARIA combobox; `filter.ts` upgrades it in place (debounced suggestions, keyboard nav, live count) and re-filters the grid on pick (never navigates). `run()` has an AbortController + requestId race guard so fast typing never renders a stale grid.
+
 ## Roadmap
 - FREE (post-MVP): hierarchy/tree, color + image swatches, range-list buckets, A-Z, autocomplete; ACF/Meta Box/Pods/SCF auto-discovery; Elementor/Bricks/FSE query-loop bindings; multilingual (WPML/Polylang/TranslatePress) interop.
 - PRO: proximity/map facets; advanced templating/listing builder; conditional/dependent facet rules UI; A/B layout testing; performance dashboard + reindex controls; SearchWP/AWS interop; priority support.

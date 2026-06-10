@@ -24,6 +24,7 @@ use Sieve\Service\FilterService;
 use Sieve\Service\ProductIndexer;
 use Sieve\Service\ResultsRenderer;
 use Sieve\Service\SearchRenderer;
+use Sieve\Service\SearchResolver;
 use Sieve\Service\Settings;
 use Sieve\Service\SuggestService;
 use Sieve\Service\UrlService;
@@ -46,8 +47,14 @@ return static function (Container $c): void {
     $c->singleton(FacetRenderer::class, static fn (): FacetRenderer => new FacetRenderer());
     $c->singleton(ResultsRenderer::class, static fn (): ResultsRenderer => new ResultsRenderer());
     $c->singleton(
+        SearchResolver::class,
+        static fn (): SearchResolver => new SearchResolver($c->get(IndexRepository::class)),
+    );
+    $c->singleton(
         SuggestService::class,
-        static fn (): SuggestService => new SuggestService($c->get(IndexRepository::class)),
+        static fn (): SuggestService => new SuggestService(
+            $c->get(SearchResolver::class),
+        ),
     );
     $c->singleton(SearchRenderer::class, static fn (): SearchRenderer => new SearchRenderer());
 
@@ -74,6 +81,7 @@ return static function (Container $c): void {
             $c->get(FacetCountService::class),
             $c->get(FacetRenderer::class),
             $c->get(ResultsRenderer::class),
+            $c->get(SearchResolver::class),
         ),
     );
 
@@ -98,6 +106,8 @@ return static function (Container $c): void {
         SuggestController::class,
         static fn (): SuggestController => new SuggestController(
             $c->get(SuggestService::class),
+            $c->get(FilterService::class),
+            $c->get(Settings::class),
         ),
     );
 
