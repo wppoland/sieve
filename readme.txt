@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.8.0
+Stable tag: 0.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,9 @@ Use the `[sieve_search]` shortcode or the "Sieve Search" block. As shoppers type
 3. The facet builder: add, reorder and retype facets, set the layout, and rebuild the index.
 
 == Changelog ==
+
+= 0.8.1 =
+* Internationalisation: the admin and front-end JavaScript interface strings are now included in the translation template, so the whole plugin (not just the PHP side) can be fully translated.
 
 = 0.8.0 =
 * New: Appearance settings. Choose a style preset (Default, Minimal, Bordered, Soft, Unstyled) and customise the accent, border, muted-text and background colours from the admin, with a live preview and a contrast hint. Applies to both the filter and the predictive search. Zero extra requests, no layout shift, fully backward compatible.
