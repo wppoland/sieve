@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-10T10:06:15+00:00\n"
+"POT-Creation-Date: 2026-06-11T09:44:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sieve\n"
@@ -56,34 +56,42 @@ msgid "Sieve requires WooCommerce %1$s or higher. You are running WooCommerce %2
 msgstr ""
 
 #: src/Enum/FacetType.php:56
+#: build/admin.js:1
 msgid "Checkboxes"
 msgstr ""
 
 #: src/Enum/FacetType.php:57
+#: build/admin.js:1
 msgid "Radio"
 msgstr ""
 
 #: src/Enum/FacetType.php:58
+#: build/admin.js:1
 msgid "Dropdown"
 msgstr ""
 
 #: src/Enum/FacetType.php:59
+#: build/admin.js:1
 msgid "Swatches (color / image)"
 msgstr ""
 
 #: src/Enum/FacetType.php:60
+#: build/admin.js:1
 msgid "Hierarchy (tree)"
 msgstr ""
 
 #: src/Enum/FacetType.php:61
+#: build/admin.js:1
 msgid "Autocomplete (searchable options)"
 msgstr ""
 
 #: src/Enum/FacetType.php:62
+#: build/admin.js:1
 msgid "A-Z index"
 msgstr ""
 
 #: src/Enum/FacetType.php:63
+#: build/admin.js:1
 msgid "Range slider"
 msgstr ""
 
@@ -110,6 +118,7 @@ msgstr ""
 
 #: src/Hook/AdminHooks.php:31
 #: src/Hook/AdminHooks.php:32
+#: build/admin.js:1
 msgid "Sieve"
 msgstr ""
 
@@ -214,6 +223,7 @@ msgid "Average rating"
 msgstr ""
 
 #: src/Service/FacetCatalog.php:43
+#: build/admin.js:1
 msgid "Search box"
 msgstr ""
 
@@ -258,6 +268,7 @@ msgstr ""
 #: src/Service/FacetRenderer.php:281
 #: src/Service/SearchRenderer.php:101
 #: src/Service/SearchRenderer.php:102
+#: build/admin.js:1
 msgid "Search products"
 msgstr ""
 
@@ -326,6 +337,7 @@ msgid "Product search results"
 msgstr ""
 
 #: src/Service/Settings.php:93
+#: build/admin.js:1
 msgid "Category"
 msgstr ""
 
@@ -333,82 +345,267 @@ msgstr ""
 msgid "Availability"
 msgstr ""
 
+#: build/admin.js:1
+msgid "Default"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Minimal"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Bordered"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Soft"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Unstyled"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Accent"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Border"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Muted text"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Background"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Appearance"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Style preset"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Unstyled mode ships no plugin CSS. Your theme styles everything through the semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-search, …). Keyboard focus and high-contrast cues are still emitted."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Low contrast: the active/selected state uses white text on the accent colour and may be hard to read."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Muted text may be hard to read against the chosen background colour."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Reset to defaults"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Preview"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Accessories"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Loading Sieve…"
+msgstr ""
+
+#: build/admin.js:1
+msgid "That facet is already added."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Settings saved."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Re-indexed"
+msgstr ""
+
+#: build/admin.js:1
+msgid "products."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Place the filter anywhere with the shortcode"
+msgstr ""
+
+#: build/admin.js:1
+msgid "or the \"Sieve Filter\" block."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Index"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Indexed rows:"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Rebuild index"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Layout"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Products per page"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Columns"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Facets"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Label"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Type"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Move up"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Move down"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Remove"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Add a facet"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Select a source…"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Add"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Save settings"
+msgstr ""
+
+#: build/blocks/search/index.js:183
 #: resources/js/blocks/search/index.js:25
+#: build/blocks/search/index.js:86
 msgid "Search settings"
 msgstr ""
 
+#: build/blocks/search/index.js:185
 #: resources/js/blocks/search/index.js:27
+#: build/blocks/search/index.js:88
 msgid "Placeholder"
 msgstr ""
 
+#: build/blocks/search/index.js:191
 #: resources/js/blocks/search/index.js:33
+#: build/blocks/search/index.js:94
 msgid "Show submit button"
 msgstr ""
 
+#: build/blocks/search/index.js:197
 #: resources/js/blocks/search/index.js:38
+#: build/blocks/search/index.js:99
 msgid "Max results"
 msgstr ""
 
+#: build/blocks/search/index.js:205
 #: resources/js/blocks/search/index.js:45
+#: build/blocks/search/index.js:106
 msgid "Minimum characters"
 msgstr ""
 
+#: build/blocks/search/index.js:213
 #: resources/js/blocks/search/index.js:53
+#: build/blocks/search/index.js:114
 msgid "In-stock products only"
 msgstr ""
 
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block title"
 msgid "Sieve Filter"
 msgstr ""
 
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block description"
 msgid "Fast, accessible faceted product filtering with a results grid."
 msgstr ""
 
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block keyword"
 msgid "filter"
 msgstr ""
 
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block keyword"
 msgid "facet"
 msgstr ""
 
+#: build/blocks/filter/block.json
+#: build/blocks/search/block.json
 #: resources/js/blocks/filter/block.json
 #: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "woocommerce"
 msgstr ""
 
+#: build/blocks/filter/block.json
+#: build/blocks/search/block.json
 #: resources/js/blocks/filter/block.json
 #: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "search"
 msgstr ""
 
+#: build/blocks/search/block.json
 #: resources/js/blocks/search/block.json
 msgctxt "block title"
 msgid "Sieve Search"
 msgstr ""
 
+#: build/blocks/search/block.json
 #: resources/js/blocks/search/block.json
 msgctxt "block description"
 msgid "Predictive product search with an instant, accessible typeahead dropdown."
 msgstr ""
 
+#: build/blocks/search/block.json
 #: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "typeahead"
 msgstr ""
 
+#: build/blocks/search/block.json
 #: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "autocomplete"
 msgstr ""
 
+#: build/blocks/search/block.json
 #: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "product"

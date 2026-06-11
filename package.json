@@ -1,6 +1,6 @@
 {
   "name": "@wppoland/sieve",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Sieve - fast, accessible faceted filtering for WooCommerce and WordPress",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "env:stop": "wp-env stop",
     "env:clean": "wp-env clean all",
     "check:wporg": "bash scripts/plugin-check.sh",
-    "i18n:pot": "wp i18n make-pot . languages/sieve.pot --exclude=node_modules,vendor,build,tests --domain=sieve"
+    "i18n:pot": "npm run build && wp i18n make-pot . languages/sieve.pot --exclude=node_modules,vendor,tests --domain=sieve"
   },
   "devDependencies": {
     "@playwright/test": "^1.48",
