@@ -1,10 +1,10 @@
 === Sieve - Faceted Filter for WooCommerce ===
-Contributors: wppoland
+Contributors: motylanogha
 Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +48,19 @@ Use the `[sieve]` shortcode or the "Sieve Filter" block. Both render the facets,
 2. Mobile filter drawer with a sticky "Show results" bar.
 3. The facet builder: add, reorder and retype facets, set the layout, and rebuild the index.
 
+== Development ==
+
+The full, human-readable source for the compiled assets is included in this plugin under `resources/`, alongside the build tooling (`package.json`, `scripts/build-wp.mjs`). The compiled files under `build/` are generated from those sources. To rebuild them:
+
+1. `npm install`
+2. `npm run build`
+
+This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at https://github.com/wppoland/sieve.
+
 == Changelog ==
+
+= 0.1.1 =
+* Compliance: added the plugin owner to the Contributors list and included the human-readable sources and build steps for the compiled assets (WordPress.org plugin guidelines).
 
 = 0.1.0 =
 * Initial MVP release: pre-built index, AJAX filtering with URL state, dependent facet counts, checkboxes / radio / dropdown / range / search facets, sorting, active-filter chips, pagination, mobile filter drawer, React facet builder, `[sieve]` shortcode and "Sieve Filter" block.
