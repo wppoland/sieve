@@ -1,0 +1,15 @@
+name: Release
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+
+jobs:
+  release:
+    uses: wppoland/workflows/.github/workflows/_release-free.yml@v1
+    with:
+      slug: sieve
+      wporg-slug: sieve
+      has-js: true
+    secrets: inherit
