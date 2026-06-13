@@ -12,4 +12,6 @@ jobs:
       slug: sieve
       wporg-slug: sieve
       has-js: true
-    secrets: inherit
+    secrets:
+      WPORG_SVN_USERNAME: ${{ secrets.WPORG_SVN_USERNAME }}
+      WPORG_SVN_PASSWORD: ${{ secrets.WPORG_SVN_PASSWORD }}
