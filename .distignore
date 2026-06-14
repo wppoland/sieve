@@ -1,3 +1,6 @@
+# Files excluded from the wp.org build. NOTE: /vendor is intentionally NOT
+# ignored — after `composer install --no-dev` it holds only runtime deps
+# (wppoland/storefront-kit + the Composer autoloader), which MUST ship.
 /.git
 /.github
 /.gitignore
@@ -5,8 +8,6 @@
 /.wp-env.json
 /.wp-env.override.json
 /node_modules
-/vendor
-/resources
 /tests
 /scripts
 /docs

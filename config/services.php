@@ -29,6 +29,7 @@ use Sieve\Service\SearchResolver;
 use Sieve\Service\Settings;
 use Sieve\Service\SuggestService;
 use Sieve\Service\UrlService;
+use WPPoland\StorefrontKit\Filter\FacetFilterResolver;
 use Sieve\Shortcode\FilterShortcode;
 use Sieve\Shortcode\SearchShortcode;
 
@@ -40,6 +41,11 @@ return static function (Container $c): void {
     // Infrastructure.
     $c->singleton(Migrator::class, static fn (): Migrator => new Migrator());
     $c->singleton(IndexRepository::class, static fn (): IndexRepository => new IndexRepository());
+
+    $c->singleton(
+        FacetFilterResolver::class,
+        static fn (): FacetFilterResolver => new FacetFilterResolver(),
+    );
 
     // Domain services.
     $c->singleton(AppearanceService::class, static fn (): AppearanceService => new AppearanceService());
@@ -75,7 +81,10 @@ return static function (Container $c): void {
     );
     $c->singleton(
         FilterService::class,
-        static fn (): FilterService => new FilterService($c->get(IndexRepository::class)),
+        static fn (): FilterService => new FilterService(
+            $c->get(IndexRepository::class),
+            $c->get(FacetFilterResolver::class),
+        ),
     );
     $c->singleton(
         FacetCountService::class,
