@@ -6,6 +6,8 @@ namespace Sieve\Repository;
 
 defined('ABSPATH') || exit;
 
+use WPPoland\StorefrontKit\Filter\FacetFilterRepository;
+
 /**
  * Read/write access to the Sieve index table (wp_sieve_index). Filtered queries
  * resolve matching object IDs from this pre-built index rather than running live
@@ -14,7 +16,7 @@ defined('ABSPATH') || exit;
  *
  * Row shape: object_id, facet_slug (index key), value (string), value_num (float).
  */
-final class IndexRepository
+final class IndexRepository implements FacetFilterRepository
 {
     private string $table;
 

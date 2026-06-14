@@ -3,8 +3,22 @@
     "description": "Sieve - fast, accessible faceted filtering for WooCommerce and WordPress.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../storefront-kit",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/wppoland/storefront-kit"
+        }
+    ],
     "require": {
-        "php": ">=8.1"
+        "php": ">=8.1",
+        "wppoland/storefront-kit": "dev-main"
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "^3.0",
@@ -29,5 +43,7 @@
         },
         "optimize-autoloader": true,
         "sort-packages": true
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
