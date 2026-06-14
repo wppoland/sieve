@@ -82,7 +82,7 @@ final class ResultsRenderer
             woocommerce_product_loop_end();
             do_action('woocommerce_after_shop_loop');
         } else {
-            wc_get_template('loop/no-products-found.php');
+            echo $this->emptyState(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from esc_html__ below.
         }
 
         $wp_query = $original; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -125,6 +125,26 @@ final class ResultsRenderer
                 $args['orderby'] = 'menu_order title';
                 $args['order'] = 'ASC';
         }
+    }
+
+    /**
+     * Friendly, on-brand empty state with a clear-filters call to action. The CTA
+     * carries data-sieve-reset, so the existing frontend handler clears every
+     * facet and re-runs the query; without JS it is simply an inert button and
+     * the helpful copy still guides the shopper.
+     */
+    private function emptyState(): string
+    {
+        return sprintf(
+            '<div class="sieve-state" data-sieve-empty>'
+                . '<p class="sieve-state__title">%1$s</p>'
+                . '<p class="sieve-state__text">%2$s</p>'
+                . '<button type="button" class="sieve-state__cta" data-sieve-reset>%3$s</button>'
+                . '</div>',
+            esc_html__('No products match these filters', 'sieve'),
+            esc_html__('Try removing a filter or widening your price range to see more products.', 'sieve'),
+            esc_html__('Clear all filters', 'sieve'),
+        );
     }
 
     private function countText(int $found): string
