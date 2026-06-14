@@ -1,23 +1,39 @@
 <?php
 
+/**
+ * Autoloading: prefer Composer's vendor autoloader (ships the storefront-kit and
+ * the optimized classmap). Fall back to a minimal PSR-4 autoloader so the plugin
+ * still boots if vendor/ is somehow absent.
+ *
+ * @package Sieve
+ */
+
 declare(strict_types=1);
 
 defined('ABSPATH') || exit;
 
-/**
- * PSR-4 style autoloader for the Sieve\ namespace, mapped to src/.
- */
+$sieve_composer = __DIR__ . '/vendor/autoload.php';
+if (is_readable($sieve_composer)) {
+    require_once $sieve_composer;
+    return;
+}
+
 spl_autoload_register(static function (string $class): void {
-    $prefix = 'Sieve\\';
+    $prefixes = [
+        'Sieve\\'                    => __DIR__ . '/src/',
+        'WPPoland\\StorefrontKit\\' => __DIR__ . '/vendor/wppoland/storefront-kit/src/',
+    ];
 
-    if (strncmp($class, $prefix, strlen($prefix)) !== 0) {
+    foreach ($prefixes as $prefix => $baseDir) {
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            continue;
+        }
+        $relative = substr($class, $len);
+        $file     = $baseDir . str_replace('\\', '/', $relative) . '.php';
+        if (is_readable($file)) {
+            require_once $file;
+        }
         return;
-    }
-
-    $relativeClass = substr($class, strlen($prefix));
-    $file = __DIR__ . '/src/' . str_replace('\\', '/', $relativeClass) . '.php';
-
-    if (file_exists($file)) {
-        require_once $file;
     }
 });

@@ -7,14 +7,20 @@ namespace Sieve\Service;
 defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
+use WPPoland\StorefrontKit\Filter\FacetFilterEngine;
 
 /**
  * The single source of truth for a filter render. Both the initial server-side
  * render (shortcode / block) and the AJAX endpoint call run(), so the markup is
  * identical and the frontend can swap fragments in place with zero layout shift.
+ *
+ * Orchestration delegates to the storefront-kit {@see FacetFilterEngine} when
+ * present; Sieve keeps templates, settings and index access local.
  */
 final class FilterEngine
 {
+    private ?FacetFilterEngine $kitEngine = null;
+
     public function __construct(
         private readonly Settings $settings,
         private readonly FilterService $filter,
@@ -31,6 +37,21 @@ final class FilterEngine
      * @return array{facets_html: string, toolbar_html: string, results_html: string, pagination_html: string, found: int, count_text: string}
      */
     public function run(array $request): array
+    {
+        $kit = $this->kitEngine();
+
+        if ($kit instanceof FacetFilterEngine) {
+            return $kit->run($request);
+        }
+
+        return $this->runLegacy($request);
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     * @return array{facets_html: string, toolbar_html: string, results_html: string, pagination_html: string, found: int, count_text: string}
+     */
+    private function runLegacy(array $request): array
     {
         $config = $this->settings->all();
         $facets = $this->settings->facets();
@@ -65,16 +86,124 @@ final class FilterEngine
     }
 
     /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     * @return array<int, int>|null
+     */
+    public function resolveObjectIds(array $request): ?array
+    {
+        $searchIds = $this->resolver->resolve($request['search']);
+
+        return $this->filter->resolve(
+            $this->settings->facets(),
+            $request['filters'],
+            null,
+            $searchIds,
+        );
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     */
+    public function renderFacetsForRequest(array $request): string
+    {
+        $searchIds = $this->resolver->resolve($request['search']);
+
+        return $this->renderFacets(
+            $this->settings->facets(),
+            $request['filters'],
+            $request['search'],
+            $searchIds,
+        );
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     */
+    public function renderToolbarForRequest(array $request, string $countText): string
+    {
+        return $this->renderToolbar(
+            $this->settings->facets(),
+            $request['filters'],
+            $request,
+            $countText,
+        );
+    }
+
+    /**
+     * @param array<int, int>|null $objectIds
+     * @return array{html: string, count_text: string, found: int, max_pages: int}
+     */
+    public function renderResultsForRequest(?array $objectIds, string $orderby, int $paged, int $perPage): array
+    {
+        $config = $this->settings->all();
+
+        return $this->resultsRenderer->render(
+            $objectIds,
+            $orderby,
+            $paged,
+            '',
+            $perPage,
+            (int) $config['columns'],
+        );
+    }
+
+    public function renderPaginationForRequest(int $paged, int $maxPages): string
+    {
+        return $this->renderPagination($paged, $maxPages);
+    }
+
+    public function perPage(): int
+    {
+        $config = $this->settings->all();
+
+        return max(1, (int) $config['per_page']);
+    }
+
+    public function columns(): int
+    {
+        $config = $this->settings->all();
+
+        return max(1, (int) $config['columns']);
+    }
+
+    private function kitEngine(): ?FacetFilterEngine
+    {
+        if (null !== $this->kitEngine) {
+            return $this->kitEngine;
+        }
+
+        $this->kitEngine = SieveFilterAdapter::engineFor($this);
+
+        return $this->kitEngine;
+    }
+
+    /**
      * Full server-rendered widget for the shortcode / block.
      *
      * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
      */
     public function container(array $request): string
     {
-        $parts = $this->run($request);
-        $config = $this->settings->all();
-        $columns = max(1, (int) $config['columns']);
+        $kit = $this->kitEngine();
 
+        if ($kit instanceof FacetFilterEngine) {
+            return $kit->container(
+                $request,
+                fn (array $parts, int $columns): string => $this->wrapContainer($parts, $columns),
+            );
+        }
+
+        $parts = $this->runLegacy($request);
+
+        return $this->wrapContainer($parts, $this->columns());
+    }
+
+    /**
+     * @param array{facets_html: string, toolbar_html: string, results_html: string, pagination_html: string, found: int, count_text: string} $parts
+     */
+    private function wrapContainer(array $parts, int $columns): string
+    {
+        $config = $this->settings->all();
         $preset = $this->appearance->resolveFrom($config)['preset'];
         $styleAttr = 'default' === $preset
             ? ''

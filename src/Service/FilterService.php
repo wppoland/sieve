@@ -8,6 +8,7 @@ defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
 use Sieve\Repository\IndexRepository;
+use WPPoland\StorefrontKit\Filter\FacetFilterResolver;
 
 /**
  * Resolves the set of product IDs that satisfy the active filter selection by
@@ -16,8 +17,10 @@ use Sieve\Repository\IndexRepository;
  */
 final class FilterService
 {
-    public function __construct(private readonly IndexRepository $index)
-    {
+    public function __construct(
+        private readonly IndexRepository $index,
+        private readonly FacetFilterResolver $resolver,
+    ) {
     }
 
     /**
@@ -49,29 +52,7 @@ final class FilterService
                 : $this->index->objectsForValues($facet->indexKey(), $this->splitValues($raw));
         }
 
-        if (empty($sets)) {
-            $result = null;
-        } else {
-            $result = array_shift($sets);
-            foreach ($sets as $set) {
-                $result = array_values(array_intersect($result, $set));
-                if (empty($result)) {
-                    $result = [];
-                    break;
-                }
-            }
-        }
-
-        // Search arrives as already-resolved ids (not as a facet). Intersect it
-        // into the facet result so the grid and dependent counts apply it
-        // identically. null => search inactive; [] => constrain to nothing.
-        if (null !== $searchIds) {
-            $result = (null === $result)
-                ? $searchIds
-                : array_values(array_intersect($result, $searchIds));
-        }
-
-        return $result;
+        return $this->resolver->resolve($sets, $searchIds);
     }
 
     /**
