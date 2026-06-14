@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.8.2
+Stable tag: 0.9.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,12 @@ The compiled assets under `build/` are generated from the sources in `resources/
 This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the linked sources.
 
 == Changelog ==
+
+= 0.9.0 =
+* Polish: a refreshed, more attractive filter UI. Collapsible facet groups, an "Active filters" chip row with clearer remove buttons, a friendly empty state with a one-click "Clear all filters" action, an accessible loading spinner, and a retryable error message if an update fails.
+* Design: themeable CSS custom properties, fluid sizing, automatic dark mode (prefers-color-scheme), and tasteful transitions that respect prefers-reduced-motion. No layout shift when filters apply.
+* Admin: inline help on every setting, including a short description of what each facet type looks like to shoppers.
+* Accessibility: facet groups expose their expanded/collapsed state, result counts announce politely, the pagination and filter regions are labelled, and remove buttons have clear accessible names.
 
 = 0.8.2 =
 * Compliance: documented the public source repository and the build steps for the compiled assets (WordPress.org plugin guidelines).
