@@ -5,20 +5,13 @@
     "license": "GPL-2.0-or-later",
     "repositories": [
         {
-            "type": "path",
-            "url": "../storefront-kit",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
             "type": "vcs",
             "url": "https://github.com/wppoland/storefront-kit"
         }
     ],
     "require": {
         "php": ">=8.1",
-        "wppoland/storefront-kit": "dev-main"
+        "wppoland/storefront-kit": "^1.6"
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "^3.0",
