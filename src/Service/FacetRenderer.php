@@ -38,14 +38,26 @@ final class FacetRenderer
             return '';
         }
 
+        // A collapsible header: a real <button> wrapping the title with an
+        // aria-expanded state and a chevron. Rendered open and inert without JS
+        // (the frontend script wires the toggle), so it degrades gracefully and
+        // never hides options from no-JS or screen-reader-only users.
+        $bodyId = 'sieve-facet-' . $facet->slug . '-' . wp_unique_id();
+
         return sprintf(
             '<div class="sieve-facet sieve-facet--%1$s" data-sieve-facet="%2$s" data-sieve-source="%3$s">'
-                . '<h3 class="sieve-facet__title">%4$s</h3>%5$s</div>',
+                . '<button type="button" class="sieve-facet__toggle" aria-expanded="true" aria-controls="%6$s" data-sieve-facet-toggle>'
+                . '<span class="sieve-facet__title">%4$s</span>'
+                . '<span class="sieve-facet__chevron" aria-hidden="true"></span>'
+                . '</button>'
+                . '<div class="sieve-facet__body" id="%6$s">%5$s</div>'
+                . '</div>',
             esc_attr($facet->type->value),
             esc_attr($facet->slug),
             esc_attr($facet->source),
             esc_html($facet->label),
             $body,
+            esc_attr($bodyId),
         );
     }
 
