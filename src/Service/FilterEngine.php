@@ -14,8 +14,8 @@ use WPPoland\StorefrontKit\Filter\FacetFilterEngine;
  * render (shortcode / block) and the AJAX endpoint call run(), so the markup is
  * identical and the frontend can swap fragments in place with zero layout shift.
  *
- * Orchestration delegates to the storefront-kit {@see FacetFilterEngine} when
- * present; Sieve keeps templates, settings and index access local.
+ * Delegates the filtering work to {@see FacetFilterEngine} when present; Sieve
+ * keeps templates, settings and index access local.
  */
 final class FilterEngine
 {

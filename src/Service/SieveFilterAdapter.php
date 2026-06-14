@@ -9,9 +9,8 @@ defined('ABSPATH') || exit;
 use WPPoland\StorefrontKit\Filter\FacetFilterEngine;
 
 /**
- * Wires the namespace-neutral {@see FacetFilterEngine} with Sieve settings,
- * index resolution and template fragments. Keeps option keys, text domain and
- * markup in this plugin; the kit owns only the orchestration contract.
+ * Wires {@see FacetFilterEngine} with Sieve settings, index resolution and
+ * template fragments. Option keys, text domain and markup stay in this plugin.
  */
 final class SieveFilterAdapter
 {
