@@ -1,5 +1,5 @@
 === Sieve - Faceted Filter for WooCommerce ===
-Contributors: motylanogha
+Contributors: wppoland
 Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
