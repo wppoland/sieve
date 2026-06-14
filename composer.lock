@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79fb127e830e2225de495fdc86aea323",
+    "content-hash": "985dbe21b980c288898b3ceabd0680ea",
     "packages": [
         {
             "name": "wppoland/storefront-kit",
-            "version": "dev-main",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wppoland/storefront-kit.git",
+                "reference": "8ccd53f38cb5e8f8a347183f32c62d2bf351b2c3"
+            },
             "dist": {
-                "type": "path",
-                "url": "../storefront-kit",
-                "reference": "990d486021646d305f4f36ef78cf5f13fd2f23f5"
+                "type": "zip",
+                "url": "https://api.github.com/repos/wppoland/storefront-kit/zipball/8ccd53f38cb5e8f8a347183f32c62d2bf351b2c3",
+                "reference": "8ccd53f38cb5e8f8a347183f32c62d2bf351b2c3",
+                "shasum": ""
             },
             "require": {
                 "php": ">=8.1"
@@ -48,10 +54,11 @@
                 "GPL-2.0-or-later"
             ],
             "description": "Shared storefront engines for WPPoland WooCommerce plugins",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/wppoland/storefront-kit/tree/v1.6.0",
+                "issues": "https://github.com/wppoland/storefront-kit/issues"
+            },
+            "time": "2026-06-14T13:02:27+00:00"
         }
     ],
     "packages-dev": [
@@ -766,9 +773,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "wppoland/storefront-kit": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
