@@ -5,13 +5,34 @@
  */
 
 .sieve-app {
-	--sieve-gap: 1.5rem;
-	--sieve-border: #e2e4e7;
+	/* Canonical, store-themeable tokens (the admin Appearance panel writes these
+	   four; keep their names stable). Everything else is derived from them so a
+	   single accent/border/muted change re-themes the whole widget. */
 	--sieve-accent: #2563eb;
+	--sieve-border: #e2e4e7;
 	--sieve-muted: #6b7280;
+
+	/* Derived surface + text tokens. color-mix gives tasteful tints from the
+	   canonical tokens; the plain fallbacks above keep older browsers correct. */
+	--sieve-surface: #ffffff;
+	--sieve-surface-2: #f3f4f6;
+	--sieve-text: #111827;
+	--sieve-on-accent: #ffffff;
+	--sieve-accent-soft: color-mix(in srgb, var(--sieve-accent) 12%, transparent);
+	--sieve-shadow: 0 1px 2px rgba(17, 24, 39, 0.06), 0 8px 24px rgba(17, 24, 39, 0.08);
+	--sieve-radius: 0.5rem;
+	--sieve-radius-pill: 999px;
+
+	/* Fluid spacing + type, so the widget scales smoothly between phones and
+	   wide screens without per-breakpoint overrides. */
+	--sieve-gap: clamp(1rem, 0.6rem + 1.6vw, 1.75rem);
+	--sieve-fs: clamp(0.85rem, 0.82rem + 0.2vw, 0.95rem);
+	--sieve-ease: cubic-bezier(0.2, 0, 0, 1);
+
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: var(--sieve-gap);
+	color: var(--sieve-text);
 }
 
 @media (min-width: 783px) {
@@ -40,6 +61,48 @@
 	margin: 0 0 0.6rem;
 }
 
+/* Collapsible facet header: a full-width button wrapping the title with a
+   rotating chevron. Progressive enhancement — without JS the body stays open. */
+.sieve-facet__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	width: 100%;
+	margin: 0 0 0.6rem;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	text-align: start;
+}
+
+.sieve-facet__toggle .sieve-facet__title {
+	margin: 0;
+}
+
+.sieve-facet__chevron {
+	flex: 0 0 auto;
+	width: 0.6em;
+	height: 0.6em;
+	border-inline-end: 2px solid currentColor;
+	border-block-end: 2px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform 0.2s var(--sieve-ease);
+	opacity: 0.6;
+}
+
+.sieve-facet__toggle[aria-expanded="false"] .sieve-facet__chevron {
+	transform: rotate(-45deg);
+}
+
+.sieve-facet__body[hidden] {
+	display: none;
+}
+
 .sieve-choices {
 	list-style: none;
 	margin: 0;
@@ -52,9 +115,20 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	padding: 0.2rem 0;
+	padding: 0.25rem 0.4rem;
+	margin-inline: -0.4rem;
+	border-radius: 0.35rem;
 	cursor: pointer;
-	font-size: 0.9rem;
+	font-size: var(--sieve-fs);
+	transition: background-color 0.12s var(--sieve-ease);
+}
+
+.sieve-choice label:hover {
+	background: var(--sieve-surface-2);
+}
+
+.sieve-choice input {
+	accent-color: var(--sieve-accent);
 }
 
 .sieve-choice__label {
@@ -72,8 +146,22 @@
 	width: 100%;
 	padding: 0.45rem 0.6rem;
 	border: 1px solid var(--sieve-border);
-	border-radius: 6px;
-	font-size: 0.9rem;
+	border-radius: var(--sieve-radius);
+	font-size: var(--sieve-fs);
+	background: var(--sieve-surface);
+	color: var(--sieve-text);
+	transition: border-color 0.12s var(--sieve-ease), box-shadow 0.12s var(--sieve-ease);
+}
+
+.sieve-dropdown:hover,
+.sieve-search:hover {
+	border-color: color-mix(in srgb, var(--sieve-accent) 40%, var(--sieve-border));
+}
+
+.sieve-dropdown:focus-visible,
+.sieve-search:focus-visible {
+	border-color: var(--sieve-accent);
+	box-shadow: 0 0 0 3px var(--sieve-accent-soft);
 }
 
 /* ---- Range ---- */
@@ -122,7 +210,7 @@
 	height: 2rem;
 	border-radius: 50%;
 	border: 1px solid var(--sieve-border);
-	box-shadow: inset 0 0 0 2px #fff;
+	box-shadow: inset 0 0 0 2px var(--sieve-surface);
 	overflow: hidden;
 	display: inline-flex;
 	align-items: center;
@@ -139,7 +227,7 @@
 .sieve-swatch__visual--text {
 	font-size: 0.7rem;
 	text-transform: uppercase;
-	background: #f3f4f6;
+	background: var(--sieve-surface-2);
 	box-shadow: none;
 	color: var(--sieve-muted);
 }
@@ -235,21 +323,23 @@
 	padding: 0.15rem 0.3rem;
 	border: 1px solid var(--sieve-border);
 	border-radius: 0.25rem;
-	background: #fff;
+	background: var(--sieve-surface);
 	color: var(--sieve-muted);
 	font-size: 0.78rem;
 	line-height: 1.2;
 	cursor: pointer;
+	transition: background-color 0.12s var(--sieve-ease), border-color 0.12s var(--sieve-ease);
 }
 
 .sieve-az__letter:hover {
 	border-color: var(--sieve-accent);
+	background: var(--sieve-accent-soft);
 }
 
 .sieve-az__letter.is-active {
 	background: var(--sieve-accent);
 	border-color: var(--sieve-accent);
-	color: #fff;
+	color: var(--sieve-on-accent);
 	/* Non-colour cue too, so the active letter is not conveyed by colour alone. */
 	font-weight: 700;
 }
@@ -279,30 +369,65 @@
 .sieve-count {
 	color: var(--sieve-muted);
 	font-size: 0.9rem;
+	font-variant-numeric: tabular-nums;
 }
 
 .sieve-chips {
 	flex-basis: 100%;
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	gap: 0.4rem;
+}
+
+/* Only show the "Active filters" label row when at least one chip is present,
+   so an unfiltered grid stays clean. :has() is progressive enhancement. */
+.sieve-chips:empty {
+	display: none;
+}
+
+.sieve-chips__label {
+	color: var(--sieve-muted);
+	font-size: 0.8rem;
+	font-weight: 600;
+	margin-inline-end: 0.15rem;
 }
 
 .sieve-chip {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.35rem;
-	padding: 0.25rem 0.6rem;
-	background: #f3f4f6;
+	gap: 0.4rem;
+	padding: 0.25rem 0.35rem 0.25rem 0.7rem;
+	background: var(--sieve-surface-2);
 	border: 1px solid var(--sieve-border);
-	border-radius: 999px;
+	border-radius: var(--sieve-radius-pill);
 	font-size: 0.8rem;
+	color: inherit;
 	cursor: pointer;
+	transition: background-color 0.12s var(--sieve-ease), border-color 0.12s var(--sieve-ease);
+}
+
+.sieve-chip:hover {
+	background: var(--sieve-accent-soft);
+	border-color: var(--sieve-accent);
 }
 
 .sieve-chip__x {
-	font-size: 1rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.1rem;
+	height: 1.1rem;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--sieve-muted) 22%, transparent);
+	font-size: 0.85rem;
 	line-height: 1;
+	transition: background-color 0.12s var(--sieve-ease), color 0.12s var(--sieve-ease);
+}
+
+.sieve-chip:hover .sieve-chip__x {
+	background: var(--sieve-accent);
+	color: var(--sieve-on-accent);
 }
 
 .sieve-reset {
@@ -311,10 +436,22 @@
 	color: var(--sieve-accent);
 	cursor: pointer;
 	font-size: 0.85rem;
+	font-weight: 600;
+	padding: 0.2rem 0.1rem;
+	border-radius: 0.3rem;
 	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.sieve-reset:hover {
+	text-decoration: none;
 }
 
 /* ---- Results ---- */
+.sieve-results-wrap {
+	position: relative;
+}
+
 .sieve-results {
 	transition: opacity 0.15s ease;
 }
@@ -322,6 +459,105 @@
 .sieve-app.is-loading .sieve-results {
 	opacity: 0.55;
 	pointer-events: none;
+}
+
+/* Loading overlay: a centred, accessible spinner that floats over the dimmed
+   grid without changing layout height (zero CLS). Reserved space comes from the
+   min-height the script pins on the container during a fetch. */
+.sieve-loading {
+	position: absolute;
+	inset-block-start: 1.5rem;
+	inset-inline: 0;
+	display: none;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.sieve-app.is-loading .sieve-loading {
+	display: flex;
+}
+
+.sieve-loading__spinner {
+	width: 2rem;
+	height: 2rem;
+	border: 3px solid var(--sieve-accent-soft);
+	border-block-start-color: var(--sieve-accent);
+	border-radius: 50%;
+	animation: sieve-spin 0.7s linear infinite;
+}
+
+@keyframes sieve-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* ---- Empty / error states ---- */
+.sieve-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+	padding: clamp(2rem, 1rem + 6vw, 4rem) 1.5rem;
+	text-align: center;
+	color: var(--sieve-muted);
+}
+
+.sieve-state__title {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: var(--sieve-text);
+	margin: 0;
+}
+
+.sieve-state__text {
+	max-width: 32rem;
+	margin: 0;
+	font-size: var(--sieve-fs);
+}
+
+.sieve-state__cta {
+	margin-top: 0.25rem;
+	padding: 0.5rem 1.1rem;
+	border: 1px solid var(--sieve-accent);
+	border-radius: var(--sieve-radius);
+	background: var(--sieve-accent);
+	color: var(--sieve-on-accent);
+	font-size: var(--sieve-fs);
+	font-weight: 600;
+	cursor: pointer;
+	transition: filter 0.12s var(--sieve-ease);
+}
+
+.sieve-state__cta:hover {
+	filter: brightness(0.94);
+}
+
+/* ---- AJAX error banner ---- */
+.sieve-error {
+	flex-basis: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.6rem 0.9rem;
+	border: 1px solid color-mix(in srgb, #dc2626 45%, var(--sieve-border));
+	border-radius: var(--sieve-radius);
+	background: color-mix(in srgb, #dc2626 8%, var(--sieve-surface));
+	color: var(--sieve-text);
+	font-size: var(--sieve-fs);
+}
+
+.sieve-error__retry {
+	margin-inline-start: auto;
+	padding: 0.35rem 0.85rem;
+	border: 1px solid var(--sieve-accent);
+	border-radius: var(--sieve-radius);
+	background: var(--sieve-accent);
+	color: var(--sieve-on-accent);
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
 }
 
 /* Self-contained product grid: the WooCommerce loop markup (ul.products) is
@@ -416,13 +652,19 @@
 .sieve-results ul.products li.product .added_to_cart {
 	display: inline-block;
 	padding: 0.45rem 0.9rem;
-	background: #111827;
-	color: #fff;
+	background: var(--sieve-text);
+	color: var(--sieve-surface);
 	border: none;
-	border-radius: 6px;
+	border-radius: var(--sieve-radius);
 	font-size: 0.82rem;
 	text-decoration: none;
 	cursor: pointer;
+	transition: filter 0.12s var(--sieve-ease);
+}
+
+.sieve-results ul.products li.product .button:hover,
+.sieve-results ul.products li.product .added_to_cart:hover {
+	filter: brightness(1.25);
 }
 
 .sieve-results .woocommerce-result-count,
@@ -455,16 +697,23 @@
 	min-width: 2.25rem;
 	padding: 0.4rem 0.6rem;
 	border: 1px solid var(--sieve-border);
-	background: #fff;
-	border-radius: 6px;
+	background: var(--sieve-surface);
+	color: var(--sieve-text);
+	border-radius: var(--sieve-radius);
 	cursor: pointer;
 	font-variant-numeric: tabular-nums;
+	transition: background-color 0.12s var(--sieve-ease), border-color 0.12s var(--sieve-ease);
+}
+
+.sieve-page:hover {
+	border-color: var(--sieve-accent);
+	background: var(--sieve-accent-soft);
 }
 
 .sieve-page.is-current {
 	background: var(--sieve-accent);
 	border-color: var(--sieve-accent);
-	color: #fff;
+	color: var(--sieve-on-accent);
 }
 
 /* ---- Focus visibility (WCAG 2.2) ---- */
@@ -486,8 +735,9 @@
 		gap: 0.4rem;
 		padding: 0.55rem 1rem;
 		border: 1px solid var(--sieve-border);
-		border-radius: 6px;
-		background: #fff;
+		border-radius: var(--sieve-radius);
+		background: var(--sieve-surface);
+		color: var(--sieve-text);
 		font-weight: 600;
 		cursor: pointer;
 	}
@@ -496,12 +746,21 @@
 		position: fixed;
 		inset: 0 15% 0 0;
 		z-index: 1000;
-		background: #fff;
+		background: var(--sieve-surface);
 		padding: 1.25rem;
 		overflow-y: auto;
 		transform: translateX(-105%);
-		transition: transform 0.2s ease;
-		box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+		transition: transform 0.25s var(--sieve-ease);
+		box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+	}
+
+	/* Tap-to-dismiss backdrop behind the open drawer. */
+	.sieve-app.is-drawer-open::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		z-index: 999;
+		background: rgba(17, 24, 39, 0.45);
 	}
 
 	.sieve-app.is-drawer-open .sieve-facets {
@@ -514,7 +773,7 @@
 		inset: auto 0 0 0;
 		z-index: 1001;
 		padding: 0.75rem;
-		background: #fff;
+		background: var(--sieve-surface);
 		border-top: 1px solid var(--sieve-border);
 	}
 
@@ -522,18 +781,37 @@
 		width: 100%;
 		padding: 0.75rem;
 		background: var(--sieve-accent);
-		color: #fff;
+		color: var(--sieve-on-accent);
 		border: none;
-		border-radius: 6px;
+		border-radius: var(--sieve-radius);
 		font-weight: 600;
 		cursor: pointer;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.sieve-facets,
-	.sieve-results {
-		transition: none;
+	.sieve-app *,
+	.sieve-app *::before,
+	.sieve-app *::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}
+
+/* ---- Dark mode ----
+   Only re-maps the DERIVED surface/text tokens, never the four canonical
+   accent/border/muted tokens the store owner controls, so a custom accent keeps
+   working in the dark. Scoped to the default border value so a store that has
+   set a bespoke (light) border palette is left untouched. */
+@media (prefers-color-scheme: dark) {
+	.sieve-app {
+		--sieve-surface: #1f2329;
+		--sieve-surface-2: #2a2f37;
+		--sieve-text: #e5e7eb;
+		--sieve-border: #3a4049;
+		--sieve-muted: #9aa3af;
+		--sieve-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5);
 	}
 }
 
@@ -553,10 +831,11 @@
 	z-index: 40;
 	max-height: 60vh;
 	overflow-y: auto;
-	background: #fff;
+	background: var(--sieve-surface);
+	color: var(--sieve-text);
 	border: 1px solid var(--sieve-border);
-	border-radius: 6px;
-	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+	border-radius: var(--sieve-radius);
+	box-shadow: var(--sieve-shadow);
 }
 
 .sieve-search__dropdown .sieve-search__item {
@@ -577,7 +856,7 @@
 
 .sieve-search__dropdown .sieve-search__item.is-active,
 .sieve-search__dropdown .sieve-search__item:hover {
-	background: #f3f4f6;
+	background: var(--sieve-surface-2);
 }
 
 /* Keyboard-active option: a non-colour cue (inset accent border) on top of the
@@ -610,7 +889,7 @@
 	justify-content: center;
 	overflow: hidden;
 	border-radius: 0.3rem;
-	background: #f3f4f6;
+	background: var(--sieve-surface-2);
 }
 
 .sieve-search__thumb img {

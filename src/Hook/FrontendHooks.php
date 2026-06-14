@@ -93,6 +93,8 @@ final class FrontendHooks implements HasHooks
                 'manyResults' => __('%d products', 'sieve'),
                 'noResults' => __('No results', 'sieve'),
                 'suggestionsLabel' => __('Product suggestions', 'sieve'),
+                'errorText' => __('Something went wrong while updating products. Please try again.', 'sieve'),
+                'retry' => __('Retry', 'sieve'),
             ],
         ]);
     }
