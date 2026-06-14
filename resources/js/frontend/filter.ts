@@ -22,6 +22,8 @@ interface SieveData {
 		manyResults?: string;
 		noResults?: string;
 		suggestionsLabel?: string;
+		errorText?: string;
+		retry?: string;
 	};
 }
 
@@ -403,6 +405,13 @@ function setupSearchCombobox(
 function onClick( app: HTMLElement, event: Event ): void {
 	const el = event.target as HTMLElement;
 
+	const toggle = el.closest< HTMLElement >( '[data-sieve-facet-toggle]' );
+	if ( toggle ) {
+		event.preventDefault();
+		toggleFacet( toggle );
+		return;
+	}
+
 	const letter = el.closest< HTMLElement >( '.sieve-az__letter' );
 	if ( letter ) {
 		event.preventDefault();
@@ -451,6 +460,22 @@ function onClick( app: HTMLElement, event: Event ): void {
 
 	if ( el.closest( '[data-sieve-close]' ) ) {
 		closeDrawer( app );
+	}
+}
+
+/**
+ * Collapse / expand a facet group. Toggles aria-expanded on the header button
+ * and hides the controlled body, so keyboard and screen-reader users get the
+ * same affordance as the visible chevron.
+ * @param toggle
+ */
+function toggleFacet( toggle: HTMLElement ): void {
+	const expanded = toggle.getAttribute( 'aria-expanded' ) === 'true';
+	toggle.setAttribute( 'aria-expanded', String( ! expanded ) );
+	const id = toggle.getAttribute( 'aria-controls' );
+	const body = id ? toggle.ownerDocument.getElementById( id ) : null;
+	if ( body ) {
+		body.hidden = expanded;
 	}
 }
 
@@ -861,7 +886,11 @@ async function run( app: HTMLElement, pushHistory = true ): Promise< void > {
 		if ( ( error as Error ).name === 'AbortError' ) {
 			return; // superseded; the newer run() owns cleanup
 		}
-		// Network/parse failure: leave the current results in place.
+		// Network/parse failure: keep the current results in place and surface a
+		// dismissible, retryable error so the shopper is never left guessing.
+		if ( current === state.requestId ) {
+			showError( app );
+		}
 		// eslint-disable-next-line no-console
 		console.error( 'Sieve filter request failed', error );
 	} finally {
@@ -877,7 +906,42 @@ async function run( app: HTMLElement, pushHistory = true ): Promise< void > {
 	}
 }
 
+/**
+ * Show a dismissible, retryable error banner inside the toolbar. A single banner
+ * per app; calling again replaces it. The Retry button re-runs the last query.
+ * @param app
+ */
+function showError( app: HTMLElement ): void {
+	const toolbar = app.querySelector< HTMLElement >( '[data-sieve-toolbar]' );
+	if ( ! toolbar ) {
+		return;
+	}
+	clearError( app );
+	const banner = document.createElement( 'div' );
+	banner.className = 'sieve-error';
+	banner.setAttribute( 'role', 'alert' );
+	banner.dataset.sieveError = '';
+	const text = document.createElement( 'span' );
+	text.textContent =
+		data?.i18n?.errorText ?? 'Something went wrong. Please try again.';
+	const retry = document.createElement( 'button' );
+	retry.type = 'button';
+	retry.className = 'sieve-error__retry';
+	retry.textContent = data?.i18n?.retry ?? 'Retry';
+	retry.addEventListener( 'click', () => {
+		clearError( app );
+		run( app );
+	} );
+	banner.append( text, retry );
+	toolbar.append( banner );
+}
+
+function clearError( app: HTMLElement ): void {
+	app.querySelector( '[data-sieve-error]' )?.remove();
+}
+
 function applyFragments( app: HTMLElement, payload: FilterResponse ): void {
+	clearError( app );
 	const facets = app.querySelector< HTMLElement >( '[data-sieve-facets]' );
 	// The server re-renders facets with fresh counts but cannot know the client
 	// -only display state (autocomplete text, active A-Z letter); capture it,
@@ -928,11 +992,24 @@ function applyFragments( app: HTMLElement, payload: FilterResponse ): void {
 interface DisplayFilters {
 	autocomplete: Map< string, string >; // facet slug -> typed text
 	az: Map< string, string >; // facet slug -> active letter
+	collapsed: Set< string >; // facet slugs whose group is collapsed
 }
 
 function snapshotDisplayFilters( facets: HTMLElement | null ): DisplayFilters {
 	const autocomplete = new Map< string, string >();
 	const az = new Map< string, string >();
+	const collapsed = new Set< string >();
+	facets?.querySelectorAll< HTMLElement >( '.sieve-facet' ).forEach( ( f ) => {
+		const toggle = f.querySelector< HTMLElement >(
+			'[data-sieve-facet-toggle]'
+		);
+		if (
+			toggle?.getAttribute( 'aria-expanded' ) === 'false' &&
+			f.dataset.sieveFacet
+		) {
+			collapsed.add( f.dataset.sieveFacet );
+		}
+	} );
 	facets
 		?.querySelectorAll< HTMLElement >( '.sieve-facet--autocomplete' )
 		.forEach( ( f ) => {
@@ -954,7 +1031,7 @@ function snapshotDisplayFilters( facets: HTMLElement | null ): DisplayFilters {
 				az.set( f.dataset.sieveFacet, letter );
 			}
 		} );
-	return { autocomplete, az };
+	return { autocomplete, az, collapsed };
 }
 
 function restoreDisplayFilters(
@@ -979,6 +1056,14 @@ function restoreDisplayFilters(
 		);
 		if ( btn ) {
 			filterByLetter( btn );
+		}
+	} );
+	state.collapsed.forEach( ( slug ) => {
+		const toggle = facets.querySelector< HTMLElement >(
+			`.sieve-facet[data-sieve-facet="${ slug }"] [data-sieve-facet-toggle]`
+		);
+		if ( toggle?.getAttribute( 'aria-expanded' ) === 'true' ) {
+			toggleFacet( toggle );
 		}
 	} );
 }

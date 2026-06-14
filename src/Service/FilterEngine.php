@@ -82,14 +82,17 @@ final class FilterEngine
 
         return sprintf(
             '<div class="sieve-app" data-sieve-app%8$s style="--sieve-cols:%7$d">'
-                . '<form class="sieve-filters" data-sieve-form>'
+                . '<form class="sieve-filters" data-sieve-form aria-label="%9$s">'
                 . '<button type="button" class="sieve-drawer-toggle" data-sieve-open aria-expanded="false">%1$s</button>'
                 . '<div class="sieve-facets" data-sieve-facets>%2$s</div>'
                 . '</form>'
                 . '<div class="sieve-main">'
                 . '<div class="sieve-toolbar" data-sieve-toolbar>%3$s</div>'
-                . '<div class="sieve-results" data-sieve-results aria-live="polite">%4$s</div>'
-                . '<nav class="sieve-pagination" data-sieve-pagination>%5$s</nav>'
+                . '<div class="sieve-results-wrap">'
+                . '<div class="sieve-results" data-sieve-results>%4$s</div>'
+                . '<div class="sieve-loading" aria-hidden="true"><span class="sieve-loading__spinner"></span></div>'
+                . '</div>'
+                . '<nav class="sieve-pagination" data-sieve-pagination aria-label="%10$s">%5$s</nav>'
                 . '</div>'
                 . '<div class="sieve-drawer-apply" data-sieve-apply hidden><button type="button" data-sieve-close>%6$s</button></div>'
                 . '</div>',
@@ -101,6 +104,8 @@ final class FilterEngine
             esc_html__('Show results', 'sieve'),
             $columns,
             $styleAttr,
+            esc_attr__('Product filters', 'sieve'),
+            esc_attr__('Results pages', 'sieve'),
         );
     }
 
@@ -143,7 +148,7 @@ final class FilterEngine
     private function renderToolbar(array $facets, array $filters, array $request, string $countText): string
     {
         return sprintf(
-            '<span class="sieve-count" data-sieve-count>%1$s</span>'
+            '<span class="sieve-count" data-sieve-count role="status" aria-live="polite">%1$s</span>'
                 . '<div class="sieve-toolbar__right">%2$s%3$s</div>'
                 . '<div class="sieve-chips" data-sieve-chips>%4$s</div>',
             esc_html($countText),
@@ -226,17 +231,30 @@ final class FilterEngine
             $chips .= $this->chip('q', '', $search);
         }
 
-        return $chips;
+        if ('' === $chips) {
+            return '';
+        }
+
+        // A leading label so the chip row reads as "Active filters: …" for both
+        // sighted shoppers and screen readers.
+        return sprintf(
+            '<span class="sieve-chips__label">%s</span>%s',
+            esc_html__('Active filters:', 'sieve'),
+            $chips,
+        );
     }
 
     private function chip(string $slug, string $value, string $label): string
     {
         return sprintf(
-            '<button type="button" class="sieve-chip" data-sieve-chip data-facet="%1$s" data-value="%2$s">'
-                . '%3$s<span class="sieve-chip__x" aria-hidden="true">&times;</span></button>',
+            '<button type="button" class="sieve-chip" data-sieve-chip data-facet="%1$s" data-value="%2$s" aria-label="%4$s">'
+                . '<span class="sieve-chip__text">%3$s</span>'
+                . '<span class="sieve-chip__x" aria-hidden="true">&times;</span></button>',
             esc_attr($slug),
             esc_attr($value),
             esc_html($label),
+            /* translators: %s: the active filter being removed. */
+            esc_attr(sprintf(__('Remove filter: %s', 'sieve'), $label)),
         );
     }
 
