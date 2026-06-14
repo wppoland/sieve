@@ -13,5 +13,6 @@ jobs:
       has-js: true
       run-i18n: false
       run-playwright: false
-      # Plugin Check = wp.org submission gate; run it deliberately when submitting.
-      run-plugin-check: false
+      # Plugin Check = wp.org submission gate. Enabled on this polish branch to
+      # capture the verdict for the UX/visual pass; it is advisory (non-blocking).
+      run-plugin-check: true

@@ -23,7 +23,7 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import AppearancePanel, {
 	DEFAULT_APPEARANCE,
 	type Appearance,
@@ -64,6 +64,47 @@ const TYPE_OPTIONS = [
 	{ label: __( 'Range slider', 'sieve' ), value: 'range_slider' },
 	{ label: __( 'Search box', 'sieve' ), value: 'search' },
 ];
+
+// Concise, shopper-facing explanation of each facet type, shown as inline help
+// under the Type selector so the owner knows what each control looks like.
+const TYPE_HELP: Record< string, string > = {
+	checkbox: __(
+		'Multiple choices can be selected at once. Best for most attributes.',
+		'sieve'
+	),
+	radio: __(
+		'Only one choice at a time. Good for mutually exclusive options.',
+		'sieve'
+	),
+	dropdown: __(
+		'A compact select menu. Saves space when there are many options.',
+		'sieve'
+	),
+	swatch: __(
+		'Colour or image squares. Ideal for colour and pattern attributes.',
+		'sieve'
+	),
+	hierarchy: __(
+		'A nested tree. Best for categories with parent/child levels.',
+		'sieve'
+	),
+	autocomplete: __(
+		'A checkbox list with a type-to-filter box. Best for very long option lists.',
+		'sieve'
+	),
+	az_index: __(
+		'An A–Z bar that filters options by first letter. Good for brand lists.',
+		'sieve'
+	),
+	range_slider: __(
+		'A min/max range. Used for price and other numeric values.',
+		'sieve'
+	),
+	search: __(
+		'A live search box that narrows the product grid as shoppers type.',
+		'sieve'
+	),
+};
 
 function slugFromSource( source: string ): string {
 	return source.startsWith( 'tax:' ) ? source.slice( 4 ) : source;
@@ -187,10 +228,16 @@ function App() {
 				setIndexedRows( data.indexed_rows );
 				setNotice( {
 					type: 'success',
-					text:
-						__( 'Re-indexed', 'sieve' ) +
-						data.indexed_products +
-						__( 'products.', 'sieve' ),
+					text: sprintf(
+						/* translators: %d: number of products re-indexed. */
+						_n(
+							'Re-indexed %d product.',
+							'Re-indexed %d products.',
+							data.indexed_products,
+							'sieve'
+						),
+						data.indexed_products
+					),
 				} );
 			} )
 			.finally( () => setReindexing( false ) );
@@ -231,7 +278,7 @@ function App() {
 				<CardBody>
 					<Flex align="center">
 						<FlexBlock>
-							{ __( 'Indexed rows:', 'sieve' ) }
+							{ __( 'Indexed rows:', 'sieve' ) }{ ' ' }
 							<strong>{ indexedRows }</strong>
 						</FlexBlock>
 						<FlexItem>
@@ -257,6 +304,10 @@ function App() {
 						<FlexItem>
 							<NumberControl
 								label={ __( 'Products per page', 'sieve' ) }
+								help={ __(
+									'How many products to show before pagination appears.',
+									'sieve'
+								) }
 								value={ settings.per_page }
 								min={ 1 }
 								onChange={ ( v?: string ) =>
@@ -269,6 +320,10 @@ function App() {
 						<FlexItem>
 							<NumberControl
 								label={ __( 'Columns', 'sieve' ) }
+								help={ __(
+									'Product grid columns on wide screens. Fewer columns are used automatically on tablets and phones.',
+									'sieve'
+								) }
 								value={ settings.columns }
 								min={ 1 }
 								max={ 6 }
@@ -312,6 +367,7 @@ function App() {
 									label={ __( 'Type', 'sieve' ) }
 									value={ facet.type }
 									options={ TYPE_OPTIONS }
+									help={ TYPE_HELP[ facet.type ] }
 									onChange={ ( type: string ) =>
 										updateFacet( index, { type } )
 									}
@@ -339,6 +395,18 @@ function App() {
 								/>
 							</FlexItem>
 						</Flex>
+						<p
+							style={ {
+								margin: '0.5rem 0 0',
+								color: '#757575',
+								fontSize: '12px',
+							} }
+						>
+							{ __(
+								'Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild it after a bulk import or if counts look out of date — new and edited products are indexed automatically.',
+								'sieve'
+							) }
+						</p>
 					</CardBody>
 				</Card>
 			) ) }
@@ -347,6 +415,10 @@ function App() {
 				<FlexBlock>
 					<SelectControl
 						label={ __( 'Add a facet', 'sieve' ) }
+						help={ __(
+							'Pick a product attribute, taxonomy or field to filter by. Sources are detected from your store automatically.',
+							'sieve'
+						) }
 						value={ newSource }
 						options={ [
 							{
