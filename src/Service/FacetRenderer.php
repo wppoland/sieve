@@ -42,7 +42,7 @@ final class FacetRenderer
         // aria-expanded state and a chevron. Rendered open and inert without JS
         // (the frontend script wires the toggle), so it degrades gracefully and
         // never hides options from no-JS or screen-reader-only users.
-        $bodyId = 'sieve-facet-' . esc_attr($facet->slug) . '-' . wp_unique_id();
+        $bodyId = 'sieve-facet-' . $facet->slug . '-' . wp_unique_id();
 
         return sprintf(
             '<div class="sieve-facet sieve-facet--%1$s" data-sieve-facet="%2$s" data-sieve-source="%3$s">'
@@ -57,7 +57,7 @@ final class FacetRenderer
             esc_attr($facet->source),
             esc_html($facet->label),
             $body,
-            $bodyId,
+            esc_attr($bodyId),
         );
     }
 
