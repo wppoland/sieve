@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.9.0
+Stable tag: 0.9.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,9 @@ The compiled assets under `build/` are generated from the sources in `resources/
 This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the linked sources.
 
 == Changelog ==
+
+= 0.9.2 =
+* Extension: `sieve_settings` filter and `layout` setting (sidebar, stacked, inline) so PRO add-ons can rotate filter-panel layouts and column counts. FilterEngine applies layout modifier classes on `.sieve-app`.
 
 = 0.9.1 =
 * Extension: `sieve_facets` filter and page context (`FacetContext`) so PRO add-ons can show or hide facets by category, shop page or customer role. AJAX requests preserve context via `sf_ctx_*` query vars.
