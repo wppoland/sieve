@@ -64,6 +64,7 @@ for (const [name, entry] of Object.entries(ENTRIES)) {
         },
         resolve: { alias: { '@': resolve(ROOT, 'resources/js') } },
         build: {
+            target: 'esnext',
             outDir: 'build',
             emptyOutDir: false,
             manifest: false,
