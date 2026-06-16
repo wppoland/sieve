@@ -79,6 +79,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 
 == Changelog ==
 
+= 0.9.1 =
+* Extension: `sieve_facets` filter and page context (`FacetContext`) so PRO add-ons can show or hide facets by category, shop page or customer role. AJAX requests preserve context via `sf_ctx_*` query vars.
+
 = 0.9.0 =
 * Polish: a refreshed, more attractive filter UI. Collapsible facet groups, an "Active filters" chip row with clearer remove buttons, a friendly empty state with a one-click "Clear all filters" action, an accessible loading spinner, and a retryable error message if an update fails.
 * Design: themeable CSS custom properties, fluid sizing, automatic dark mode (prefers-color-scheme), and tasteful transitions that respect prefers-reduced-motion. No layout shift when filters apply.
