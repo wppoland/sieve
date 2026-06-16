@@ -225,8 +225,15 @@ final class FilterEngine
         $ctxAttr    = $categoryId > 0 ? ' data-sieve-ctx-category="' . esc_attr((string) $categoryId) . '"' : '';
         $ctxAttr   .= ! empty($context['is_shop']) ? ' data-sieve-ctx-shop="1"' : '';
 
+        $layout      = isset($config['layout']) ? sanitize_key((string) $config['layout']) : 'sidebar';
+        $layoutClass = match ($layout) {
+            'stacked' => ' sieve-app--stacked',
+            'inline' => ' sieve-app--inline-facets',
+            default => '',
+        };
+
         return sprintf(
-            '<div class="sieve-app" data-sieve-app%8$s%11$s style="--sieve-cols:%7$d">'
+            '<div class="sieve-app%12$s" data-sieve-app%8$s%11$s style="--sieve-cols:%7$d">'
                 . '<form class="sieve-filters" data-sieve-form aria-label="%9$s">'
                 . '<button type="button" class="sieve-drawer-toggle" data-sieve-open aria-expanded="false">%1$s</button>'
                 . '<div class="sieve-facets" data-sieve-facets>%2$s</div>'
@@ -252,6 +259,7 @@ final class FilterEngine
             esc_attr__('Product filters', 'sieve'),
             esc_attr__('Results pages', 'sieve'),
             $ctxAttr,
+            $layoutClass,
         );
     }
 
