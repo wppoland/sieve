@@ -42,7 +42,14 @@ final class FacetCatalog
         $sources[] = $this->entry('rating', __('Average rating', 'sieve'), 'checkbox', 'field');
         $sources[] = $this->entry('search', __('Search box', 'sieve'), 'search', 'field');
 
-        return $sources;
+        /**
+         * Filters the auto-discovered facet sources for the admin builder.
+         *
+         * @param array<int, array{source: string, label: string, suggested_type: string, group: string}> $sources
+         */
+        $filtered = apply_filters('sieve_facet_catalog', $sources);
+
+        return is_array($filtered) ? array_values($filtered) : $sources;
     }
 
     /**

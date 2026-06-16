@@ -25,6 +25,27 @@ enum FacetType: string
     case Pager = 'pager';
     case Reset = 'reset';
     case ActiveChips = 'active_chips';
+    case StarRating = 'star_rating';
+
+    /**
+     * Facet types selectable in the admin facet builder.
+     *
+     * @return array<int, self>
+     */
+    public static function builder(): array
+    {
+        return [
+            self::Checkbox,
+            self::Radio,
+            self::Dropdown,
+            self::Swatch,
+            self::Hierarchy,
+            self::Autocomplete,
+            self::AzIndex,
+            self::RangeSlider,
+            self::Search,
+        ];
+    }
 
     /**
      * Facet types shipped in the FREE MVP.
@@ -66,6 +87,7 @@ enum FacetType: string
             self::Pager => __('Pagination', 'sieve'),
             self::Reset => __('Reset', 'sieve'),
             self::ActiveChips => __('Active filters', 'sieve'),
+            self::StarRating => __('Star rating', 'sieve'),
         };
     }
 }
