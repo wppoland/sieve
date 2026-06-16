@@ -119,6 +119,10 @@ export default function AppearancePanel( { appearance, onChange }: Props ) {
 		<PanelBody title={ __( 'Appearance', 'sieve' ) } initialOpen={ false }>
 			<SelectControl
 				label={ __( 'Style preset', 'sieve' ) }
+				help={ __(
+					'Visual style for the filter panel. Unstyled removes plugin CSS so your theme controls everything through .sieve-* classes.',
+					'sieve'
+				) }
 				value={ preset }
 				options={ PRESET_OPTIONS }
 				onChange={ ( value: string ) =>
