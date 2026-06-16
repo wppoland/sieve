@@ -132,35 +132,55 @@ function App() {
 		type: string;
 		text: string;
 	} | null >( null );
+	const [ loadError, setLoadError ] = useState< string | null >( null );
 
 	useEffect( () => {
-		apiFetch< Settings >( { path: 'sieve/v1/settings' } ).then( ( data ) =>
-			setSettings( {
-				...data,
-				appearance: data.appearance ?? DEFAULT_APPEARANCE,
-			} )
-		);
-		apiFetch< {
-			sources: Source[];
-			facet_types: FacetTypeOption[];
-			indexed_rows: number;
-		} >( {
-			path: 'sieve/v1/catalog',
-		} ).then( ( data ) => {
-			setSources( data.sources );
-			setIndexedRows( data.indexed_rows );
-			if ( data.facet_types?.length ) {
-				setTypeOptions( data.facet_types );
-				const help: Record< string, string > = { ...TYPE_HELP };
-				data.facet_types.forEach( ( type ) => {
-					if ( type.help ) {
-						help[ type.value ] = type.help;
-					}
+		Promise.all( [
+			apiFetch< Settings >( { path: 'sieve/v1/settings' } ),
+			apiFetch< {
+				sources: Source[];
+				facet_types: FacetTypeOption[];
+				indexed_rows: number;
+			} >( { path: 'sieve/v1/catalog' } ),
+		] )
+			.then( ( [ settingsData, catalog ] ) => {
+				setSettings( {
+					...settingsData,
+					appearance: settingsData.appearance ?? DEFAULT_APPEARANCE,
 				} );
-				setTypeHelp( help );
-			}
-		} );
+				setSources( catalog.sources );
+				setIndexedRows( catalog.indexed_rows );
+				if ( catalog.facet_types?.length ) {
+					setTypeOptions( catalog.facet_types );
+					const help: Record< string, string > = { ...TYPE_HELP };
+					catalog.facet_types.forEach( ( type ) => {
+						if ( type.help ) {
+							help[ type.value ] = type.help;
+						}
+					} );
+					setTypeHelp( help );
+				}
+			} )
+			.catch( () => {
+				setLoadError(
+					__(
+						'Could not load Sieve settings. Refresh the page or check that WooCommerce and the REST API are available.',
+						'sieve'
+					)
+				);
+			} );
 	}, [] );
+
+	if ( loadError ) {
+		return (
+			<div style={ { maxWidth: 880, margin: '1rem 0' } }>
+				<h1>{ __( 'Sieve', 'sieve' ) }</h1>
+				<Notice status="error" isDismissible={ false }>
+					{ loadError }
+				</Notice>
+			</div>
+		);
+	}
 
 	if ( ! settings ) {
 		return (
@@ -197,7 +217,7 @@ function App() {
 		update( { facets: settings.facets.filter( ( _, i ) => i !== index ) } );
 
 	const addFacet = () => {
-		if ( ! newSource ) {
+		if ( ! newSource || newSource.startsWith( '__group_' ) ) {
 			return;
 		}
 		const source = sources.find( ( s ) => s.source === newSource );
@@ -240,6 +260,15 @@ function App() {
 					text: __( 'Settings saved.', 'sieve' ),
 				} );
 			} )
+			.catch( () => {
+				setNotice( {
+					type: 'error',
+					text: __(
+						'Could not save settings. Please try again.',
+						'sieve'
+					),
+				} );
+			} )
 			.finally( () => setSaving( false ) );
 	};
 
@@ -265,6 +294,15 @@ function App() {
 					),
 				} );
 			} )
+			.catch( () => {
+				setNotice( {
+					type: 'error',
+					text: __(
+						'Could not rebuild the index. Please try again.',
+						'sieve'
+					),
+				} );
+			} )
 			.finally( () => setReindexing( false ) );
 	};
 
@@ -274,6 +312,57 @@ function App() {
 				( f ) => f.slug === slugFromSource( s.source )
 			)
 	);
+
+	const sourceGroupLabel = ( group: string ): string => {
+		switch ( group ) {
+			case 'taxonomy':
+				return __( 'Taxonomies', 'sieve' );
+			case 'attribute':
+				return __( 'Attributes', 'sieve' );
+			case 'field':
+				return __( 'Product fields', 'sieve' );
+			default:
+				return __( 'Other sources', 'sieve' );
+		}
+	};
+
+	const groupedSourceOptions = () => {
+		const groups = new Map< string, Source[] >();
+		availableSources.forEach( ( source ) => {
+			const key = source.group || 'other';
+			if ( ! groups.has( key ) ) {
+				groups.set( key, [] );
+			}
+			groups.get( key )!.push( source );
+		} );
+
+		const options: Array< {
+			label: string;
+			value: string;
+			disabled?: boolean;
+		} > = [
+			{
+				label: __( 'Select a source…', 'sieve' ),
+				value: '',
+			},
+		];
+
+		for ( const [ group, items ] of groups ) {
+			options.push( {
+				label: `— ${ sourceGroupLabel( group ) } —`,
+				value: `__group_${ group }`,
+				disabled: true,
+			} );
+			items.forEach( ( source ) => {
+				options.push( {
+					label: source.label,
+					value: source.source,
+				} );
+			} );
+		}
+
+		return options;
+	};
 
 	return (
 		<div style={ { maxWidth: 880, margin: '1rem 0' } }>
@@ -317,6 +406,26 @@ function App() {
 							</Button>
 						</FlexItem>
 					</Flex>
+					<p
+						style={ {
+							margin: '0.75rem 0 0',
+							color: '#757575',
+							fontSize: '12px',
+						} }
+					>
+						{ __(
+							'Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild after a bulk import or if counts look out of date — new and edited products are indexed automatically.',
+							'sieve'
+						) }
+					</p>
+					{ indexedRows === 0 && (
+						<Notice status="warning" isDismissible={ false }>
+							{ __(
+								'The index is empty. Publish WooCommerce products, then click Rebuild index before placing [sieve] on a page.',
+								'sieve'
+							) }
+						</Notice>
+					) }
 				</CardBody>
 			</Card>
 
@@ -370,6 +479,14 @@ function App() {
 			</Panel>
 
 			<h2>{ __( 'Facets', 'sieve' ) }</h2>
+			{ settings.facets.length === 0 && (
+				<Notice status="info" isDismissible={ false }>
+					{ __(
+						'No facets yet. Pick a source below, click Add, then Save settings. Shoppers will not see filters until at least one facet is configured.',
+						'sieve'
+					) }
+				</Notice>
+			) }
 			{ settings.facets.map( ( facet, index ) => (
 				<Card
 					key={ facet.slug }
@@ -399,7 +516,14 @@ function App() {
 								/>
 							</FlexBlock>
 							<FlexItem>
-								<code>{ facet.source }</code>
+								<span
+									title={ __(
+										'Internal source key (taxonomy, attribute or product field) used by Sieve.',
+										'sieve'
+									) }
+								>
+									<code>{ facet.source }</code>
+								</span>
 							</FlexItem>
 							<FlexItem>
 								<Button
@@ -420,18 +544,6 @@ function App() {
 								/>
 							</FlexItem>
 						</Flex>
-						<p
-							style={ {
-								margin: '0.5rem 0 0',
-								color: '#757575',
-								fontSize: '12px',
-							} }
-						>
-							{ __(
-								'Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild it after a bulk import or if counts look out of date — new and edited products are indexed automatically.',
-								'sieve'
-							) }
-						</p>
 					</CardBody>
 				</Card>
 			) ) }
@@ -445,16 +557,7 @@ function App() {
 							'sieve'
 						) }
 						value={ newSource }
-						options={ [
-							{
-								label: __( 'Select a source…', 'sieve' ),
-								value: '',
-							},
-							...availableSources.map( ( s ) => ( {
-								label: s.label,
-								value: s.source,
-							} ) ),
-						] }
+						options={ groupedSourceOptions() }
 						onChange={ setNewSource }
 					/>
 				</FlexBlock>
