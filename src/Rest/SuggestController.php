@@ -10,6 +10,7 @@ use Sieve\Service\FilterService;
 use Sieve\Service\Settings;
 use Sieve\Service\SuggestService;
 use Sieve\Service\UrlService;
+use Sieve\Support\FacetContext;
 use WP_REST_Request;
 use WP_REST_Response;
 
@@ -98,7 +99,10 @@ final class SuggestController
 
         // Scope excludes the in-progress search term by contract, so resolve the
         // facet selection only (search ids stay null here).
-        $resolved = $this->filter->resolve($this->settings->facets(), $parsed['filters']);
+        $resolved = $this->filter->resolve(
+            $this->settings->facetsForContext(FacetContext::current()),
+            $parsed['filters'],
+        );
 
         // null => no facet constraint at all: nothing to scope to. Treat as an
         // empty constraint so an empty scope query does not silently widen the

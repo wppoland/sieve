@@ -720,6 +720,14 @@ function collectQuery( app: HTMLElement ): Record< string, string > {
 		query[ `${ PREFIX }paged` ] = paged;
 	}
 
+	const categoryId = app.dataset.sieveCtxCategory;
+	if ( categoryId ) {
+		query[ `${ PREFIX }ctx_category` ] = categoryId;
+	}
+	if ( app.dataset.sieveCtxShop === '1' ) {
+		query[ `${ PREFIX }ctx_shop` ] = '1';
+	}
+
 	return query;
 }
 

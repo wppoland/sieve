@@ -7,6 +7,7 @@ namespace Sieve\Service;
 defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
+use Sieve\Support\FacetContext;
 
 /**
  * Reads and writes the plugin settings (the configured facet set + layout
@@ -77,6 +78,28 @@ final class Settings
             $facets[] = Facet::fromArray($raw);
         }
         return $facets;
+    }
+
+    /**
+     * Facets visible for the current page / shopper context.
+     *
+     * @param array<string, mixed> $context See {@see FacetContext}.
+     * @return array<int, Facet>
+     */
+    public function facetsForContext(array $context = []): array
+    {
+        $facets = $this->facets();
+        $context = FacetContext::normalize($context);
+
+        /**
+         * Filters the facet list before render and resolution.
+         *
+         * @param array<int, Facet> $facets  Configured facets.
+         * @param array{is_shop: bool, category_id: int, user_roles: array<int, string>} $context Page context.
+         */
+        $filtered = apply_filters('sieve_facets', $facets, $context);
+
+        return is_array($filtered) ? array_values($filtered) : $facets;
     }
 
     /**

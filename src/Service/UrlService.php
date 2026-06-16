@@ -6,6 +6,8 @@ namespace Sieve\Service;
 
 defined('ABSPATH') || exit;
 
+use Sieve\Support\FacetContext;
+
 /**
  * Owns the URL state contract shared by the server (initial render) and the
  * frontend script (AJAX + History API). Every facet maps to a "sf_{slug}" query
@@ -20,7 +22,7 @@ final class UrlService
      * request the engine understands.
      *
      * @param array<string, mixed> $params
-     * @return array{filters: array<string, string>, orderby: string, paged: int, search: string}
+     * @return array{filters: array<string, string>, orderby: string, paged: int, search: string, context: array{is_shop: bool, category_id: int, user_roles: array<int, string>}}
      */
     public function parse(array $params): array
     {
@@ -28,6 +30,7 @@ final class UrlService
         $orderby = '';
         $paged = 1;
         $search = '';
+        $contextParams = $params;
 
         foreach ($params as $key => $value) {
             $key = (string) $key;
@@ -36,6 +39,10 @@ final class UrlService
             }
 
             $name = substr($key, strlen(self::PREFIX));
+            if (str_starts_with($name, 'ctx_')) {
+                continue;
+            }
+
             $clean = is_array($value)
                 ? implode(',', array_map([$this, 'cleanScalar'], $value))
                 : $this->cleanScalar($value);
@@ -60,6 +67,7 @@ final class UrlService
             'orderby' => $orderby,
             'paged' => $paged,
             'search' => $search,
+            'context' => FacetContext::fromParams($contextParams),
         ];
     }
 
