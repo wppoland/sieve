@@ -35,16 +35,28 @@ This is an early release (MVP). Documentation: https://plogins.com/sieve/docs/
 == Frequently Asked Questions ==
 
 = Does it require WooCommerce? =
-Yes, this early version targets WooCommerce product archives.
+Yes. Sieve is a WooCommerce product filter for product archives and product-listing pages.
 
 = Does filtering reload the page? =
 No. Filtering happens via AJAX with the URL kept in sync so results are shareable.
+
+= What can shoppers filter by? =
+Sieve can filter WooCommerce products by categories, tags, attributes, price, stock status, on-sale state, ratings and a keyword search field. It also supports range sliders, searchable options, color/image swatches, active-filter chips and sorting.
+
+= Is it fast on large stores? =
+Yes. Sieve builds a product filter index, so AJAX filter requests do not need to run slow live joins for every category, attribute and price query.
 
 = How do I add the filter to a page? =
 Use the `[sieve]` shortcode or the "Sieve Filter" block. Both render the facets, the results grid, sorting, active-filter chips and pagination together.
 
 = How do I add the predictive search box? =
 Use the `[sieve_search]` shortcode or the "Sieve Search" block. As shoppers type, a dropdown shows matching products with thumbnails and prices; it is fully keyboard accessible and falls back to the standard product search when JavaScript is unavailable.
+
+= Is Sieve accessible? =
+Yes. The filter UI is built for keyboard use and screen readers, with labelled regions, accessible controls, polite result-count announcements and reduced-motion support.
+
+= Does Sieve work on mobile? =
+Yes. Sieve includes a mobile filter drawer with a sticky apply bar, so shoppers can filter products without fighting a long sidebar on small screens.
 
 == Screenshots ==
 
