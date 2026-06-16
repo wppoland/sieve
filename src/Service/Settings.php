@@ -32,14 +32,15 @@ final class Settings
             return $this->defaults();
         }
 
-        return [
+        return apply_filters('sieve_settings', [
             'facets' => is_array($stored['facets']) ? array_values($stored['facets']) : [],
             'per_page' => isset($stored['per_page']) ? max(1, (int) $stored['per_page']) : 12,
             'columns' => isset($stored['columns']) ? max(1, (int) $stored['columns']) : 3,
             'appearance' => isset($stored['appearance']) && is_array($stored['appearance'])
                 ? $this->appearance->normalize($stored['appearance'])
                 : $this->appearance->defaults(),
-        ];
+            'layout' => isset($stored['layout']) ? sanitize_key((string) $stored['layout']) : 'sidebar',
+        ]);
     }
 
     /**
@@ -109,7 +110,7 @@ final class Settings
      */
     public function defaults(): array
     {
-        return [
+        return apply_filters('sieve_settings', [
             'facets' => [
                 Facet::fromArray([
                     'slug' => 'product_cat',
@@ -139,6 +140,7 @@ final class Settings
             'per_page' => 12,
             'columns' => 3,
             'appearance' => $this->appearance->defaults(),
-        ];
+            'layout' => 'sidebar',
+        ]);
     }
 }
