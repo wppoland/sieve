@@ -54,7 +54,7 @@ final class FilterEngine
     private function runLegacy(array $request): array
     {
         $config = $this->settings->all();
-        $facets = $this->settings->facets();
+        $facets = $this->facetsForRequest($request);
         $filters = $request['filters'];
 
         // Resolve the search term to ids ONCE via the shared resolver, then thread
@@ -94,7 +94,7 @@ final class FilterEngine
         $searchIds = $this->resolver->resolve($request['search']);
 
         return $this->filter->resolve(
-            $this->settings->facets(),
+            $this->facetsForRequest($request),
             $request['filters'],
             null,
             $searchIds,
@@ -109,7 +109,7 @@ final class FilterEngine
         $searchIds = $this->resolver->resolve($request['search']);
 
         return $this->renderFacets(
-            $this->settings->facets(),
+            $this->facetsForRequest($request),
             $request['filters'],
             $request['search'],
             $searchIds,
@@ -122,7 +122,7 @@ final class FilterEngine
     public function renderToolbarForRequest(array $request, string $countText): string
     {
         return $this->renderToolbar(
-            $this->settings->facets(),
+            $this->facetsForRequest($request),
             $request['filters'],
             $request,
             $countText,
@@ -189,19 +189,31 @@ final class FilterEngine
         if ($kit instanceof FacetFilterEngine) {
             return $kit->container(
                 $request,
-                fn (array $parts, int $columns): string => $this->wrapContainer($parts, $columns),
+                fn (array $parts, int $columns): string => $this->wrapContainer($parts, $columns, $request['context'] ?? []),
             );
         }
 
         $parts = $this->runLegacy($request);
 
-        return $this->wrapContainer($parts, $this->columns());
+        return $this->wrapContainer($parts, $this->columns(), $request['context'] ?? []);
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string, context?: array<string, mixed>} $request
+     * @return array<int, Facet>
+     */
+    private function facetsForRequest(array $request): array
+    {
+        $context = isset($request['context']) && is_array($request['context']) ? $request['context'] : [];
+
+        return $this->settings->facetsForContext($context);
     }
 
     /**
      * @param array{facets_html: string, toolbar_html: string, results_html: string, pagination_html: string, found: int, count_text: string} $parts
+     * @param array{is_shop?: bool, category_id?: int, user_roles?: array<int, string>} $context
      */
-    private function wrapContainer(array $parts, int $columns): string
+    private function wrapContainer(array $parts, int $columns, array $context = []): string
     {
         $config = $this->settings->all();
         $preset = $this->appearance->resolveFrom($config)['preset'];
@@ -209,8 +221,12 @@ final class FilterEngine
             ? ''
             : ' data-sieve-style="' . esc_attr($preset) . '"';
 
+        $categoryId = isset($context['category_id']) ? max(0, (int) $context['category_id']) : 0;
+        $ctxAttr    = $categoryId > 0 ? ' data-sieve-ctx-category="' . esc_attr((string) $categoryId) . '"' : '';
+        $ctxAttr   .= ! empty($context['is_shop']) ? ' data-sieve-ctx-shop="1"' : '';
+
         return sprintf(
-            '<div class="sieve-app" data-sieve-app%8$s style="--sieve-cols:%7$d">'
+            '<div class="sieve-app" data-sieve-app%8$s%11$s style="--sieve-cols:%7$d">'
                 . '<form class="sieve-filters" data-sieve-form aria-label="%9$s">'
                 . '<button type="button" class="sieve-drawer-toggle" data-sieve-open aria-expanded="false">%1$s</button>'
                 . '<div class="sieve-facets" data-sieve-facets>%2$s</div>'
@@ -235,6 +251,7 @@ final class FilterEngine
             $styleAttr,
             esc_attr__('Product filters', 'sieve'),
             esc_attr__('Results pages', 'sieve'),
+            $ctxAttr,
         );
     }
 
