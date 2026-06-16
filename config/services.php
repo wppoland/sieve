@@ -18,6 +18,7 @@ use Sieve\Rest\FilterController;
 use Sieve\Rest\SuggestController;
 use Sieve\Service\AppearanceService;
 use Sieve\Service\FacetCatalog;
+use Sieve\Service\FacetTypeRegistry;
 use Sieve\Service\FacetCountService;
 use Sieve\Service\FacetRenderer;
 use Sieve\Service\FilterEngine;
@@ -54,6 +55,7 @@ return static function (Container $c): void {
         static fn (): Settings => new Settings($c->get(AppearanceService::class)),
     );
     $c->singleton(FacetCatalog::class, static fn (): FacetCatalog => new FacetCatalog());
+    $c->singleton(FacetTypeRegistry::class, static fn (): FacetTypeRegistry => new FacetTypeRegistry());
     $c->singleton(UrlService::class, static fn (): UrlService => new UrlService());
     $c->singleton(FacetRenderer::class, static fn (): FacetRenderer => new FacetRenderer());
     $c->singleton(ResultsRenderer::class, static fn (): ResultsRenderer => new ResultsRenderer());
@@ -119,6 +121,7 @@ return static function (Container $c): void {
         static fn (): AdminController => new AdminController(
             $c->get(Settings::class),
             $c->get(FacetCatalog::class),
+            $c->get(FacetTypeRegistry::class),
             $c->get(ProductIndexer::class),
             $c->get(IndexRepository::class),
         ),

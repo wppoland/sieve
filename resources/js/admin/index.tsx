@@ -50,6 +50,12 @@ interface Source {
 	group: string;
 }
 
+interface FacetTypeOption {
+	value: string;
+	label: string;
+	help: string;
+}
+
 const TYPE_OPTIONS = [
 	{ label: __( 'Checkboxes', 'sieve' ), value: 'checkbox' },
 	{ label: __( 'Radio', 'sieve' ), value: 'radio' },
@@ -113,6 +119,11 @@ function slugFromSource( source: string ): string {
 function App() {
 	const [ settings, setSettings ] = useState< Settings | null >( null );
 	const [ sources, setSources ] = useState< Source[] >( [] );
+	const [ typeOptions, setTypeOptions ] =
+		useState< FacetTypeOption[] >( TYPE_OPTIONS );
+	const [ typeHelp, setTypeHelp ] = useState< Record< string, string > >(
+		TYPE_HELP
+	);
 	const [ indexedRows, setIndexedRows ] = useState< number >( 0 );
 	const [ newSource, setNewSource ] = useState< string >( '' );
 	const [ saving, setSaving ] = useState( false );
@@ -129,11 +140,25 @@ function App() {
 				appearance: data.appearance ?? DEFAULT_APPEARANCE,
 			} )
 		);
-		apiFetch< { sources: Source[]; indexed_rows: number } >( {
+		apiFetch< {
+			sources: Source[];
+			facet_types: FacetTypeOption[];
+			indexed_rows: number;
+		} >( {
 			path: 'sieve/v1/catalog',
 		} ).then( ( data ) => {
 			setSources( data.sources );
 			setIndexedRows( data.indexed_rows );
+			if ( data.facet_types?.length ) {
+				setTypeOptions( data.facet_types );
+				const help: Record< string, string > = { ...TYPE_HELP };
+				data.facet_types.forEach( ( type ) => {
+					if ( type.help ) {
+						help[ type.value ] = type.help;
+					}
+				} );
+				setTypeHelp( help );
+			}
 		} );
 	}, [] );
 
@@ -366,8 +391,8 @@ function App() {
 								<SelectControl
 									label={ __( 'Type', 'sieve' ) }
 									value={ facet.type }
-									options={ TYPE_OPTIONS }
-									help={ TYPE_HELP[ facet.type ] }
+									options={ typeOptions }
+									help={ typeHelp[ facet.type ] }
 									onChange={ ( type: string ) =>
 										updateFacet( index, { type } )
 									}

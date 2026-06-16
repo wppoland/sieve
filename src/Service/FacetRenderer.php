@@ -23,16 +23,34 @@ final class FacetRenderer
      */
     public function render(Facet $facet, array $counts, array $selected, ?array $bounds = null): string
     {
-        $body = match ($facet->type) {
-            FacetType::RangeSlider => $this->renderRange($facet, $selected, $bounds),
-            FacetType::Search => $this->renderSearch($facet, $selected),
-            FacetType::Dropdown => $this->renderDropdown($facet, $counts, $selected),
-            FacetType::Swatch => $this->renderSwatch($facet, $counts, $selected),
-            FacetType::Hierarchy => $this->renderHierarchy($facet, $counts, $selected),
-            FacetType::Autocomplete => $this->renderAutocomplete($facet, $counts, $selected),
-            FacetType::AzIndex => $this->renderAzIndex($facet, $counts, $selected),
-            default => $this->renderChoices($facet, $counts, $selected),
-        };
+        /**
+         * Filters the HTML body of one facet before the default renderer runs.
+         *
+         * Return a non-empty string to replace the built-in widget. Return null
+         * to fall back to the core presentation for the facet type.
+         *
+         * @param string|null          $html     Custom body HTML, or null.
+         * @param Facet                $facet    Configured facet.
+         * @param array<string, int>   $counts   Value => dependent count.
+         * @param array<int, string>   $selected Selected values.
+         * @param array{min: float, max: float}|null $bounds Price bounds for sliders.
+         */
+        $custom = apply_filters('sieve_facet_body', null, $facet, $counts, $selected, $bounds);
+        if (is_string($custom) && $custom !== '') {
+            $body = $custom;
+        } else {
+            $body = match ($facet->type) {
+                FacetType::RangeSlider => $this->renderRange($facet, $selected, $bounds),
+                FacetType::Search => $this->renderSearch($facet, $selected),
+                FacetType::Dropdown => $this->renderDropdown($facet, $counts, $selected),
+                FacetType::Swatch => $this->renderSwatch($facet, $counts, $selected),
+                FacetType::Hierarchy => $this->renderHierarchy($facet, $counts, $selected),
+                FacetType::Autocomplete => $this->renderAutocomplete($facet, $counts, $selected),
+                FacetType::AzIndex => $this->renderAzIndex($facet, $counts, $selected),
+                FacetType::StarRating => $this->renderChoices($facet, $counts, $selected),
+                default => $this->renderChoices($facet, $counts, $selected),
+            };
+        }
 
         if ('' === $body) {
             return '';
