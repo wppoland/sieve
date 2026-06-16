@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.9.3
+Stable tag: 0.9.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,9 @@ The compiled assets under `build/` are generated from the sources in `resources/
 This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the linked sources.
 
 == Changelog ==
+
+= 0.9.4 =
+* Extension: `sieve_search_product_ids` filter on `SearchResolver` so PRO add-ons can route the in-grid search facet and predictive search through SearchWP or Algolia.
 
 = 0.9.3 =
 * Extension: `sieve_facet_body`, `sieve_facet_types` and `sieve_facet_catalog` filters plus `FacetTypeRegistry` in the admin catalog REST response so PRO add-ons can register advanced facet presentations (e.g. star rating).
