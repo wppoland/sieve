@@ -55,17 +55,34 @@ final class SearchResolver
             return null;
         }
 
+        /** @var int $cap */
+        $cap = (int) apply_filters('sieve_search_resolve_cap', self::RESOLVE_CAP);
+        if ($cap < 1) {
+            $cap = self::RESOLVE_CAP;
+        }
+
+        /**
+         * Filters product IDs for a search term before the built-in index resolver runs.
+         *
+         * Return an array of product IDs to replace native resolution. Return null to
+         * use the built-in folded prefix + fuzzy index search.
+         *
+         * @param array<int, int>|null $productIds Resolved product IDs, or null.
+         * @param string               $term       Raw search term.
+         * @param array<int, string>   $tokens     Normalized query tokens.
+         */
+        $external = apply_filters('sieve_search_product_ids', null, $term, $tokens);
+        if (is_array($external)) {
+            $ids = array_values(array_unique(array_map('intval', $external)));
+
+            return array_slice($ids, 0, $cap);
+        }
+
         $ids = $this->prefixTier($tokens);
 
         $lastToken = $tokens[count($tokens) - 1];
         if (mb_strlen($lastToken, 'UTF-8') >= 3) {
             $ids = $this->appendUnique($ids, $this->fuzzyTier($lastToken));
-        }
-
-        /** @var int $cap */
-        $cap = (int) apply_filters('sieve_search_resolve_cap', self::RESOLVE_CAP);
-        if ($cap < 1) {
-            $cap = self::RESOLVE_CAP;
         }
 
         // Even an empty result is returned as [] (a genuine zero-result term must
