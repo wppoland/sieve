@@ -34,6 +34,15 @@ This is an early release (MVP). Documentation: https://plogins.com/sieve/docs/
 
 == Frequently Asked Questions ==
 
+= Documentation and links =
+
+* **Documentation** - https://plogins.com/sieve/docs/
+* **Plugin page** - https://plogins.com/sieve/
+* **Source code** - https://github.com/wppoland/sieve
+* **Bug reports and feature requests** - https://github.com/wppoland/sieve/issues
+* **Discussions and questions** - https://github.com/wppoland/sieve/discussions
+
+
 = Does it require WooCommerce? =
 Yes. Sieve is a WooCommerce product filter for product archives and product-listing pages.
 
