@@ -6,7 +6,8 @@
 /.wp-env.override.json
 /node_modules
 /vendor
-/resources
+# /resources ships: it holds the human-readable source (index.tsx etc.) for the
+# minified build/ bundles, which wp.org review requires for compiled code.
 /tests
 /scripts
 /docs
