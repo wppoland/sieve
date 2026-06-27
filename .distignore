@@ -27,3 +27,5 @@
 .DS_Store
 /assets
 /SUBMISSION.md
+/.wordpress-org
+/test-results
