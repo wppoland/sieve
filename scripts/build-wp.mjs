@@ -56,6 +56,11 @@ for (const [name, entry] of Object.entries(ENTRIES)) {
             jsxFactory: 'wp.element.createElement',
             jsxFragment: 'wp.element.Fragment',
             jsxDev: false,
+            // WordPress only enqueues these bundles on evergreen browsers that
+            // support destructuring natively; tell esbuild not to down-level it
+            // (esbuild >=0.25 errors instead of transforming it).
+            target: 'es2020',
+            supported: { destructuring: true },
         },
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
@@ -63,6 +68,7 @@ for (const [name, entry] of Object.entries(ENTRIES)) {
         },
         resolve: { alias: { '@': resolve(ROOT, 'resources/js') } },
         build: {
+            target: 'es2020',
             outDir: 'build',
             emptyOutDir: false,
             manifest: false,
