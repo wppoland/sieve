@@ -192,7 +192,7 @@ function App() {
 							</Button>
 						</FlexItem>
 					</Flex>
-				</CardBody>
+						</CardBody>
 			</Card>
 
 			<Panel>
@@ -240,15 +240,17 @@ function App() {
 								/>
 							</FlexBlock>
 							<FlexItem>
-								<code>{ facet.source }</code>
-							</FlexItem>
-							<FlexItem>
-								<Button icon="arrow-up-alt2" label={ __( 'Move up', 'sieve' ) } onClick={ () => move( index, -1 ) } />
-								<Button icon="arrow-down-alt2" label={ __( 'Move down', 'sieve' ) } onClick={ () => move( index, 1 ) } />
-								<Button icon="trash" isDestructive label={ __( 'Remove', 'sieve' ) } onClick={ () => remove( index ) } />
-							</FlexItem>
+									<div style={ { display: 'flex', gap: '2px' } }>
+										<Button icon="arrow-up-alt2" label={ __( 'Move up', 'sieve' ) } disabled={ index === 0 } onClick={ () => move( index, -1 ) } />
+										<Button icon="arrow-down-alt2" label={ __( 'Move down', 'sieve' ) } disabled={ index === settings.facets.length - 1 } onClick={ () => move( index, 1 ) } />
+										<Button icon="trash" isDestructive label={ __( 'Remove', 'sieve' ) } onClick={ () => remove( index ) } />
+									</div>
+								</FlexItem>
 						</Flex>
-					</CardBody>
+							<p style={ { margin: '8px 0 0', color: '#757575', fontSize: '12px' } }>
+								{ __( 'Source:', 'sieve' ) } <code>{ facet.source }</code>
+							</p>
+						</CardBody>
 				</Card>
 			) ) }
 
