@@ -12,17 +12,48 @@ Fast, accessible faceted product filtering for WooCommerce: AJAX filters, a mobi
 
 == Description ==
 
-Sieve lets shoppers narrow down products instantly with checkboxes, ranges, search and sort, without a page reload. It is built to be pleasant to use and fast: accessible widgets, a mobile filter drawer, and a rendering approach designed for Core Web Vitals (no layout shift when results update).
+Sieve gives your shoppers a fast, modern way to find products. They tick a few boxes, drag a price range, pick a rating, and the grid updates instantly with no page reload. It is built to feel effortless and to stay quick on large catalogs, with accessible widgets, a mobile filter drawer, and a rendering approach designed for Core Web Vitals: no layout shift when results change.
 
-* AJAX filtering with no page reload, with shareable, bookmarkable URLs
-* Facet types: checkboxes, radio, searchable dropdown, range slider, search, sort, pagination, reset, active-filter chips
-* WooCommerce: categories, tags, attributes, price, stock status, on sale
-* A pre-built index for fast filtered queries on large catalogs
+Everything runs against a pre-built index, so filtering stays fast even with thousands of products, and the counts next to each option update live as shoppers narrow down.
+
+Filtering that feels instant:
+
+* AJAX filtering with no page reload, and shareable, bookmarkable URLs
+* Live dependent counts that update as filters are applied
+* Active-filter chips, one-click reset, sorting and pagination built in
+
+Every facet type you need:
+
+* Checkboxes, radio buttons, dropdowns, range sliders, text search, sort, pagination, reset and active-filter chips
+
+Filter by anything in your catalog:
+
+* Categories, tags and product attributes
+* Price, stock status, on sale and average rating
+
+Fast and accessible by design:
+
+* Pre-built index for quick filtered queries on large catalogs
 * Mobile filter drawer with a sticky Apply bar
-* Accessible widgets (keyboard and screen-reader friendly)
-* Gutenberg block and shortcode for placement
+* Keyboard and screen-reader friendly widgets
+* Core Web Vitals by design: no layout shift when results update
 
-This is an early release (MVP). Documentation: https://plogins.com/sieve/docs/
+Easy to place and configure:
+
+* Gutenberg "Sieve Filter" block and the `[sieve]` shortcode
+* A visual facet builder in the admin: add, reorder and retype facets, set the layout, and rebuild the index
+
+= Sieve PRO =
+
+Sieve PRO adds advanced control and integrations for growing stores:
+
+* Star-rating facet with visual stars
+* Conditional facet rules: show or hide facets by category, shop page or customer role
+* A/B layout testing to find the filter layout that converts best
+* Performance dashboard: index size, catalog coverage and filter-speed benchmarks
+* Search integrations: SearchWP and Algolia, with native fallback
+
+Documentation: https://plogins.com/sieve/docs/
 
 == Installation ==
 
@@ -34,7 +65,7 @@ This is an early release (MVP). Documentation: https://plogins.com/sieve/docs/
 == Frequently Asked Questions ==
 
 = Does it require WooCommerce? =
-Yes, this early version targets WooCommerce product archives.
+Yes. Sieve filters WooCommerce product archives and any page where you place the filter.
 
 = Does filtering reload the page? =
 No. Filtering happens via AJAX with the URL kept in sync so results are shareable.
