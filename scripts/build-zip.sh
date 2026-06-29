@@ -10,9 +10,11 @@ STAGE="${OUT_DIR}/sieve"
 rm -rf "${OUT_DIR}"
 mkdir -p "${STAGE}"
 
+composer install --no-dev --working-dir="${ROOT_DIR}" --quiet
+
 # Copy everything except .distignore patterns.
 rsync -a --exclude-from="${ROOT_DIR}/.distignore" \
-    --exclude '.git' --exclude 'node_modules' --exclude 'vendor' \
+    --exclude '.git' --exclude 'node_modules' \
     --exclude '.DS_Store' \
     "${ROOT_DIR}/" "${STAGE}/"
 

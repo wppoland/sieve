@@ -7,6 +7,7 @@ namespace Sieve\Service;
 defined('ABSPATH') || exit;
 
 use Sieve\Repository\IndexRepository;
+use Sieve\Support\Normalizer;
 
 /**
  * Builds the Sieve index from WooCommerce products.
@@ -129,6 +130,39 @@ final class ProductIndexer
                 'facet_slug' => 'rating',
                 'value' => $rounded,
                 'value_num' => (float) $rounded,
+            ];
+        }
+
+        // Predictive-search token index. '_search' is a reserved internal
+        // facet_slug holding diacritic-folded tokens from the product name and
+        // SKU, so a query folded the same way can match across diacritics and
+        // small typos. Each token is stored as its own row.
+        //
+        // Only index tokens for products WooCommerce would surface in its own
+        // search (visibility 'visible' or 'search'); skipping hidden and
+        // catalog-only products keeps the predictive dropdown from exposing
+        // search-excluded products and trims index size.
+        if (! in_array($product->get_catalog_visibility(), ['visible', 'search'], true)) {
+            return $rows;
+        }
+
+        $sku = (string) $product->get_sku();
+        $tokens = array_merge(
+            Normalizer::tokens($product->get_name()),
+            Normalizer::tokens($sku),
+        );
+        // Also store the full folded SKU as one token so a code like "abc-12"
+        // (which folds to "abc 12") remains findable as a single unit.
+        $foldedSku = Normalizer::fold($sku);
+        if ('' !== $foldedSku) {
+            $tokens[] = $foldedSku;
+        }
+
+        foreach (array_unique($tokens) as $token) {
+            $rows[] = [
+                'facet_slug' => '_search',
+                'value' => mb_substr($token, 0, 191, 'UTF-8'),
+                'value_num' => null,
             ];
         }
 

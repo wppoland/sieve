@@ -31,16 +31,20 @@ final class FacetCountService
      *
      * @param array<int, Facet> $facets
      * @param array<string, string> $filters
+     * @param array<int, int>|null $searchIds Resolved search ids (search-aware counts).
      * @return array<string, int>
      */
-    public function countsFor(Facet $facet, array $facets, array $filters): array
+    public function countsFor(Facet $facet, array $facets, array $filters, ?array $searchIds = null): array
     {
-        $cacheKey = $facet->slug . '|' . md5((string) wp_json_encode($filters));
+        // The cache key must include the search ids: within one request lifecycle
+        // the same facet can be counted with and without a search, and the counts
+        // differ (search-aware). Omitting it would serve stale counts.
+        $cacheKey = $facet->slug . '|' . md5((string) wp_json_encode([$filters, $searchIds]));
         if (isset($this->memo[$cacheKey])) {
             return $this->memo[$cacheKey];
         }
 
-        $candidates = $this->filter->resolve($facets, $filters, $facet->slug);
+        $candidates = $this->filter->resolve($facets, $filters, $facet->slug, $searchIds);
         $counts = $this->index->valueCounts($facet->indexKey(), $candidates);
 
         $this->memo[$cacheKey] = $counts;
