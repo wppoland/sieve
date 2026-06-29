@@ -8,6 +8,9 @@
 /.wp-env.json
 /.wp-env.override.json
 /node_modules
+/vendor
+# /resources ships: it holds the human-readable source (index.tsx etc.) for the
+# minified build/ bundles, which wp.org review requires for compiled code.
 /tests
 /scripts
 /docs
@@ -28,7 +31,7 @@
 .DS_Store
 /assets
 /SUBMISSION.md
+/.wordpress-org
 /test-results
 /playwright-report
 /.playwright-mcp
-/vendor

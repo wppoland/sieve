@@ -20,14 +20,13 @@ const ROOT = resolve(import.meta.dirname, '..');
 const ENTRIES = {
     admin: 'resources/js/admin/index.tsx',
     'frontend-filter': 'resources/js/frontend/filter.ts',
-    'frontend-suggest': 'resources/js/frontend/suggest.ts',
 };
 
 // Bundles that need WordPress React deps in their .asset.php.
-const ASSET_PHP = new Set(['admin', 'frontend-filter', 'frontend-suggest']);
+const ASSET_PHP = new Set(['admin', 'frontend-filter']);
 
 // Framework-free bundles: emit an empty dependency list.
-const VANILLA = new Set(['frontend-filter', 'frontend-suggest']);
+const VANILLA = new Set(['frontend-filter']);
 
 const GLOBALS = {
     react: 'React',
@@ -57,6 +56,11 @@ for (const [name, entry] of Object.entries(ENTRIES)) {
             jsxFactory: 'wp.element.createElement',
             jsxFragment: 'wp.element.Fragment',
             jsxDev: false,
+            // WordPress only enqueues these bundles on evergreen browsers that
+            // support destructuring natively; tell esbuild not to down-level it
+            // (esbuild >=0.25 errors instead of transforming it).
+            target: 'es2020',
+            supported: { destructuring: true },
         },
         define: {
             'process.env.NODE_ENV': JSON.stringify('production'),
@@ -64,7 +68,7 @@ for (const [name, entry] of Object.entries(ENTRIES)) {
         },
         resolve: { alias: { '@': resolve(ROOT, 'resources/js') } },
         build: {
-            target: 'esnext',
+            target: 'es2020',
             outDir: 'build',
             emptyOutDir: false,
             manifest: false,
