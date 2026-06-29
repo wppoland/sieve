@@ -12,18 +12,55 @@ Fast, accessible faceted product filtering for WooCommerce: AJAX filters, a mobi
 
 == Description ==
 
-Sieve lets shoppers narrow down products instantly with checkboxes, ranges, search and sort, without a page reload. It is built to be pleasant to use and fast: accessible widgets, a mobile filter drawer, and a rendering approach designed for Core Web Vitals (no layout shift when results update).
+Sieve gives your shoppers a fast, modern way to find products. They tick a few boxes, drag a price range, type a keyword, and the grid updates instantly with no page reload. It is built to feel effortless and to stay quick on large catalogs, with accessible widgets, a mobile filter drawer, and a rendering approach designed for Core Web Vitals: no layout shift when results change.
 
-* AJAX filtering with no page reload, with shareable, bookmarkable URLs
-* Predictive product search: an instant typeahead dropdown with thumbnails, prices, SKU and category matches, and keyboard navigation
-* Facet types: checkboxes, radio, searchable dropdown, color and image swatches, hierarchical (tree) categories, autocomplete (searchable options), A-Z index, range slider, search, sort, pagination, reset, active-filter chips
-* WooCommerce: categories, tags, attributes, price, stock status, on sale
-* A pre-built index for fast filtered queries on large catalogs
+Everything runs against a pre-built index, so filtering stays fast even with thousands of products, and the counts next to each option update live as shoppers narrow down.
+
+Filtering that feels instant:
+
+* AJAX filtering with no page reload, and shareable, bookmarkable URLs
+* Live dependent counts that update as filters are applied
+* Active-filter chips, one-click reset, sorting and pagination built in
+
+Every facet type you need:
+
+* Checkboxes, radio buttons and searchable dropdowns
+* Color and image swatches, hierarchical (tree) categories
+* Autocomplete (searchable options) and an A-Z index
+* Range sliders, keyword search, sort, pagination and reset
+
+Filter by anything in your catalog:
+
+* Categories, tags and product attributes
+* Price, stock status and on sale
+
+Predictive product search:
+
+* An instant typeahead dropdown with thumbnails, prices, SKU and category matches, and full keyboard navigation
+
+Fast and accessible by design:
+
+* Pre-built index for quick filtered queries on large catalogs
 * Mobile filter drawer with a sticky Apply bar
-* Accessible widgets (keyboard and screen-reader friendly)
-* Gutenberg blocks and shortcodes for placement
+* Keyboard and screen-reader friendly widgets
+* Core Web Vitals by design: no layout shift when results update
 
-This is an early release (MVP). Documentation: https://plogins.com/sieve/docs/
+Easy to place and configure:
+
+* Gutenberg "Sieve Filter" block and the `[sieve]` shortcode
+* A visual facet builder in the admin: add, reorder and retype facets, set the layout, and rebuild the index
+
+= Sieve PRO =
+
+Sieve PRO adds advanced control and integrations for growing stores:
+
+* Star-rating facet with visual stars
+* Conditional facet rules: show or hide facets by category, shop page or customer role
+* A/B layout testing to find the filter layout that converts best
+* Performance dashboard: index size, catalog coverage and filter-speed benchmarks
+* Search integrations: SearchWP and Algolia, with native fallback
+
+Documentation: https://plogins.com/sieve/docs/
 
 == Installation ==
 
@@ -44,13 +81,13 @@ This is an early release (MVP). Documentation: https://plogins.com/sieve/docs/
 
 
 = Does it require WooCommerce? =
-Yes. Sieve is a WooCommerce product filter for product archives and product-listing pages.
+Yes. Sieve filters WooCommerce product archives and any page where you place the filter.
 
 = Does filtering reload the page? =
 No. Filtering happens via AJAX with the URL kept in sync so results are shareable.
 
 = What can shoppers filter by? =
-Sieve can filter WooCommerce products by categories, tags, attributes, price, stock status, on-sale state, ratings and a keyword search field. It also supports range sliders, searchable options, color/image swatches, active-filter chips and sorting.
+Sieve can filter WooCommerce products by categories, tags, attributes, price, stock status, on-sale state and a keyword search field. It also supports range sliders, searchable options, color/image swatches, active-filter chips and sorting.
 
 = Is it fast on large stores? =
 Yes. Sieve builds a product filter index, so AJAX filter requests do not need to run slow live joins for every category, attribute and price query.
@@ -75,16 +112,12 @@ Yes. Sieve includes a mobile filter drawer with a sticky apply bar, so shoppers 
 
 == Development ==
 
-The full, human-readable source code (including the JavaScript/TypeScript sources for the blocks, admin and front-end scripts) and the build tooling are publicly available at:
-
-https://github.com/wppoland/sieve
-
-The compiled assets under `build/` are generated from the sources in `resources/`. To rebuild them:
+The full, human-readable source for the compiled assets is included in this plugin under `resources/`, alongside the build tooling (`package.json`, `scripts/build-wp.mjs`). The compiled files under `build/` are generated from those sources. To rebuild them:
 
 1. `npm install`
 2. `npm run build`
 
-This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the linked sources.
+This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at https://github.com/wppoland/sieve.
 
 == Changelog ==
 
@@ -136,6 +169,12 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 
 = 0.2.0 =
 * New facet types: color and image swatches (with per-term color/image, plus an automatic color guess from common color names) and hierarchical (tree) category facets that show only branches leading to results.
+
+= 0.1.2 =
+* Admin: cleaner facet builder rows (aligned controls, grouped reorder/remove buttons with first/last disabled states, field source shown as a caption).
+
+= 0.1.1 =
+* Compliance: added the plugin owner to the Contributors list and included the human-readable sources and build steps for the compiled assets (WordPress.org plugin guidelines).
 
 = 0.1.0 =
 * Initial MVP release: pre-built index, AJAX filtering with URL state, dependent facet counts, checkboxes / radio / dropdown / range / search facets, sorting, active-filter chips, pagination, mobile filter drawer, React facet builder, `[sieve]` shortcode and "Sieve Filter" block.
