@@ -4,3 +4,8 @@
 /.wp-env.override.json
 *.log
 .DS_Store
+
+# e2e generated artifacts
+/tests/e2e/.urls.json
+/test-results/
+/playwright-report/

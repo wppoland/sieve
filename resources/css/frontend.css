@@ -5,13 +5,34 @@
  */
 
 .sieve-app {
-	--sieve-gap: 1.5rem;
-	--sieve-border: #e2e4e7;
+	/* Canonical, store-themeable tokens (the admin Appearance panel writes these
+	   four; keep their names stable). Everything else is derived from them so a
+	   single accent/border/muted change re-themes the whole widget. */
 	--sieve-accent: #2563eb;
+	--sieve-border: #e2e4e7;
 	--sieve-muted: #6b7280;
+
+	/* Derived surface + text tokens. color-mix gives tasteful tints from the
+	   canonical tokens; the plain fallbacks above keep older browsers correct. */
+	--sieve-surface: #ffffff;
+	--sieve-surface-2: #f3f4f6;
+	--sieve-text: #111827;
+	--sieve-on-accent: #ffffff;
+	--sieve-accent-soft: color-mix(in srgb, var(--sieve-accent) 12%, transparent);
+	--sieve-shadow: 0 1px 2px rgba(17, 24, 39, 0.06), 0 8px 24px rgba(17, 24, 39, 0.08);
+	--sieve-radius: 0.5rem;
+	--sieve-radius-pill: 999px;
+
+	/* Fluid spacing + type, so the widget scales smoothly between phones and
+	   wide screens without per-breakpoint overrides. */
+	--sieve-gap: clamp(1rem, 0.6rem + 1.6vw, 1.75rem);
+	--sieve-fs: clamp(0.85rem, 0.82rem + 0.2vw, 0.95rem);
+	--sieve-ease: cubic-bezier(0.2, 0, 0, 1);
+
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: var(--sieve-gap);
+	color: var(--sieve-text);
 }
 
 @media (min-width: 783px) {
@@ -40,6 +61,48 @@
 	margin: 0 0 0.6rem;
 }
 
+/* Collapsible facet header: a full-width button wrapping the title with a
+   rotating chevron. Progressive enhancement — without JS the body stays open. */
+.sieve-facet__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	width: 100%;
+	margin: 0 0 0.6rem;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: inherit;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	text-align: start;
+}
+
+.sieve-facet__toggle .sieve-facet__title {
+	margin: 0;
+}
+
+.sieve-facet__chevron {
+	flex: 0 0 auto;
+	width: 0.6em;
+	height: 0.6em;
+	border-inline-end: 2px solid currentColor;
+	border-block-end: 2px solid currentColor;
+	transform: rotate(45deg);
+	transition: transform 0.2s var(--sieve-ease);
+	opacity: 0.6;
+}
+
+.sieve-facet__toggle[aria-expanded="false"] .sieve-facet__chevron {
+	transform: rotate(-45deg);
+}
+
+.sieve-facet__body[hidden] {
+	display: none;
+}
+
 .sieve-choices {
 	list-style: none;
 	margin: 0;
@@ -52,9 +115,20 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
-	padding: 0.2rem 0;
+	padding: 0.25rem 0.4rem;
+	margin-inline: -0.4rem;
+	border-radius: 0.35rem;
 	cursor: pointer;
-	font-size: 0.9rem;
+	font-size: var(--sieve-fs);
+	transition: background-color 0.12s var(--sieve-ease);
+}
+
+.sieve-choice label:hover {
+	background: var(--sieve-surface-2);
+}
+
+.sieve-choice input {
+	accent-color: var(--sieve-accent);
 }
 
 .sieve-choice__label {
@@ -72,8 +146,22 @@
 	width: 100%;
 	padding: 0.45rem 0.6rem;
 	border: 1px solid var(--sieve-border);
-	border-radius: 6px;
-	font-size: 0.9rem;
+	border-radius: var(--sieve-radius);
+	font-size: var(--sieve-fs);
+	background: var(--sieve-surface);
+	color: var(--sieve-text);
+	transition: border-color 0.12s var(--sieve-ease), box-shadow 0.12s var(--sieve-ease);
+}
+
+.sieve-dropdown:hover,
+.sieve-search:hover {
+	border-color: color-mix(in srgb, var(--sieve-accent) 40%, var(--sieve-border));
+}
+
+.sieve-dropdown:focus-visible,
+.sieve-search:focus-visible {
+	border-color: var(--sieve-accent);
+	box-shadow: 0 0 0 3px var(--sieve-accent-soft);
 }
 
 /* ---- Range ---- */
@@ -96,6 +184,171 @@
 	color: var(--sieve-muted);
 }
 
+/* ---- Swatches ---- */
+.sieve-swatches {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem 0.75rem;
+}
+
+.sieve-swatch label {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.2rem;
+	cursor: pointer;
+	font-size: 0.78rem;
+	max-width: 4.5rem;
+	text-align: center;
+}
+
+.sieve-swatch__visual {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	border: 1px solid var(--sieve-border);
+	box-shadow: inset 0 0 0 2px var(--sieve-surface);
+	overflow: hidden;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: outline-offset 0.1s ease;
+}
+
+.sieve-swatch__visual--image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.sieve-swatch__visual--text {
+	font-size: 0.7rem;
+	text-transform: uppercase;
+	background: var(--sieve-surface-2);
+	box-shadow: none;
+	color: var(--sieve-muted);
+}
+
+.sieve-swatch__input:checked ~ .sieve-swatch__visual {
+	outline: 2px solid var(--sieve-accent);
+	outline-offset: 2px;
+}
+
+.sieve-swatch__input:focus-visible ~ .sieve-swatch__visual {
+	outline: 2px solid var(--sieve-accent);
+	outline-offset: 2px;
+}
+
+.sieve-swatch__label {
+	line-height: 1.2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 100%;
+}
+
+.sieve-swatch__count {
+	color: var(--sieve-muted);
+	font-size: 0.7rem;
+	font-variant-numeric: tabular-nums;
+}
+
+/* ---- Hierarchy (tree) ---- */
+.sieve-tree {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.sieve-tree .sieve-tree {
+	margin-inline-start: 1rem;
+	border-inline-start: 1px solid var(--sieve-border);
+	padding-inline-start: 0.5rem;
+}
+
+.sieve-tree__item > label {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.2rem 0;
+	cursor: pointer;
+	font-size: 0.9rem;
+}
+
+/* Visually hidden but available to assistive tech (status announcements, labels).
+   Self-contained so accessibility never depends on the active theme. */
+.sieve-app .screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	word-wrap: normal;
+}
+
+/* ---- Autocomplete facet ---- */
+.sieve-autocomplete__input {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.4rem 0.6rem;
+	margin: 0 0 0.5rem;
+	border: 1px solid var(--sieve-border);
+	border-radius: 0.35rem;
+	font-size: 0.9rem;
+}
+
+.sieve-autocomplete__input:focus-visible {
+	outline: 2px solid var(--sieve-accent);
+	outline-offset: 1px;
+}
+
+/* ---- A-Z index facet ---- */
+.sieve-az__bar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.15rem;
+	margin: 0 0 0.6rem;
+}
+
+.sieve-az__letter {
+	min-width: 1.5rem;
+	padding: 0.15rem 0.3rem;
+	border: 1px solid var(--sieve-border);
+	border-radius: 0.25rem;
+	background: var(--sieve-surface);
+	color: var(--sieve-muted);
+	font-size: 0.78rem;
+	line-height: 1.2;
+	cursor: pointer;
+	transition: background-color 0.12s var(--sieve-ease), border-color 0.12s var(--sieve-ease);
+}
+
+.sieve-az__letter:hover {
+	border-color: var(--sieve-accent);
+	background: var(--sieve-accent-soft);
+}
+
+.sieve-az__letter.is-active {
+	background: var(--sieve-accent);
+	border-color: var(--sieve-accent);
+	color: var(--sieve-on-accent);
+	/* Non-colour cue too, so the active letter is not conveyed by colour alone. */
+	font-weight: 700;
+}
+
+.sieve-az__letter:focus-visible {
+	outline: 2px solid var(--sieve-accent);
+	outline-offset: 1px;
+}
+
 /* ---- Toolbar ---- */
 .sieve-toolbar {
 	display: flex;
@@ -116,30 +369,65 @@
 .sieve-count {
 	color: var(--sieve-muted);
 	font-size: 0.9rem;
+	font-variant-numeric: tabular-nums;
 }
 
 .sieve-chips {
 	flex-basis: 100%;
 	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
 	gap: 0.4rem;
+}
+
+/* Only show the "Active filters" label row when at least one chip is present,
+   so an unfiltered grid stays clean. :has() is progressive enhancement. */
+.sieve-chips:empty {
+	display: none;
+}
+
+.sieve-chips__label {
+	color: var(--sieve-muted);
+	font-size: 0.8rem;
+	font-weight: 600;
+	margin-inline-end: 0.15rem;
 }
 
 .sieve-chip {
 	display: inline-flex;
 	align-items: center;
-	gap: 0.35rem;
-	padding: 0.25rem 0.6rem;
-	background: #f3f4f6;
+	gap: 0.4rem;
+	padding: 0.25rem 0.35rem 0.25rem 0.7rem;
+	background: var(--sieve-surface-2);
 	border: 1px solid var(--sieve-border);
-	border-radius: 999px;
+	border-radius: var(--sieve-radius-pill);
 	font-size: 0.8rem;
+	color: inherit;
 	cursor: pointer;
+	transition: background-color 0.12s var(--sieve-ease), border-color 0.12s var(--sieve-ease);
+}
+
+.sieve-chip:hover {
+	background: var(--sieve-accent-soft);
+	border-color: var(--sieve-accent);
 }
 
 .sieve-chip__x {
-	font-size: 1rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.1rem;
+	height: 1.1rem;
+	border-radius: 50%;
+	background: color-mix(in srgb, var(--sieve-muted) 22%, transparent);
+	font-size: 0.85rem;
 	line-height: 1;
+	transition: background-color 0.12s var(--sieve-ease), color 0.12s var(--sieve-ease);
+}
+
+.sieve-chip:hover .sieve-chip__x {
+	background: var(--sieve-accent);
+	color: var(--sieve-on-accent);
 }
 
 .sieve-reset {
@@ -148,10 +436,22 @@
 	color: var(--sieve-accent);
 	cursor: pointer;
 	font-size: 0.85rem;
+	font-weight: 600;
+	padding: 0.2rem 0.1rem;
+	border-radius: 0.3rem;
 	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.sieve-reset:hover {
+	text-decoration: none;
 }
 
 /* ---- Results ---- */
+.sieve-results-wrap {
+	position: relative;
+}
+
 .sieve-results {
 	transition: opacity 0.15s ease;
 }
@@ -159,6 +459,105 @@
 .sieve-app.is-loading .sieve-results {
 	opacity: 0.55;
 	pointer-events: none;
+}
+
+/* Loading overlay: a centred, accessible spinner that floats over the dimmed
+   grid without changing layout height (zero CLS). Reserved space comes from the
+   min-height the script pins on the container during a fetch. */
+.sieve-loading {
+	position: absolute;
+	inset-block-start: 1.5rem;
+	inset-inline: 0;
+	display: none;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.sieve-app.is-loading .sieve-loading {
+	display: flex;
+}
+
+.sieve-loading__spinner {
+	width: 2rem;
+	height: 2rem;
+	border: 3px solid var(--sieve-accent-soft);
+	border-block-start-color: var(--sieve-accent);
+	border-radius: 50%;
+	animation: sieve-spin 0.7s linear infinite;
+}
+
+@keyframes sieve-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* ---- Empty / error states ---- */
+.sieve-state {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.75rem;
+	padding: clamp(2rem, 1rem + 6vw, 4rem) 1.5rem;
+	text-align: center;
+	color: var(--sieve-muted);
+}
+
+.sieve-state__title {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: var(--sieve-text);
+	margin: 0;
+}
+
+.sieve-state__text {
+	max-width: 32rem;
+	margin: 0;
+	font-size: var(--sieve-fs);
+}
+
+.sieve-state__cta {
+	margin-top: 0.25rem;
+	padding: 0.5rem 1.1rem;
+	border: 1px solid var(--sieve-accent);
+	border-radius: var(--sieve-radius);
+	background: var(--sieve-accent);
+	color: var(--sieve-on-accent);
+	font-size: var(--sieve-fs);
+	font-weight: 600;
+	cursor: pointer;
+	transition: filter 0.12s var(--sieve-ease);
+}
+
+.sieve-state__cta:hover {
+	filter: brightness(0.94);
+}
+
+/* ---- AJAX error banner ---- */
+.sieve-error {
+	flex-basis: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.6rem 0.9rem;
+	border: 1px solid color-mix(in srgb, #dc2626 45%, var(--sieve-border));
+	border-radius: var(--sieve-radius);
+	background: color-mix(in srgb, #dc2626 8%, var(--sieve-surface));
+	color: var(--sieve-text);
+	font-size: var(--sieve-fs);
+}
+
+.sieve-error__retry {
+	margin-inline-start: auto;
+	padding: 0.35rem 0.85rem;
+	border: 1px solid var(--sieve-accent);
+	border-radius: var(--sieve-radius);
+	background: var(--sieve-accent);
+	color: var(--sieve-on-accent);
+	font-size: 0.82rem;
+	font-weight: 600;
+	cursor: pointer;
 }
 
 /* Self-contained product grid: the WooCommerce loop markup (ul.products) is
@@ -253,13 +652,19 @@
 .sieve-results ul.products li.product .added_to_cart {
 	display: inline-block;
 	padding: 0.45rem 0.9rem;
-	background: #111827;
-	color: #fff;
+	background: var(--sieve-text);
+	color: var(--sieve-surface);
 	border: none;
-	border-radius: 6px;
+	border-radius: var(--sieve-radius);
 	font-size: 0.82rem;
 	text-decoration: none;
 	cursor: pointer;
+	transition: filter 0.12s var(--sieve-ease);
+}
+
+.sieve-results ul.products li.product .button:hover,
+.sieve-results ul.products li.product .added_to_cart:hover {
+	filter: brightness(1.25);
 }
 
 .sieve-results .woocommerce-result-count,
@@ -292,16 +697,23 @@
 	min-width: 2.25rem;
 	padding: 0.4rem 0.6rem;
 	border: 1px solid var(--sieve-border);
-	background: #fff;
-	border-radius: 6px;
+	background: var(--sieve-surface);
+	color: var(--sieve-text);
+	border-radius: var(--sieve-radius);
 	cursor: pointer;
 	font-variant-numeric: tabular-nums;
+	transition: background-color 0.12s var(--sieve-ease), border-color 0.12s var(--sieve-ease);
+}
+
+.sieve-page:hover {
+	border-color: var(--sieve-accent);
+	background: var(--sieve-accent-soft);
 }
 
 .sieve-page.is-current {
 	background: var(--sieve-accent);
 	border-color: var(--sieve-accent);
-	color: #fff;
+	color: var(--sieve-on-accent);
 }
 
 /* ---- Focus visibility (WCAG 2.2) ---- */
@@ -323,8 +735,9 @@
 		gap: 0.4rem;
 		padding: 0.55rem 1rem;
 		border: 1px solid var(--sieve-border);
-		border-radius: 6px;
-		background: #fff;
+		border-radius: var(--sieve-radius);
+		background: var(--sieve-surface);
+		color: var(--sieve-text);
 		font-weight: 600;
 		cursor: pointer;
 	}
@@ -333,12 +746,21 @@
 		position: fixed;
 		inset: 0 15% 0 0;
 		z-index: 1000;
-		background: #fff;
+		background: var(--sieve-surface);
 		padding: 1.25rem;
 		overflow-y: auto;
 		transform: translateX(-105%);
-		transition: transform 0.2s ease;
-		box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+		transition: transform 0.25s var(--sieve-ease);
+		box-shadow: 0 0 30px rgba(0, 0, 0, 0.25);
+	}
+
+	/* Tap-to-dismiss backdrop behind the open drawer. */
+	.sieve-app.is-drawer-open::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		z-index: 999;
+		background: rgba(17, 24, 39, 0.45);
 	}
 
 	.sieve-app.is-drawer-open .sieve-facets {
@@ -351,7 +773,7 @@
 		inset: auto 0 0 0;
 		z-index: 1001;
 		padding: 0.75rem;
-		background: #fff;
+		background: var(--sieve-surface);
 		border-top: 1px solid var(--sieve-border);
 	}
 
@@ -359,17 +781,203 @@
 		width: 100%;
 		padding: 0.75rem;
 		background: var(--sieve-accent);
-		color: #fff;
+		color: var(--sieve-on-accent);
 		border: none;
-		border-radius: 6px;
+		border-radius: var(--sieve-radius);
 		font-weight: 600;
 		cursor: pointer;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.sieve-facets,
-	.sieve-results {
+	.sieve-app *,
+	.sieve-app *::before,
+	.sieve-app *::after {
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}
+
+/* ---- Dark mode ----
+   Only re-maps the DERIVED surface/text tokens, never the four canonical
+   accent/border/muted tokens the store owner controls, so a custom accent keeps
+   working in the dark. Scoped to the default border value so a store that has
+   set a bespoke (light) border palette is left untouched. */
+@media (prefers-color-scheme: dark) {
+	.sieve-app {
+		--sieve-surface: #1f2329;
+		--sieve-surface-2: #2a2f37;
+		--sieve-text: #e5e7eb;
+		--sieve-border: #3a4049;
+		--sieve-muted: #9aa3af;
+		--sieve-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5);
+	}
+}
+
+/* ---- In-grid search combobox ----
+   A thin keyboard/a11y assist anchored under the input. Absolutely positioned so
+   it never reserves layout space (zero CLS). Class names mirror search.css so the
+   look stays consistent with the standalone predictive search widget. */
+.sieve-search__wrap {
+	position: relative;
+}
+
+.sieve-search__dropdown {
+	position: absolute;
+	top: calc(100% + 0.35rem);
+	left: 0;
+	right: 0;
+	z-index: 40;
+	max-height: 60vh;
+	overflow-y: auto;
+	background: var(--sieve-surface);
+	color: var(--sieve-text);
+	border: 1px solid var(--sieve-border);
+	border-radius: var(--sieve-radius);
+	box-shadow: var(--sieve-shadow);
+}
+
+.sieve-search__dropdown .sieve-search__item {
+	display: grid;
+	grid-template-columns: 44px 1fr;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.5rem 0.75rem;
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+	border-bottom: 1px solid var(--sieve-border);
+}
+
+.sieve-search__dropdown .sieve-search__item:last-child {
+	border-bottom: 0;
+}
+
+.sieve-search__dropdown .sieve-search__item.is-active,
+.sieve-search__dropdown .sieve-search__item:hover {
+	background: var(--sieve-surface-2);
+}
+
+/* Keyboard-active option: a non-colour cue (inset accent border) on top of the
+   background, so the highlight is not conveyed by colour alone (WCAG 1.4.1 /
+   1.4.11) and stays distinct from hover. */
+.sieve-search__dropdown .sieve-search__item.is-active {
+	box-shadow: inset 3px 0 0 var(--sieve-accent);
+	font-weight: 600;
+}
+
+@media (forced-colors: active) {
+	.sieve-search__dropdown .sieve-search__item.is-active {
+		outline: 2px solid Highlight;
+		outline-offset: -2px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sieve-search__dropdown,
+	.sieve-search__dropdown .sieve-search__item {
 		transition: none;
 	}
+}
+
+.sieve-search__thumb {
+	width: 44px;
+	height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: 0.3rem;
+	background: var(--sieve-surface-2);
+}
+
+.sieve-search__thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.sieve-search__meta {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem;
+	min-width: 0;
+}
+
+.sieve-search__name {
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sieve-search__sku,
+.sieve-search__price {
+	font-size: 0.8rem;
+	color: var(--sieve-muted);
+}
+
+.sieve-search__price del {
+	opacity: 0.6;
+}
+
+.sieve-search__empty {
+	padding: 0.75rem;
+	color: var(--sieve-muted);
+}
+
+/* ===== Appearance presets (0.8.0). Inert unless data-sieve-style is set on the
+   root, so a default install renders byte-identically to the base styles above.
+   Rules reference only the four real colour vars; "unstyled" has no rules here
+   (its base sheet is never enqueued). ===== */
+
+/* Minimal: flat, low-chrome facets. */
+.sieve-app[data-sieve-style="minimal"] .sieve-facet {
+	border-bottom: none;
+	padding-bottom: 0.75rem;
+}
+.sieve-app[data-sieve-style="minimal"] .sieve-facet + .sieve-facet {
+	border-top: 1px solid var(--sieve-border);
+	padding-top: 0.75rem;
+}
+.sieve-app[data-sieve-style="minimal"] .sieve-chip {
+	border-radius: 4px;
+}
+
+/* Bordered: boxed facets and cards. */
+.sieve-app[data-sieve-style="bordered"] .sieve-facet {
+	border: 1px solid var(--sieve-border);
+	border-radius: 8px;
+	padding: 1rem;
+	margin-bottom: 1rem;
+}
+.sieve-app[data-sieve-style="bordered"] .sieve-chip {
+	border: 1px solid var(--sieve-border);
+	border-radius: 6px;
+}
+.sieve-app[data-sieve-style="bordered"] .sieve-page {
+	border-radius: 6px;
+}
+
+/* Soft: rounded corners and gentle shadows. */
+.sieve-app[data-sieve-style="soft"] .sieve-facet {
+	border: 1px solid var(--sieve-border);
+	border-radius: 12px;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.sieve-app[data-sieve-style="soft"] .sieve-dropdown,
+.sieve-app[data-sieve-style="soft"] .sieve-range__min,
+.sieve-app[data-sieve-style="soft"] .sieve-range__max {
+	border-radius: 8px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.sieve-app[data-sieve-style="soft"] .sieve-chip {
+	border-radius: 8px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.sieve-app[data-sieve-style="soft"] .sieve-page {
+	border-radius: 6px;
 }

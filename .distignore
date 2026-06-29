@@ -1,3 +1,6 @@
+# Files excluded from the wp.org build. The storefront-kit runtime is bundled
+# in /lib/storefront-kit (de-vendored), loaded via the PSR-4 fallback in
+# autoload.php, so /vendor (Composer + dev deps) is excluded.
 /.git
 /.github
 /.gitignore
@@ -30,3 +33,5 @@
 /SUBMISSION.md
 /.wordpress-org
 /test-results
+/playwright-report
+/.playwright-mcp

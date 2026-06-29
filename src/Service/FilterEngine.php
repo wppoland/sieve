@@ -7,20 +7,28 @@ namespace Sieve\Service;
 defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
+use WPPoland\StorefrontKit\Filter\FacetFilterEngine;
 
 /**
  * The single source of truth for a filter render. Both the initial server-side
  * render (shortcode / block) and the AJAX endpoint call run(), so the markup is
  * identical and the frontend can swap fragments in place with zero layout shift.
+ *
+ * Delegates the filtering work to {@see FacetFilterEngine} when present; Sieve
+ * keeps templates, settings and index access local.
  */
 final class FilterEngine
 {
+    private ?FacetFilterEngine $kitEngine = null;
+
     public function __construct(
         private readonly Settings $settings,
         private readonly FilterService $filter,
         private readonly FacetCountService $counts,
         private readonly FacetRenderer $facetRenderer,
         private readonly ResultsRenderer $resultsRenderer,
+        private readonly SearchResolver $resolver,
+        private readonly AppearanceService $appearance,
     ) {
     }
 
@@ -30,22 +38,45 @@ final class FilterEngine
      */
     public function run(array $request): array
     {
+        $kit = $this->kitEngine();
+
+        if ($kit instanceof FacetFilterEngine) {
+            return $kit->run($request);
+        }
+
+        return $this->runLegacy($request);
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     * @return array{facets_html: string, toolbar_html: string, results_html: string, pagination_html: string, found: int, count_text: string}
+     */
+    private function runLegacy(array $request): array
+    {
         $config = $this->settings->all();
-        $facets = $this->settings->facets();
+        $facets = $this->facetsForRequest($request);
         $filters = $request['filters'];
 
-        $resolved = $this->filter->resolve($facets, $filters);
+        // Resolve the search term to ids ONCE via the shared resolver, then thread
+        // the same id set into the grid query and every dependent count so the
+        // grid, the counts and the dropdown can never disagree. null = search
+        // inactive, [] = matched nothing, int[] = ids.
+        $searchIds = $this->resolver->resolve($request['search']);
+
+        $resolved = $this->filter->resolve($facets, $filters, null, $searchIds);
         $results = $this->resultsRenderer->render(
             $resolved,
             $request['orderby'],
             $request['paged'],
-            $request['search'],
+            // Pass '' deliberately: the folded index is authoritative for grid
+            // search, so no diacritic-sensitive native 's' runs here.
+            '',
             (int) $config['per_page'],
             (int) $config['columns'],
         );
 
         return [
-            'facets_html' => $this->renderFacets($facets, $filters, $request['search']),
+            'facets_html' => $this->renderFacets($facets, $filters, $request['search'], $searchIds),
             'toolbar_html' => $this->renderToolbar($facets, $filters, $request, $results['count_text']),
             'results_html' => $results['html'],
             'pagination_html' => $this->renderPagination($request['paged'], $results['max_pages']),
@@ -55,25 +86,165 @@ final class FilterEngine
     }
 
     /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     * @return array<int, int>|null
+     */
+    public function resolveObjectIds(array $request): ?array
+    {
+        $searchIds = $this->resolver->resolve($request['search']);
+
+        return $this->filter->resolve(
+            $this->facetsForRequest($request),
+            $request['filters'],
+            null,
+            $searchIds,
+        );
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     */
+    public function renderFacetsForRequest(array $request): string
+    {
+        $searchIds = $this->resolver->resolve($request['search']);
+
+        return $this->renderFacets(
+            $this->facetsForRequest($request),
+            $request['filters'],
+            $request['search'],
+            $searchIds,
+        );
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
+     */
+    public function renderToolbarForRequest(array $request, string $countText): string
+    {
+        return $this->renderToolbar(
+            $this->facetsForRequest($request),
+            $request['filters'],
+            $request,
+            $countText,
+        );
+    }
+
+    /**
+     * @param array<int, int>|null $objectIds
+     * @return array{html: string, count_text: string, found: int, max_pages: int}
+     */
+    public function renderResultsForRequest(?array $objectIds, string $orderby, int $paged, int $perPage): array
+    {
+        $config = $this->settings->all();
+
+        return $this->resultsRenderer->render(
+            $objectIds,
+            $orderby,
+            $paged,
+            '',
+            $perPage,
+            (int) $config['columns'],
+        );
+    }
+
+    public function renderPaginationForRequest(int $paged, int $maxPages): string
+    {
+        return $this->renderPagination($paged, $maxPages);
+    }
+
+    public function perPage(): int
+    {
+        $config = $this->settings->all();
+
+        return max(1, (int) $config['per_page']);
+    }
+
+    public function columns(): int
+    {
+        $config = $this->settings->all();
+
+        return max(1, (int) $config['columns']);
+    }
+
+    private function kitEngine(): ?FacetFilterEngine
+    {
+        if (null !== $this->kitEngine) {
+            return $this->kitEngine;
+        }
+
+        $this->kitEngine = SieveFilterAdapter::engineFor($this);
+
+        return $this->kitEngine;
+    }
+
+    /**
      * Full server-rendered widget for the shortcode / block.
      *
      * @param array{filters: array<string, string>, orderby: string, paged: int, search: string} $request
      */
     public function container(array $request): string
     {
-        $parts = $this->run($request);
-        $columns = max(1, (int) $this->settings->all()['columns']);
+        $kit = $this->kitEngine();
+
+        if ($kit instanceof FacetFilterEngine) {
+            return $kit->container(
+                $request,
+                fn (array $parts, int $columns): string => $this->wrapContainer($parts, $columns, $request['context'] ?? []),
+            );
+        }
+
+        $parts = $this->runLegacy($request);
+
+        return $this->wrapContainer($parts, $this->columns(), $request['context'] ?? []);
+    }
+
+    /**
+     * @param array{filters: array<string, string>, orderby: string, paged: int, search: string, context?: array<string, mixed>} $request
+     * @return array<int, Facet>
+     */
+    private function facetsForRequest(array $request): array
+    {
+        $context = isset($request['context']) && is_array($request['context']) ? $request['context'] : [];
+
+        return $this->settings->facetsForContext($context);
+    }
+
+    /**
+     * @param array{facets_html: string, toolbar_html: string, results_html: string, pagination_html: string, found: int, count_text: string} $parts
+     * @param array{is_shop?: bool, category_id?: int, user_roles?: array<int, string>} $context
+     */
+    private function wrapContainer(array $parts, int $columns, array $context = []): string
+    {
+        $config = $this->settings->all();
+        $preset = $this->appearance->resolveFrom($config)['preset'];
+        $styleAttr = 'default' === $preset
+            ? ''
+            : ' data-sieve-style="' . esc_attr($preset) . '"';
+
+        $categoryId = isset($context['category_id']) ? max(0, (int) $context['category_id']) : 0;
+        $ctxAttr    = $categoryId > 0 ? ' data-sieve-ctx-category="' . esc_attr((string) $categoryId) . '"' : '';
+        $ctxAttr   .= ! empty($context['is_shop']) ? ' data-sieve-ctx-shop="1"' : '';
+
+        $layout      = isset($config['layout']) ? sanitize_key((string) $config['layout']) : 'sidebar';
+        $layoutClass = match ($layout) {
+            'stacked' => ' sieve-app--stacked',
+            'inline' => ' sieve-app--inline-facets',
+            default => '',
+        };
 
         return sprintf(
-            '<div class="sieve-app" data-sieve-app style="--sieve-cols:%7$d">'
-                . '<form class="sieve-filters" data-sieve-form>'
+            '<div class="sieve-app%12$s" data-sieve-app%8$s%11$s style="--sieve-cols:%7$d">'
+                . '<form class="sieve-filters" data-sieve-form aria-label="%9$s">'
                 . '<button type="button" class="sieve-drawer-toggle" data-sieve-open aria-expanded="false">%1$s</button>'
                 . '<div class="sieve-facets" data-sieve-facets>%2$s</div>'
                 . '</form>'
                 . '<div class="sieve-main">'
                 . '<div class="sieve-toolbar" data-sieve-toolbar>%3$s</div>'
-                . '<div class="sieve-results" data-sieve-results aria-live="polite">%4$s</div>'
-                . '<nav class="sieve-pagination" data-sieve-pagination>%5$s</nav>'
+                . '<div class="sieve-results-wrap">'
+                . '<div class="sieve-results" data-sieve-results>%4$s</div>'
+                . '<div class="sieve-loading" aria-hidden="true"><span class="sieve-loading__spinner"></span></div>'
+                . '</div>'
+                . '<nav class="sieve-pagination" data-sieve-pagination aria-label="%10$s">%5$s</nav>'
                 . '</div>'
                 . '<div class="sieve-drawer-apply" data-sieve-apply hidden><button type="button" data-sieve-close>%6$s</button></div>'
                 . '</div>',
@@ -84,14 +255,21 @@ final class FilterEngine
             $parts['pagination_html'],
             esc_html__('Show results', 'sieve'),
             $columns,
+            $styleAttr,
+            esc_attr__('Product filters', 'sieve'),
+            esc_attr__('Results pages', 'sieve'),
+            $ctxAttr,
+            $layoutClass,
         );
     }
 
     /**
      * @param array<int, Facet> $facets
      * @param array<string, string> $filters
+     * @param array<int, int>|null $searchIds Resolved once in run() and threaded
+     *        here so counts are search-aware without recomputing per facet.
      */
-    private function renderFacets(array $facets, array $filters, string $search): string
+    private function renderFacets(array $facets, array $filters, string $search, ?array $searchIds): string
     {
         $html = '';
         foreach ($facets as $facet) {
@@ -109,7 +287,7 @@ final class FilterEngine
                 continue;
             }
 
-            $counts = $this->counts->countsFor($facet, $facets, $filters);
+            $counts = $this->counts->countsFor($facet, $facets, $filters, $searchIds);
             $html .= $this->facetRenderer->render($facet, $counts, $selected);
         }
 
@@ -124,7 +302,7 @@ final class FilterEngine
     private function renderToolbar(array $facets, array $filters, array $request, string $countText): string
     {
         return sprintf(
-            '<span class="sieve-count" data-sieve-count>%1$s</span>'
+            '<span class="sieve-count" data-sieve-count role="status" aria-live="polite">%1$s</span>'
                 . '<div class="sieve-toolbar__right">%2$s%3$s</div>'
                 . '<div class="sieve-chips" data-sieve-chips>%4$s</div>',
             esc_html($countText),
@@ -207,17 +385,30 @@ final class FilterEngine
             $chips .= $this->chip('q', '', $search);
         }
 
-        return $chips;
+        if ('' === $chips) {
+            return '';
+        }
+
+        // A leading label so the chip row reads as "Active filters: …" for both
+        // sighted shoppers and screen readers.
+        return sprintf(
+            '<span class="sieve-chips__label">%s</span>%s',
+            esc_html__('Active filters:', 'sieve'),
+            $chips,
+        );
     }
 
     private function chip(string $slug, string $value, string $label): string
     {
         return sprintf(
-            '<button type="button" class="sieve-chip" data-sieve-chip data-facet="%1$s" data-value="%2$s">'
-                . '%3$s<span class="sieve-chip__x" aria-hidden="true">&times;</span></button>',
+            '<button type="button" class="sieve-chip" data-sieve-chip data-facet="%1$s" data-value="%2$s" aria-label="%4$s">'
+                . '<span class="sieve-chip__text">%3$s</span>'
+                . '<span class="sieve-chip__x" aria-hidden="true">&times;</span></button>',
             esc_attr($slug),
             esc_attr($value),
             esc_html($label),
+            /* translators: %s: the active filter being removed. */
+            esc_attr(sprintf(__('Remove filter: %s', 'sieve'), $label)),
         );
     }
 

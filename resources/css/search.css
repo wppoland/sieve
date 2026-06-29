@@ -1,0 +1,223 @@
+/**
+ * Sieve predictive search styles. Self-contained and theme-independent: the
+ * dropdown is absolutely positioned, reserves no layout space until shown (zero
+ * CLS), and focus/active states are always visible.
+ */
+
+.sieve-search {
+	--sieve-search-border: #e2e4e7;
+	--sieve-search-accent: #2563eb;
+	--sieve-search-muted: #6b7280;
+	--sieve-search-bg: #fff;
+	position: relative;
+	max-width: 32rem;
+}
+
+.sieve-search__form {
+	margin: 0;
+}
+
+.sieve-search__inner {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.sieve-search__input {
+	flex: 1 1 auto;
+	min-width: 0;
+	padding: 0.6rem 0.75rem;
+	border: 1px solid var(--sieve-search-border);
+	border-radius: 0.4rem;
+	font-size: 1rem;
+	line-height: 1.4;
+}
+
+.sieve-search__input:focus-visible {
+	outline: 2px solid var(--sieve-search-accent);
+	outline-offset: 1px;
+}
+
+.sieve-search__submit {
+	flex: 0 0 auto;
+	padding: 0.6rem 1rem;
+	border: 0;
+	border-radius: 0.4rem;
+	background: var(--sieve-search-accent);
+	color: #fff;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.sieve-search__submit:hover {
+	filter: brightness(0.95);
+}
+
+/* ---- Dropdown ---- */
+.sieve-search__results {
+	position: absolute;
+	top: calc(100% + 0.35rem);
+	left: 0;
+	right: 0;
+	z-index: 40;
+	max-height: 70vh;
+	overflow-y: auto;
+	background: var(--sieve-search-bg);
+	border: 1px solid var(--sieve-search-border);
+	border-radius: 0.5rem;
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+.sieve-search__results[aria-busy='true'] {
+	cursor: progress;
+}
+
+.sieve-search__item {
+	display: grid;
+	grid-template-columns: 44px 1fr;
+	gap: 0.75rem;
+	align-items: center;
+	padding: 0.5rem 0.75rem;
+	text-decoration: none;
+	color: inherit;
+	border-bottom: 1px solid var(--sieve-search-border);
+}
+
+.sieve-search__item:last-child {
+	border-bottom: 0;
+}
+
+.sieve-search__item.is-active,
+.sieve-search__item:hover {
+	background: #f3f4f6;
+}
+
+/* Keyboard-active option: a non-colour cue (inset accent border) on top of the
+   background, so the highlight is not conveyed by colour alone (WCAG 1.4.1 /
+   1.4.11) and stays distinct from hover. */
+.sieve-search__item.is-active {
+	box-shadow: inset 3px 0 0 var(--sieve-search-accent);
+}
+
+@media (forced-colors: active) {
+	.sieve-search__item.is-active {
+		outline: 2px solid Highlight;
+		outline-offset: -2px;
+	}
+}
+
+.sieve-search__thumb {
+	width: 44px;
+	height: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: 0.3rem;
+	background: #f3f4f6;
+}
+
+.sieve-search__thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.sieve-search__meta {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem;
+	min-width: 0;
+}
+
+.sieve-search__name {
+	font-weight: 600;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.sieve-search__sku {
+	font-size: 0.75rem;
+	color: var(--sieve-search-muted);
+}
+
+.sieve-search__price {
+	font-size: 0.85rem;
+	color: var(--sieve-search-muted);
+}
+
+.sieve-search__price del {
+	opacity: 0.6;
+}
+
+.sieve-search__empty {
+	padding: 0.75rem;
+	color: var(--sieve-search-muted);
+}
+
+/* Visually hidden but available to assistive tech (the status live region and
+   single-group headings). Self-contained so it never depends on the theme. */
+.sieve-search .screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+	word-wrap: normal;
+}
+
+.sieve-search__heading {
+	padding: 0.5rem 0.75rem 0.25rem;
+	font-size: 0.7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--sieve-search-muted);
+}
+
+.sieve-search__item--category .sieve-search__name {
+	font-weight: 600;
+}
+
+.sieve-search__count {
+	font-size: 0.75rem;
+	color: var(--sieve-search-muted);
+}
+
+.sieve-search__all {
+	display: block;
+	padding: 0.6rem 0.75rem;
+	text-align: center;
+	font-weight: 600;
+	color: var(--sieve-search-accent);
+	text-decoration: none;
+	border-top: 1px solid var(--sieve-search-border);
+}
+
+.sieve-search__all:hover {
+	background: #f3f4f6;
+}
+
+/* ===== Appearance presets (0.8.0). Inert unless data-sieve-style is set. ===== */
+.sieve-search[data-sieve-style="minimal"] .sieve-search__input,
+.sieve-search[data-sieve-style="minimal"] .sieve-search__results {
+	border-radius: 4px;
+}
+.sieve-search[data-sieve-style="bordered"] .sieve-search__input,
+.sieve-search[data-sieve-style="bordered"] .sieve-search__results {
+	border: 1px solid var(--sieve-search-border);
+	border-radius: 8px;
+}
+.sieve-search[data-sieve-style="soft"] .sieve-search__input {
+	border-radius: 8px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.sieve-search[data-sieve-style="soft"] .sieve-search__results {
+	border-radius: 12px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}

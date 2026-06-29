@@ -9,7 +9,9 @@ use Sieve\Hook\BlockHooks;
 use Sieve\Hook\FrontendHooks;
 use Sieve\Hook\IndexerHooks;
 use Sieve\Hook\RestHooks;
+use Sieve\Hook\SearchBlockHooks;
 use Sieve\Shortcode\FilterShortcode;
+use Sieve\Shortcode\SearchShortcode;
 
 /**
  * Hook subscribers booted in order by Plugin::boot(). Each must implement
@@ -22,4 +24,6 @@ return [
     IndexerHooks::class,
     FilterShortcode::class,
     BlockHooks::class,
+    SearchShortcode::class,
+    SearchBlockHooks::class,
 ];

@@ -17,6 +17,8 @@ use const Sieve\VERSION;
  */
 final class IndexerHooks implements HasHooks
 {
+    private const LOCK = 'sieve_indexing_lock';
+
     public function __construct(private readonly ProductIndexer $indexer)
     {
     }
@@ -31,13 +33,17 @@ final class IndexerHooks implements HasHooks
     }
 
     /**
-     * Build the index once after activation so facets work immediately, including
-     * for products that existed before the plugin was activated. Runs a single
-     * time (guarded by an autoloaded option) and only once products exist.
+     * Build the index once per version so facets work immediately, including for
+     * products that existed before the plugin was activated. The stored option
+     * holds the version the index was last built for; a backfill runs whenever
+     * the installed VERSION is newer (so upgrading to a release that adds new row
+     * types, e.g. the 0.6.0 '_search' tokens, rebuilds once) and only once
+     * products exist.
      */
     public function ensureInitialIndex(): void
     {
-        if (get_option('sieve_index_ready')) {
+        $stored = (string) get_option('sieve_index_ready', '0');
+        if (version_compare($stored, VERSION, '>=')) {
             return;
         }
 
@@ -47,8 +53,19 @@ final class IndexerHooks implements HasHooks
             return;
         }
 
+        // A full indexAll() truncates and rebuilds; guard against a concurrent
+        // admin_init request doing the same at the same moment (which would race
+        // on the TRUNCATE). The lock auto-expires so a fatal mid-build cannot
+        // wedge the backfill permanently.
+        if (get_transient(self::LOCK)) {
+            return;
+        }
+        set_transient(self::LOCK, 1, 5 * MINUTE_IN_SECONDS);
+
         $this->indexer->indexAll();
         update_option('sieve_index_ready', VERSION);
+
+        delete_transient(self::LOCK);
     }
 
     public function onSave(int $productId): void

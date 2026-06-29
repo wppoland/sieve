@@ -7,6 +7,7 @@ namespace Sieve\Service;
 defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
+use Sieve\Support\FacetContext;
 
 /**
  * Reads and writes the plugin settings (the configured facet set + layout
@@ -17,8 +18,12 @@ final class Settings
 {
     public const OPTION = 'sieve_settings';
 
+    public function __construct(private readonly AppearanceService $appearance)
+    {
+    }
+
     /**
-     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int}
+     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int, appearance: array{preset: string, colors: array<string, string>}}
      */
     public function all(): array
     {
@@ -27,11 +32,15 @@ final class Settings
             return $this->defaults();
         }
 
-        return [
+        return apply_filters('sieve_settings', [
             'facets' => is_array($stored['facets']) ? array_values($stored['facets']) : [],
             'per_page' => isset($stored['per_page']) ? max(1, (int) $stored['per_page']) : 12,
             'columns' => isset($stored['columns']) ? max(1, (int) $stored['columns']) : 3,
-        ];
+            'appearance' => isset($stored['appearance']) && is_array($stored['appearance'])
+                ? $this->appearance->normalize($stored['appearance'])
+                : $this->appearance->defaults(),
+            'layout' => isset($stored['layout']) ? sanitize_key((string) $stored['layout']) : 'sidebar',
+        ]);
     }
 
     /**
@@ -52,6 +61,9 @@ final class Settings
             'facets' => $facets,
             'per_page' => isset($value['per_page']) ? max(1, (int) $value['per_page']) : 12,
             'columns' => isset($value['columns']) ? max(1, (int) $value['columns']) : 3,
+            'appearance' => $this->appearance->normalize(
+                isset($value['appearance']) && is_array($value['appearance']) ? $value['appearance'] : [],
+            ),
         ]);
     }
 
@@ -70,13 +82,35 @@ final class Settings
     }
 
     /**
+     * Facets visible for the current page / shopper context.
+     *
+     * @param array<string, mixed> $context See {@see FacetContext}.
+     * @return array<int, Facet>
+     */
+    public function facetsForContext(array $context = []): array
+    {
+        $facets = $this->facets();
+        $context = FacetContext::normalize($context);
+
+        /**
+         * Filters the facet list before render and resolution.
+         *
+         * @param array<int, Facet> $facets  Configured facets.
+         * @param array{is_shop: bool, category_id: int, user_roles: array<int, string>} $context Page context.
+         */
+        $filtered = apply_filters('sieve_facets', $facets, $context);
+
+        return is_array($filtered) ? array_values($filtered) : $facets;
+    }
+
+    /**
      * The default "WooCommerce shop" preset.
      *
-     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int}
+     * @return array{facets: array<int, array<string, mixed>>, per_page: int, columns: int, appearance: array{preset: string, colors: array<string, string>}}
      */
     public function defaults(): array
     {
-        return [
+        return apply_filters('sieve_settings', [
             'facets' => [
                 Facet::fromArray([
                     'slug' => 'product_cat',
@@ -105,6 +139,8 @@ final class Settings
             ],
             'per_page' => 12,
             'columns' => 3,
-        ];
+            'appearance' => $this->appearance->defaults(),
+            'layout' => 'sidebar',
+        ]);
     }
 }

@@ -8,6 +8,7 @@ defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
 use Sieve\Repository\IndexRepository;
+use WPPoland\StorefrontKit\Filter\FacetFilterResolver;
 
 /**
  * Resolves the set of product IDs that satisfy the active filter selection by
@@ -16,8 +17,10 @@ use Sieve\Repository\IndexRepository;
  */
 final class FilterService
 {
-    public function __construct(private readonly IndexRepository $index)
-    {
+    public function __construct(
+        private readonly IndexRepository $index,
+        private readonly FacetFilterResolver $resolver,
+    ) {
     }
 
     /**
@@ -26,9 +29,11 @@ final class FilterService
      * @param array<int, Facet> $facets   Configured facets.
      * @param array<string, string> $filters Raw filter values keyed by facet slug.
      * @param string|null $exclude         Slug to ignore (for dependent counts).
+     * @param array<int, int>|null $searchIds Resolved search ids: null = search
+     *        inactive (no constraint), [] = search matched nothing, int[] = ids.
      * @return array<int, int>|null        Matching IDs, or null when unrestricted.
      */
-    public function resolve(array $facets, array $filters, ?string $exclude = null): ?array
+    public function resolve(array $facets, array $filters, ?string $exclude = null, ?array $searchIds = null): ?array
     {
         $sets = [];
 
@@ -47,19 +52,7 @@ final class FilterService
                 : $this->index->objectsForValues($facet->indexKey(), $this->splitValues($raw));
         }
 
-        if (empty($sets)) {
-            return null;
-        }
-
-        $result = array_shift($sets);
-        foreach ($sets as $set) {
-            $result = array_values(array_intersect($result, $set));
-            if (empty($result)) {
-                return [];
-            }
-        }
-
-        return $result;
+        return $this->resolver->resolve($sets, $searchIds);
     }
 
     /**
