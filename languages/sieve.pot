@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 0.1.0\n"
+"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 0.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sieve\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-09T10:04:33+00:00\n"
+"POT-Creation-Date: 2026-06-14T10:43:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sieve\n"
@@ -55,45 +55,146 @@ msgstr ""
 msgid "Sieve requires WooCommerce %1$s or higher. You are running WooCommerce %2$s."
 msgstr ""
 
-#: src/Enum/FacetType.php:48
+#: src/Enum/FacetType.php:56
+#: build/admin.js:1
 msgid "Checkboxes"
 msgstr ""
 
-#: src/Enum/FacetType.php:49
+#: src/Enum/FacetType.php:57
+#: build/admin.js:1
 msgid "Radio"
 msgstr ""
 
-#: src/Enum/FacetType.php:50
+#: src/Enum/FacetType.php:58
+#: build/admin.js:1
 msgid "Dropdown"
 msgstr ""
 
-#: src/Enum/FacetType.php:51
+#: src/Enum/FacetType.php:59
+#: build/admin.js:1
+msgid "Swatches (color / image)"
+msgstr ""
+
+#: src/Enum/FacetType.php:60
+#: build/admin.js:1
+msgid "Hierarchy (tree)"
+msgstr ""
+
+#: src/Enum/FacetType.php:61
+#: build/admin.js:1
+msgid "Autocomplete (searchable options)"
+msgstr ""
+
+#: src/Enum/FacetType.php:62
+#: build/admin.js:1
+msgid "A-Z index"
+msgstr ""
+
+#: src/Enum/FacetType.php:63
+#: build/admin.js:1
 msgid "Range slider"
 msgstr ""
 
-#: src/Enum/FacetType.php:52
+#: src/Enum/FacetType.php:64
+#: src/Service/SearchRenderer.php:105
 msgid "Search"
 msgstr ""
 
-#: src/Enum/FacetType.php:53
+#: src/Enum/FacetType.php:65
 msgid "Sort"
 msgstr ""
 
-#: src/Enum/FacetType.php:54
+#: src/Enum/FacetType.php:66
 msgid "Pagination"
 msgstr ""
 
-#: src/Enum/FacetType.php:55
+#: src/Enum/FacetType.php:67
 msgid "Reset"
 msgstr ""
 
-#: src/Enum/FacetType.php:56
+#: src/Enum/FacetType.php:68
 msgid "Active filters"
 msgstr ""
 
 #: src/Hook/AdminHooks.php:31
 #: src/Hook/AdminHooks.php:32
+#: build/admin.js:1
 msgid "Sieve"
+msgstr ""
+
+#. translators: %d: number of matching options.
+#: src/Hook/FrontendHooks.php:87
+#, php-format
+msgid "%d options"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:88
+msgid "No matching options"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:89
+#: src/Hook/FrontendHooks.php:137
+msgid "Searching…"
+msgstr ""
+
+#. translators: %d: number of matching products (singular).
+#. translators: %d: number of products in a category.
+#: src/Hook/FrontendHooks.php:91
+#: src/Service/SuggestService.php:275
+#, php-format
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of matching products.
+#: src/Hook/FrontendHooks.php:93
+#, php-format
+msgid "%d products"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:94
+msgid "No results"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:95
+#: src/Service/FacetRenderer.php:296
+msgid "Product suggestions"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:96
+msgid "Something went wrong while updating products. Please try again."
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:97
+msgid "Retry"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:135
+#: src/Service/ResultsRenderer.php:153
+msgid "No products found."
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:136
+msgid "View all results"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:138
+msgid "Products"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:139
+msgid "Categories"
+msgstr ""
+
+#: src/Hook/FrontendHooks.php:140
+msgid "1 result found"
+msgstr ""
+
+#. translators: %d: number of search results found.
+#: src/Hook/FrontendHooks.php:142
+#, php-format
+msgid "%d results found"
 msgstr ""
 
 #: src/Service/FacetCatalog.php:25
@@ -111,7 +212,7 @@ msgid "Attribute: %s"
 msgstr ""
 
 #: src/Service/FacetCatalog.php:39
-#: src/Service/Settings.php:89
+#: src/Service/Settings.php:99
 msgid "Price"
 msgstr ""
 
@@ -120,8 +221,8 @@ msgid "Stock status"
 msgstr ""
 
 #: src/Service/FacetCatalog.php:41
-#: src/Service/FacetRenderer.php:64
-#: src/Service/Settings.php:101
+#: src/Service/FacetRenderer.php:80
+#: src/Service/Settings.php:111
 msgid "On sale"
 msgstr ""
 
@@ -130,131 +231,471 @@ msgid "Average rating"
 msgstr ""
 
 #: src/Service/FacetCatalog.php:43
+#: build/admin.js:1
 msgid "Search box"
 msgstr ""
 
 #. translators: %s: number of stars.
-#: src/Service/FacetRenderer.php:67
+#: src/Service/FacetRenderer.php:83
 #, php-format
 msgid "%s star"
 msgid_plural "%s stars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Service/FacetRenderer.php:118
-msgid "Any"
+#: src/Service/FacetRenderer.php:142
+msgid "Filter options"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:168
-msgid "Minimum price"
+#. translators: %s: facet label.
+#: src/Service/FacetRenderer.php:144
+#, php-format
+msgid "Filter %s options"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:169
-msgid "Maximum price"
+#: src/Service/FacetRenderer.php:185
+msgid "All"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:183
-msgid "Search products"
+#: src/Service/FacetRenderer.php:196
+msgid "Filter options by first letter"
 msgstr ""
 
 #: src/Service/FacetRenderer.php:216
+msgid "Any"
+msgstr ""
+
+#: src/Service/FacetRenderer.php:266
+msgid "Minimum price"
+msgstr ""
+
+#: src/Service/FacetRenderer.php:267
+msgid "Maximum price"
+msgstr ""
+
+#: src/Service/FacetRenderer.php:293
+#: src/Service/SearchRenderer.php:101
+#: src/Service/SearchRenderer.php:102
+#: build/admin.js:1
+msgid "Search products"
+msgstr ""
+
+#: src/Service/FacetRenderer.php:533
 msgid "In stock"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:217
+#: src/Service/FacetRenderer.php:534
 msgid "Out of stock"
 msgstr ""
 
-#: src/Service/FacetRenderer.php:218
+#: src/Service/FacetRenderer.php:535
 msgid "On backorder"
 msgstr ""
 
-#: src/Service/FilterEngine.php:79
+#: src/Service/FilterEngine.php:99
 msgid "Filters"
 msgstr ""
 
-#: src/Service/FilterEngine.php:84
+#: src/Service/FilterEngine.php:104
 msgid "Show results"
 msgstr ""
 
-#: src/Service/FilterEngine.php:138
+#: src/Service/FilterEngine.php:107
+msgid "Product filters"
+msgstr ""
+
+#: src/Service/FilterEngine.php:108
+msgid "Results pages"
+msgstr ""
+
+#: src/Service/FilterEngine.php:164
 msgid "Default sorting"
 msgstr ""
 
-#: src/Service/FilterEngine.php:139
+#: src/Service/FilterEngine.php:165
 msgid "Sort by popularity"
 msgstr ""
 
-#: src/Service/FilterEngine.php:140
+#: src/Service/FilterEngine.php:166
 msgid "Sort by average rating"
 msgstr ""
 
-#: src/Service/FilterEngine.php:141
+#: src/Service/FilterEngine.php:167
 msgid "Sort by latest"
 msgstr ""
 
-#: src/Service/FilterEngine.php:142
+#: src/Service/FilterEngine.php:168
 msgid "Sort by price: low to high"
 msgstr ""
 
-#: src/Service/FilterEngine.php:143
+#: src/Service/FilterEngine.php:169
 msgid "Sort by price: high to low"
 msgstr ""
 
-#: src/Service/FilterEngine.php:159
+#: src/Service/FilterEngine.php:185
 msgid "Sort products"
 msgstr ""
 
-#: src/Service/FilterEngine.php:176
+#: src/Service/FilterEngine.php:202
 msgid "Clear all"
 msgstr ""
 
-#: src/Service/ResultsRenderer.php:133
-msgid "No products found."
+#: src/Service/FilterEngine.php:242
+msgid "Active filters:"
+msgstr ""
+
+#. translators: %s: the active filter being removed.
+#: src/Service/FilterEngine.php:257
+#, php-format
+msgid "Remove filter: %s"
+msgstr ""
+
+#: src/Service/ResultsRenderer.php:144
+msgid "No products match these filters"
+msgstr ""
+
+#: src/Service/ResultsRenderer.php:145
+msgid "Try removing a filter or widening your price range to see more products."
+msgstr ""
+
+#: src/Service/ResultsRenderer.php:146
+msgid "Clear all filters"
 msgstr ""
 
 #. translators: %s: number of products.
-#: src/Service/ResultsRenderer.php:138
+#: src/Service/ResultsRenderer.php:158
 #, php-format
 msgid "%s product"
 msgid_plural "%s products"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Service/Settings.php:83
+#: src/Service/SearchRenderer.php:103
+msgid "Product search results"
+msgstr ""
+
+#: src/Service/Settings.php:93
+#: build/admin.js:1
 msgid "Category"
 msgstr ""
 
-#: src/Service/Settings.php:95
+#: src/Service/Settings.php:105
 msgid "Availability"
 msgstr ""
 
+#: build/admin.js:1
+msgid "Default"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Minimal"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Bordered"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Soft"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Unstyled"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Accent"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Border"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Muted text"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Background"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Appearance"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Style preset"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Unstyled mode ships no plugin CSS. Your theme styles everything through the semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-search, …). Keyboard focus and high-contrast cues are still emitted."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Low contrast: the active/selected state uses white text on the accent colour and may be hard to read."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Muted text may be hard to read against the chosen background colour."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Reset to defaults"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Preview"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Accessories"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Multiple choices can be selected at once. Best for most attributes."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Only one choice at a time. Good for mutually exclusive options."
+msgstr ""
+
+#: build/admin.js:1
+msgid "A compact select menu. Saves space when there are many options."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Colour or image squares. Ideal for colour and pattern attributes."
+msgstr ""
+
+#: build/admin.js:1
+msgid "A nested tree. Best for categories with parent/child levels."
+msgstr ""
+
+#: build/admin.js:1
+msgid "A checkbox list with a type-to-filter box. Best for very long option lists."
+msgstr ""
+
+#: build/admin.js:1
+msgid "An A–Z bar that filters options by first letter. Good for brand lists."
+msgstr ""
+
+#: build/admin.js:1
+msgid "A min/max range. Used for price and other numeric values."
+msgstr ""
+
+#: build/admin.js:1
+msgid "A live search box that narrows the product grid as shoppers type."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Loading Sieve…"
+msgstr ""
+
+#: build/admin.js:1
+msgid "That facet is already added."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Settings saved."
+msgstr ""
+
+#: build/admin.js:1
+#, js-format
+msgid "Re-indexed %d product."
+msgid_plural "Re-indexed %d products."
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/admin.js:1
+msgid "Place the filter anywhere with the shortcode"
+msgstr ""
+
+#: build/admin.js:1
+msgid "or the \"Sieve Filter\" block."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Index"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Indexed rows:"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Rebuild index"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Layout"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Products per page"
+msgstr ""
+
+#: build/admin.js:1
+msgid "How many products to show before pagination appears."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Columns"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Product grid columns on wide screens. Fewer columns are used automatically on tablets and phones."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Facets"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Label"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Type"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Move up"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Move down"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Remove"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild it after a bulk import or if counts look out of date — new and edited products are indexed automatically."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Add a facet"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Pick a product attribute, taxonomy or field to filter by. Sources are detected from your store automatically."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Select a source…"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Add"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Save settings"
+msgstr ""
+
+#: build/blocks/search/index.js:183
+#: resources/js/blocks/search/index.js:25
+#: build/blocks/search/index.js:86
+msgid "Search settings"
+msgstr ""
+
+#: build/blocks/search/index.js:185
+#: resources/js/blocks/search/index.js:27
+#: build/blocks/search/index.js:88
+msgid "Placeholder"
+msgstr ""
+
+#: build/blocks/search/index.js:191
+#: resources/js/blocks/search/index.js:33
+#: build/blocks/search/index.js:94
+msgid "Show submit button"
+msgstr ""
+
+#: build/blocks/search/index.js:197
+#: resources/js/blocks/search/index.js:38
+#: build/blocks/search/index.js:99
+msgid "Max results"
+msgstr ""
+
+#: build/blocks/search/index.js:205
+#: resources/js/blocks/search/index.js:45
+#: build/blocks/search/index.js:106
+msgid "Minimum characters"
+msgstr ""
+
+#: build/blocks/search/index.js:213
+#: resources/js/blocks/search/index.js:53
+#: build/blocks/search/index.js:114
+msgid "In-stock products only"
+msgstr ""
+
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block title"
 msgid "Sieve Filter"
 msgstr ""
 
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block description"
 msgid "Fast, accessible faceted product filtering with a results grid."
 msgstr ""
 
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block keyword"
 msgid "filter"
 msgstr ""
 
+#: build/blocks/filter/block.json
 #: resources/js/blocks/filter/block.json
 msgctxt "block keyword"
 msgid "facet"
 msgstr ""
 
+#: build/blocks/filter/block.json
+#: build/blocks/search/block.json
 #: resources/js/blocks/filter/block.json
+#: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "woocommerce"
 msgstr ""
 
+#: build/blocks/filter/block.json
+#: build/blocks/search/block.json
 #: resources/js/blocks/filter/block.json
+#: resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "search"
+msgstr ""
+
+#: build/blocks/search/block.json
+#: resources/js/blocks/search/block.json
+msgctxt "block title"
+msgid "Sieve Search"
+msgstr ""
+
+#: build/blocks/search/block.json
+#: resources/js/blocks/search/block.json
+msgctxt "block description"
+msgid "Predictive product search with an instant, accessible typeahead dropdown."
+msgstr ""
+
+#: build/blocks/search/block.json
+#: resources/js/blocks/search/block.json
+msgctxt "block keyword"
+msgid "typeahead"
+msgstr ""
+
+#: build/blocks/search/block.json
+#: resources/js/blocks/search/block.json
+msgctxt "block keyword"
+msgid "autocomplete"
+msgstr ""
+
+#: build/blocks/search/block.json
+#: resources/js/blocks/search/block.json
+msgctxt "block keyword"
+msgid "product"
 msgstr ""

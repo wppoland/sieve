@@ -8,6 +8,7 @@ defined('ABSPATH') || exit;
 
 use Sieve\Repository\IndexRepository;
 use Sieve\Service\FacetCatalog;
+use Sieve\Service\FacetTypeRegistry;
 use Sieve\Service\ProductIndexer;
 use Sieve\Service\Settings;
 use WP_REST_Request;
@@ -24,6 +25,7 @@ final class AdminController
     public function __construct(
         private readonly Settings $settings,
         private readonly FacetCatalog $catalog,
+        private readonly FacetTypeRegistry $facetTypes,
         private readonly ProductIndexer $indexer,
         private readonly IndexRepository $index,
     ) {
@@ -81,6 +83,7 @@ final class AdminController
     {
         return rest_ensure_response([
             'sources' => $this->catalog->available(),
+            'facet_types' => $this->facetTypes->all(),
             'indexed_rows' => $this->index->rowCount(),
         ]);
     }

@@ -23,7 +23,11 @@ import {
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
-import { __ } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
+import AppearancePanel, {
+	DEFAULT_APPEARANCE,
+	type Appearance,
+} from './AppearancePanel';
 
 interface Facet {
 	slug: string;
@@ -36,6 +40,7 @@ interface Settings {
 	facets: Facet[];
 	per_page: number;
 	columns: number;
+	appearance: Appearance;
 }
 
 interface Source {
@@ -45,13 +50,67 @@ interface Source {
 	group: string;
 }
 
+interface FacetTypeOption {
+	value: string;
+	label: string;
+	help: string;
+}
+
 const TYPE_OPTIONS = [
 	{ label: __( 'Checkboxes', 'sieve' ), value: 'checkbox' },
 	{ label: __( 'Radio', 'sieve' ), value: 'radio' },
 	{ label: __( 'Dropdown', 'sieve' ), value: 'dropdown' },
+	{ label: __( 'Swatches (color / image)', 'sieve' ), value: 'swatch' },
+	{ label: __( 'Hierarchy (tree)', 'sieve' ), value: 'hierarchy' },
+	{
+		label: __( 'Autocomplete (searchable options)', 'sieve' ),
+		value: 'autocomplete',
+	},
+	{ label: __( 'A-Z index', 'sieve' ), value: 'az_index' },
 	{ label: __( 'Range slider', 'sieve' ), value: 'range_slider' },
 	{ label: __( 'Search box', 'sieve' ), value: 'search' },
 ];
+
+// Concise, shopper-facing explanation of each facet type, shown as inline help
+// under the Type selector so the owner knows what each control looks like.
+const TYPE_HELP: Record< string, string > = {
+	checkbox: __(
+		'Multiple choices can be selected at once. Best for most attributes.',
+		'sieve'
+	),
+	radio: __(
+		'Only one choice at a time. Good for mutually exclusive options.',
+		'sieve'
+	),
+	dropdown: __(
+		'A compact select menu. Saves space when there are many options.',
+		'sieve'
+	),
+	swatch: __(
+		'Colour or image squares. Ideal for colour and pattern attributes.',
+		'sieve'
+	),
+	hierarchy: __(
+		'A nested tree. Best for categories with parent/child levels.',
+		'sieve'
+	),
+	autocomplete: __(
+		'A checkbox list with a type-to-filter box. Best for very long option lists.',
+		'sieve'
+	),
+	az_index: __(
+		'An A–Z bar that filters options by first letter. Good for brand lists.',
+		'sieve'
+	),
+	range_slider: __(
+		'A min/max range. Used for price and other numeric values.',
+		'sieve'
+	),
+	search: __(
+		'A live search box that narrows the product grid as shoppers type.',
+		'sieve'
+	),
+};
 
 function slugFromSource( source: string ): string {
 	return source.startsWith( 'tax:' ) ? source.slice( 4 ) : source;
@@ -60,31 +119,79 @@ function slugFromSource( source: string ): string {
 function App() {
 	const [ settings, setSettings ] = useState< Settings | null >( null );
 	const [ sources, setSources ] = useState< Source[] >( [] );
+	const [ typeOptions, setTypeOptions ] =
+		useState< FacetTypeOption[] >( TYPE_OPTIONS );
+	const [ typeHelp, setTypeHelp ] = useState< Record< string, string > >(
+		TYPE_HELP
+	);
 	const [ indexedRows, setIndexedRows ] = useState< number >( 0 );
 	const [ newSource, setNewSource ] = useState< string >( '' );
 	const [ saving, setSaving ] = useState( false );
 	const [ reindexing, setReindexing ] = useState( false );
-	const [ notice, setNotice ] = useState< { type: string; text: string } | null >( null );
+	const [ notice, setNotice ] = useState< {
+		type: string;
+		text: string;
+	} | null >( null );
+	const [ loadError, setLoadError ] = useState< string | null >( null );
 
 	useEffect( () => {
-		apiFetch< Settings >( { path: 'sieve/v1/settings' } ).then( setSettings );
-		apiFetch< { sources: Source[]; indexed_rows: number } >( { path: 'sieve/v1/catalog' } ).then(
-			( data ) => {
-				setSources( data.sources );
-				setIndexedRows( data.indexed_rows );
-			}
-		);
+		Promise.all( [
+			apiFetch< Settings >( { path: 'sieve/v1/settings' } ),
+			apiFetch< {
+				sources: Source[];
+				facet_types: FacetTypeOption[];
+				indexed_rows: number;
+			} >( { path: 'sieve/v1/catalog' } ),
+		] )
+			.then( ( [ settingsData, catalog ] ) => {
+				setSettings( {
+					...settingsData,
+					appearance: settingsData.appearance ?? DEFAULT_APPEARANCE,
+				} );
+				setSources( catalog.sources );
+				setIndexedRows( catalog.indexed_rows );
+				if ( catalog.facet_types?.length ) {
+					setTypeOptions( catalog.facet_types );
+					const help: Record< string, string > = { ...TYPE_HELP };
+					catalog.facet_types.forEach( ( type ) => {
+						if ( type.help ) {
+							help[ type.value ] = type.help;
+						}
+					} );
+					setTypeHelp( help );
+				}
+			} )
+			.catch( () => {
+				setLoadError(
+					__(
+						'Could not load Sieve settings. Refresh the page or check that WooCommerce and the REST API are available.',
+						'sieve'
+					)
+				);
+			} );
 	}, [] );
 
-	if ( ! settings ) {
+	if ( loadError ) {
 		return (
-			<div style={ { padding: '2rem' } }>
-				<Spinner /> { __( 'Loading Sieve...', 'sieve' ) }
+			<div style={ { maxWidth: 880, margin: '1rem 0' } }>
+				<h1>{ __( 'Sieve', 'sieve' ) }</h1>
+				<Notice status="error" isDismissible={ false }>
+					{ loadError }
+				</Notice>
 			</div>
 		);
 	}
 
-	const update = ( patch: Partial< Settings > ) => setSettings( { ...settings, ...patch } );
+	if ( ! settings ) {
+		return (
+			<div style={ { padding: '2rem' } }>
+				<Spinner /> { __( 'Loading Sieve…', 'sieve' ) }
+			</div>
+		);
+	}
+
+	const update = ( patch: Partial< Settings > ) =>
+		setSettings( { ...settings, ...patch } );
 
 	const updateFacet = ( index: number, patch: Partial< Facet > ) => {
 		const facets = settings.facets.map( ( facet, i ) =>
@@ -99,7 +206,10 @@ function App() {
 			return;
 		}
 		const facets = [ ...settings.facets ];
-		[ facets[ index ], facets[ target ] ] = [ facets[ target ], facets[ index ] ];
+		[ facets[ index ], facets[ target ] ] = [
+			facets[ target ],
+			facets[ index ],
+		];
 		update( { facets } );
 	};
 
@@ -107,7 +217,7 @@ function App() {
 		update( { facets: settings.facets.filter( ( _, i ) => i !== index ) } );
 
 	const addFacet = () => {
-		if ( ! newSource ) {
+		if ( ! newSource || newSource.startsWith( '__group_' ) ) {
 			return;
 		}
 		const source = sources.find( ( s ) => s.source === newSource );
@@ -116,13 +226,21 @@ function App() {
 		}
 		const slug = slugFromSource( source.source );
 		if ( settings.facets.some( ( f ) => f.slug === slug ) ) {
-			setNotice( { type: 'warning', text: __( 'That facet is already added.', 'sieve' ) } );
+			setNotice( {
+				type: 'warning',
+				text: __( 'That facet is already added.', 'sieve' ),
+			} );
 			return;
 		}
 		update( {
 			facets: [
 				...settings.facets,
-				{ slug, label: source.label, type: source.suggested_type, source: source.source },
+				{
+					slug,
+					label: source.label,
+					type: source.suggested_type,
+					source: source.source,
+				},
 			],
 		} );
 		setNewSource( '' );
@@ -137,7 +255,19 @@ function App() {
 		} )
 			.then( ( saved ) => {
 				setSettings( saved );
-				setNotice( { type: 'success', text: __( 'Settings saved.', 'sieve' ) } );
+				setNotice( {
+					type: 'success',
+					text: __( 'Settings saved.', 'sieve' ),
+				} );
+			} )
+			.catch( () => {
+				setNotice( {
+					type: 'error',
+					text: __(
+						'Could not save settings. Please try again.',
+						'sieve'
+					),
+				} );
 			} )
 			.finally( () => setSaving( false ) );
 	};
@@ -152,26 +282,105 @@ function App() {
 				setIndexedRows( data.indexed_rows );
 				setNotice( {
 					type: 'success',
-					text: __( 'Re-indexed ', 'sieve' ) + data.indexed_products + __( ' products.', 'sieve' ),
+					text: sprintf(
+						/* translators: %d: number of products re-indexed. */
+						_n(
+							'Re-indexed %d product.',
+							'Re-indexed %d products.',
+							data.indexed_products,
+							'sieve'
+						),
+						data.indexed_products
+					),
+				} );
+			} )
+			.catch( () => {
+				setNotice( {
+					type: 'error',
+					text: __(
+						'Could not rebuild the index. Please try again.',
+						'sieve'
+					),
 				} );
 			} )
 			.finally( () => setReindexing( false ) );
 	};
 
 	const availableSources = sources.filter(
-		( s ) => ! settings.facets.some( ( f ) => f.slug === slugFromSource( s.source ) )
+		( s ) =>
+			! settings.facets.some(
+				( f ) => f.slug === slugFromSource( s.source )
+			)
 	);
+
+	const sourceGroupLabel = ( group: string ): string => {
+		switch ( group ) {
+			case 'taxonomy':
+				return __( 'Taxonomies', 'sieve' );
+			case 'attribute':
+				return __( 'Attributes', 'sieve' );
+			case 'field':
+				return __( 'Product fields', 'sieve' );
+			default:
+				return __( 'Other sources', 'sieve' );
+		}
+	};
+
+	const groupedSourceOptions = () => {
+		const groups = new Map< string, Source[] >();
+		availableSources.forEach( ( source ) => {
+			const key = source.group || 'other';
+			if ( ! groups.has( key ) ) {
+				groups.set( key, [] );
+			}
+			groups.get( key )!.push( source );
+		} );
+
+		const options: Array< {
+			label: string;
+			value: string;
+			disabled?: boolean;
+		} > = [
+			{
+				label: __( 'Select a source…', 'sieve' ),
+				value: '',
+			},
+		];
+
+		for ( const [ group, items ] of groups ) {
+			options.push( {
+				label: `— ${ sourceGroupLabel( group ) } —`,
+				value: `__group_${ group }`,
+				disabled: true,
+			} );
+			items.forEach( ( source ) => {
+				options.push( {
+					label: source.label,
+					value: source.source,
+				} );
+			} );
+		}
+
+		return options;
+	};
 
 	return (
 		<div style={ { maxWidth: 880, margin: '1rem 0' } }>
 			<h1>{ __( 'Sieve', 'sieve' ) }</h1>
 			<p>
-				{ __( 'Place the filter anywhere with the shortcode', 'sieve' ) }{ ' ' }
-				<code>[sieve]</code> { __( 'or the "Sieve Filter" block.', 'sieve' ) }
+				{ __(
+					'Place the filter anywhere with the shortcode',
+					'sieve'
+				) }{ ' ' }
+				<code>[sieve]</code>{ ' ' }
+				{ __( 'or the "Sieve Filter" block.', 'sieve' ) }
 			</p>
 
 			{ notice && (
-				<Notice status={ notice.type } onRemove={ () => setNotice( null ) }>
+				<Notice
+					status={ notice.type }
+					onRemove={ () => setNotice( null ) }
+				>
 					{ notice.text }
 				</Notice>
 			) }
@@ -183,74 +392,159 @@ function App() {
 				<CardBody>
 					<Flex align="center">
 						<FlexBlock>
-							{ __( 'Indexed rows: ', 'sieve' ) }
+							{ __( 'Indexed rows:', 'sieve' ) }{ ' ' }
 							<strong>{ indexedRows }</strong>
 						</FlexBlock>
 						<FlexItem>
-							<Button variant="secondary" onClick={ reindex } isBusy={ reindexing } disabled={ reindexing }>
+							<Button
+								variant="secondary"
+								onClick={ reindex }
+								isBusy={ reindexing }
+								disabled={ reindexing }
+							>
 								{ __( 'Rebuild index', 'sieve' ) }
 							</Button>
 						</FlexItem>
 					</Flex>
-						</CardBody>
+					<p
+						style={ {
+							margin: '0.75rem 0 0',
+							color: '#757575',
+							fontSize: '12px',
+						} }
+					>
+						{ __(
+							'Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild after a bulk import or if counts look out of date — new and edited products are indexed automatically.',
+							'sieve'
+						) }
+					</p>
+					{ indexedRows === 0 && (
+						<Notice status="warning" isDismissible={ false }>
+							{ __(
+								'The index is empty. Publish WooCommerce products, then click Rebuild index before placing [sieve] on a page.',
+								'sieve'
+							) }
+						</Notice>
+					) }
+				</CardBody>
 			</Card>
 
 			<Panel>
-				<PanelBody title={ __( 'Layout', 'sieve' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Layout', 'sieve' ) }
+					initialOpen={ true }
+				>
 					<Flex>
 						<FlexItem>
 							<NumberControl
 								label={ __( 'Products per page', 'sieve' ) }
+								help={ __(
+									'How many products to show before pagination appears.',
+									'sieve'
+								) }
 								value={ settings.per_page }
 								min={ 1 }
-								onChange={ ( v?: string ) => update( { per_page: parseInt( v || '12', 10 ) } ) }
+								onChange={ ( v?: string ) =>
+									update( {
+										per_page: parseInt( v || '12', 10 ),
+									} )
+								}
 							/>
 						</FlexItem>
 						<FlexItem>
 							<NumberControl
 								label={ __( 'Columns', 'sieve' ) }
+								help={ __(
+									'Product grid columns on wide screens. Fewer columns are used automatically on tablets and phones.',
+									'sieve'
+								) }
 								value={ settings.columns }
 								min={ 1 }
 								max={ 6 }
-								onChange={ ( v?: string ) => update( { columns: parseInt( v || '3', 10 ) } ) }
+								onChange={ ( v?: string ) =>
+									update( {
+										columns: parseInt( v || '3', 10 ),
+									} )
+								}
 							/>
 						</FlexItem>
 					</Flex>
 				</PanelBody>
+				<AppearancePanel
+					appearance={ settings.appearance }
+					onChange={ ( appearance: Appearance ) =>
+						update( { appearance } )
+					}
+				/>
 			</Panel>
 
 			<h2>{ __( 'Facets', 'sieve' ) }</h2>
+			{ settings.facets.length === 0 && (
+				<Notice status="info" isDismissible={ false }>
+					{ __(
+						'No facets yet. Pick a source below, click Add, then Save settings. Shoppers will not see filters until at least one facet is configured.',
+						'sieve'
+					) }
+				</Notice>
+			) }
 			{ settings.facets.map( ( facet, index ) => (
-				<Card key={ facet.slug } size="small" style={ { marginBottom: '0.75rem' } }>
+				<Card
+					key={ facet.slug }
+					size="small"
+					style={ { marginBottom: '0.75rem' } }
+				>
 					<CardBody>
 						<Flex align="flex-end" gap={ 3 }>
 							<FlexBlock>
 								<TextControl
 									label={ __( 'Label', 'sieve' ) }
 									value={ facet.label }
-									onChange={ ( label: string ) => updateFacet( index, { label } ) }
+									onChange={ ( label: string ) =>
+										updateFacet( index, { label } )
+									}
 								/>
 							</FlexBlock>
 							<FlexBlock>
 								<SelectControl
 									label={ __( 'Type', 'sieve' ) }
 									value={ facet.type }
-									options={ TYPE_OPTIONS }
-									onChange={ ( type: string ) => updateFacet( index, { type } ) }
+									options={ typeOptions }
+									help={ typeHelp[ facet.type ] }
+									onChange={ ( type: string ) =>
+										updateFacet( index, { type } )
+									}
 								/>
 							</FlexBlock>
 							<FlexItem>
-									<div style={ { display: 'flex', gap: '2px' } }>
-										<Button icon="arrow-up-alt2" label={ __( 'Move up', 'sieve' ) } disabled={ index === 0 } onClick={ () => move( index, -1 ) } />
-										<Button icon="arrow-down-alt2" label={ __( 'Move down', 'sieve' ) } disabled={ index === settings.facets.length - 1 } onClick={ () => move( index, 1 ) } />
-										<Button icon="trash" isDestructive label={ __( 'Remove', 'sieve' ) } onClick={ () => remove( index ) } />
-									</div>
-								</FlexItem>
+								<span
+									title={ __(
+										'Internal source key (taxonomy, attribute or product field) used by Sieve.',
+										'sieve'
+									) }
+								>
+									<code>{ facet.source }</code>
+								</span>
+							</FlexItem>
+							<FlexItem>
+								<Button
+									icon="arrow-up-alt2"
+									label={ __( 'Move up', 'sieve' ) }
+									onClick={ () => move( index, -1 ) }
+								/>
+								<Button
+									icon="arrow-down-alt2"
+									label={ __( 'Move down', 'sieve' ) }
+									onClick={ () => move( index, 1 ) }
+								/>
+								<Button
+									icon="trash"
+									isDestructive
+									label={ __( 'Remove', 'sieve' ) }
+									onClick={ () => remove( index ) }
+								/>
+							</FlexItem>
 						</Flex>
-							<p style={ { margin: '8px 0 0', color: '#757575', fontSize: '12px' } }>
-								{ __( 'Source:', 'sieve' ) } <code>{ facet.source }</code>
-							</p>
-						</CardBody>
+					</CardBody>
 				</Card>
 			) ) }
 
@@ -258,23 +552,33 @@ function App() {
 				<FlexBlock>
 					<SelectControl
 						label={ __( 'Add a facet', 'sieve' ) }
+						help={ __(
+							'Pick a product attribute, taxonomy or field to filter by. Sources are detected from your store automatically.',
+							'sieve'
+						) }
 						value={ newSource }
-						options={ [
-							{ label: __( 'Select a source...', 'sieve' ), value: '' },
-							...availableSources.map( ( s ) => ( { label: s.label, value: s.source } ) ),
-						] }
+						options={ groupedSourceOptions() }
 						onChange={ setNewSource }
 					/>
 				</FlexBlock>
 				<FlexItem>
-					<Button variant="secondary" onClick={ addFacet } disabled={ ! newSource }>
+					<Button
+						variant="secondary"
+						onClick={ addFacet }
+						disabled={ ! newSource }
+					>
 						{ __( 'Add', 'sieve' ) }
 					</Button>
 				</FlexItem>
 			</Flex>
 
 			<div style={ { marginTop: '1.5rem' } }>
-				<Button variant="primary" onClick={ save } isBusy={ saving } disabled={ saving }>
+				<Button
+					variant="primary"
+					onClick={ save }
+					isBusy={ saving }
+					disabled={ saving }
+				>
 					{ __( 'Save settings', 'sieve' ) }
 				</Button>
 			</div>
