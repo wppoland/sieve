@@ -104,6 +104,10 @@ Yes. The filter UI is built for keyboard use and screen readers, with labelled r
 = Does Sieve work on mobile? =
 Yes. Sieve includes a mobile filter drawer with a sticky apply bar, so shoppers can filter products without fighting a long sidebar on small screens.
 
+= Does this plugin work on WordPress Multisite? =
+
+Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings and data.
+
 == Screenshots ==
 
 1. Faceted filtering on a product page: categories, price range, availability and on-sale facets with live dependent counts, active-filter chips and a results grid.
