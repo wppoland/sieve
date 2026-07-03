@@ -6,6 +6,7 @@ namespace Sieve\Hook;
 
 defined('ABSPATH') || exit;
 
+use Sieve\Admin\ProUpsell;
 use Sieve\Contract\HasHooks;
 
 use const Sieve\PLUGIN_DIR;
@@ -19,10 +20,18 @@ final class AdminHooks implements HasHooks
 {
     private string $hookSuffix = '';
 
+    private ?ProUpsell $proUpsell = null;
+
+    private function proUpsell(): ProUpsell
+    {
+        return $this->proUpsell ??= new ProUpsell();
+    }
+
     public function registerHooks(): void
     {
         add_action('admin_menu', [$this, 'registerMenu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue']);
+        $this->proUpsell()->registerHooks();
     }
 
     public function registerMenu(): void
@@ -40,7 +49,21 @@ final class AdminHooks implements HasHooks
 
     public function renderPage(): void
     {
-        echo '<div class="wrap"><div id="sieve-admin-root"></div></div>';
+        $pro = $this->proUpsell();
+        ?>
+        <div class="wrap sieve-admin">
+            <h1><?php esc_html_e('Sieve', 'sieve'); ?></h1>
+
+            <?php $pro->banner(); ?>
+
+            <div class="sieve-cols">
+                <div id="sieve-admin-root"></div>
+                <?php $pro->aside(); ?>
+            </div>
+
+            <?php $pro->cards(); ?>
+        </div>
+        <?php
     }
 
     public function enqueue(string $hookSuffix): void
@@ -60,6 +83,16 @@ final class AdminHooks implements HasHooks
         );
 
         wp_enqueue_style('wp-components');
+
+        // Server-side PRO upsell styling (banner / sidebar promo / locked cards)
+        // wrapped around the React root. Scoped to this screen only.
+        wp_enqueue_style(
+            'sieve-admin',
+            plugins_url('assets/css/admin.css', PLUGIN_FILE),
+            ['wp-components'],
+            $asset['version'],
+        );
+
         wp_set_script_translations('sieve-admin', 'sieve');
 
         wp_localize_script('sieve-admin', 'sieveAdmin', [
