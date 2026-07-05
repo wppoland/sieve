@@ -10,6 +10,7 @@ use Sieve\Hook\FrontendHooks;
 use Sieve\Hook\IndexerHooks;
 use Sieve\Hook\RestHooks;
 use Sieve\Hook\SearchBlockHooks;
+use Sieve\Service\ElementorWidgets;
 use Sieve\Shortcode\FilterShortcode;
 use Sieve\Shortcode\SearchShortcode;
 
@@ -26,4 +27,5 @@ return [
     BlockHooks::class,
     SearchShortcode::class,
     SearchBlockHooks::class,
+    ElementorWidgets::class,
 ];
