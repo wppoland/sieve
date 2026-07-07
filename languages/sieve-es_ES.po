@@ -1,0 +1,478 @@
+# Copyright (C) 2026 WPPoland.com
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 0.9.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sieve\n"
+"POT-Creation-Date: 2026-06-14T10:43:11+00:00\n"
+"PO-Revision-Date: 2026-07-07 00:00+0000\n"
+"Last-Translator: WPPoland <kontakt@wppoland.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Codex + translate.googleapis.com\n"
+"X-Domain: sieve\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Sieve - Faceted Filter for WooCommerce"
+msgstr "Sieve - Filtro facetado para WooCommerce"
+
+msgid "https://plogins.com/sieve/"
+msgstr "https://plogins.com/sieve/"
+
+msgid "Fast, accessible faceted filtering for WooCommerce and WordPress. Beautiful facet widgets, AJAX filtering with no page reload, a mobile filter drawer, and Core Web Vitals by design."
+msgstr "Filtrado por facetas rápido y accesible para WooCommerce y WordPress. Hermosos widgets de facetas, filtrado AJAX sin recarga de página, un cajón de filtros móvil y Core Web Vitals por diseño."
+
+msgid "WPPoland"
+msgstr "WPPoland"
+
+msgid "https://wppoland.com"
+msgstr "https://wppoland.com"
+
+msgid "Sieve requires PHP %1$s or higher. You are running PHP %2$s."
+msgstr "Sieve requiere PHP %1$s o superior. Estás ejecutando PHP %2$s."
+
+msgid "Sieve requires WooCommerce to be installed and activated."
+msgstr "Sieve requiere que WooCommerce esté instalado y activado."
+
+msgid "Sieve requires WooCommerce %1$s or higher. You are running WooCommerce %2$s."
+msgstr "Sieve requiere WooCommerce %1$s o superior. Estás ejecutando WooCommerce %2$s."
+
+msgid "Checkboxes"
+msgstr "Casillas de verificación"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Dropdown"
+msgstr "Menú desplegable"
+
+msgid "Swatches (color / image)"
+msgstr "Muestras (color/imagen)"
+
+msgid "Hierarchy (tree)"
+msgstr "Jerarquía (árbol)"
+
+msgid "Autocomplete (searchable options)"
+msgstr "Autocompletar (opciones de búsqueda)"
+
+msgid "A-Z index"
+msgstr "índice A-Z"
+
+msgid "Range slider"
+msgstr "Control deslizante de rango"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Sort"
+msgstr "Clasificar"
+
+msgid "Pagination"
+msgstr "Paginación"
+
+msgid "Reset"
+msgstr "Reiniciar"
+
+msgid "Active filters"
+msgstr "Filtros activos"
+
+msgid "Sieve"
+msgstr "Sieve"
+
+msgid "%d options"
+msgstr "%d opciones"
+
+msgid "No matching options"
+msgstr "No hay opciones coincidentes"
+
+msgid "Searching…"
+msgstr "Búsqueda…"
+
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] "%d producto"
+msgstr[1] "%d productos"
+
+msgid "%d products"
+msgstr "%d productos"
+
+msgid "No results"
+msgstr "Sin resultados"
+
+msgid "Product suggestions"
+msgstr "Sugerencias de productos"
+
+msgid "Something went wrong while updating products. Please try again."
+msgstr "Algo salió mal al actualizar los productos. Por favor inténtalo de nuevo."
+
+msgid "Retry"
+msgstr "Rever"
+
+msgid "No products found."
+msgstr "No se encontraron productos."
+
+msgid "View all results"
+msgstr "Ver todos los resultados"
+
+msgid "Products"
+msgstr "Productos"
+
+msgid "Categories"
+msgstr "Categorías"
+
+msgid "1 result found"
+msgstr "1 resultado encontrado"
+
+msgid "%d results found"
+msgstr "%d resultados encontrados"
+
+msgid "Product category"
+msgstr "categoría de producto"
+
+msgid "Product tag"
+msgstr "Etiqueta de producto"
+
+msgid "Attribute: %s"
+msgstr "Atributo: %s"
+
+msgid "Price"
+msgstr "Precio"
+
+msgid "Stock status"
+msgstr "Estado del stock"
+
+msgid "On sale"
+msgstr "En venta"
+
+msgid "Average rating"
+msgstr "Calificación promedio"
+
+msgid "Search box"
+msgstr "Cuadro de búsqueda"
+
+msgid "%s star"
+msgid_plural "%s stars"
+msgstr[0] "%s estrella"
+msgstr[1] "%s estrellas"
+
+msgid "Filter options"
+msgstr "Opciones de filtro"
+
+msgid "Filter %s options"
+msgstr "Filtrar opciones de %s"
+
+msgid "All"
+msgstr "Todo"
+
+msgid "Filter options by first letter"
+msgstr "Filtrar opciones por primera letra"
+
+msgid "Any"
+msgstr "Cualquiera"
+
+msgid "Minimum price"
+msgstr "Precio mínimo"
+
+msgid "Maximum price"
+msgstr "Precio máximo"
+
+msgid "Search products"
+msgstr "Buscar productos"
+
+msgid "In stock"
+msgstr "En stock"
+
+msgid "Out of stock"
+msgstr "Agotado"
+
+msgid "On backorder"
+msgstr "En espera"
+
+msgid "Filters"
+msgstr "Filtros"
+
+msgid "Show results"
+msgstr "Mostrar resultados"
+
+msgid "Product filters"
+msgstr "Filtros de producto"
+
+msgid "Results pages"
+msgstr "Páginas de resultados"
+
+msgid "Default sorting"
+msgstr "Clasificación predeterminada"
+
+msgid "Sort by popularity"
+msgstr "Ordenar por popularidad"
+
+msgid "Sort by average rating"
+msgstr "Ordenar por calificación promedio"
+
+msgid "Sort by latest"
+msgstr "Ordenar por novedades"
+
+msgid "Sort by price: low to high"
+msgstr "Ordenar por precio: de menor a mayor"
+
+msgid "Sort by price: high to low"
+msgstr "Ordenar por precio: de mayor a menor"
+
+msgid "Sort products"
+msgstr "Ordenar productos"
+
+msgid "Clear all"
+msgstr "Borrar todo"
+
+msgid "Active filters:"
+msgstr "Filtros activos:"
+
+msgid "Remove filter: %s"
+msgstr "Quitar filtro: %s"
+
+msgid "No products match these filters"
+msgstr "Ningún producto coincide con estos filtros"
+
+msgid "Try removing a filter or widening your price range to see more products."
+msgstr "Intente eliminar un filtro o ampliar su rango de precios para ver más productos."
+
+msgid "Clear all filters"
+msgstr "Borrar todos los filtros"
+
+msgid "%s product"
+msgid_plural "%s products"
+msgstr[0] "%s producto"
+msgstr[1] "%s productos"
+
+msgid "Product search results"
+msgstr "Resultados de búsqueda de productos"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Availability"
+msgstr "Disponibilidad"
+
+msgid "Default"
+msgstr "Por defecto"
+
+msgid "Minimal"
+msgstr "Mínimo"
+
+msgid "Bordered"
+msgstr "bordeado"
+
+msgid "Soft"
+msgstr "Suave"
+
+msgid "Unstyled"
+msgstr "Sin estilo"
+
+msgid "Accent"
+msgstr "Acento"
+
+msgid "Border"
+msgstr "Borde"
+
+msgid "Muted text"
+msgstr "Texto silenciado"
+
+msgid "Background"
+msgstr "Fondo"
+
+msgid "Appearance"
+msgstr "Apariencia"
+
+msgid "Style preset"
+msgstr "Estilo preestablecido"
+
+msgid "Unstyled mode ships no plugin CSS. Your theme styles everything through the semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-search, …). Keyboard focus and high-contrast cues are still emitted."
+msgstr "El modo sin estilo no incluye ningún complemento CSS. Su tema diseña todo a través de las clases semánticas.sieve-* (.sieve-app,.sieve-facet,.sieve-chip,.sieve-search,…). Todavía se emiten el enfoque del teclado y las señales de alto contraste."
+
+msgid "Low contrast: the active/selected state uses white text on the accent colour and may be hard to read."
+msgstr "Bajo contraste: el estado activo/seleccionado utiliza texto blanco sobre el color de acento y puede ser difícil de leer."
+
+msgid "Muted text may be hard to read against the chosen background colour."
+msgstr "El texto apagado puede resultar difícil de leer con el color de fondo elegido."
+
+msgid "Reset to defaults"
+msgstr "Restablecer los valores predeterminados"
+
+msgid "Preview"
+msgstr "Avance"
+
+msgid "Accessories"
+msgstr "Accesorios"
+
+msgid "Multiple choices can be selected at once. Best for most attributes."
+msgstr "Se pueden seleccionar varias opciones a la vez. Lo mejor para la mayoría de los atributos."
+
+msgid "Only one choice at a time. Good for mutually exclusive options."
+msgstr "Sólo una opción a la vez. Bueno para opciones mutuamente excluyentes."
+
+msgid "A compact select menu. Saves space when there are many options."
+msgstr "Un menú de selección compacto. Ahorra espacio cuando hay muchas opciones."
+
+msgid "Colour or image squares. Ideal for colour and pattern attributes."
+msgstr "Cuadrados de color o imagen. Ideal para atributos de color y patrón."
+
+msgid "A nested tree. Best for categories with parent/child levels."
+msgstr "Un árbol anidado. Lo mejor para categorías con niveles de padre/hijo."
+
+msgid "A checkbox list with a type-to-filter box. Best for very long option lists."
+msgstr "Una lista de casillas de verificación con un cuadro de tipo para filtrar. Lo mejor para listas de opciones muy largas."
+
+msgid "An A–Z bar that filters options by first letter. Good for brand lists."
+msgstr "Una barra A–Z que filtra opciones por primera letra. Bueno para listas de marcas."
+
+msgid "A min/max range. Used for price and other numeric values."
+msgstr "Un rango mínimo/máximo. Se utiliza para precios y otros valores numéricos."
+
+msgid "A live search box that narrows the product grid as shoppers type."
+msgstr "Un cuadro de búsqueda en vivo que reduce la cuadrícula de productos a medida que los compradores escriben."
+
+msgid "Loading Sieve…"
+msgstr "Cargando Sieve …"
+
+msgid "That facet is already added."
+msgstr "Esa faceta ya está añadida."
+
+msgid "Settings saved."
+msgstr "Configuración guardada."
+
+msgid "Re-indexed %d product."
+msgid_plural "Re-indexed %d products."
+msgstr[0] "Producto %d reindexado."
+msgstr[1] "Productos %d reindexados."
+
+msgid "Place the filter anywhere with the shortcode"
+msgstr "Coloque el filtro en cualquier lugar con el código corto"
+
+msgid "or the \"Sieve Filter\" block."
+msgstr "o el bloque \" Sieve Filtro\"."
+
+msgid "Index"
+msgstr "Índice"
+
+msgid "Indexed rows:"
+msgstr "Filas indexadas:"
+
+msgid "Rebuild index"
+msgstr "Índice de reconstrucción"
+
+msgid "Layout"
+msgstr "Disposición"
+
+msgid "Products per page"
+msgstr "Productos por página"
+
+msgid "How many products to show before pagination appears."
+msgstr "Cuántos productos mostrar antes de que aparezca la paginación."
+
+msgid "Columns"
+msgstr "columnas"
+
+msgid "Product grid columns on wide screens. Fewer columns are used automatically on tablets and phones."
+msgstr "Columnas de cuadrícula de productos en pantallas anchas. Se utilizan menos columnas automáticamente en tabletas y teléfonos."
+
+msgid "Facets"
+msgstr "facetas"
+
+msgid "Label"
+msgstr "Etiqueta"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Move up"
+msgstr "Subir"
+
+msgid "Move down"
+msgstr "Bajar"
+
+msgid "Remove"
+msgstr "Eliminar"
+
+msgid "Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild it after a bulk import or if counts look out of date — new and edited products are indexed automatically."
+msgstr "Sieve mantiene un índice prediseñado para que las consultas filtradas se mantengan rápidas en catálogos grandes. Reconstrúyalo después de una importación masiva o si los recuentos parecen obsoletos: los productos nuevos y editados se indexan automáticamente."
+
+msgid "Add a facet"
+msgstr "Agregar una faceta"
+
+msgid "Pick a product attribute, taxonomy or field to filter by. Sources are detected from your store automatically."
+msgstr "Elija un atributo de producto, taxonomía o campo para filtrar. Las fuentes se detectan desde su tienda automáticamente."
+
+msgid "Select a source…"
+msgstr "Seleccione una fuente…"
+
+msgid "Add"
+msgstr "Agregar"
+
+msgid "Save settings"
+msgstr "Guardar configuración"
+
+msgid "Search settings"
+msgstr "Configuración de búsqueda"
+
+msgid "Placeholder"
+msgstr "Marcador de posición"
+
+msgid "Show submit button"
+msgstr "Mostrar botón de envío"
+
+msgid "Max results"
+msgstr "Resultados máximos"
+
+msgid "Minimum characters"
+msgstr "Caracteres mínimos"
+
+msgctxt "block title"
+msgid "In-stock products only"
+msgstr "Solo productos en stock"
+
+msgctxt "block description"
+msgid "Sieve Filter"
+msgstr "Sieve Filtro"
+
+msgctxt "block keyword"
+msgid "Fast, accessible faceted product filtering with a results grid."
+msgstr "Filtrado de productos por facetas rápido y accesible con una cuadrícula de resultados."
+
+msgctxt "block keyword"
+msgid "filter"
+msgstr "filter"
+
+msgctxt "block keyword"
+msgid "facet"
+msgstr "facet"
+
+msgctxt "block keyword"
+msgid "woocommerce"
+msgstr "woocommerce"
+
+msgctxt "block title"
+msgid "search"
+msgstr "search"
+
+msgctxt "block description"
+msgid "Sieve Search"
+msgstr "Sieve Buscar"
+
+msgctxt "block keyword"
+msgid "Predictive product search with an instant, accessible typeahead dropdown."
+msgstr "Búsqueda predictiva de productos con un menú desplegable de escritura anticipada instantáneo y accesible."
+
+msgctxt "block keyword"
+msgid "typeahead"
+msgstr "typeahead"
+
+msgctxt "block keyword"
+msgid "autocomplete"
+msgstr "autocomplete"
+
+msgid "product"
+msgstr "product"
+
