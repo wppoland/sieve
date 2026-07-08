@@ -47,7 +47,7 @@ Fast and accessible by design:
 
 Easy to place and configure:
 
-* Gutenberg "Sieve Filter" block and the `[sieve]` shortcode
+* Gutenberg "Sieve Filter" block, an Elementor "Sieve Filter" widget, and the `[sieve]` shortcode
 * A visual facet builder in the admin: add, reorder and retype facets, set the layout, and rebuild the index
 
 = Sieve PRO =
