@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,7 +133,14 @@ The full, human-readable source for the compiled assets is included in this plug
 
 This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at https://github.com/wppoland/sieve.
 
+== Translations ==
+
+Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
+
 == Changelog ==
+
+= 1.0.2 =
+* Added bundled Polish, German and Spanish translations for the plugin interface.
 
 = 1.0.1 =
 * First stable release.
