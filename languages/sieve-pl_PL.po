@@ -4,17 +4,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sieve - Faceted Filter for WooCommerce 0.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sieve\n"
+"POT-Creation-Date: 2026-06-14T10:43:11+00:00\n"
+"PO-Revision-Date: 2026-06-15 00:00+0000\n"
 "Last-Translator: WPPoland <hello@wppoland.com>\n"
 "Language-Team: Polish <hello@wppoland.com>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-14T10:43:11+00:00\n"
-"PO-Revision-Date: 2026-06-15 00:00+0000\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sieve\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
+"|| n%100>14) ? 1 : 2);\n"
 
 #. Plugin Name of the plugin
 #: sieve.php
@@ -28,8 +29,14 @@ msgstr "https://plogins.com/sieve/"
 
 #. Description of the plugin
 #: sieve.php
-msgid "Fast, accessible faceted filtering for WooCommerce and WordPress. Beautiful facet widgets, AJAX filtering with no page reload, a mobile filter drawer, and Core Web Vitals by design."
-msgstr "Szybkie, dostępne filtrowanie fasetowe dla WooCommerce i WordPressa. Eleganckie widżety faset, filtrowanie AJAX bez przeładowania strony, mobilny panel filtrów oraz dbałość o Core Web Vitals."
+msgid ""
+"Fast, accessible faceted filtering for WooCommerce and WordPress. Beautiful "
+"facet widgets, AJAX filtering with no page reload, a mobile filter drawer, "
+"and Core Web Vitals by design."
+msgstr ""
+"Szybkie, dostępne filtrowanie fasetowe dla WooCommerce i WordPressa. "
+"Eleganckie widżety faset, filtrowanie AJAX bez przeładowania strony, mobilny "
+"panel filtrów oraz dbałość o Core Web Vitals."
 
 #. Author of the plugin
 #: sieve.php
@@ -54,51 +61,43 @@ msgstr "Sieve wymaga zainstalowanego i aktywowanego WooCommerce."
 #. translators: 1: Required WC version, 2: Current WC version
 #: sieve.php:85
 #, php-format
-msgid "Sieve requires WooCommerce %1$s or higher. You are running WooCommerce %2$s."
+msgid ""
+"Sieve requires WooCommerce %1$s or higher. You are running WooCommerce %2$s."
 msgstr "Sieve wymaga WooCommerce %1$s lub nowszego. Używasz WooCommerce %2$s."
 
-#: src/Enum/FacetType.php:56
-#: build/admin.js:1
+#: src/Enum/FacetType.php:56 build/admin.js:1
 msgid "Checkboxes"
 msgstr "Pola wyboru"
 
-#: src/Enum/FacetType.php:57
-#: build/admin.js:1
+#: src/Enum/FacetType.php:57 build/admin.js:1
 msgid "Radio"
 msgstr "Przyciski opcji"
 
-#: src/Enum/FacetType.php:58
-#: build/admin.js:1
+#: src/Enum/FacetType.php:58 build/admin.js:1
 msgid "Dropdown"
 msgstr "Lista rozwijana"
 
-#: src/Enum/FacetType.php:59
-#: build/admin.js:1
+#: src/Enum/FacetType.php:59 build/admin.js:1
 msgid "Swatches (color / image)"
 msgstr "Próbki (kolor / obraz)"
 
-#: src/Enum/FacetType.php:60
-#: build/admin.js:1
+#: src/Enum/FacetType.php:60 build/admin.js:1
 msgid "Hierarchy (tree)"
 msgstr "Hierarchia (drzewo)"
 
-#: src/Enum/FacetType.php:61
-#: build/admin.js:1
+#: src/Enum/FacetType.php:61 build/admin.js:1
 msgid "Autocomplete (searchable options)"
 msgstr "Autouzupełnianie (wyszukiwalne opcje)"
 
-#: src/Enum/FacetType.php:62
-#: build/admin.js:1
+#: src/Enum/FacetType.php:62 build/admin.js:1
 msgid "A-Z index"
 msgstr "Indeks A-Z"
 
-#: src/Enum/FacetType.php:63
-#: build/admin.js:1
+#: src/Enum/FacetType.php:63 build/admin.js:1
 msgid "Range slider"
 msgstr "Suwak zakresu"
 
-#: src/Enum/FacetType.php:64
-#: src/Service/SearchRenderer.php:105
+#: src/Enum/FacetType.php:64 src/Service/SearchRenderer.php:105
 msgid "Search"
 msgstr "Szukaj"
 
@@ -118,9 +117,7 @@ msgstr "Resetuj"
 msgid "Active filters"
 msgstr "Aktywne filtry"
 
-#: src/Hook/AdminHooks.php:31
-#: src/Hook/AdminHooks.php:32
-#: build/admin.js:1
+#: src/Hook/AdminHooks.php:31 src/Hook/AdminHooks.php:32 build/admin.js:1
 msgid "Sieve"
 msgstr "Sieve"
 
@@ -134,15 +131,13 @@ msgstr "%d opcji"
 msgid "No matching options"
 msgstr "Brak pasujących opcji"
 
-#: src/Hook/FrontendHooks.php:89
-#: src/Hook/FrontendHooks.php:137
+#: src/Hook/FrontendHooks.php:89 src/Hook/FrontendHooks.php:137
 msgid "Searching…"
 msgstr "Wyszukiwanie…"
 
 #. translators: %d: number of matching products (singular).
 #. translators: %d: number of products in a category.
-#: src/Hook/FrontendHooks.php:91
-#: src/Service/SuggestService.php:275
+#: src/Hook/FrontendHooks.php:91 src/Service/SuggestService.php:275
 #, php-format
 msgid "%d product"
 msgid_plural "%d products"
@@ -160,8 +155,7 @@ msgstr "%d produktów"
 msgid "No results"
 msgstr "Brak wyników"
 
-#: src/Hook/FrontendHooks.php:95
-#: src/Service/FacetRenderer.php:296
+#: src/Hook/FrontendHooks.php:95 src/Service/FacetRenderer.php:296
 msgid "Product suggestions"
 msgstr "Sugestie produktów"
 
@@ -173,8 +167,7 @@ msgstr "Coś poszło nie tak podczas aktualizacji produktów. Spróbuj ponownie.
 msgid "Retry"
 msgstr "Ponów"
 
-#: src/Hook/FrontendHooks.php:135
-#: src/Service/ResultsRenderer.php:153
+#: src/Hook/FrontendHooks.php:135 src/Service/ResultsRenderer.php:153
 msgid "No products found."
 msgstr "Nie znaleziono produktów."
 
@@ -214,8 +207,7 @@ msgstr "Tag produktu"
 msgid "Attribute: %s"
 msgstr "Atrybut: %s"
 
-#: src/Service/FacetCatalog.php:39
-#: src/Service/Settings.php:99
+#: src/Service/FacetCatalog.php:39 src/Service/Settings.php:99
 msgid "Price"
 msgstr "Cena"
 
@@ -223,8 +215,7 @@ msgstr "Cena"
 msgid "Stock status"
 msgstr "Status zapasów"
 
-#: src/Service/FacetCatalog.php:41
-#: src/Service/FacetRenderer.php:80
+#: src/Service/FacetCatalog.php:41 src/Service/FacetRenderer.php:80
 #: src/Service/Settings.php:111
 msgid "On sale"
 msgstr "W promocji"
@@ -233,8 +224,7 @@ msgstr "W promocji"
 msgid "Average rating"
 msgstr "Średnia ocena"
 
-#: src/Service/FacetCatalog.php:43
-#: build/admin.js:1
+#: src/Service/FacetCatalog.php:43 build/admin.js:1
 msgid "Search box"
 msgstr "Pole wyszukiwania"
 
@@ -277,10 +267,8 @@ msgstr "Cena minimalna"
 msgid "Maximum price"
 msgstr "Cena maksymalna"
 
-#: src/Service/FacetRenderer.php:293
-#: src/Service/SearchRenderer.php:101
-#: src/Service/SearchRenderer.php:102
-#: build/admin.js:1
+#: src/Service/FacetRenderer.php:293 src/Service/SearchRenderer.php:101
+#: src/Service/SearchRenderer.php:102 build/admin.js:1
 msgid "Search products"
 msgstr "Szukaj produktów"
 
@@ -359,8 +347,10 @@ msgid "No products match these filters"
 msgstr "Żaden produkt nie pasuje do tych filtrów"
 
 #: src/Service/ResultsRenderer.php:145
-msgid "Try removing a filter or widening your price range to see more products."
-msgstr "Spróbuj usunąć filtr lub poszerzyć zakres cen, aby zobaczyć więcej produktów."
+msgid ""
+"Try removing a filter or widening your price range to see more products."
+msgstr ""
+"Spróbuj usunąć filtr lub poszerzyć zakres cen, aby zobaczyć więcej produktów."
 
 #: src/Service/ResultsRenderer.php:146
 msgid "Clear all filters"
@@ -379,8 +369,7 @@ msgstr[2] "%s produktów"
 msgid "Product search results"
 msgstr "Wyniki wyszukiwania produktów"
 
-#: src/Service/Settings.php:93
-#: build/admin.js:1
+#: src/Service/Settings.php:93 build/admin.js:1
 msgid "Category"
 msgstr "Kategoria"
 
@@ -433,12 +422,23 @@ msgid "Style preset"
 msgstr "Gotowy styl"
 
 #: build/admin.js:1
-msgid "Unstyled mode ships no plugin CSS. Your theme styles everything through the semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-search, …). Keyboard focus and high-contrast cues are still emitted."
-msgstr "Tryb bez stylów nie dostarcza żadnego CSS-a wtyczki. Twój motyw stylizuje wszystko za pomocą semantycznych klas .sieve-* (.sieve-app, .sieve-facet, .sieve-chip, .sieve-search, …). Wskaźniki fokusu klawiatury i wysokiego kontrastu są nadal renderowane."
+msgid ""
+"Unstyled mode ships no plugin CSS. Your theme styles everything through the "
+"semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-"
+"search, …). Keyboard focus and high-contrast cues are still emitted."
+msgstr ""
+"Tryb bez stylów nie dostarcza żadnego CSS-a wtyczki. Twój motyw stylizuje "
+"wszystko za pomocą semantycznych klas .sieve-* (.sieve-app, .sieve-"
+"facet, .sieve-chip, .sieve-search, …). Wskaźniki fokusu klawiatury i "
+"wysokiego kontrastu są nadal renderowane."
 
 #: build/admin.js:1
-msgid "Low contrast: the active/selected state uses white text on the accent colour and may be hard to read."
-msgstr "Niski kontrast: stan aktywny/wybrany używa białego tekstu na kolorze akcentu i może być trudny do odczytania."
+msgid ""
+"Low contrast: the active/selected state uses white text on the accent colour "
+"and may be hard to read."
+msgstr ""
+"Niski kontrast: stan aktywny/wybrany używa białego tekstu na kolorze akcentu "
+"i może być trudny do odczytania."
 
 #: build/admin.js:1
 msgid "Muted text may be hard to read against the chosen background colour."
@@ -458,7 +458,8 @@ msgstr "Akcesoria"
 
 #: build/admin.js:1
 msgid "Multiple choices can be selected at once. Best for most attributes."
-msgstr "Można zaznaczyć wiele opcji jednocześnie. Najlepsze dla większości atrybutów."
+msgstr ""
+"Można zaznaczyć wiele opcji jednocześnie. Najlepsze dla większości atrybutów."
 
 #: build/admin.js:1
 msgid "Only one choice at a time. Good for mutually exclusive options."
@@ -474,15 +475,20 @@ msgstr "Kwadraty z kolorem lub obrazem. Idealne dla atrybutów koloru i wzoru."
 
 #: build/admin.js:1
 msgid "A nested tree. Best for categories with parent/child levels."
-msgstr "Zagnieżdżone drzewo. Najlepsze dla kategorii z poziomami nadrzędny/podrzędny."
+msgstr ""
+"Zagnieżdżone drzewo. Najlepsze dla kategorii z poziomami nadrzędny/podrzędny."
 
 #: build/admin.js:1
-msgid "A checkbox list with a type-to-filter box. Best for very long option lists."
-msgstr "Lista pól wyboru z polem filtrowania podczas pisania. Najlepsza dla bardzo długich list opcji."
+msgid ""
+"A checkbox list with a type-to-filter box. Best for very long option lists."
+msgstr ""
+"Lista pól wyboru z polem filtrowania podczas pisania. Najlepsza dla bardzo "
+"długich list opcji."
 
 #: build/admin.js:1
 msgid "An A–Z bar that filters options by first letter. Good for brand lists."
-msgstr "Pasek A–Z filtrujący opcje według pierwszej litery. Dobry dla list marek."
+msgstr ""
+"Pasek A–Z filtrujący opcje według pierwszej litery. Dobry dla list marek."
 
 #: build/admin.js:1
 msgid "A min/max range. Used for price and other numeric values."
@@ -490,7 +496,8 @@ msgstr "Zakres min/maks. Używany dla ceny i innych wartości liczbowych."
 
 #: build/admin.js:1
 msgid "A live search box that narrows the product grid as shoppers type."
-msgstr "Pole wyszukiwania na żywo, które zawęża siatkę produktów w miarę pisania."
+msgstr ""
+"Pole wyszukiwania na żywo, które zawęża siatkę produktów w miarę pisania."
 
 #: build/admin.js:1
 msgid "Loading Sieve…"
@@ -505,7 +512,6 @@ msgid "Settings saved."
 msgstr "Ustawienia zapisane."
 
 #: build/admin.js:1
-#, js-format
 msgid "Re-indexed %d product."
 msgid_plural "Re-indexed %d products."
 msgstr[0] "Ponownie zindeksowano %d produkt."
@@ -549,8 +555,12 @@ msgid "Columns"
 msgstr "Kolumny"
 
 #: build/admin.js:1
-msgid "Product grid columns on wide screens. Fewer columns are used automatically on tablets and phones."
-msgstr "Liczba kolumn siatki produktów na szerokich ekranach. Na tabletach i telefonach automatycznie używana jest mniejsza liczba kolumn."
+msgid ""
+"Product grid columns on wide screens. Fewer columns are used automatically "
+"on tablets and phones."
+msgstr ""
+"Liczba kolumn siatki produktów na szerokich ekranach. Na tabletach i "
+"telefonach automatycznie używana jest mniejsza liczba kolumn."
 
 #: build/admin.js:1
 msgid "Facets"
@@ -577,16 +587,27 @@ msgid "Remove"
 msgstr "Usuń"
 
 #: build/admin.js:1
-msgid "Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild it after a bulk import or if counts look out of date — new and edited products are indexed automatically."
-msgstr "Sieve utrzymuje gotowy indeks, dzięki czemu filtrowane zapytania pozostają szybkie nawet przy dużych katalogach. Przebuduj go po imporcie masowym lub gdy liczby wyglądają na nieaktualne — nowe i edytowane produkty są indeksowane automatycznie."
+msgid ""
+"Sieve keeps a pre-built index so filtered queries stay fast on large "
+"catalogs. Rebuild it after a bulk import or if counts look out of date — new "
+"and edited products are indexed automatically."
+msgstr ""
+"Sieve utrzymuje gotowy indeks, dzięki czemu filtrowane zapytania pozostają "
+"szybkie nawet przy dużych katalogach. Przebuduj go po imporcie masowym lub "
+"gdy liczby wyglądają na nieaktualne — nowe i edytowane produkty są "
+"indeksowane automatycznie."
 
 #: build/admin.js:1
 msgid "Add a facet"
 msgstr "Dodaj fasetę"
 
 #: build/admin.js:1
-msgid "Pick a product attribute, taxonomy or field to filter by. Sources are detected from your store automatically."
-msgstr "Wybierz atrybut produktu, taksonomię lub pole, według którego chcesz filtrować. Źródła są wykrywane w Twoim sklepie automatycznie."
+msgid ""
+"Pick a product attribute, taxonomy or field to filter by. Sources are "
+"detected from your store automatically."
+msgstr ""
+"Wybierz atrybut produktu, taksonomię lub pole, według którego chcesz "
+"filtrować. Źródła są wykrywane w Twoim sklepie automatycznie."
 
 #: build/admin.js:1
 msgid "Select a source…"
@@ -600,108 +621,92 @@ msgstr "Dodaj"
 msgid "Save settings"
 msgstr "Zapisz ustawienia"
 
-#: build/blocks/search/index.js:183
-#: resources/js/blocks/search/index.js:25
+#: build/blocks/search/index.js:183 resources/js/blocks/search/index.js:25
 #: build/blocks/search/index.js:86
 msgid "Search settings"
 msgstr "Ustawienia wyszukiwania"
 
-#: build/blocks/search/index.js:185
-#: resources/js/blocks/search/index.js:27
+#: build/blocks/search/index.js:185 resources/js/blocks/search/index.js:27
 #: build/blocks/search/index.js:88
 msgid "Placeholder"
 msgstr "Tekst zastępczy"
 
-#: build/blocks/search/index.js:191
-#: resources/js/blocks/search/index.js:33
+#: build/blocks/search/index.js:191 resources/js/blocks/search/index.js:33
 #: build/blocks/search/index.js:94
 msgid "Show submit button"
 msgstr "Pokaż przycisk wysyłania"
 
-#: build/blocks/search/index.js:197
-#: resources/js/blocks/search/index.js:38
+#: build/blocks/search/index.js:197 resources/js/blocks/search/index.js:38
 #: build/blocks/search/index.js:99
 msgid "Max results"
 msgstr "Maks. wyników"
 
-#: build/blocks/search/index.js:205
-#: resources/js/blocks/search/index.js:45
+#: build/blocks/search/index.js:205 resources/js/blocks/search/index.js:45
 #: build/blocks/search/index.js:106
 msgid "Minimum characters"
 msgstr "Minimalna liczba znaków"
 
-#: build/blocks/search/index.js:213
-#: resources/js/blocks/search/index.js:53
+#: build/blocks/search/index.js:213 resources/js/blocks/search/index.js:53
 #: build/blocks/search/index.js:114
 msgid "In-stock products only"
 msgstr "Tylko produkty dostępne"
 
-#: build/blocks/filter/block.json
-#: resources/js/blocks/filter/block.json
+#: build/blocks/filter/block.json resources/js/blocks/filter/block.json
 msgctxt "block title"
 msgid "Sieve Filter"
 msgstr "Filtr Sieve"
 
-#: build/blocks/filter/block.json
-#: resources/js/blocks/filter/block.json
+#: build/blocks/filter/block.json resources/js/blocks/filter/block.json
 msgctxt "block description"
 msgid "Fast, accessible faceted product filtering with a results grid."
 msgstr "Szybkie, dostępne filtrowanie fasetowe produktów z siatką wyników."
 
-#: build/blocks/filter/block.json
-#: resources/js/blocks/filter/block.json
+#: build/blocks/filter/block.json resources/js/blocks/filter/block.json
 msgctxt "block keyword"
 msgid "filter"
 msgstr "filtr"
 
-#: build/blocks/filter/block.json
-#: resources/js/blocks/filter/block.json
+#: build/blocks/filter/block.json resources/js/blocks/filter/block.json
 msgctxt "block keyword"
 msgid "facet"
 msgstr "faseta"
 
-#: build/blocks/filter/block.json
-#: build/blocks/search/block.json
-#: resources/js/blocks/filter/block.json
-#: resources/js/blocks/search/block.json
+#: build/blocks/filter/block.json build/blocks/search/block.json
+#: resources/js/blocks/filter/block.json resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "woocommerce"
 msgstr "woocommerce"
 
-#: build/blocks/filter/block.json
-#: build/blocks/search/block.json
-#: resources/js/blocks/filter/block.json
-#: resources/js/blocks/search/block.json
+#: build/blocks/filter/block.json build/blocks/search/block.json
+#: resources/js/blocks/filter/block.json resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "search"
 msgstr "wyszukiwanie"
 
-#: build/blocks/search/block.json
-#: resources/js/blocks/search/block.json
+#: build/blocks/search/block.json resources/js/blocks/search/block.json
 msgctxt "block title"
 msgid "Sieve Search"
 msgstr "Wyszukiwarka Sieve"
 
-#: build/blocks/search/block.json
-#: resources/js/blocks/search/block.json
+#: build/blocks/search/block.json resources/js/blocks/search/block.json
 msgctxt "block description"
-msgid "Predictive product search with an instant, accessible typeahead dropdown."
-msgstr "Predykcyjne wyszukiwanie produktów z natychmiastową, dostępną listą podpowiedzi."
+msgid ""
+"Predictive product search with an instant, accessible typeahead dropdown."
+msgstr ""
+"Predykcyjne wyszukiwanie produktów z natychmiastową, dostępną listą "
+"podpowiedzi."
 
-#: build/blocks/search/block.json
-#: resources/js/blocks/search/block.json
+#: build/blocks/search/block.json resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "typeahead"
 msgstr "podpowiedzi"
 
-#: build/blocks/search/block.json
-#: resources/js/blocks/search/block.json
+#: build/blocks/search/block.json resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "autocomplete"
 msgstr "autouzupełnianie"
 
-#: build/blocks/search/block.json
-#: resources/js/blocks/search/block.json
+#: build/blocks/search/block.json resources/js/blocks/search/block.json
 msgctxt "block keyword"
 msgid "product"
 msgstr "produkt"
