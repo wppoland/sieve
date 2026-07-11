@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,6 +72,20 @@ More free WooCommerce plugins from WPPoland:
 
 Browse the full catalogue at https://plogins.com/ .
 
+== Sieve PRO ==
+
+The free edition is the full filtering MVP, with no limits. **Sieve PRO** is built for large or conversion-focused catalogs and adds:
+
+* **Performance dashboard** - index health, catalogue coverage and a filter-resolve benchmark
+* **Conditional facet rules** - show or hide facets by product category, customer role or the shop page
+* **A/B layout testing** - rotate filter-panel layouts and product grid columns with impression tracking
+* **Star rating facet** - visual star rows for the average-rating filter
+* **Search integrations** - route predictive and in-grid search through SearchWP or Algolia
+
+Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year (PLN shown at checkout).
+
+Compare editions and pricing: https://plogins.com/sieve-pro/pricing/
+
 == Installation ==
 
 1. Install and activate WooCommerce.
@@ -138,6 +152,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
 
 == Changelog ==
+
+= 1.0.3 =
+* Added a Free vs PRO overview to the readme.
 
 = 1.0.2 =
 * Added bundled Polish, German and Spanish translations for the plugin interface.
