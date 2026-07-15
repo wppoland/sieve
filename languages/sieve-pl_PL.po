@@ -7,15 +7,14 @@ msgstr ""
 "POT-Creation-Date: 2026-06-14T10:43:11+00:00\n"
 "PO-Revision-Date: 2026-06-15 00:00+0000\n"
 "Last-Translator: WPPoland <hello@wppoland.com>\n"
-"Language-Team: Polish <hello@wppoland.com>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Domain: sieve\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
-"|| n%100>14) ? 1 : 2);\n"
+"X-Generator: WP-CLI 2.12.0\n"
 
 #. Plugin Name of the plugin
 #: sieve.php
@@ -35,8 +34,8 @@ msgid ""
 "and Core Web Vitals by design."
 msgstr ""
 "Szybkie, dostępne filtrowanie fasetowe dla WooCommerce i WordPressa. "
-"Eleganckie widżety faset, filtrowanie AJAX bez przeładowania strony, mobilny "
-"panel filtrów oraz dbałość o Core Web Vitals."
+"Eleganckie widżety faset, filtrowanie AJAX bez przeładowania strony, mobilny"
+" panel filtrów oraz dbałość o Core Web Vitals."
 
 #. Author of the plugin
 #: sieve.php
@@ -350,7 +349,8 @@ msgstr "Żaden produkt nie pasuje do tych filtrów"
 msgid ""
 "Try removing a filter or widening your price range to see more products."
 msgstr ""
-"Spróbuj usunąć filtr lub poszerzyć zakres cen, aby zobaczyć więcej produktów."
+"Spróbuj usunąć filtr lub poszerzyć zakres cen, aby zobaczyć więcej "
+"produktów."
 
 #: src/Service/ResultsRenderer.php:146
 msgid "Clear all filters"
@@ -428,21 +428,22 @@ msgid ""
 "search, …). Keyboard focus and high-contrast cues are still emitted."
 msgstr ""
 "Tryb bez stylów nie dostarcza żadnego CSS-a wtyczki. Twój motyw stylizuje "
-"wszystko za pomocą semantycznych klas .sieve-* (.sieve-app, .sieve-"
-"facet, .sieve-chip, .sieve-search, …). Wskaźniki fokusu klawiatury i "
-"wysokiego kontrastu są nadal renderowane."
+"wszystko za pomocą semantycznych klas .sieve-* (.sieve-app, .sieve-facet, "
+".sieve-chip, .sieve-search, …). Wskaźniki fokusu klawiatury i wysokiego "
+"kontrastu są nadal renderowane."
 
 #: build/admin.js:1
 msgid ""
-"Low contrast: the active/selected state uses white text on the accent colour "
-"and may be hard to read."
+"Low contrast: the active/selected state uses white text on the accent colour"
+" and may be hard to read."
 msgstr ""
-"Niski kontrast: stan aktywny/wybrany używa białego tekstu na kolorze akcentu "
-"i może być trudny do odczytania."
+"Niski kontrast: stan aktywny/wybrany używa białego tekstu na kolorze akcentu"
+" i może być trudny do odczytania."
 
 #: build/admin.js:1
 msgid "Muted text may be hard to read against the chosen background colour."
-msgstr "Stonowany tekst może być trudny do odczytania na wybranym kolorze tła."
+msgstr ""
+"Stonowany tekst może być trudny do odczytania na wybranym kolorze tła."
 
 #: build/admin.js:1
 msgid "Reset to defaults"
@@ -459,11 +460,13 @@ msgstr "Akcesoria"
 #: build/admin.js:1
 msgid "Multiple choices can be selected at once. Best for most attributes."
 msgstr ""
-"Można zaznaczyć wiele opcji jednocześnie. Najlepsze dla większości atrybutów."
+"Można zaznaczyć wiele opcji jednocześnie. Najlepsze dla większości "
+"atrybutów."
 
 #: build/admin.js:1
 msgid "Only one choice at a time. Good for mutually exclusive options."
-msgstr "Tylko jedna opcja naraz. Dobre dla wzajemnie wykluczających się opcji."
+msgstr ""
+"Tylko jedna opcja naraz. Dobre dla wzajemnie wykluczających się opcji."
 
 #: build/admin.js:1
 msgid "A compact select menu. Saves space when there are many options."
@@ -476,7 +479,8 @@ msgstr "Kwadraty z kolorem lub obrazem. Idealne dla atrybutów koloru i wzoru."
 #: build/admin.js:1
 msgid "A nested tree. Best for categories with parent/child levels."
 msgstr ""
-"Zagnieżdżone drzewo. Najlepsze dla kategorii z poziomami nadrzędny/podrzędny."
+"Zagnieżdżone drzewo. Najlepsze dla kategorii z poziomami "
+"nadrzędny/podrzędny."
 
 #: build/admin.js:1
 msgid ""
@@ -589,8 +593,8 @@ msgstr "Usuń"
 #: build/admin.js:1
 msgid ""
 "Sieve keeps a pre-built index so filtered queries stay fast on large "
-"catalogs. Rebuild it after a bulk import or if counts look out of date — new "
-"and edited products are indexed automatically."
+"catalogs. Rebuild it after a bulk import or if counts look out of date — new"
+" and edited products are indexed automatically."
 msgstr ""
 "Sieve utrzymuje gotowy indeks, dzięki czemu filtrowane zapytania pozostają "
 "szybkie nawet przy dużych katalogach. Przebuduj go po imporcie masowym lub "
