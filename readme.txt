@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,7 +84,7 @@ The free edition is the full filtering MVP, with no limits. **Sieve PRO** is bui
 
 Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year (PLN shown at checkout).
 
-Compare editions and pricing: https://plogins.com/sieve-pro/pricing/
+Compare editions and pricing: [plogins.com/sieve-pro/pricing/](https://plogins.com/sieve-pro/pricing/)
 
 == Installation ==
 
@@ -97,11 +97,11 @@ Compare editions and pricing: https://plogins.com/sieve-pro/pricing/
 
 = Documentation and links =
 
-* **Documentation** - https://plogins.com/sieve/docs/
-* **Plugin page** - https://plogins.com/sieve/
-* **Source code** - https://github.com/wppoland/sieve
-* **Bug reports and feature requests** - https://github.com/wppoland/sieve/issues
-* **Discussions and questions** - https://github.com/wppoland/sieve/discussions
+* **Documentation** - [plogins.com/sieve/docs/](https://plogins.com/sieve/docs/)
+* **Plugin page** - [plogins.com/sieve/](https://plogins.com/sieve/)
+* **Source code** - [github.com/wppoland/sieve](https://github.com/wppoland/sieve)
+* **Bug reports and feature requests** - [github.com/wppoland/sieve/issues](https://github.com/wppoland/sieve/issues)
+* **Discussions and questions** - [github.com/wppoland/sieve/discussions](https://github.com/wppoland/sieve/discussions)
 
 
 = Does it require WooCommerce? =
@@ -152,6 +152,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
 
 == Changelog ==
+
+= 1.0.6 =
+* Documentation: readme links are now labelled links.
 
 = 1.0.5 =
 * Prefixed the (unused) storefront-kit product-badges filter as sieve_product_badges to satisfy WordPress plugin naming guidelines.
