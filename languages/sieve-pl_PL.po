@@ -212,7 +212,7 @@ msgstr "Cena"
 
 #: src/Service/FacetCatalog.php:40
 msgid "Stock status"
-msgstr "Status zapasów"
+msgstr "Stan magazynowy"
 
 #: src/Service/FacetCatalog.php:41 src/Service/FacetRenderer.php:80
 #: src/Service/Settings.php:111
@@ -492,7 +492,7 @@ msgstr ""
 #: build/admin.js:1
 msgid "An A–Z bar that filters options by first letter. Good for brand lists."
 msgstr ""
-"Pasek A–Z filtrujący opcje według pierwszej litery. Dobry dla list marek."
+"Pasek A-Z filtrujący opcje według pierwszej litery. Dobry dla list marek."
 
 #: build/admin.js:1
 msgid "A min/max range. Used for price and other numeric values."

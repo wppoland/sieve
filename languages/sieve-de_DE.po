@@ -18,7 +18,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: sieve.php
 msgid "Sieve - Faceted Filter for WooCommerce"
-msgstr "Sieve – Facettenfilter für WooCommerce"
+msgstr "Sieve - Facettenfilter für WooCommerce"
 
 #. Plugin URI of the plugin
 #: sieve.php
@@ -402,11 +402,11 @@ msgstr "Akzent"
 
 #: build/admin.js:1
 msgid "Border"
-msgstr "Grenze"
+msgstr "Rahmen"
 
 #: build/admin.js:1
 msgid "Muted text"
-msgstr "Gedämpfter Wortlaut"
+msgstr "Gedämpfter Text"
 
 #: build/admin.js:1
 msgid "Background"
@@ -426,9 +426,9 @@ msgid ""
 "semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-"
 "search, …). Keyboard focus and high-contrast cues are still emitted."
 msgstr ""
-"Der Modus „Unstyled“ enthält kein CSS-Plugin. dein Theme gestaltet alles "
-"durch die semantischen.sieve-*-Klassen (.sieve-app,.sieve-facet,.sieve-"
-"chip,.sieve-search, …). Tastaturfokus und kontrastreiche Hinweise werden "
+"Der Modus „Unstyled“ liefert kein Plugin-CSS. Dein Theme gestaltet alles "
+"über die semantischen .sieve-*-Klassen (.sieve-app, .sieve-facet, .sieve-"
+"chip, .sieve-search, …). Tastaturfokus und kontrastreiche Hinweise werden "
 "weiterhin ausgegeben."
 
 #: build/admin.js:1
@@ -508,7 +508,7 @@ msgstr ""
 
 #: build/admin.js:1
 msgid "Loading Sieve…"
-msgstr "Laden Sieve …"
+msgstr "Sieve wird geladen…"
 
 #: build/admin.js:1
 msgid "That facet is already added."
@@ -530,7 +530,7 @@ msgstr "Platziere den Filter an einer beliebigen Stelle mit dem Shortcode"
 
 #: build/admin.js:1
 msgid "or the \"Sieve Filter\" block."
-msgstr "oder der Block „ Sieve Filter“."
+msgstr "oder der Block „Sieve Filter“."
 
 #: build/admin.js:1
 msgid "Index"
@@ -583,11 +583,11 @@ msgstr "Typ"
 
 #: build/admin.js:1
 msgid "Move up"
-msgstr "Bewege sich nach oben"
+msgstr "Nach oben verschieben"
 
 #: build/admin.js:1
 msgid "Move down"
-msgstr "Bewege sich nach unten"
+msgstr "Nach unten verschieben"
 
 #: build/admin.js:1
 msgid "Remove"

@@ -91,7 +91,7 @@ msgstr "Autocompletar (opciones de búsqueda)"
 
 #: src/Enum/FacetType.php:62 build/admin.js:1
 msgid "A-Z index"
-msgstr "índice A-Z"
+msgstr "Índice A-Z"
 
 #: src/Enum/FacetType.php:63 build/admin.js:1
 msgid "Range slider"
@@ -103,7 +103,7 @@ msgstr "Buscar"
 
 #: src/Enum/FacetType.php:65
 msgid "Sort"
-msgstr "Clasificar"
+msgstr "Ordenar"
 
 #: src/Enum/FacetType.php:66
 msgid "Pagination"
@@ -133,7 +133,7 @@ msgstr "No hay opciones coincidentes"
 
 #: src/Hook/FrontendHooks.php:89 src/Hook/FrontendHooks.php:137
 msgid "Searching…"
-msgstr "Búsqueda…"
+msgstr "Buscando…"
 
 #. translators: %d: number of matching products (singular).
 #. translators: %d: number of products in a category.
@@ -165,7 +165,7 @@ msgstr ""
 
 #: src/Hook/FrontendHooks.php:97
 msgid "Retry"
-msgstr "Rever"
+msgstr "Reintentar"
 
 #: src/Hook/FrontendHooks.php:135 src/Service/ResultsRenderer.php:153
 msgid "No products found."
@@ -218,7 +218,7 @@ msgstr "Estado del stock"
 #: src/Service/FacetCatalog.php:41 src/Service/FacetRenderer.php:80
 #: src/Service/Settings.php:111
 msgid "On sale"
-msgstr "En venta"
+msgstr "En oferta"
 
 #: src/Service/FacetCatalog.php:42
 msgid "Average rating"
@@ -386,7 +386,7 @@ msgstr "Mínimo"
 
 #: build/admin.js:1
 msgid "Bordered"
-msgstr "bordeado"
+msgstr "Con bordes"
 
 #: build/admin.js:1
 msgid "Soft"
@@ -406,7 +406,7 @@ msgstr "Borde"
 
 #: build/admin.js:1
 msgid "Muted text"
-msgstr "Texto silenciado"
+msgstr "Texto atenuado"
 
 #: build/admin.js:1
 msgid "Background"
@@ -451,7 +451,7 @@ msgstr "Restablecer los valores predeterminados"
 
 #: build/admin.js:1
 msgid "Preview"
-msgstr "Avance"
+msgstr "Vista previa"
 
 #: build/admin.js:1
 msgid "Accessories"
@@ -490,7 +490,7 @@ msgstr ""
 #: build/admin.js:1
 msgid "An A–Z bar that filters options by first letter. Good for brand lists."
 msgstr ""
-"Una barra A–Z que filtra opciones por primera letra. Bueno para listas de "
+"Una barra A-Z que filtra opciones por primera letra. Bueno para listas de "
 "marcas."
 
 #: build/admin.js:1
@@ -528,7 +528,7 @@ msgstr "Coloque el filtro en cualquier lugar con el código corto"
 
 #: build/admin.js:1
 msgid "or the \"Sieve Filter\" block."
-msgstr "o el bloque \" Sieve Filtro\"."
+msgstr "o el bloque «Sieve Filter»."
 
 #: build/admin.js:1
 msgid "Index"
@@ -540,7 +540,7 @@ msgstr "Filas indexadas:"
 
 #: build/admin.js:1
 msgid "Rebuild index"
-msgstr "Índice de reconstrucción"
+msgstr "Reconstruir índice"
 
 #: build/admin.js:1
 msgid "Layout"
@@ -556,7 +556,7 @@ msgstr "Cuántos productos mostrar antes de que aparezca la paginación."
 
 #: build/admin.js:1
 msgid "Columns"
-msgstr "columnas"
+msgstr "Columnas"
 
 #: build/admin.js:1
 msgid ""
@@ -568,7 +568,7 @@ msgstr ""
 
 #: build/admin.js:1
 msgid "Facets"
-msgstr "facetas"
+msgstr "Facetas"
 
 #: build/admin.js:1
 msgid "Label"
