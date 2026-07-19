@@ -1,22 +1,372 @@
-# wp.org Stable Readme translation (pl_PL)
+# Translation of Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable Readme (latest release) in Polish
+# This file is distributed under the same license as the Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable Readme (latest release) package.
 msgid ""
 msgstr ""
-"Project-Id-Version: sieve Stable Readme\n"
-"Last-Translator: wppoland.com <hello@wppoland.com>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"Project-Id-Version: Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable Readme (latest release)\n"
+"PO-Revision-Date: 2026-07-13 19:58:58+0000\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: plogins-i18n\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
+"X-Generator: GlotPress/4.0.3\n"
 
+#. Short description.
+#, gp-priority: high
 msgid ""
 "Fast, accessible faceted product filtering for WooCommerce: AJAX filters, a "
 "mobile drawer, and Core Web Vitals by design."
 msgstr ""
-"Szybkie, dostępne filtrowanie fasetowe produktów dla WooCommerce: filtry "
-"AJAX, mobilna szuflada i Core Web Vitals już w projekcie."
+"Szybkie, dostępne fasetowe filtrowanie produktów dla WooCommerce: filtry "
+"AJAX, mobilny panel i Core Web Vitals zaprojektowane od podstaw."
 
+#. Plugin name.
+#, gp-priority: high
+msgid "Sieve - Faceted Filter for WooCommerce"
+msgstr "Sieve, fasetowy filtr dla WooCommerce"
+
+#. Found in faq list item.
+msgid ""
+"<strong>Discussions and questions</strong> - <a "
+"href=\"https://github.com/wppoland/sieve/discussions\">github.com/wppoland/sieve/discussions</a>"
+msgstr ""
+"<strong>Dyskusje i pytania</strong> - <a "
+"href=\"https://github.com/wppoland/sieve/discussions\">github.com/wppoland/sieve/discussions</a>"
+
+#. Found in faq list item.
+msgid ""
+"<strong>Bug reports and feature requests</strong> - <a "
+"href=\"https://github.com/wppoland/sieve/issues\">github.com/wppoland/sieve/issues</a>"
+msgstr ""
+"<strong>Zgłoszenia błędów i propozycje funkcji</strong> - <a "
+"href=\"https://github.com/wppoland/sieve/issues\">github.com/wppoland/sieve/issues</a>"
+
+#. Found in faq list item.
+msgid ""
+"<strong>Source code</strong> - <a "
+"href=\"https://github.com/wppoland/sieve\">github.com/wppoland/sieve</a>"
+msgstr ""
+"<strong>Kod źródłowy</strong> - <a "
+"href=\"https://github.com/wppoland/sieve\">github.com/wppoland/sieve</a>"
+
+#. Found in faq list item.
+msgid ""
+"<strong>Plugin page</strong> - <a "
+"href=\"https://plogins.com/sieve/\">plogins.com/sieve/</a>"
+msgstr ""
+"<strong>Strona wtyczki</strong> - <a "
+"href=\"https://plogins.com/sieve/\">plogins.com/sieve/</a>"
+
+#. Found in faq list item.
+msgid ""
+"<strong>Documentation</strong> - <a "
+"href=\"https://plogins.com/sieve/docs/\">plogins.com/sieve/docs/</a>"
+msgstr ""
+"<strong>Dokumentacja</strong> - <a "
+"href=\"https://plogins.com/sieve/docs/\">plogins.com/sieve/docs/</a>"
+
+#. Found in description paragraph.
+msgid ""
+"Compare editions and pricing: <a href=\"https://plogins.com/sieve-"
+"pro/pricing/\">plogins.com/sieve-pro/pricing/</a>"
+msgstr ""
+"Porównaj edycje i cennik: <a href=\"https://plogins.com/sieve-"
+"pro/pricing/\">plogins.com/sieve-pro/pricing/</a>"
+
+#. Found in description paragraph.
+msgid ""
+"Everything in the free edition stays free and open. Sieve PRO starts at 29 "
+"EUR per year (PLN shown at checkout)."
+msgstr ""
+"Wszystko w wersji darmowej pozostaje darmowe i otwarte. Cena Sieve PRO "
+"zaczyna się od 29 EUR rocznie (kwota w PLN podana przy kasie)."
+
+#. Found in description paragraph.
+msgid ""
+"The free edition is the full filtering MVP, with no limits. <strong>Sieve "
+"PRO</strong> is built for large or conversion-focused catalogs and adds:"
+msgstr ""
+"Wersja darmowa to pełna wersja MVP z funkcją filtrowania, bez żadnych "
+"ograniczeń. <strong>Sieve PRO</strong> jest stworzony z myślą o dużych "
+"katalogach lub tych nastawionych na konwersję i oferuje dodatkowo:"
+
+#. Found in description list item.
+msgid ""
+"<strong>Search integrations</strong> - route predictive and in-grid search "
+"through SearchWP or Algolia"
+msgstr ""
+"<strong>Integracje wyszukiwania</strong>, kieruj wyszukiwanie predykcyjne i "
+"wewnątrz sieci za pośrednictwem SearchWP lub Algolia"
+
+#. Found in description list item.
+msgid ""
+"<strong>Star rating facet</strong> - visual star rows for the average-rating"
+" filter"
+msgstr ""
+"<strong>Filtr oceny gwiazdkowej</strong>, wizualne rzędy gwiazdek dla filtra"
+" średniej oceny"
+
+#. Found in description list item.
+msgid ""
+"<strong>A/B layout testing</strong> - rotate filter-panel layouts and "
+"product grid columns with impression tracking"
+msgstr ""
+"<strong>Testy A/B układów stron</strong>, rotacja układów paneli filtrów i "
+"kolumn siatki produktów z monitorowaniem wyświetleń"
+
+#. Found in description list item.
+msgid ""
+"<strong>Conditional facet rules</strong> - show or hide facets by product "
+"category, customer role or the shop page"
+msgstr ""
+"<strong>Warunkowe reguły filtrowania</strong>, wyświetlanie lub ukrywanie "
+"filtrów według kategorii produktów, roli klienta lub strony sklepu"
+
+#. Found in description list item.
+msgid ""
+"<strong>Performance dashboard</strong> - index health, catalogue coverage "
+"and a filter-resolve benchmark"
+msgstr ""
+"<strong>Panel wydajności</strong>, stan indeksu, zasięg katalogu i test "
+"porównawczy filtrowania i rozwiązywania"
+
+#. Found in description paragraph.
+msgid ""
+"Sieve includes Polish, German and Spanish translations for the plugin "
+"interface. The text domain is <code>sieve</code>, so WordPress.org language "
+"packs can also override or extend these bundled translations."
+msgstr ""
+"Wtyczka Sieve zawiera polskie, niemieckie i hiszpańskie tłumaczenia "
+"interfejsu. Domena tekstowa to <code>sieve</code>, więc pakiety językowe z "
+"WordPress.org mogą również zastąpić lub rozszerzyć te dołączone tłumaczenia."
+
+#. Found in description list item.
+msgid ""
+"Gutenberg \"Sieve Filter\" block, an Elementor \"Sieve Filter\" widget, and "
+"the <code>[sieve]</code> shortcode"
+msgstr ""
+"Blok „Sieve Filter” w Gutenbergu, widget „Sieve Filter” w Elementorze oraz "
+"skrót <code>[sieve]</code>"
+
+#. Found in description header.
+msgid "Translations"
+msgstr "Tłumaczenie"
+
+#. Found in description paragraph.
+msgid "Browse the full catalogue at https://plogins.com/ ."
+msgstr "Przejrzyj cały katalog na stronie https://plogins.com/."
+
+#. Found in description paragraph.
+msgid "More free WooCommerce plugins from WPPoland:"
+msgstr "Więcej darmowych wtyczek WooCommerce od WPPoland:"
+
+#. Found in description list item.
+msgid ""
+"<a href=\"https://wordpress.org/plugins/polski/\">Polski for WooCommerce</a>"
+" - Polish-market compliance: GPSR, Omnibus, GDPR, invoices and storefront "
+"modules."
+msgstr ""
+"<a href=\"https://pl.wordpress.org/plugins/polski/\">Polski dla "
+"WooCommerce</a>, zgodność z przepisami obowiązującymi na rynku polskim: "
+"GPSR, Omnibus, RODO, faktury i moduły sklepowe."
+
+#. Found in description list item.
+msgid ""
+"<a href=\"https://wordpress.org/plugins/plogins-waitlist/\">Plogins "
+"Waitlist</a> - back-in-stock waitlist that emails shoppers the moment a "
+"product returns."
+msgstr ""
+"<a href=\"https://wordpress.org/plugins/plogins-waitlist/\">Lista "
+"oczekujących na ploginy</a>, lista oczekujących na ponowne pojawienie się "
+"produktu w magazynie, która wysyła klientom e-maila, gdy tylko produkt znów "
+"będzie dostępny."
+
+#. Found in description list item.
+msgid ""
+"<a href=\"https://wordpress.org/plugins/plogins-tiers/\">Plogins Tiers</a> -"
+" quantity and volume pricing tiers with a server-rendered price table."
+msgstr ""
+"<a href=\"https://pl.wordpress.org/plugins/plogins-tiers/\">Poziomy cenowe "
+"Plogins</a>, poziomy cenowe oparte na ilości i objętości z tabelą cen "
+"wygenerowaną przez serwer."
+
+#. Found in description header.
+msgid "You may also like these plugins"
+msgstr "Te wtyczki też mogą Ci się spodobać"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. This plugin is compatible with WordPress Multisite. Network activate it"
+" or activate it on individual sites; each site keeps its own settings and "
+"data."
+msgstr ""
+"Tak. Wtyczka jest zgodna z WordPress Multisite. Możesz aktywować ją w całej "
+"sieci lub na poszczególnych witrynach; każda witryna zachowuje własne "
+"ustawienia i dane."
+
+#. Found in faq header.
+msgid "Does this plugin work on WordPress Multisite?"
+msgstr "Czy ta wtyczka działa w WordPress Multisite?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. Sieve includes a mobile filter drawer with a sticky apply bar, so "
+"shoppers can filter products without fighting a long sidebar on small "
+"screens."
+msgstr ""
+"Tak. Sieve zawiera mobilny panel filtrów z przypiętym paskiem zastosowania, "
+"dzięki czemu klienci mogą filtrować produkty bez walki z długim paskiem "
+"bocznym na małych ekranach."
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. The filter UI is built for keyboard use and screen readers, with "
+"labelled regions, accessible controls, polite result-count announcements and"
+" reduced-motion support."
+msgstr ""
+"Tak. Interfejs filtra jest zaprojektowany pod klawiaturę i czytniki ekranu, "
+"z oznaczonymi regionami, dostępnymi kontrolkami, uprzejmymi ogłoszeniami "
+"liczby wyników i obsługą prefers-reduced-motion."
+
+#. Found in faq paragraph.
+msgid ""
+"Use the <code>[sieve_search]</code> shortcode or the \"Sieve Search\" block."
+" As shoppers type, a dropdown shows matching products with thumbnails and "
+"prices; it is fully keyboard accessible and falls back to the standard "
+"product search when JavaScript is unavailable."
+msgstr ""
+"Użyj shortcode’u <code>[sieve_search]</code> lub bloku „Wyszukiwanie Sieve”."
+" Gdy klienci piszą, lista rozwijana pokazuje pasujące produkty z miniaturami"
+" i cenami; jest w pełni dostępna z klawiatury i wraca do standardowego "
+"wyszukiwania produktów, gdy JavaScript jest niedostępny."
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. Sieve builds a product filter index, so AJAX filter requests do not "
+"need to run slow live joins for every category, attribute and price query."
+msgstr ""
+"Tak. Sieve buduje indeks filtrów produktów, więc żądania filtrów AJAX nie "
+"muszą wykonywać wolnych zapytań na żywo dla każdej kategorii, atrybutu i "
+"zapytania o cenę."
+
+#. Found in faq paragraph.
+msgid ""
+"Sieve can filter WooCommerce products by categories, tags, attributes, "
+"price, stock status, on-sale state and a keyword search field. It also "
+"supports range sliders, searchable options, color/image swatches, active-"
+"filter chips and sorting."
+msgstr ""
+"Sieve może filtrować produkty WooCommerce według kategorii, tagów, "
+"atrybutów, ceny, stanu magazynowego, statusu promocji i pola wyszukiwania "
+"słów kluczowych. Obsługuje też suwaki zakresu, przeszukiwalne opcje, próbki "
+"kolorów/obrazów, chipy aktywnych filtrów i sortowanie."
+
+#. Found in faq header.
+msgid "Does Sieve work on mobile?"
+msgstr "Czy Sieve działa na urządzeniach mobilnych?"
+
+#. Found in faq header.
+msgid "Is Sieve accessible?"
+msgstr "Czy Sieve jest dostępny?"
+
+#. Found in faq header.
+msgid "How do I add the predictive search box?"
+msgstr "Jak dodać pole predykcyjnego wyszukiwania?"
+
+#. Found in faq header.
+msgid "Is it fast on large stores?"
+msgstr "Czy jest szybki w dużych sklepach?"
+
+#. Found in faq header.
+msgid "What can shoppers filter by?"
+msgstr "Według czego klienci mogą filtrować?"
+
+#. Found in faq header.
+msgid "Documentation and links"
+msgstr "Dokumentacja i linki"
+
+#. Found in description paragraph.
+msgid "Predictive product search:"
+msgstr "Predykcyjne wyszukiwanie produktów:"
+
+#. Found in description list item.
+msgid ""
+"An instant typeahead dropdown with thumbnails, prices, SKU and category "
+"matches, and full keyboard navigation"
+msgstr ""
+"Natychmiastowa lista rozwijana podpowiedzi z miniaturami, cenami, "
+"dopasowaniami SKU i kategorii oraz pełną nawigacją klawiaturową"
+
+#. Found in description list item.
+msgid "Price, stock status and on sale"
+msgstr "Cena, stan magazynowy i promocja"
+
+#. Found in description list item.
+msgid "Range sliders, keyword search, sort, pagination and reset"
+msgstr ""
+"Suwaki zakresu, wyszukiwanie słów kluczowych, sortowanie, paginacja i reset"
+
+#. Found in description list item.
+msgid "Autocomplete (searchable options) and an A-Z index"
+msgstr "Autouzupełnianie (przeszukiwalne opcje) i indeks A-Z"
+
+#. Found in description list item.
+msgid "Color and image swatches, hierarchical (tree) categories"
+msgstr "Próbki kolorów i obrazów, hierarchiczne (drzewiaste) kategorie"
+
+#. Found in description list item.
+msgid "Checkboxes, radio buttons and searchable dropdowns"
+msgstr "Pola wyboru, przyciski opcji i przeszukiwalne listy rozwijane"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. Sieve filters WooCommerce product archives and any page where you place"
+" the filter."
+msgstr ""
+"Tak. Sieve filtruje archiwa produktów WooCommerce i każdą stronę, na której "
+"umieścisz filtr."
+
+#. Found in description paragraph.
+msgid "Documentation: https://plogins.com/sieve/docs/"
+msgstr "Dokumentacja: https://plogins.com/sieve/docs/"
+
+#. Found in description paragraph.
+msgid "Sieve PRO adds advanced control and integrations for growing stores:"
+msgstr ""
+"Sieve PRO dodaje zaawansowaną kontrolę i integracje dla rozwijających się "
+"sklepów:"
+
+#. Found in description paragraph.
+msgid "Easy to place and configure:"
+msgstr "Łatwe umieszczenie i konfiguracja:"
+
+#. Found in description paragraph.
+msgid "Fast and accessible by design:"
+msgstr "Szybki i dostępny z założenia:"
+
+#. Found in description paragraph.
+msgid "Filter by anything in your catalog:"
+msgstr "Filtruj według czegokolwiek w katalogu:"
+
+#. Found in description paragraph.
+msgid "Every facet type you need:"
+msgstr "Każdy potrzebny typ fasety:"
+
+#. Found in description paragraph.
+msgid "Filtering that feels instant:"
+msgstr "Filtrowanie, które wydaje się natychmiastowe:"
+
+#. Found in description paragraph.
+msgid ""
+"Everything runs against a pre-built index, so filtering stays fast even with"
+" thousands of products, and the counts next to each option update live as "
+"shoppers narrow down."
+msgstr ""
+"Wszystko działa na wstępnie zbudowanym indeksie, więc filtrowanie pozostaje "
+"szybkie nawet przy tysiącach produktów, a liczniki przy każdej opcji "
+"aktualizują się na żywo, gdy klienci zawężają wyniki."
+
+#. Found in description paragraph.
 msgid ""
 "Sieve gives your shoppers a fast, modern way to find products. They tick a "
 "few boxes, drag a price range, type a keyword, and the grid updates "
@@ -25,491 +375,551 @@ msgid ""
 "and a rendering approach designed for Core Web Vitals: no layout shift when "
 "results change."
 msgstr ""
-"Sieve daje kupującym szybki, nowoczesny sposób na znajdowanie produktów. "
-"Zaznaczają kilka pól, przeciągają zakres cen, wpisują słowo kluczowe, a "
-"siatka aktualizuje się natychmiast, bez ponownego ładowania strony. Powstał "
-"tak, aby działał bez wysiłku i pozostawał szybki nawet przy dużych "
-"katalogach - z dostępnymi widżetami, mobilną szufladą filtrów i sposobem "
-"renderowania zaprojektowanym pod Core Web Vitals: bez przeskoku układu przy "
-"zmianie wyników."
+"Sieve daje Twoim klientom szybki, nowoczesny sposób znajdowania produktów. "
+"Zaznaczają kilka opcji, przeciągają zakres cen, wpisują słowo kluczowe, a "
+"siatka aktualizuje się natychmiast bez przeładowania strony. Zaprojektowany,"
+" by być bez wysiłku i szybki w dużych katalogach, z dostępnymi widżetami, "
+"mobilnym panelem filtrów i podejściem do renderowania pod Core Web Vitals: "
+"bez przesunięcia układu przy zmianie wyników."
 
+#. Found in description list item.
+msgid "Search integrations: SearchWP and Algolia, with native fallback"
+msgstr ""
+"Integracje wyszukiwania: SearchWP i Algolia, z natywnym zapasowym "
+"rozwiązaniem"
+
+#. Found in description list item.
 msgid ""
-"Everything runs against a pre-built index, so filtering stays fast even with"
-" thousands of products, and the counts next to each option update live as "
-"shoppers narrow down."
+"Performance dashboard: index size, catalog coverage and filter-speed "
+"benchmarks"
 msgstr ""
-"Wszystko działa na wstępnie zbudowanym indeksie, więc filtrowanie pozostaje "
-"szybkie nawet przy tysiącach produktów, a liczniki obok każdej opcji "
-"aktualizują się na żywo, gdy kupujący zawężają wybór."
+"Panel wydajności: rozmiar indeksu, pokrycie katalogu i testy szybkości "
+"filtrów"
 
-msgid "Filtering that feels instant:"
-msgstr "Filtrowanie, które działa natychmiast:"
+#. Found in description list item.
+msgid "A/B layout testing to find the filter layout that converts best"
+msgstr "Testy A/B układu, aby znaleźć filtr konwertujący najlepiej"
 
+#. Found in description list item.
 msgid ""
-"* AJAX filtering with no page reload, and shareable, bookmarkable URLs\n"
-"* Live dependent counts that update as filters are applied\n"
-"* Active-filter chips, one-click reset, sorting and pagination built in"
+"Conditional facet rules: show or hide facets by category, shop page or "
+"customer role"
 msgstr ""
-"* Filtrowanie AJAX bez ponownego ładowania strony oraz adresy URL, które można udostępniać i dodawać do zakładek\n"
-"* Zależne liczniki na żywo, które aktualizują się w miarę stosowania filtrów\n"
-"* Wbudowane etykiety aktywnych filtrów, resetowanie jednym kliknięciem, sortowanie i paginacja"
+"Warunkowe reguły faset: pokazuj lub ukrywaj fasety według kategorii, strony "
+"sklepu lub roli klienta"
 
-msgid "Every facet type you need:"
-msgstr "Każdy typ fasety, jakiego potrzebujesz:"
+#. Found in description list item.
+msgid "Star-rating facet with visual stars"
+msgstr "Faseta oceny gwiazdkowej z wizualnymi gwiazdkami"
 
+#. Found in description list item.
 msgid ""
-"* Checkboxes, radio buttons and searchable dropdowns\n"
-"* Color and image swatches, hierarchical (tree) categories\n"
-"* Autocomplete (searchable options) and an A-Z index\n"
-"* Range sliders, keyword search, sort, pagination and reset"
+"A visual facet builder in the admin: add, reorder and retype facets, set the"
+" layout, and rebuild the index"
 msgstr ""
-"* Pola wyboru, przyciski radiowe i listy rozwijane z wyszukiwaniem\n"
-"* Próbki kolorów i obrazów, hierarchiczne (drzewiaste) kategorie\n"
-"* Autouzupełnianie (opcje z wyszukiwaniem) oraz indeks A-Z\n"
-"* Suwaki zakresu, wyszukiwanie słów kluczowych, sortowanie, paginacja i resetowanie"
+"Wizualny kreator faset w panelu administracyjnym: dodawaj, zmieniaj "
+"kolejność i typ faset, ustawiaj układ i odbudowuj indeks"
 
-msgid "Filter by anything in your catalog:"
-msgstr "Filtruj po dowolnym elemencie katalogu:"
+#. Found in description list item.
+msgid "Core Web Vitals by design: no layout shift when results update"
+msgstr ""
+"Core Web Vitals z założenia: brak przesunięcia układu przy aktualizacji "
+"wyników"
 
+#. Found in description list item.
+msgid "Keyboard and screen-reader friendly widgets"
+msgstr "Widżety przyjazne klawiaturze i czytnikom ekranu"
+
+#. Found in description list item.
+msgid "Categories, tags and product attributes"
+msgstr "Kategorie, tagi i atrybuty produktów"
+
+#. Found in description list item.
+msgid "Active-filter chips, one-click reset, sorting and pagination built in"
+msgstr ""
+"Chipy aktywnych filtrów, reset jednym kliknięciem, wbudowane sortowanie i "
+"paginacja"
+
+#. Found in description list item.
+msgid "Live dependent counts that update as filters are applied"
+msgstr "Na żywo aktualizowane zależne liczniki przy stosowaniu filtrów"
+
+#. Found in description header.
+msgid "Sieve PRO"
+msgstr "Sieve PRO"
+
+#. Found in faq paragraph.
 msgid ""
-"* Categories, tags and product attributes\n"
-"* Price, stock status and on sale"
+"Use the <code>[sieve]</code> shortcode or the \"Sieve Filter\" block. Both "
+"render the facets, the results grid, sorting, active-filter chips and "
+"pagination together."
 msgstr ""
-"* Kategorie, tagi i atrybuty produktów\n"
-"* Cena, stan magazynowy i status wyprzedaży"
+"Użyj shortcode’u <code>[sieve]</code> lub bloku „Filtr Sieve”. Oba renderują"
+" fasety, siatkę wyników, sortowanie, chipy aktywnych filtrów i paginację "
+"razem."
 
-msgid "Predictive product search:"
-msgstr "Predykcyjne wyszukiwanie produktów:"
-
-msgid ""
-"* An instant typeahead dropdown with thumbnails, prices, SKU and category "
-"matches, and full keyboard navigation"
-msgstr ""
-"* Natychmiastowa lista podpowiedzi z miniaturami, cenami, dopasowaniami SKU "
-"i kategorii oraz pełną obsługą klawiatury"
-
-msgid "Fast and accessible by design:"
-msgstr "Szybkie i dostępne z założenia:"
-
-msgid ""
-"* Pre-built index for quick filtered queries on large catalogs\n"
-"* Mobile filter drawer with a sticky Apply bar\n"
-"* Keyboard and screen-reader friendly widgets\n"
-"* Core Web Vitals by design: no layout shift when results update"
-msgstr ""
-"* Wstępnie zbudowany indeks do szybkich zapytań filtrujących w dużych katalogach\n"
-"* Mobilna szuflada filtrów z przyklejonym paskiem „Zastosuj”\n"
-"* Widżety przyjazne dla klawiatury i czytników ekranu\n"
-"* Core Web Vitals już w projekcie: bez przeskoku układu przy aktualizacji wyników"
-
-msgid "Easy to place and configure:"
-msgstr "Łatwe do umieszczenia i skonfigurowania:"
-
-msgid ""
-"* Gutenberg \"Sieve Filter\" block, an Elementor \"Sieve Filter\" widget, and the `[sieve]` shortcode\n"
-"* A visual facet builder in the admin: add, reorder and retype facets, set the layout, and rebuild the index"
-msgstr ""
-"* Blok „Sieve Filter” w Gutenbergu, widżet „Sieve Filter” w Elementorze oraz shortcode `[sieve]`\n"
-"* Wizualny kreator faset w panelu administracyjnym: dodawaj, zmieniaj kolejność i zmieniaj typ faset, ustaw układ i przebuduj indeks"
-
-msgid "Sieve PRO adds advanced control and integrations for growing stores:"
-msgstr ""
-"Sieve PRO dodaje zaawansowaną kontrolę i integracje dla rozwijających się "
-"sklepów:"
-
-msgid ""
-"* Star-rating facet with visual stars\n"
-"* Conditional facet rules: show or hide facets by category, shop page or customer role\n"
-"* A/B layout testing to find the filter layout that converts best\n"
-"* Performance dashboard: index size, catalog coverage and filter-speed benchmarks\n"
-"* Search integrations: SearchWP and Algolia, with native fallback"
-msgstr ""
-"* Faseta oceny gwiazdkowej z wizualnymi gwiazdkami\n"
-"* Warunkowe reguły faset: pokazuj lub ukrywaj fasety według kategorii, strony sklepu lub roli klienta\n"
-"* Testy A/B układu, aby znaleźć układ filtra, który najlepiej konwertuje\n"
-"* Panel wydajności: rozmiar indeksu, pokrycie katalogu i testy szybkości filtrowania\n"
-"* Integracje wyszukiwania: SearchWP i Algolia, z natywnym mechanizmem awaryjnym"
-
-msgid "Documentation: https://plogins.com/sieve/docs/"
-msgstr "Dokumentacja: https://plogins.com/pl/sieve/docs/"
-
-msgid "More free WooCommerce plugins from WPPoland:"
-msgstr "Więcej darmowych wtyczek WooCommerce od WPPoland:"
-
-msgid ""
-"* [Plogins Tiers](https://wordpress.org/plugins/plogins-tiers/) - quantity and volume pricing tiers with a server-rendered price table.\n"
-"* [Plogins Waitlist](https://wordpress.org/plugins/plogins-waitlist/) - back-in-stock waitlist that emails shoppers the moment a product returns.\n"
-"* [Polski for WooCommerce](https://wordpress.org/plugins/polski/) - Polish-market compliance: GPSR, Omnibus, GDPR, invoices and storefront modules."
-msgstr ""
-"* [Plogins Tiers](https://wordpress.org/plugins/plogins-tiers/) - progi cenowe ilościowe i wolumenowe z tabelą cen renderowaną po stronie serwera.\n"
-"* [Plogins Waitlist](https://wordpress.org/plugins/plogins-waitlist/) - lista oczekujących na powrót do magazynu, która wysyła e-mail do kupujących w chwili, gdy produkt znów jest dostępny.\n"
-"* [Polski for WooCommerce](https://wordpress.org/plugins/polski/) - zgodność z rynkiem polskim: GPSR, Omnibus, RODO, faktury i moduły sklepowe."
-
-msgid "Browse the full catalogue at https://plogins.com/ ."
-msgstr "Przejrzyj pełny katalog na https://plogins.com/pl/ ."
-
-msgid ""
-"1. Install and activate WooCommerce.\n"
-"2. Install Sieve and activate it.\n"
-"3. Open the Sieve menu, rebuild the index, and adjust the facet set if needed.\n"
-"4. Place the filter on any page with the `[sieve]` shortcode or the \"Sieve Filter\" block."
-msgstr ""
-"1. Zainstaluj i włącz WooCommerce.\n"
-"2. Zainstaluj Sieve i włącz je.\n"
-"3. Otwórz menu Sieve, przebuduj indeks i w razie potrzeby dostosuj zestaw faset.\n"
-"4. Umieść filtr na dowolnej stronie za pomocą shortcode’u `[sieve]` lub bloku „Sieve Filter”."
-
-msgid ""
-"* <strong>Documentation</strong> - https://plogins.com/sieve/docs/\n"
-"* <strong>Plugin page</strong> - https://plogins.com/sieve/\n"
-"* <strong>Source code</strong> - https://github.com/wppoland/sieve\n"
-"* <strong>Bug reports and feature requests</strong> - https://github.com/wppoland/sieve/issues\n"
-"* <strong>Discussions and questions</strong> - https://github.com/wppoland/sieve/discussions"
-msgstr ""
-"* <strong>Dokumentacja</strong> - https://plogins.com/pl/sieve/docs/\n"
-"* <strong>Strona wtyczki</strong> - https://plogins.com/pl/sieve/\n"
-"* <strong>Kod źródłowy</strong> - https://github.com/wppoland/sieve\n"
-"* <strong>Zgłoszenia błędów i propozycje funkcji</strong> - https://github.com/wppoland/sieve/issues\n"
-"* <strong>Dyskusje i pytania</strong> - https://github.com/wppoland/sieve/discussions"
-
-msgid ""
-"Yes. Sieve filters WooCommerce product archives and any page where you place"
-" the filter."
-msgstr ""
-"Tak. Sieve filtruje archiwa produktów WooCommerce oraz każdą stronę, na "
-"której umieścisz filtr."
-
+#. Found in faq paragraph.
 msgid ""
 "No. Filtering happens via AJAX with the URL kept in sync so results are "
 "shareable."
 msgstr ""
-"Nie. Filtrowanie odbywa się przez AJAX, a adres URL pozostaje "
-"zsynchronizowany, więc wyniki można udostępniać."
+"Nie. Filtrowanie odbywa się przez AJAX z synchronizacją adresu URL, więc "
+"wyniki można udostępniać."
 
+#. Found in faq header.
+msgid "How do I add the filter to a page?"
+msgstr "Jak dodać filtr na stronę?"
+
+#. Found in faq header.
+msgid "Does filtering reload the page?"
+msgstr "Czy filtrowanie przeładowuje stronę?"
+
+#. Found in faq header.
+msgid "Does it require WooCommerce?"
+msgstr "Czy wymaga WooCommerce?"
+
+#. Found in installation list item.
 msgid ""
-"Sieve can filter WooCommerce products by categories, tags, attributes, "
-"price, stock status, on-sale state and a keyword search field. It also "
-"supports range sliders, searchable options, color/image swatches, active-"
-"filter chips and sorting."
+"Place the filter on any page with the <code>[sieve]</code> shortcode or the "
+"\"Sieve Filter\" block."
 msgstr ""
-"Sieve może filtrować produkty WooCommerce według kategorii, tagów, "
-"atrybutów, ceny, stanu magazynowego, statusu wyprzedaży oraz pola "
-"wyszukiwania słów kluczowych. Obsługuje też suwaki zakresu, opcje z "
-"wyszukiwaniem, próbki kolorów/obrazów, etykiety aktywnych filtrów i "
-"sortowanie."
+"Umieść filtr na dowolnej stronie za pomocą shortcode’u <code>[sieve]</code> "
+"lub bloku „Filtr Sieve”."
 
+#. Found in installation list item.
 msgid ""
-"Yes. Sieve builds a product filter index, so AJAX filter requests do not "
-"need to run slow live joins for every category, attribute and price query."
+"Open the Sieve menu, rebuild the index, and adjust the facet set if needed."
 msgstr ""
-"Tak. Sieve buduje indeks filtra produktów, więc żądania filtrowania AJAX nie"
-" muszą wykonywać wolnych złączeń na żywo przy każdym zapytaniu o kategorię, "
-"atrybut i cenę."
+"Otwórz menu Sieve, odbuduj indeks i w razie potrzeby dostosuj zestaw faset."
 
-msgid ""
-"Use the `[sieve]` shortcode or the \"Sieve Filter\" block. Both render the "
-"facets, the results grid, sorting, active-filter chips and pagination "
-"together."
-msgstr ""
-"Użyj shortcode’u `[sieve]` lub bloku „Sieve Filter”. Oba renderują razem "
-"fasety, siatkę wyników, sortowanie, etykiety aktywnych filtrów i paginację."
+#. Found in installation list item.
+msgid "Install Sieve and activate it."
+msgstr "Zainstaluj Sieve i aktywuj wtyczkę."
 
-msgid ""
-"Use the `[sieve_search]` shortcode or the \"Sieve Search\" block. As "
-"shoppers type, a dropdown shows matching products with thumbnails and "
-"prices; it is fully keyboard accessible and falls back to the standard "
-"product search when JavaScript is unavailable."
-msgstr ""
-"Użyj shortcode’u `[sieve_search]` lub bloku „Sieve Search”. Gdy kupujący "
-"pisze, lista rozwijana pokazuje pasujące produkty z miniaturami i cenami; "
-"jest w pełni dostępna z klawiatury i wraca do standardowego wyszukiwania "
-"produktów, gdy JavaScript jest niedostępny."
+#. Found in installation list item.
+msgid "Install and activate WooCommerce."
+msgstr "Zainstaluj i aktywuj WooCommerce."
 
-msgid ""
-"Yes. The filter UI is built for keyboard use and screen readers, with "
-"labelled regions, accessible controls, polite result-count announcements and"
-" reduced-motion support."
-msgstr ""
-"Tak. Interfejs filtra jest zbudowany z myślą o obsłudze klawiatury i "
-"czytnikach ekranu - z oznaczonymi regionami, dostępnymi elementami "
-"sterującymi, uprzejmymi komunikatami o liczbie wyników i obsługą "
-"ograniczonego ruchu."
-
-msgid ""
-"Yes. Sieve includes a mobile filter drawer with a sticky apply bar, so "
-"shoppers can filter products without fighting a long sidebar on small "
-"screens."
-msgstr ""
-"Tak. Sieve zawiera mobilną szufladę filtrów z przyklejonym paskiem "
-"zastosowania, dzięki czemu kupujący mogą filtrować produkty bez walki z "
-"długim panelem bocznym na małych ekranach."
-
-msgid ""
-"Yes. This plugin is compatible with WordPress Multisite. Network activate it"
-" or activate it on individual sites; each site keeps its own settings and "
-"data."
-msgstr ""
-"Tak. Ta wtyczka jest zgodna z WordPress Multisite. Włącz ją dla całej sieci "
-"lub w pojedynczych witrynach; każda witryna zachowuje własne ustawienia i "
-"dane."
-
-msgid ""
-"1. Faceted filtering on a product page: categories, price range, availability and on-sale facets with live dependent counts, active-filter chips and a results grid.\n"
-"2. Mobile filter drawer with a sticky \"Show results\" bar.\n"
-"3. The facet builder: add, reorder and retype facets, set the layout, and rebuild the index."
-msgstr ""
-"1. Filtrowanie fasetowe na stronie produktu: fasety kategorii, zakresu cen, dostępności i wyprzedaży z zależnymi licznikami na żywo, etykietami aktywnych filtrów i siatką wyników.\n"
-"2. Mobilna szuflada filtrów z przyklejonym paskiem „Pokaż wyniki”.\n"
-"3. Kreator faset: dodawaj, zmieniaj kolejność i zmieniaj typ faset, ustaw układ i przebuduj indeks."
-
-msgid ""
-"The full, human-readable source for the compiled assets is included in this "
-"plugin under `resources/`, alongside the build tooling (`package.json`, "
-"`scripts/build-wp.mjs`). The compiled files under `build/` are generated "
-"from those sources. To rebuild them:"
-msgstr ""
-"Pełne, czytelne dla człowieka źródło skompilowanych zasobów jest dołączone "
-"do tej wtyczki w katalogu `resources/`, obok narzędzi kompilacji "
-"(`package.json`, `scripts/build-wp.mjs`). Skompilowane pliki w `build/` są "
-"generowane z tych źródeł. Aby je przebudować:"
-
+#. Found in description paragraph.
 msgid ""
 "This uses Vite (admin and front-end scripts) and @wordpress/scripts "
 "(blocks). There is no obfuscation; every shipped asset can be regenerated "
 "from the included sources. The public source repository is also available at"
 " https://github.com/wppoland/sieve."
 msgstr ""
-"Wykorzystuje Vite (skrypty panelu administracyjnego i front-endu) oraz "
-"@wordpress/scripts (bloki). Nie ma żadnej obfuskacji; każdy dostarczany "
-"zasób można ponownie wygenerować z dołączonych źródeł. Publiczne "
-"repozytorium źródeł jest również dostępne pod adresem "
-"https://github.com/wppoland/sieve."
+"Używa Vite (skrypty panelu administracyjnego i front-endu) oraz "
+"@wordpress/scripts (bloki). Nie ma zaciemniania; każdy dostarczany zasób "
+"można odtworzyć z dołączonych źródeł. Publiczne repozytorium kodu źródłowego"
+" jest dostępne pod adresem https://github.com/wppoland/sieve."
 
+#. Found in description paragraph.
 msgid ""
-"Sieve includes Polish, German and Spanish translations for the plugin "
-"interface. The text domain is `sieve`, so WordPress.org language packs can "
-"also override or extend these bundled translations."
+"The full, human-readable source for the compiled assets is included in this "
+"plugin under <code>resources/</code>, alongside the build tooling "
+"(<code>package.json</code>, <code>scripts/build-wp.mjs</code>). The compiled"
+" files under <code>build/</code> are generated from those sources. To "
+"rebuild them:"
 msgstr ""
-"Sieve zawiera polskie, niemieckie i hiszpańskie tłumaczenia interfejsu "
-"wtyczki. Domena tekstowa to `sieve`, dzięki czemu paczki językowe z "
-"WordPress.org mogą również nadpisywać lub rozszerzać dołączone tłumaczenia."
+"Pełne, czytelne źródła skompilowanych zasobów są dołączone do wtyczki w "
+"folderze <code>resources/</code>, wraz z narzędziami budowania "
+"(<code>package.json</code>, <code>scripts/build-wp.mjs</code>). Skompilowane"
+" pliki w <code>build/</code> są generowane z tych źródeł. Aby je odbudować:"
 
+#. Found in description list item.
+msgid "<code>npm run build</code>"
+msgstr "<code>npm run build</code>"
+
+#. Found in description list item.
+msgid "<code>npm install</code>"
+msgstr "<code>npm install</code>"
+
+#. Found in description list item.
+msgid "Mobile filter drawer with a sticky Apply bar"
+msgstr "Mobilny panel filtrów z przypiętym paskiem Zastosuj"
+
+#. Found in description list item.
+msgid "Pre-built index for quick filtered queries on large catalogs"
+msgstr ""
+"Wstępnie zbudowany indeks do szybkich zapytań filtrowanych w dużych "
+"katalogach"
+
+#. Found in description list item.
+msgid "AJAX filtering with no page reload, and shareable, bookmarkable URLs"
+msgstr ""
+"Filtrowanie AJAX bez przeładowania strony oraz udostępnialne, zapisywalne "
+"adresy URL"
+
+#. Found in description header.
+msgid "Development"
+msgstr "Rozwój"
+
+#. Screenshot description.
 msgid ""
-"* Added bundled Polish, German and Spanish translations for the plugin "
+"The facet builder: add, reorder and retype facets, set the layout, and "
+"rebuild the index."
+msgstr ""
+"Kreator faset: dodawaj, zmieniaj kolejność i typ faset, ustawiaj układ i "
+"odbudowuj indeks."
+
+#. Screenshot description.
+msgid "Mobile filter drawer with a sticky \"Show results\" bar."
+msgstr "Mobilny panel filtrów z przypiętym paskiem „Pokaż wyniki”."
+
+#. Screenshot description.
+msgid ""
+"Faceted filtering on a product page: categories, price range, availability "
+"and on-sale facets with live dependent counts, active-filter chips and a "
+"results grid."
+msgstr ""
+"Fasetowe filtrowanie na stronie produktów: kategorie, zakres cen, dostępność"
+" i fasety promocji z na żywo aktualizowanymi zależnymi licznikami, chipami "
+"aktywnych filtrów i siatką wyników."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Translation quality pass: corrected Polish, German and Spanish (product "
+"names kept in English, legal withdrawal terminology, WooCommerce glossary "
+"and grammar fixes)."
+msgstr ""
+"Poprawa jakości tłumaczeń: skorygowano polski, niemiecki i hiszpański (nazwy"
+" produktów pozostawiono po angielsku, terminologia prawna dotycząca "
+"odstąpienia od umowy, poprawki zgodne z glosariuszem WooCommerce oraz "
+"gramatyka)."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Documentation: readme links are now labelled links."
+msgstr ""
+"Dokumentacja: odnośniki w pliku readme są teraz opisanymi odnośnikami."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Prefixed the (unused) storefront-kit product-badges filter as "
+"sieve_product_badges to satisfy WordPress plugin naming guidelines."
+msgstr ""
+"Zmieniłem nazwę (nieużywanego) filtra „storefront-kit product-badges” na "
+"„sieve_product_badges”, żeby spełnić wytyczne dotyczące nazewnictwa wtyczek "
+"WordPressa."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"New: an in-plugin overview of Sieve PRO on the admin screen (dismissible, "
+"advertising only)."
+msgstr ""
+"Nowość: podgląd Sieve PRO w ramach wtyczki na ekranie administratora (można "
+"go zamknąć, to tylko reklama)."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Added a Free vs PRO overview to the readme."
+msgstr "Dodałem do pliku readme zestawienie wersji darmowej i PRO."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Added bundled Polish, German and Spanish translations for the plugin "
 "interface."
 msgstr ""
-"* Dodano dołączone polskie, niemieckie i hiszpańskie tłumaczenia interfejsu "
-"wtyczki."
+"Dodano gotowe tłumaczenia interfejsu wtyczki na język polski, niemiecki i "
+"hiszpański."
 
-msgid "* First stable release."
-msgstr "* Pierwsza stabilna wersja."
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "First stable release."
+msgstr "Pierwsze stabilne wydanie."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* Docs: added a \"You may also like\" section linking the other free "
-"WPPoland WooCommerce plugins. No functional changes."
+"Docs: added a \"You may also like\" section linking the other free WPPoland "
+"WooCommerce plugins. No functional changes."
 msgstr ""
-"* Dokumentacja: dodano sekcję „Może Ci się też spodobać”, która linkuje do "
-"pozostałych darmowych wtyczek WooCommerce od WPPoland. Bez zmian "
-"funkcjonalnych."
+"Dokumentacja: dodano sekcję „Może Ci się też spodobać” z linkami do innych "
+"darmowych wtyczek WPPoland dla WooCommerce. Bez zmian funkcjonalnych."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* New: Elementor widgets for product search and product filter (works on "
+"New: Elementor widgets for product search and product filter (works on "
 "Elementor 3.x and 4.0)."
 msgstr ""
-"* Nowość: widżety Elementora do wyszukiwania produktów i filtrowania "
-"produktów (działają w Elementorze 3.x i 4.0)."
+"Nowość: widżety Elementor do wyszukiwania i filtrowania produktów (działa w "
+"Elementor 3.x i 4.0)."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* Admin: fix index help text shown on every facet row; add empty-index and empty-facet notices, grouped source picker, save/reindex error messages, and load-failure state.\n"
-"* Admin: style-preset inline help in Appearance panel."
+"New facet types: color and image swatches (with per-term color/image, plus "
+"an automatic color guess from common color names) and hierarchical (tree) "
+"category facets that show only branches leading to results."
 msgstr ""
-"* Panel administracyjny: naprawiono tekst pomocy indeksu wyświetlany w każdym wierszu fasety; dodano powiadomienia o pustym indeksie i pustej fasecie, zgrupowany selektor źródła, komunikaty o błędach zapisu/ponownego indeksowania oraz stan niepowodzenia ładowania.\n"
-"* Panel administracyjny: wbudowana pomoc dotycząca gotowych stylów w panelu Wygląd."
+"Nowe typy faset: próbki kolorów i obrazów (z kolorem/obrazem na termin, plus"
+" automatyczne rozpoznawanie koloru z popularnych nazw) oraz hierarchiczne "
+"(drzewiaste) fasety kategorii pokazujące tylko gałęzie prowadzące do "
+"wyników."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* Extension: `sieve_search_product_ids` filter on `SearchResolver` so PRO "
-"add-ons can route the in-grid search facet and predictive search through "
-"SearchWP or Algolia."
+"New: predictive product search. The <code>[sieve_search]</code> shortcode "
+"and \"Sieve Search\" block render an accessible search box with an instant "
+"typeahead dropdown (product thumbnails, prices, SKU), full keyboard "
+"navigation, and a \"view all results\" link. Built on WooCommerce product "
+"search, loaded as a standalone lightweight bundle so pages without it stay "
+"fast."
 msgstr ""
-"* Rozszerzenie: filtr `sieve_search_product_ids` w `SearchResolver`, dzięki "
-"czemu dodatki PRO mogą kierować fasetę wyszukiwania w siatce oraz "
-"wyszukiwanie predykcyjne przez SearchWP lub Algolia."
+"Nowość: predykcyjne wyszukiwanie produktów. Shortcode "
+"<code>[sieve_search]</code> i blok „Wyszukiwanie Sieve” renderują dostępne "
+"pole wyszukiwania z natychmiastową listą rozwijaną podpowiedzi (miniatury "
+"produktów, ceny, SKU), pełną nawigacją klawiaturową i linkiem „zobacz "
+"wszystkie wyniki”. Oparte na wyszukiwaniu produktów WooCommerce, ładowane "
+"jako samodzielny lekki pakiet, aby strony bez niego pozostały szybkie."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* Extension: `sieve_facet_body`, `sieve_facet_types` and "
-"`sieve_facet_catalog` filters plus `FacetTypeRegistry` in the admin catalog "
-"REST response so PRO add-ons can register advanced facet presentations (e.g."
-" star rating)."
-msgstr ""
-"* Rozszerzenie: filtry `sieve_facet_body`, `sieve_facet_types` i "
-"`sieve_facet_catalog` oraz `FacetTypeRegistry` w odpowiedzi REST katalogu w "
-"panelu administracyjnym, dzięki czemu dodatki PRO mogą rejestrować "
-"zaawansowane sposoby prezentacji faset (np. ocenę gwiazdkową)."
-
-msgid ""
-"* Extension: `sieve_settings` filter and `layout` setting (sidebar, stacked,"
-" inline) so PRO add-ons can rotate filter-panel layouts and column counts. "
-"FilterEngine applies layout modifier classes on `.sieve-app`."
-msgstr ""
-"* Rozszerzenie: filtr `sieve_settings` i ustawienie `layout` (sidebar, "
-"stacked, inline), dzięki czemu dodatki PRO mogą zmieniać układy panelu "
-"filtra i liczbę kolumn. FilterEngine stosuje klasy modyfikujące układ na "
-"`.sieve-app`."
-
-msgid ""
-"* Extension: `sieve_facets` filter and page context (`FacetContext`) so PRO "
-"add-ons can show or hide facets by category, shop page or customer role. "
-"AJAX requests preserve context via `sf_ctx_*` query vars."
-msgstr ""
-"* Rozszerzenie: filtr `sieve_facets` i kontekst strony (`FacetContext`), "
-"dzięki czemu dodatki PRO mogą pokazywać lub ukrywać fasety według kategorii,"
-" strony sklepu lub roli klienta. Żądania AJAX zachowują kontekst przez "
-"zmienne zapytania `sf_ctx_*`."
-
-msgid ""
-"* Polish: a refreshed, more attractive filter UI. Collapsible facet groups, an \"Active filters\" chip row with clearer remove buttons, a friendly empty state with a one-click \"Clear all filters\" action, an accessible loading spinner, and a retryable error message if an update fails.\n"
-"* Design: themeable CSS custom properties, fluid sizing, automatic dark mode (prefers-color-scheme), and tasteful transitions that respect prefers-reduced-motion. No layout shift when filters apply.\n"
-"* Admin: inline help on every setting, including a short description of what each facet type looks like to shoppers.\n"
-"* Accessibility: facet groups expose their expanded/collapsed state, result counts announce politely, the pagination and filter regions are labelled, and remove buttons have clear accessible names."
-msgstr ""
-"* Dopracowanie: odświeżony, atrakcyjniejszy interfejs filtra. Zwijane grupy faset, rząd etykiet „Aktywne filtry” z czytelniejszymi przyciskami usuwania, przyjazny stan pusty z akcją „Wyczyść wszystkie filtry” jednym kliknięciem, dostępny wskaźnik ładowania oraz komunikat o błędzie z możliwością ponowienia, gdy aktualizacja się nie powiedzie.\n"
-"* Wygląd: konfigurowalne właściwości niestandardowe CSS, płynne skalowanie, automatyczny tryb ciemny (prefers-color-scheme) oraz gustowne przejścia respektujące prefers-reduced-motion. Bez przeskoku układu przy stosowaniu filtrów.\n"
-"* Panel administracyjny: wbudowana pomoc przy każdym ustawieniu, w tym krótki opis tego, jak każdy typ fasety wygląda dla kupujących.\n"
-"* Dostępność: grupy faset udostępniają swój stan rozwinięcia/zwinięcia, liczba wyników jest ogłaszana w sposób uprzejmy, obszary paginacji i filtra są oznaczone etykietami, a przyciski usuwania mają czytelne, dostępne nazwy."
-
-msgid ""
-"* Compliance: documented the public source repository and the build steps "
-"for the compiled assets (WordPress.org plugin guidelines)."
-msgstr ""
-"* Zgodność: udokumentowano publiczne repozytorium źródeł i kroki kompilacji "
-"skompilowanych zasobów (wytyczne dla wtyczek WordPress.org)."
-
-msgid ""
-"* Internationalisation: the admin and front-end JavaScript interface strings"
-" are now included in the translation template, so the whole plugin (not just"
-" the PHP side) can be fully translated."
-msgstr ""
-"* Umiędzynarodowienie: ciągi interfejsu w JavaScript panelu "
-"administracyjnego i front-endu są teraz zawarte w szablonie tłumaczenia, "
-"więc całą wtyczkę (nie tylko stronę PHP) można w pełni przetłumaczyć."
-
-msgid ""
-"* New: Appearance settings. Choose a style preset (Default, Minimal, "
-"Bordered, Soft, Unstyled) and customise the accent, border, muted-text and "
-"background colours from the admin, with a live preview and a contrast hint. "
-"Applies to both the filter and the predictive search. Zero extra requests, "
-"no layout shift, fully backward compatible."
-msgstr ""
-"* Nowość: ustawienia wyglądu. Wybierz gotowy styl (Domyślny, Minimalny, Z "
-"obramowaniem, Miękki, Bez stylu) i dostosuj z poziomu panelu kolory akcentu,"
-" obramowania, przygaszonego tekstu i tła, z podglądem na żywo i wskazówką "
-"dotyczącą kontrastu. Dotyczy zarówno filtra, jak i wyszukiwania "
-"predykcyjnego. Zero dodatkowych żądań, bez przeskoku układu, w pełni zgodne "
-"wstecz."
-
-msgid ""
-"* Search now behaves as a filter: type to narrow the live grid in place with"
-" predictive, diacritic- and typo-tolerant suggestions, combinable with every"
-" facet, and URL- and back-button-safe. Dependent facet counts now reflect "
-"the active search too."
-msgstr ""
-"* Wyszukiwanie działa teraz jak filtr: pisz, aby zawęzić siatkę na żywo w "
-"miejscu, dzięki podpowiedziom predykcyjnym, tolerującym znaki diakrytyczne i"
-" literówki, które można łączyć z każdą fasetą i które są bezpieczne dla "
-"adresu URL oraz przycisku Wstecz. Zależne liczniki faset odzwierciedlają "
-"teraz również aktywne wyszukiwanie."
-
-msgid ""
-"* Predictive search is now diacritic-insensitive and typo-tolerant. It "
-"matches product titles and SKUs while ignoring diacritic differences (so "
-"\"lozko\" finds \"łóżko\"), tolerates small typos, and matching categories "
-"are found the same way. This release triggers a one-time rebuild of the "
-"search index."
-msgstr ""
-"* Wyszukiwanie predykcyjne jest teraz niewrażliwe na znaki diakrytyczne i "
-"toleruje literówki. Dopasowuje tytuły produktów i numery SKU, ignorując "
-"różnice diakrytyczne (więc „lozko” znajduje „łóżko”), toleruje drobne "
-"literówki, a pasujące kategorie odnajdywane są w ten sam sposób. To wydanie "
-"uruchamia jednorazową przebudowę indeksu wyszukiwania."
-
-msgid ""
-"* Predictive search now looks beyond product titles: a partial SKU pass "
-"surfaces a product by its code even when the title misses, and matching "
-"product categories appear as their own group in the dropdown so a shopper "
-"can jump straight to the filtered archive. Results and categories are "
-"grouped with headings, and keyboard navigation moves through both."
-msgstr ""
-"* Wyszukiwanie predykcyjne sięga teraz poza tytuły produktów: częściowe "
-"dopasowanie SKU pokazuje produkt po jego kodzie, nawet gdy tytuł nie pasuje,"
-" a pasujące kategorie produktów pojawiają się jako osobna grupa na liście "
-"rozwijanej, dzięki czemu kupujący może przejść od razu do przefiltrowanego "
-"archiwum. Wyniki i kategorie są pogrupowane z nagłówkami, a nawigacja z "
-"klawiatury przechodzi przez oba."
-
-msgid ""
-"* New facet types: Autocomplete (a search box that filters a facet's own "
+"New facet types: Autocomplete (a search box that filters a facet's own "
 "options as you type, for facets with many values) and A-Z index (an "
 "alphabetical bar that filters options by first letter). Both filter client-"
 "side with no extra request, and degrade to a plain option list without "
 "JavaScript."
 msgstr ""
-"* Nowe typy faset: Autouzupełnianie (pole wyszukiwania, które filtruje "
-"własne opcje fasety podczas pisania, dla faset z wieloma wartościami) oraz "
-"indeks A-Z (alfabetyczny pasek filtrujący opcje według pierwszej litery). "
-"Oba filtrują po stronie klienta bez dodatkowego żądania i sprowadzają się do"
-" zwykłej listy opcji bez JavaScript."
+"Nowe typy faset: Autouzupełnianie (pole wyszukiwania filtrujące własne opcje"
+" fasety podczas pisania, dla faset z wieloma wartościami) i Indeks A-Z "
+"(alfabetyczny pasek filtrujący opcje według pierwszej litery). Oba filtrują "
+"po stronie klienta bez dodatkowego żądania i przechodzą na zwykłą listę "
+"opcji bez JavaScript."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* New: predictive product search. The `[sieve_search]` shortcode and \"Sieve"
-" Search\" block render an accessible search box with an instant typeahead "
-"dropdown (product thumbnails, prices, SKU), full keyboard navigation, and a "
-"\"view all results\" link. Built on WooCommerce product search, loaded as a "
-"standalone lightweight bundle so pages without it stay fast."
+"Predictive search now looks beyond product titles: a partial SKU pass "
+"surfaces a product by its code even when the title misses, and matching "
+"product categories appear as their own group in the dropdown so a shopper "
+"can jump straight to the filtered archive. Results and categories are "
+"grouped with headings, and keyboard navigation moves through both."
 msgstr ""
-"* Nowość: predykcyjne wyszukiwanie produktów. Shortcode `[sieve_search]` i "
-"blok „Sieve Search” renderują dostępne pole wyszukiwania z natychmiastową "
-"listą podpowiedzi (miniatury produktów, ceny, SKU), pełną obsługą klawiatury"
-" i odnośnikiem „zobacz wszystkie wyniki”. Zbudowane na wyszukiwarce "
-"produktów WooCommerce, ładowane jako samodzielny, lekki pakiet, dzięki czemu"
-" strony bez niego pozostają szybkie."
+"Predykcyjne wyszukiwanie wykracza teraz poza tytuły produktów: częściowe "
+"dopasowanie SKU wyszukuje produkt po kodzie, nawet gdy tytuł nie pasuje, a "
+"pasujące kategorie produktów pojawiają się jako osobna grupa na liście "
+"rozwijanej, aby klient mógł przejść prosto do przefiltrowanego archiwum. "
+"Wyniki i kategorie są pogrupowane z nagłówkami, a nawigacja klawiaturowa "
+"przechodzi przez obie grupy."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* New facet types: color and image swatches (with per-term color/image, plus"
-" an automatic color guess from common color names) and hierarchical (tree) "
-"category facets that show only branches leading to results."
+"Predictive search is now diacritic-insensitive and typo-tolerant. It matches"
+" product titles and SKUs while ignoring diacritic differences (so \"lozko\" "
+"finds \"łóżko\"), tolerates small typos, and matching categories are found "
+"the same way. This release triggers a one-time rebuild of the search index."
 msgstr ""
-"* Nowe typy faset: próbki kolorów i obrazów (z kolorem/obrazem dla każdego "
-"terminu oraz automatycznym odgadywaniem koloru na podstawie popularnych nazw"
-" kolorów) i hierarchiczne (drzewiaste) fasety kategorii, które pokazują "
-"tylko gałęzie prowadzące do wyników."
+"Predykcyjne wyszukiwanie jest teraz niewrażliwe na znaki diakrytyczne i "
+"toleruje literówki. Dopasowuje tytuły produktów i SKU, ignorując różnice "
+"diakrytyczne (np. „lozko” znajdzie „łóżko”), toleruje drobne błędy, a "
+"pasujące kategorie są wyszukiwane tak samo. To wydanie uruchamia jednorazową"
+" odbudowę indeksu wyszukiwania."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* Admin: cleaner facet builder rows (aligned controls, grouped "
-"reorder/remove buttons with first/last disabled states, field source shown "
-"as a caption)."
+"Search now behaves as a filter: type to narrow the live grid in place with "
+"predictive, diacritic- and typo-tolerant suggestions, combinable with every "
+"facet, and URL- and back-button-safe. Dependent facet counts now reflect the"
+" active search too."
 msgstr ""
-"* Panel administracyjny: czytelniejsze wiersze kreatora faset (wyrównane "
-"elementy sterujące, zgrupowane przyciski zmiany kolejności/usuwania ze "
-"stanami wyłączenia dla pierwszego/ostatniego, źródło pola pokazane jako "
-"podpis)."
+"Wyszukiwanie działa teraz jak filtr: pisz, aby zawęzić siatkę na żywo w "
+"miejscu dzięki predykcyjnym, niewrażliwym na diakrytyki i tolerującym "
+"literówki podpowiedziom, łączonym z każdą fasetą, z bezpiecznym adresem URL "
+"i przyciskiem Wstecz. Zależne liczniki faset uwzględniają teraz także "
+"aktywne wyszukiwanie."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* Compliance: added the plugin owner to the Contributors list and included "
-"the human-readable sources and build steps for the compiled assets "
-"(WordPress.org plugin guidelines)."
+"New: Appearance settings. Choose a style preset (Default, Minimal, Bordered,"
+" Soft, Unstyled) and customise the accent, border, muted-text and background"
+" colours from the admin, with a live preview and a contrast hint. Applies to"
+" both the filter and the predictive search. Zero extra requests, no layout "
+"shift, fully backward compatible."
 msgstr ""
-"* Zgodność: dodano właściciela wtyczki do listy współtwórców i dołączono "
-"czytelne dla człowieka źródła oraz kroki kompilacji skompilowanych zasobów "
-"(wytyczne dla wtyczek WordPress.org)."
+"Nowość: ustawienia wyglądu. Wybierz preset stylu (Domyślny, Minimalny, Z "
+"obramowaniem, Miękki, Bez stylu) i dostosuj kolory akcentu, obramowania, "
+"stonowanego tekstu i tła w panelu administracyjnym, z podglądem na żywo i "
+"podpowiedzią kontrastu. Dotyczy filtra i predykcyjnego wyszukiwania. Zero "
+"dodatkowych żądań, brak przesunięcia układu, pełna zgodność wsteczna."
 
+#. Found in changelog list item.
+#, gp-priority: low
 msgid ""
-"* Initial MVP release: pre-built index, AJAX filtering with URL state, "
+"Internationalisation: the admin and front-end JavaScript interface strings "
+"are now included in the translation template, so the whole plugin (not just "
+"the PHP side) can be fully translated."
+msgstr ""
+"Internacjonalizacja: ciągi interfejsu JavaScript panelu administracyjnego i "
+"front-endu są teraz uwzględnione w szablonie tłumaczeń, więc cała wtyczka "
+"(nie tylko strona PHP) może być w pełni przetłumaczona."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Compliance: documented the public source repository and the build steps for "
+"the compiled assets (WordPress.org plugin guidelines)."
+msgstr ""
+"Zgodność: udokumentowano publiczne repozytorium kodu źródłowego i kroki "
+"budowania skompilowanych zasobów (wytyczne wtyczek WordPress.org)."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Accessibility: facet groups expose their expanded/collapsed state, result "
+"counts announce politely, the pagination and filter regions are labelled, "
+"and remove buttons have clear accessible names."
+msgstr ""
+"Dostępność: grupy faset ujawniają stan rozwinięty/zwinięty, liczniki wyników"
+" są ogłaszane uprzejmie, regiony paginacji i filtrów są oznaczone, a "
+"przyciski usuwania mają jasne nazwy dostępnościowe."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Admin: inline help on every setting, including a short description of what "
+"each facet type looks like to shoppers."
+msgstr ""
+"Panel administracyjny: wbudowana pomoc przy każdym ustawieniu, w tym krótki "
+"opis wyglądu każdego typu fasety dla klientów."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Design: themeable CSS custom properties, fluid sizing, automatic dark mode "
+"(prefers-color-scheme), and tasteful transitions that respect prefers-"
+"reduced-motion. No layout shift when filters apply."
+msgstr ""
+"Wygląd: konfigurowalne właściwości niestandardowe CSS, płynne rozmiary, "
+"automatyczny tryb ciemny (prefers-color-scheme) i stonowane przejścia "
+"respektujące prefers-reduced-motion. Brak przesunięcia układu przy "
+"stosowaniu filtrów."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Polish: a refreshed, more attractive filter UI. Collapsible facet groups, an"
+" \"Active filters\" chip row with clearer remove buttons, a friendly empty "
+"state with a one-click \"Clear all filters\" action, an accessible loading "
+"spinner, and a retryable error message if an update fails."
+msgstr ""
+"Usprawnienia: odświeżony, bardziej atrakcyjny interfejs filtra. Zwijane "
+"grupy faset, wiersz chipów „Aktywne filtry” z wyraźniejszymi przyciskami "
+"usuwania, przyjazny stan pusty z akcją „Wyczyść wszystkie filtry” jednym "
+"kliknięciem, dostępny wskaźnik ładowania i komunikat błędu z możliwością "
+"ponowienia przy nieudanej aktualizacji."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Extension: <code>sieve_facets</code> filter and page context "
+"(<code>FacetContext</code>) so PRO add-ons can show or hide facets by "
+"category, shop page or customer role. AJAX requests preserve context via "
+"<code>sf_ctx_*</code> query vars."
+msgstr ""
+"Rozszerzenie: filtr <code>sieve_facets</code> i kontekst strony "
+"(<code>FacetContext</code>), aby dodatki PRO mogły pokazywać lub ukrywać "
+"fasety według kategorii, strony sklepu lub roli klienta. Żądania AJAX "
+"zachowują kontekst przez zmienne zapytania <code>sf_ctx_*</code>."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Extension: <code>sieve_settings</code> filter and <code>layout</code> "
+"setting (sidebar, stacked, inline) so PRO add-ons can rotate filter-panel "
+"layouts and column counts. FilterEngine applies layout modifier classes on "
+"<code>.sieve-app</code>."
+msgstr ""
+"Rozszerzenie: filtr <code>sieve_settings</code> i ustawienie "
+"<code>layout</code> (pasek boczny, ułożone, w linii), aby dodatki PRO mogły "
+"rotować układy panelu filtrów i liczbę kolumn. FilterEngine stosuje klasy "
+"modyfikatorów układu na <code>.sieve-app</code>."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Extension: <code>sieve_facet_body</code>, <code>sieve_facet_types</code> and"
+" <code>sieve_facet_catalog</code> filters plus "
+"<code>FacetTypeRegistry</code> in the admin catalog REST response so PRO "
+"add-ons can register advanced facet presentations (e.g. star rating)."
+msgstr ""
+"Rozszerzenie: filtry <code>sieve_facet_body</code>, "
+"<code>sieve_facet_types</code> i <code>sieve_facet_catalog</code> oraz "
+"<code>FacetTypeRegistry</code> w odpowiedzi REST katalogu administracyjnego,"
+" aby dodatki PRO mogły rejestrować zaawansowane prezentacje faset (np. ocena"
+" gwiazdkowa)."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Extension: <code>sieve_search_product_ids</code> filter on "
+"<code>SearchResolver</code> so PRO add-ons can route the in-grid search "
+"facet and predictive search through SearchWP or Algolia."
+msgstr ""
+"Rozszerzenie: filtr <code>sieve_search_product_ids</code> na "
+"<code>SearchResolver</code>, aby dodatki PRO mogły kierować fasetę "
+"wyszukiwania w siatce i predykcyjne wyszukiwanie przez SearchWP lub Algolia."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Admin: style-preset inline help in Appearance panel."
+msgstr ""
+"Panel administracyjny: wbudowana pomoc dotycząca presetów stylu w panelu "
+"Wygląd."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Admin: fix index help text shown on every facet row; add empty-index and "
+"empty-facet notices, grouped source picker, save/reindex error messages, and"
+" load-failure state."
+msgstr ""
+"Panel administracyjny: poprawka tekstu pomocy indeksu wyświetlanego w każdym"
+" wierszu fasety; dodano powiadomienia o pustym indeksie i pustej fasecie, "
+"pogrupowany selektor źródła, komunikaty błędów zapisu/ponownego indeksowania"
+" i stan nieudanego ładowania."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Admin: cleaner facet builder rows (aligned controls, grouped reorder/remove "
+"buttons with first/last disabled states, field source shown as a caption)."
+msgstr ""
+"Panel administracyjny: czytelniejsze wiersze kreatora faset (wyrównane "
+"kontrolki, pogrupowane przyciski zmiany kolejności/usuwania ze stanami "
+"wyłączenia pierwszego/ostatniego, źródło pola pokazane jako podpis)."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Initial MVP release: pre-built index, AJAX filtering with URL state, "
 "dependent facet counts, checkboxes / radio / dropdown / range / search "
 "facets, sorting, active-filter chips, pagination, mobile filter drawer, "
-"React facet builder, `[sieve]` shortcode and \"Sieve Filter\" block."
+"React facet builder, <code>[sieve]</code> shortcode and \"Sieve Filter\" "
+"block."
 msgstr ""
-"* Pierwsze wydanie MVP: wstępnie zbudowany indeks, filtrowanie AJAX ze "
-"stanem w adresie URL, zależne liczniki faset, fasety pól wyboru / radiowe / "
-"listy rozwijanej / zakresu / wyszukiwania, sortowanie, etykiety aktywnych "
-"filtrów, paginacja, mobilna szuflada filtrów, kreator faset w React, "
-"shortcode `[sieve]` i blok „Sieve Filter”."
+"Pierwsze wydanie MVP: wstępnie zbudowany indeks, filtrowanie AJAX ze stanem "
+"URL, zależne liczniki faset, fasety pól wyboru / przycisków opcji / listy "
+"rozwijanej / zakresu / wyszukiwania, sortowanie, chipy aktywnych filtrów, "
+"paginacja, mobilny panel filtrów, kreator faset w React, shortcode "
+"<code>[sieve]</code> i blok „Filtr Sieve”."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid ""
+"Compliance: added the plugin owner to the Contributors list and included the"
+" human-readable sources and build steps for the compiled assets "
+"(WordPress.org plugin guidelines)."
+msgstr ""
+"Zgodność: dodano właściciela wtyczki do listy współtwórców oraz dołączono "
+"czytelne źródła i kroki budowania skompilowanych zasobów (wytyczne wtyczek "
+"WordPress.org)."
