@@ -4,6 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable Readme (latest release)\n"
 "PO-Revision-Date: 2026-07-13 19:58:58+0000\n"
+"Last-Translator: wppoland.com <hello@wppoland.com>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -494,11 +496,11 @@ msgstr ""
 
 #. Found in installation list item.
 msgid "Install Sieve and activate it."
-msgstr "Zainstaluj Sieve i aktywuj wtyczkę."
+msgstr "Zainstaluj Sieve i włącz wtyczkę."
 
 #. Found in installation list item.
 msgid "Install and activate WooCommerce."
-msgstr "Zainstaluj i aktywuj WooCommerce."
+msgstr "Zainstaluj i włącz WooCommerce."
 
 #. Found in description paragraph.
 msgid ""
