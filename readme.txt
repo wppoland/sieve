@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.9.5
+Stable tag: 1.0.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,7 +47,7 @@ Fast and accessible by design:
 
 Easy to place and configure:
 
-* Gutenberg "Sieve Filter" block and the `[sieve]` shortcode
+* Gutenberg "Sieve Filter" block, an Elementor "Sieve Filter" widget, and the `[sieve]` shortcode
 * A visual facet builder in the admin: add, reorder and retype facets, set the layout, and rebuild the index
 
 = Sieve PRO =
@@ -62,6 +62,30 @@ Sieve PRO adds advanced control and integrations for growing stores:
 
 Documentation: https://plogins.com/sieve/docs/
 
+= You may also like these plugins =
+
+More free WooCommerce plugins from WPPoland:
+
+* [Plogins Tiers](https://wordpress.org/plugins/plogins-tiers/) - quantity and volume pricing tiers with a server-rendered price table.
+* [Plogins Waitlist](https://wordpress.org/plugins/plogins-waitlist/) - back-in-stock waitlist that emails shoppers the moment a product returns.
+* [Polski for WooCommerce](https://wordpress.org/plugins/polski/) - Polish-market compliance: GPSR, Omnibus, GDPR, invoices and storefront modules.
+
+Browse the full catalogue at https://plogins.com/ .
+
+== Sieve PRO ==
+
+The free edition is the full filtering MVP, with no limits. **Sieve PRO** is built for large or conversion-focused catalogs and adds:
+
+* **Performance dashboard** - index health, catalogue coverage and a filter-resolve benchmark
+* **Conditional facet rules** - show or hide facets by product category, customer role or the shop page
+* **A/B layout testing** - rotate filter-panel layouts and product grid columns with impression tracking
+* **Star rating facet** - visual star rows for the average-rating filter
+* **Search integrations** - route predictive and in-grid search through SearchWP or Algolia
+
+Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year (PLN shown at checkout).
+
+Compare editions and pricing: [plogins.com/sieve-pro/pricing/](https://plogins.com/sieve-pro/pricing/)
+
 == Installation ==
 
 1. Install and activate WooCommerce.
@@ -73,11 +97,11 @@ Documentation: https://plogins.com/sieve/docs/
 
 = Documentation and links =
 
-* **Documentation** - https://plogins.com/sieve/docs/
-* **Plugin page** - https://plogins.com/sieve/
-* **Source code** - https://github.com/wppoland/sieve
-* **Bug reports and feature requests** - https://github.com/wppoland/sieve/issues
-* **Discussions and questions** - https://github.com/wppoland/sieve/discussions
+* **Documentation** - [plogins.com/sieve/docs/](https://plogins.com/sieve/docs/)
+* **Plugin page** - [plogins.com/sieve/](https://plogins.com/sieve/)
+* **Source code** - [github.com/wppoland/sieve](https://github.com/wppoland/sieve)
+* **Bug reports and feature requests** - [github.com/wppoland/sieve/issues](https://github.com/wppoland/sieve/issues)
+* **Discussions and questions** - [github.com/wppoland/sieve/discussions](https://github.com/wppoland/sieve/discussions)
 
 
 = Does it require WooCommerce? =
@@ -104,6 +128,10 @@ Yes. The filter UI is built for keyboard use and screen readers, with labelled r
 = Does Sieve work on mobile? =
 Yes. Sieve includes a mobile filter drawer with a sticky apply bar, so shoppers can filter products without fighting a long sidebar on small screens.
 
+= Does this plugin work on WordPress Multisite? =
+
+Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings and data.
+
 == Screenshots ==
 
 1. Faceted filtering on a product page: categories, price range, availability and on-sale facets with live dependent counts, active-filter chips and a results grid.
@@ -119,7 +147,47 @@ The full, human-readable source for the compiled assets is included in this plug
 
 This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at https://github.com/wppoland/sieve.
 
+== Translations ==
+
+Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
+
 == Changelog ==
+
+= 1.0.10 =
+* Translations: completed Polish, German and Spanish for the PRO upgrade panel.
+
+= 1.0.9 =
+* Declared compatibility with WooCommerce 10.9.
+
+= 1.0.8 =
+* Security: strict color-format validation on attribute swatches, preventing style-attribute injection from term meta.
+
+= 1.0.7 =
+* Translation quality pass: corrected Polish, German and Spanish (product names kept in English, legal withdrawal terminology, WooCommerce glossary and grammar fixes).
+
+= 1.0.6 =
+* Documentation: readme links are now labelled links.
+
+= 1.0.5 =
+* Prefixed the (unused) storefront-kit product-badges filter as sieve_product_badges to satisfy WordPress plugin naming guidelines.
+
+= 1.0.4 =
+* New: an in-plugin overview of Sieve PRO on the admin screen (dismissible, advertising only).
+
+= 1.0.3 =
+* Added a Free vs PRO overview to the readme.
+
+= 1.0.2 =
+* Added bundled Polish, German and Spanish translations for the plugin interface.
+
+= 1.0.1 =
+* First stable release.
+
+= 0.9.7 =
+* Docs: added a "You may also like" section linking the other free WPPoland WooCommerce plugins. No functional changes.
+
+= 0.9.6 =
+* New: Elementor widgets for product search and product filter (works on Elementor 3.x and 4.0).
 
 = 0.9.5 =
 * Admin: fix index help text shown on every facet row; add empty-index and empty-facet notices, grouped source picker, save/reindex error messages, and load-failure state.

@@ -268,7 +268,7 @@ final class FacetRenderer
                 . '<div class="sieve-range__inputs">'
                 . '<label class="screen-reader-text" for="sieve-%3$s-min">%8$s</label>'
                 . '<input type="number" id="sieve-%3$s-min" class="sieve-range__min" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%4$s">'
-                . '<span class="sieve-range__sep" aria-hidden="true">&ndash;</span>'
+                . '<span class="sieve-range__sep" aria-hidden="true">, </span>'
                 . '<label class="screen-reader-text" for="sieve-%3$s-max">%9$s</label>'
                 . '<input type="number" id="sieve-%3$s-max" class="sieve-range__max" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%5$s">'
                 . '</div>'
@@ -371,6 +371,9 @@ final class FacetRenderer
         if ('' === $color) {
             $color = $this->guessColor($label);
         }
+        if ('' !== $color && ! $this->isSafeCssColor($color)) {
+            $color = ''; // esc_attr does not neutralize CSS syntax; drop anything that could break out.
+        }
         if ('' !== $color) {
             return sprintf(
                 '<span class="sieve-swatch__visual sieve-swatch__visual--color" style="background-color:%1$s"></span>',
@@ -382,6 +385,18 @@ final class FacetRenderer
             '<span class="sieve-swatch__visual sieve-swatch__visual--text">%1$s</span>',
             esc_html(function_exists('mb_substr') ? mb_substr($label, 0, 2) : substr($label, 0, 2)),
         );
+    }
+
+    /**
+     * Only a hex color (#rgb..#rrggbbaa) or a plain CSS color keyword may reach
+     * the style attribute. rgb()/hsl() and anything with CSS syntax is rejected
+     * (falls back to a text swatch), preventing style-attribute breakout from a
+     * compromised term-meta value.
+     */
+    private function isSafeCssColor(string $color): bool
+    {
+        return 1 === preg_match('/^#[0-9a-f]{3,8}$/i', $color)
+            || 1 === preg_match('/^[a-z]+$/i', $color);
     }
 
     private function swatchColor(string $taxonomy, string $value): string

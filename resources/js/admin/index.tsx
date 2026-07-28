@@ -99,7 +99,7 @@ const TYPE_HELP: Record< string, string > = {
 		'sieve'
 	),
 	az_index: __(
-		'An A–Z bar that filters options by first letter. Good for brand lists.',
+		'An A, Z bar that filters options by first letter. Good for brand lists.',
 		'sieve'
 	),
 	range_slider: __(
@@ -349,7 +349,7 @@ function App() {
 
 		for ( const [ group, items ] of groups ) {
 			options.push( {
-				label: `— ${ sourceGroupLabel( group ) } —`,
+				label: `, ${ sourceGroupLabel( group ) }, `,
 				value: `__group_${ group }`,
 				disabled: true,
 			} );
@@ -414,7 +414,7 @@ function App() {
 						} }
 					>
 						{ __(
-							'Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild after a bulk import or if counts look out of date — new and edited products are indexed automatically.',
+							'Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild after a bulk import or if counts look out of date, new and edited products are indexed automatically.',
 							'sieve'
 						) }
 					</p>

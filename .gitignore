@@ -9,3 +9,5 @@
 /tests/e2e/.urls.json
 /test-results/
 /playwright-report/
+*~
+*.bak

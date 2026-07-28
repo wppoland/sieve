@@ -1,0 +1,208 @@
+{
+    "translation-revision-date": "2026-07-07 00:00+0000",
+    "generator": "WP-CLI\/2.12.0",
+    "source": "build\/a.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "es_ES",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Checkboxes": [
+                "Casillas de verificaci\u00f3n"
+            ],
+            "Radio": [
+                "Radio"
+            ],
+            "Dropdown": [
+                "Men\u00fa desplegable"
+            ],
+            "Swatches (color \/ image)": [
+                "Muestras (color\/imagen)"
+            ],
+            "Hierarchy (tree)": [
+                "Jerarqu\u00eda (\u00e1rbol)"
+            ],
+            "Autocomplete (searchable options)": [
+                "Autocompletar (opciones de b\u00fasqueda)"
+            ],
+            "A-Z index": [
+                "\u00edndice A-Z"
+            ],
+            "Range slider": [
+                "Control deslizante de rango"
+            ],
+            "Sieve": [
+                "Sieve"
+            ],
+            "Search box": [
+                "Cuadro de b\u00fasqueda"
+            ],
+            "Search products": [
+                "Buscar productos"
+            ],
+            "Category": [
+                "Categor\u00eda"
+            ],
+            "Default": [
+                "Por defecto"
+            ],
+            "Minimal": [
+                "M\u00ednimo"
+            ],
+            "Bordered": [
+                "bordeado"
+            ],
+            "Soft": [
+                "Suave"
+            ],
+            "Unstyled": [
+                "Sin estilo"
+            ],
+            "Accent": [
+                "Acento"
+            ],
+            "Border": [
+                "Borde"
+            ],
+            "Muted text": [
+                "Texto silenciado"
+            ],
+            "Background": [
+                "Fondo"
+            ],
+            "Appearance": [
+                "Apariencia"
+            ],
+            "Style preset": [
+                "Estilo preestablecido"
+            ],
+            "Unstyled mode ships no plugin CSS. Your theme styles everything through the semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-search, \u2026). Keyboard focus and high-contrast cues are still emitted.": [
+                "El modo sin estilo no incluye ning\u00fan complemento CSS. Su tema dise\u00f1a todo a trav\u00e9s de las clases sem\u00e1nticas.sieve-* (.sieve-app,.sieve-facet,.sieve-chip,.sieve-search,\u2026). Todav\u00eda se emiten el enfoque del teclado y las se\u00f1ales de alto contraste."
+            ],
+            "Low contrast: the active\/selected state uses white text on the accent colour and may be hard to read.": [
+                "Bajo contraste: el estado activo\/seleccionado utiliza texto blanco sobre el color de acento y puede ser dif\u00edcil de leer."
+            ],
+            "Muted text may be hard to read against the chosen background colour.": [
+                "El texto apagado puede resultar dif\u00edcil de leer con el color de fondo elegido."
+            ],
+            "Reset to defaults": [
+                "Restablecer los valores predeterminados"
+            ],
+            "Preview": [
+                "Avance"
+            ],
+            "Accessories": [
+                "Accesorios"
+            ],
+            "Multiple choices can be selected at once. Best for most attributes.": [
+                "Se pueden seleccionar varias opciones a la vez. Lo mejor para la mayor\u00eda de los atributos."
+            ],
+            "Only one choice at a time. Good for mutually exclusive options.": [
+                "S\u00f3lo una opci\u00f3n a la vez. Bueno para opciones mutuamente excluyentes."
+            ],
+            "A compact select menu. Saves space when there are many options.": [
+                "Un men\u00fa de selecci\u00f3n compacto. Ahorra espacio cuando hay muchas opciones."
+            ],
+            "Colour or image squares. Ideal for colour and pattern attributes.": [
+                "Cuadrados de color o imagen. Ideal para atributos de color y patr\u00f3n."
+            ],
+            "A nested tree. Best for categories with parent\/child levels.": [
+                "Un \u00e1rbol anidado. Lo mejor para categor\u00edas con niveles de padre\/hijo."
+            ],
+            "A checkbox list with a type-to-filter box. Best for very long option lists.": [
+                "Una lista de casillas de verificaci\u00f3n con un cuadro de tipo para filtrar. Lo mejor para listas de opciones muy largas."
+            ],
+            "An A\u2013Z bar that filters options by first letter. Good for brand lists.": [
+                "Una barra A\u2013Z que filtra opciones por primera letra. Bueno para listas de marcas."
+            ],
+            "A min\/max range. Used for price and other numeric values.": [
+                "Un rango m\u00ednimo\/m\u00e1ximo. Se utiliza para precios y otros valores num\u00e9ricos."
+            ],
+            "A live search box that narrows the product grid as shoppers type.": [
+                "Un cuadro de b\u00fasqueda en vivo que reduce la cuadr\u00edcula de productos a medida que los compradores escriben."
+            ],
+            "Loading Sieve\u2026": [
+                "Cargando Sieve \u2026"
+            ],
+            "That facet is already added.": [
+                "Esa faceta ya est\u00e1 a\u00f1adida."
+            ],
+            "Settings saved.": [
+                "Configuraci\u00f3n guardada."
+            ],
+            "Re-indexed %d product.": [
+                "Producto %d reindexado.",
+                "Productos %d reindexados."
+            ],
+            "Place the filter anywhere with the shortcode": [
+                "Coloque el filtro en cualquier lugar con el c\u00f3digo corto"
+            ],
+            "or the \"Sieve Filter\" block.": [
+                "o el bloque \" Sieve Filtro\"."
+            ],
+            "Index": [
+                "\u00cdndice"
+            ],
+            "Indexed rows:": [
+                "Filas indexadas:"
+            ],
+            "Rebuild index": [
+                "\u00cdndice de reconstrucci\u00f3n"
+            ],
+            "Layout": [
+                "Disposici\u00f3n"
+            ],
+            "Products per page": [
+                "Productos por p\u00e1gina"
+            ],
+            "How many products to show before pagination appears.": [
+                "Cu\u00e1ntos productos mostrar antes de que aparezca la paginaci\u00f3n."
+            ],
+            "Columns": [
+                "columnas"
+            ],
+            "Product grid columns on wide screens. Fewer columns are used automatically on tablets and phones.": [
+                "Columnas de cuadr\u00edcula de productos en pantallas anchas. Se utilizan menos columnas autom\u00e1ticamente en tabletas y tel\u00e9fonos."
+            ],
+            "Facets": [
+                "facetas"
+            ],
+            "Label": [
+                "Etiqueta"
+            ],
+            "Type": [
+                "Tipo"
+            ],
+            "Move up": [
+                "Subir"
+            ],
+            "Move down": [
+                "Bajar"
+            ],
+            "Remove": [
+                "Eliminar"
+            ],
+            "Sieve keeps a pre-built index so filtered queries stay fast on large catalogs. Rebuild it after a bulk import or if counts look out of date \u2014 new and edited products are indexed automatically.": [
+                "Sieve mantiene un \u00edndice predise\u00f1ado para que las consultas filtradas se mantengan r\u00e1pidas en cat\u00e1logos grandes. Reconstr\u00fayalo despu\u00e9s de una importaci\u00f3n masiva o si los recuentos parecen obsoletos: los productos nuevos y editados se indexan autom\u00e1ticamente."
+            ],
+            "Add a facet": [
+                "Agregar una faceta"
+            ],
+            "Pick a product attribute, taxonomy or field to filter by. Sources are detected from your store automatically.": [
+                "Elija un atributo de producto, taxonom\u00eda o campo para filtrar. Las fuentes se detectan desde su tienda autom\u00e1ticamente."
+            ],
+            "Select a source\u2026": [
+                "Seleccione una fuente\u2026"
+            ],
+            "Add": [
+                "Agregar"
+            ],
+            "Save settings": [
+                "Guardar configuraci\u00f3n"
+            ]
+        }
+    }
+}

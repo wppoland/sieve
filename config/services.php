@@ -17,6 +17,7 @@ use Sieve\Rest\AdminController;
 use Sieve\Rest\FilterController;
 use Sieve\Rest\SuggestController;
 use Sieve\Service\AppearanceService;
+use Sieve\Service\ElementorWidgets;
 use Sieve\Service\FacetCatalog;
 use Sieve\Service\FacetTypeRegistry;
 use Sieve\Service\FacetCountService;
@@ -186,4 +187,7 @@ return static function (Container $c): void {
             $c->get(FrontendHooks::class),
         ),
     );
+
+    // Elementor integration (self-guards on the elementor/widgets/register hook).
+    $c->singleton(ElementorWidgets::class, static fn (): ElementorWidgets => new ElementorWidgets());
 };
