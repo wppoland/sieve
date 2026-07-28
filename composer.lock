@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "wppoland/storefront-kit",
-            "version": "v1.6.1",
+            "version": "v1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wppoland/storefront-kit.git",
-                "reference": "6b3b79d09dd5b8ce163864507db55f61ed9b3bb5"
+                "reference": "d389fc65c7457c36b4403be2b6b65c46dfcc7bc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wppoland/storefront-kit/zipball/6b3b79d09dd5b8ce163864507db55f61ed9b3bb5",
-                "reference": "6b3b79d09dd5b8ce163864507db55f61ed9b3bb5",
+                "url": "https://api.github.com/repos/wppoland/storefront-kit/zipball/d389fc65c7457c36b4403be2b6b65c46dfcc7bc5",
+                "reference": "d389fc65c7457c36b4403be2b6b65c46dfcc7bc5",
                 "shasum": ""
             },
             "require": {
@@ -55,10 +55,10 @@
             ],
             "description": "Shared storefront engines for WPPoland WooCommerce plugins",
             "support": {
-                "source": "https://github.com/wppoland/storefront-kit/tree/v1.6.1",
+                "source": "https://github.com/wppoland/storefront-kit/tree/v1.6.2",
                 "issues": "https://github.com/wppoland/storefront-kit/issues"
             },
-            "time": "2026-07-28T13:03:41+00:00"
+            "time": "2026-07-28T13:26:58+00:00"
         }
     ],
     "packages-dev": [
