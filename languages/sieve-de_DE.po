@@ -433,8 +433,8 @@ msgstr ""
 
 #: build/admin.js:1
 msgid ""
-"Low contrast: the active/selected state uses white text on the accent colour"
-" and may be hard to read."
+"Low contrast: the active/selected state uses white text on the accent colour "
+"and may be hard to read."
 msgstr ""
 "Geringer Kontrast: Der aktive/ausgewählte Status verwendet weißen Text in "
 "der Akzentfarbe und ist möglicherweise schwer lesbar."
@@ -479,8 +479,8 @@ msgstr "Farb- oder Bildquadrate. Ideal für Farb- und Musterattribute."
 #: build/admin.js:1
 msgid "A nested tree. Best for categories with parent/child levels."
 msgstr ""
-"Ein verschachtelter Baum. Am besten für Kategorien mit "
-"übergeordneten/untergeordneten Ebenen geeignet."
+"Ein verschachtelter Baum. Am besten für Kategorien mit übergeordneten/"
+"untergeordneten Ebenen geeignet."
 
 #: build/admin.js:1
 msgid ""
@@ -566,8 +566,8 @@ msgid ""
 "Product grid columns on wide screens. Fewer columns are used automatically "
 "on tablets and phones."
 msgstr ""
-"Produktrasterspalten auf Breitbildschirmen. Auf Tablets und Telefonen werden"
-" automatisch weniger Spalten verwendet."
+"Produktrasterspalten auf Breitbildschirmen. Auf Tablets und Telefonen werden "
+"automatisch weniger Spalten verwendet."
 
 #: build/admin.js:1
 msgid "Facets"
@@ -596,8 +596,8 @@ msgstr "Entfernen"
 #: build/admin.js:1
 msgid ""
 "Sieve keeps a pre-built index so filtered queries stay fast on large "
-"catalogs. Rebuild it after a bulk import or if counts look out of date — new"
-" and edited products are indexed automatically."
+"catalogs. Rebuild it after a bulk import or if counts look out of date — new "
+"and edited products are indexed automatically."
 msgstr ""
 "Sieve verwaltet einen vorgefertigten Index, sodass gefilterte Abfragen in "
 "großen Katalogen schnell bleiben. Erstelle es nach einem Massenimport neu "
@@ -719,6 +719,42 @@ msgstr "automatische Vervollständigung"
 msgctxt "block keyword"
 msgid "product"
 msgstr "Produkt"
+
+#. translators: %d: yearly price in PLN
+#: src/Admin/ProUpsell.php:69
+#, php-format
+msgid "od %d zł/rok"
+msgstr "ab %d zł/Jahr"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:74
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "ab %1$s%2$d/Jahr"
+
+#: src/Admin/ProUpsell.php:106
+msgid "Permission denied."
+msgstr "Zugriff verweigert."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:132
+#, php-format
+msgid "Do more with %s"
+msgstr "Mehr erreichen mit %s"
+
+#: src/Admin/ProUpsell.php:137
+msgid "Upgrade to PRO"
+msgstr "Auf PRO upgraden"
+
+#: src/Admin/ProUpsell.php:139
+msgid "Dismiss this notice"
+msgstr "Diesen Hinweis ausblenden"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:157
+#, php-format
+msgid "What %s adds"
+msgstr "Was %s ergänzt"
 
 #~ msgctxt "block title"
 #~ msgid "In-stock products only"
