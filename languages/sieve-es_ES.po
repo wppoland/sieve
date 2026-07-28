@@ -433,8 +433,8 @@ msgstr ""
 
 #: build/admin.js:1
 msgid ""
-"Low contrast: the active/selected state uses white text on the accent colour"
-" and may be hard to read."
+"Low contrast: the active/selected state uses white text on the accent colour "
+"and may be hard to read."
 msgstr ""
 "Bajo contraste: el estado activo/seleccionado utiliza texto blanco sobre el "
 "color de acento y puede ser difícil de leer."
@@ -484,8 +484,8 @@ msgstr "Un árbol anidado. Lo mejor para categorías con niveles de padre/hijo."
 msgid ""
 "A checkbox list with a type-to-filter box. Best for very long option lists."
 msgstr ""
-"Una lista de casillas de verificación con un cuadro de tipo para filtrar. Lo"
-" mejor para listas de opciones muy largas."
+"Una lista de casillas de verificación con un cuadro de tipo para filtrar. Lo "
+"mejor para listas de opciones muy largas."
 
 #: build/admin.js:1
 msgid "An A–Z bar that filters options by first letter. Good for brand lists."
@@ -501,8 +501,8 @@ msgstr ""
 #: build/admin.js:1
 msgid "A live search box that narrows the product grid as shoppers type."
 msgstr ""
-"Un cuadro de búsqueda en vivo que reduce la cuadrícula de productos a medida"
-" que los compradores escriben."
+"Un cuadro de búsqueda en vivo que reduce la cuadrícula de productos a medida "
+"que los compradores escriben."
 
 #: build/admin.js:1
 msgid "Loading Sieve…"
@@ -593,8 +593,8 @@ msgstr "Eliminar"
 #: build/admin.js:1
 msgid ""
 "Sieve keeps a pre-built index so filtered queries stay fast on large "
-"catalogs. Rebuild it after a bulk import or if counts look out of date — new"
-" and edited products are indexed automatically."
+"catalogs. Rebuild it after a bulk import or if counts look out of date — new "
+"and edited products are indexed automatically."
 msgstr ""
 "Sieve mantiene un índice prediseñado para que las consultas filtradas se "
 "mantengan rápidas en catálogos grandes. Reconstrúyalo después de una "
@@ -717,6 +717,42 @@ msgctxt "block keyword"
 msgid "product"
 msgstr "producto"
 
+#. translators: %d: yearly price in PLN
+#: src/Admin/ProUpsell.php:69
+#, php-format
+msgid "od %d zł/rok"
+msgstr "desde %d zł/año"
+
+#. translators: 1: currency symbol, 2: yearly price
+#: src/Admin/ProUpsell.php:74
+#, php-format
+msgid "from %1$s%2$d/yr"
+msgstr "desde %1$s%2$d/año"
+
+#: src/Admin/ProUpsell.php:106
+msgid "Permission denied."
+msgstr "Permiso denegado."
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:132
+#, php-format
+msgid "Do more with %s"
+msgstr "Haz más con %s"
+
+#: src/Admin/ProUpsell.php:137
+msgid "Upgrade to PRO"
+msgstr "Mejora a PRO"
+
+#: src/Admin/ProUpsell.php:139
+msgid "Dismiss this notice"
+msgstr "Descartar este aviso"
+
+#. translators: %s: PRO edition name
+#: src/Admin/ProUpsell.php:157
+#, php-format
+msgid "What %s adds"
+msgstr "Lo que añade %s"
+
 #~ msgctxt "block title"
 #~ msgid "In-stock products only"
 #~ msgstr "Solo productos en stock"
@@ -728,8 +764,8 @@ msgstr "producto"
 #~ msgctxt "block keyword"
 #~ msgid "Fast, accessible faceted product filtering with a results grid."
 #~ msgstr ""
-#~ "Filtrado de productos por facetas rápido y accesible con una cuadrícula de "
-#~ "resultados."
+#~ "Filtrado de productos por facetas rápido y accesible con una cuadrícula "
+#~ "de resultados."
 
 #~ msgctxt "block title"
 #~ msgid "search"
