@@ -9,27 +9,20 @@ defined('ABSPATH') || exit;
 use const Sieve\PLUGIN_DIR;
 
 /**
- * PRO upgrade promotion, shown ONLY on the Sieve settings screen: a dismissible
- * top banner, a sidebar promo panel, and a "what PRO adds" locked-card list.
+ * PRO upgrade promotion, shown ONLY on the Sieve admin screen: a dismissible top
+ * banner and a "what PRO adds" locked-card list below the facet builder.
  *
- * It is pure advertising: no disabled form fields, nothing blocks a free
- * workflow, it is scoped to this one screen and the banner is dismissible per
- * user. That keeps it inside the WordPress.org guidelines (no admin hijacking,
- * no trialware). Content comes from config/pro-upsell.php, generated from the
- * plogins.com registry, so the feature copy always matches the real PRO edition.
+ * Pure advertising: no disabled fields, nothing blocks the free workflow, scoped
+ * to this one screen and dismissible per user, so it stays inside the
+ * WordPress.org guidelines. Content comes from config/pro-upsell.php.
  */
 final class ProUpsell
 {
     private const META   = 'sieve_pro_banner_dismissed';
-    private const ACTION = 'sieve_dismiss_pro';
+    public const ACTION  = 'sieve_dismiss_pro';
 
     /** @var array<string, mixed>|null */
     private ?array $data = null;
-
-    public function registerHooks(): void
-    {
-        add_action('admin_post_' . self::ACTION, [$this, 'handleDismiss']);
-    }
 
     /** @return array<string, mixed> */
     private function data(): array
@@ -45,7 +38,7 @@ final class ProUpsell
     public function enabled(): bool
     {
         /**
-         * Filters whether the Sieve PRO promo is shown on the settings screen.
+         * Filters whether the Sieve PRO promo is shown on the admin screen.
          *
          * @param bool $show Default true.
          */
@@ -118,11 +111,7 @@ final class ProUpsell
         exit;
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Render pieces                                                       */
-    /* ------------------------------------------------------------------ */
-
-    /** Dismissible strip at the top of the settings screen. */
+    /** Dismissible strip at the top of the admin screen. */
     public function banner(): void
     {
         if (! $this->enabled() || $this->bannerDismissed()) {
@@ -152,38 +141,7 @@ final class ProUpsell
         <?php
     }
 
-    /** Sidebar promo panel (sits in the settings two-column layout). */
-    public function aside(): void
-    {
-        if (! $this->enabled()) {
-            return;
-        }
-        $name     = (string) ($this->data()['name'] ?? 'Sieve PRO');
-        $price    = $this->priceLabel();
-        $features = $this->features();
-        ?>
-        <aside class="sieve-pro-aside" aria-labelledby="sieve-pro-aside-h">
-            <p class="sieve-pro-aside__eyebrow"><?php echo esc_html($name); ?></p>
-            <h2 id="sieve-pro-aside-h" class="sieve-pro-aside__heading"><?php esc_html_e('Unlock every PRO feature', 'sieve'); ?></h2>
-            <ul class="sieve-pro-aside__list">
-                <?php foreach ($features as $f) : ?>
-                    <li>
-                        <span class="sieve-pro-aside__lock" aria-hidden="true"></span>
-                        <span><?php echo esc_html($f['title']); ?></span>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <a class="button button-primary button-hero sieve-pro-aside__cta" href="<?php echo esc_url($this->url()); ?>" target="_blank" rel="noopener noreferrer">
-                <?php esc_html_e('Upgrade to PRO', 'sieve'); ?>
-            </a>
-            <?php if ($price !== '') : ?>
-                <p class="sieve-pro-aside__price"><?php echo esc_html($price); ?> · <?php esc_html_e('one licence, every PRO feature', 'sieve'); ?></p>
-            <?php endif; ?>
-        </aside>
-        <?php
-    }
-
-    /** "What PRO adds" locked-card grid, appended after the settings form. */
+    /** "What PRO adds" locked-card grid, appended after the facet builder. */
     public function cards(): void
     {
         if (! $this->enabled()) {
@@ -202,7 +160,6 @@ final class ProUpsell
                 <?php foreach ($features as $f) : ?>
                     <article class="sieve-pro-card">
                         <span class="sieve-pro-card__badge">PRO</span>
-                        <span class="sieve-pro-card__lock" aria-hidden="true"></span>
                         <h3 class="sieve-pro-card__title"><?php echo esc_html($f['title']); ?></h3>
                         <?php if ($f['desc'] !== '') : ?>
                             <p class="sieve-pro-card__desc"><?php echo esc_html($f['desc']); ?></p>

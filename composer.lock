@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "wppoland/storefront-kit",
-            "version": "v1.6.0",
+            "version": "v1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wppoland/storefront-kit.git",
-                "reference": "8ccd53f38cb5e8f8a347183f32c62d2bf351b2c3"
+                "reference": "d389fc65c7457c36b4403be2b6b65c46dfcc7bc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wppoland/storefront-kit/zipball/8ccd53f38cb5e8f8a347183f32c62d2bf351b2c3",
-                "reference": "8ccd53f38cb5e8f8a347183f32c62d2bf351b2c3",
+                "url": "https://api.github.com/repos/wppoland/storefront-kit/zipball/d389fc65c7457c36b4403be2b6b65c46dfcc7bc5",
+                "reference": "d389fc65c7457c36b4403be2b6b65c46dfcc7bc5",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
             "require-dev": {
                 "brain/monkey": "^2.6",
                 "mockery/mockery": "^1.6",
-                "php-stubs/woocommerce-stubs": "^9.0",
+                "php-stubs/woocommerce-stubs": "^9.0 || ^10.0",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^10",
                 "szepeviktor/phpstan-wordpress": "^1.3"
@@ -55,10 +55,10 @@
             ],
             "description": "Shared storefront engines for WPPoland WooCommerce plugins",
             "support": {
-                "source": "https://github.com/wppoland/storefront-kit/tree/v1.6.0",
+                "source": "https://github.com/wppoland/storefront-kit/tree/v1.6.2",
                 "issues": "https://github.com/wppoland/storefront-kit/issues"
             },
-            "time": "2026-06-14T13:02:27+00:00"
+            "time": "2026-07-28T13:26:58+00:00"
         }
     ],
     "packages-dev": [
