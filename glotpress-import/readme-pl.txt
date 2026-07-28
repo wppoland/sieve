@@ -12,7 +12,7 @@ Szybkie, dostępne filtrowanie fasetowe produktów dla WooCommerce: filtry AJAX,
 
 == Description ==
 
-Sieve daje kupującym szybki, nowoczesny sposób na znajdowanie produktów. Zaznaczają kilka pól, przeciągają zakres cen, wpisują słowo kluczowe, a siatka aktualizuje się natychmiast, bez ponownego ładowania strony. Powstał tak, aby działał bez wysiłku i pozostawał szybki nawet przy dużych katalogach — z dostępnymi widżetami, mobilną szufladą filtrów i sposobem renderowania zaprojektowanym pod Core Web Vitals: bez przeskoku układu przy zmianie wyników.
+Sieve daje kupującym szybki, nowoczesny sposób na znajdowanie produktów. Zaznaczają kilka pól, przeciągają zakres cen, wpisują słowo kluczowe, a siatka aktualizuje się natychmiast, bez ponownego ładowania strony. Powstał tak, aby działał bez wysiłku i pozostawał szybki nawet przy dużych katalogach, z dostępnymi widżetami, mobilną szufladą filtrów i sposobem renderowania zaprojektowanym pod Core Web Vitals: bez przeskoku układu przy zmianie wyników.
 
 Wszystko działa na wstępnie zbudowanym indeksie, więc filtrowanie pozostaje szybkie nawet przy tysiącach produktów, a liczniki obok każdej opcji aktualizują się na żywo, gdy kupujący zawężają wybór.
 
@@ -109,7 +109,7 @@ Użyj shortcode’u `[sieve]` lub bloku „Sieve Filter”. Oba renderują razem
 Użyj shortcode’u `[sieve_search]` lub bloku „Sieve Search”. Gdy kupujący pisze, lista rozwijana pokazuje pasujące produkty z miniaturami i cenami; jest w pełni dostępna z klawiatury i wraca do standardowego wyszukiwania produktów, gdy JavaScript jest niedostępny.
 
 = Is Sieve accessible? =
-Tak. Interfejs filtra jest zbudowany z myślą o obsłudze klawiatury i czytnikach ekranu — z oznaczonymi regionami, dostępnymi elementami sterującymi, uprzejmymi komunikatami o liczbie wyników i obsługą ograniczonego ruchu.
+Tak. Interfejs filtra jest zbudowany z myślą o obsłudze klawiatury i czytnikach ekranu, z oznaczonymi regionami, dostępnymi elementami sterującymi, uprzejmymi komunikatami o liczbie wyników i obsługą ograniczonego ruchu.
 
 = Does Sieve work on mobile? =
 Tak. Sieve zawiera mobilną szufladę filtrów z przyklejonym paskiem zastosowania, dzięki czemu kupujący mogą filtrować produkty bez walki z długim panelem bocznym na małych ekranach.

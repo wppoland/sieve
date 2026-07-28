@@ -12,7 +12,7 @@ Schnelle, barrierefreie facettierte Produktfilterung für WooCommerce: AJAX-Filt
 
 == Description ==
 
-Sieve bietet deinen Käufern eine schnelle, moderne Möglichkeit, Produkte zu finden. Sie kreuzen ein paar Kästchen an, ziehen eine Preisspanne, geben ein Stichwort ein, und das Raster aktualisiert sich sofort, ohne Neuladen der Seite. Es ist so gebaut, dass es sich mühelos anfühlt und bei großen Katalogen schnell bleibt – mit barrierefreien Widgets, einer mobilen Filterschublade und einem Rendering-Ansatz, der für Core Web Vitals entwickelt wurde: keine Layout-Verschiebung, wenn sich die Ergebnisse ändern.
+Sieve bietet deinen Käufern eine schnelle, moderne Möglichkeit, Produkte zu finden. Sie kreuzen ein paar Kästchen an, ziehen eine Preisspanne, geben ein Stichwort ein, und das Raster aktualisiert sich sofort, ohne Neuladen der Seite. Es ist so gebaut, dass es sich mühelos anfühlt und bei großen Katalogen schnell bleibt, mit barrierefreien Widgets, einer mobilen Filterschublade und einem Rendering-Ansatz, der für Core Web Vitals entwickelt wurde: keine Layout-Verschiebung, wenn sich die Ergebnisse ändern.
 
 Alles läuft gegen einen vorgefertigten Index, sodass die Filterung selbst bei Tausenden von Produkten schnell bleibt und die Anzahl neben jeder Option live aktualisiert wird, während die Käufer ihre Auswahl eingrenzen.
 
@@ -109,7 +109,7 @@ Verwende den Shortcode `[sieve]` oder den Block „Sieve Filter“. Beide render
 Verwende den Shortcode `[sieve_search]` oder den Block „Sieve Search“. Während die Käufer tippen, zeigt ein Dropdown passende Produkte mit Miniaturbildern und Preisen; es ist vollständig per Tastatur bedienbar und fällt auf die Standard-Produktsuche zurück, wenn JavaScript nicht verfügbar ist.
 
 = Is Sieve accessible? =
-Ja. Die Filter-Oberfläche ist für die Bedienung per Tastatur und für Screenreader gebaut – mit beschrifteten Regionen, barrierefreien Bedienelementen, höflichen Ansagen der Ergebniszahl und Unterstützung für reduzierte Bewegung.
+Ja. Die Filter-Oberfläche ist für die Bedienung per Tastatur und für Screenreader gebaut, mit beschrifteten Regionen, barrierefreien Bedienelementen, höflichen Ansagen der Ergebniszahl und Unterstützung für reduzierte Bewegung.
 
 = Does Sieve work on mobile? =
 Ja. Sieve enthält eine mobile Filterschublade mit angehefteter Anwenden-Leiste, sodass Käufer Produkte filtern können, ohne auf kleinen Bildschirmen mit einer langen Seitenleiste kämpfen zu müssen.
@@ -180,10 +180,10 @@ Sieve enthält polnische, deutsche und spanische Übersetzungen für die Plugin-
 * Internationalisierung: Die JavaScript-Oberflächentexte von Adminbereich und Frontend sind jetzt in der Übersetzungsvorlage enthalten, sodass sich das gesamte Plugin (nicht nur die PHP-Seite) vollständig übersetzen lässt.
 
 = 0.8.0 =
-* Neu: Darstellungseinstellungen. Wähle ein Stil-Preset (Standard, Minimal, Mit Rahmen, Weich, Ohne Stil) und passe im Adminbereich die Akzent-, Rahmen-, gedämpfte-Text- und Hintergrundfarben an – mit Live-Vorschau und Kontrast-Hinweis. Gilt sowohl für den Filter als auch für die vorausschauende Suche. Null zusätzliche Anfragen, keine Layout-Verschiebung, vollständig abwärtskompatibel.
+* Neu: Darstellungseinstellungen. Wähle ein Stil-Preset (Standard, Minimal, Mit Rahmen, Weich, Ohne Stil) und passe im Adminbereich die Akzent-, Rahmen-, gedämpfte-Text- und Hintergrundfarben an, mit Live-Vorschau und Kontrast-Hinweis. Gilt sowohl für den Filter als auch für die vorausschauende Suche. Null zusätzliche Anfragen, keine Layout-Verschiebung, vollständig abwärtskompatibel.
 
 = 0.7.0 =
-* Die Suche verhält sich jetzt wie ein Filter: Tippe, um das Live-Raster direkt einzugrenzen – mit vorausschauenden, diakritik- und tippfehlertoleranten Vorschlägen, kombinierbar mit jeder Facette und sicher für URL und Zurück-Button. Abhängige Facettenzahlen spiegeln jetzt auch die aktive Suche wider.
+* Die Suche verhält sich jetzt wie ein Filter: Tippe, um das Live-Raster direkt einzugrenzen, mit vorausschauenden, diakritik- und tippfehlertoleranten Vorschlägen, kombinierbar mit jeder Facette und sicher für URL und Zurück-Button. Abhängige Facettenzahlen spiegeln jetzt auch die aktive Suche wider.
 
 = 0.6.0 =
 * Die vorausschauende Suche ist jetzt diakritik-unabhängig und tippfehlertolerant. Sie gleicht Produkttitel und SKUs ab und ignoriert dabei diakritische Unterschiede (so findet „lozko“ „łóżko“), toleriert kleine Tippfehler, und passende Kategorien werden auf dieselbe Weise gefunden. Diese Version löst eine einmalige Neuerstellung des Suchindex aus.
