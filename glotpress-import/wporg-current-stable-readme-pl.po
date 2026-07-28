@@ -1,5 +1,5 @@
-# Translation of Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable Readme (latest release) in Polish
-# This file is distributed under the same license as the Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable Readme (latest release) package.
+# Translation of Plugins - Sieve, Faceted Filter for WooCommerce - Stable Readme (latest release) in Polish
+# This file is distributed under the same license as the Plugins - Sieve, Faceted Filter for WooCommerce - Stable Readme (latest release) package.
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2026-07-05 10:48:01+0000\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
 "X-Generator: GlotPress/4.0.3\n"
 "Language: pl\n"
-"Project-Id-Version: Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable Readme (latest release)\n"
+"Project-Id-Version: Plugins - Sieve, Faceted Filter for WooCommerce - Stable Readme (latest release)\n"
 
 #. Short description.
 #, gp-priority: high
@@ -19,7 +19,7 @@ msgstr "Szybkie, dostępne fasetowe filtrowanie produktów dla WooCommerce: filt
 #. Plugin name.
 #, gp-priority: high
 msgid "Sieve - Faceted Filter for WooCommerce"
-msgstr "Sieve – fasetowy filtr dla WooCommerce"
+msgstr "Sieve, fasetowy filtr dla WooCommerce"
 
 #. Found in faq paragraph.
 msgid "Yes. This plugin is compatible with WordPress Multisite. Network activate it or activate it on individual sites; each site keeps its own settings and data."
@@ -51,23 +51,23 @@ msgstr "Sieve może filtrować produkty WooCommerce według kategorii, tagów, a
 
 #. Found in faq list item.
 msgid "<strong>Discussions and questions</strong> - https://github.com/wppoland/sieve/discussions"
-msgstr "<strong>Dyskusje i pytania</strong> – https://github.com/wppoland/sieve/discussions"
+msgstr "<strong>Dyskusje i pytania</strong>, https://github.com/wppoland/sieve/discussions"
 
 #. Found in faq list item.
 msgid "<strong>Bug reports and feature requests</strong> - https://github.com/wppoland/sieve/issues"
-msgstr "<strong>Zgłoszenia błędów i propozycje funkcji</strong> – https://github.com/wppoland/sieve/issues"
+msgstr "<strong>Zgłoszenia błędów i propozycje funkcji</strong>, https://github.com/wppoland/sieve/issues"
 
 #. Found in faq list item.
 msgid "<strong>Source code</strong> - https://github.com/wppoland/sieve"
-msgstr "<strong>Kod źródłowy</strong> – https://github.com/wppoland/sieve"
+msgstr "<strong>Kod źródłowy</strong>, https://github.com/wppoland/sieve"
 
 #. Found in faq list item.
 msgid "<strong>Plugin page</strong> - https://plogins.com/sieve/"
-msgstr "<strong>Strona wtyczki</strong> – https://plogins.com/sieve/"
+msgstr "<strong>Strona wtyczki</strong>, https://plogins.com/sieve/"
 
 #. Found in faq list item.
 msgid "<strong>Documentation</strong> - https://plogins.com/sieve/docs/"
-msgstr "<strong>Dokumentacja</strong> – https://plogins.com/sieve/docs/"
+msgstr "<strong>Dokumentacja</strong>, https://plogins.com/sieve/docs/"
 
 #. Found in faq header.
 msgid "Does Sieve work on mobile?"
@@ -111,7 +111,7 @@ msgstr "Suwaki zakresu, wyszukiwanie słów kluczowych, sortowanie, paginacja i 
 
 #. Found in description list item.
 msgid "Autocomplete (searchable options) and an A-Z index"
-msgstr "Autouzupełnianie (przeszukiwalne opcje) i indeks A–Z"
+msgstr "Autouzupełnianie (przeszukiwalne opcje) i indeks A, Z"
 
 #. Found in description list item.
 msgid "Color and image swatches, hierarchical (tree) categories"
@@ -311,7 +311,7 @@ msgstr "Nowość: predykcyjne wyszukiwanie produktów. Shortcode <code>[sieve_se
 #. Found in changelog list item.
 #, gp-priority: low
 msgid "New facet types: Autocomplete (a search box that filters a facet's own options as you type, for facets with many values) and A-Z index (an alphabetical bar that filters options by first letter). Both filter client-side with no extra request, and degrade to a plain option list without JavaScript."
-msgstr "Nowe typy faset: Autouzupełnianie (pole wyszukiwania filtrujące własne opcje fasety podczas pisania, dla faset z wieloma wartościami) i Indeks A–Z (alfabetyczny pasek filtrujący opcje według pierwszej litery). Oba filtrują po stronie klienta bez dodatkowego żądania i przechodzą na zwykłą listę opcji bez JavaScript."
+msgstr "Nowe typy faset: Autouzupełnianie (pole wyszukiwania filtrujące własne opcje fasety podczas pisania, dla faset z wieloma wartościami) i Indeks A, Z (alfabetyczny pasek filtrujący opcje według pierwszej litery). Oba filtrują po stronie klienta bez dodatkowego żądania i przechodzą na zwykłą listę opcji bez JavaScript."
 
 #. Found in changelog list item.
 #, gp-priority: low

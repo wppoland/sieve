@@ -268,7 +268,7 @@ final class FacetRenderer
                 . '<div class="sieve-range__inputs">'
                 . '<label class="screen-reader-text" for="sieve-%3$s-min">%8$s</label>'
                 . '<input type="number" id="sieve-%3$s-min" class="sieve-range__min" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%4$s">'
-                . '<span class="sieve-range__sep" aria-hidden="true">&ndash;</span>'
+                . '<span class="sieve-range__sep" aria-hidden="true">, </span>'
                 . '<label class="screen-reader-text" for="sieve-%3$s-max">%9$s</label>'
                 . '<input type="number" id="sieve-%3$s-max" class="sieve-range__max" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%5$s">'
                 . '</div>'

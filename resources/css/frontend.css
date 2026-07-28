@@ -62,7 +62,7 @@
 }
 
 /* Collapsible facet header: a full-width button wrapping the title with a
-   rotating chevron. Progressive enhancement — without JS the body stays open. */
+   rotating chevron. Progressive enhancement, without JS the body stays open. */
 .sieve-facet__toggle {
 	display: flex;
 	align-items: center;

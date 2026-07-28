@@ -490,9 +490,9 @@ msgstr ""
 "lange Optionslisten geeignet."
 
 #: build/admin.js:1
-msgid "An A–Z bar that filters options by first letter. Good for brand lists."
+msgid "An A, Z bar that filters options by first letter. Good for brand lists."
 msgstr ""
-"Eine A–Z-Leiste, die Optionen nach Anfangsbuchstaben filtert. Gut für "
+"Eine A, Z-Leiste, die Optionen nach Anfangsbuchstaben filtert. Gut für "
 "Markenlisten."
 
 #: build/admin.js:1
@@ -596,12 +596,12 @@ msgstr "Entfernen"
 #: build/admin.js:1
 msgid ""
 "Sieve keeps a pre-built index so filtered queries stay fast on large "
-"catalogs. Rebuild it after a bulk import or if counts look out of date — new "
+"catalogs. Rebuild it after a bulk import or if counts look out of date, new "
 "and edited products are indexed automatically."
 msgstr ""
 "Sieve verwaltet einen vorgefertigten Index, sodass gefilterte Abfragen in "
 "großen Katalogen schnell bleiben. Erstelle es nach einem Massenimport neu "
-"oder wenn die Zählungen veraltet erscheinen – neue und bearbeitete Produkte "
+"oder wenn die Zählungen veraltet erscheinen, neue und bearbeitete Produkte "
 "werden automatisch indiziert."
 
 #: build/admin.js:1
