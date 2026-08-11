@@ -72,6 +72,8 @@ More free WooCommerce plugins from WPPoland:
 
 Browse the full catalogue at https://plogins.com/ .
 
+Reporting a security issue: email hello@wppoland.com, and under our [coordinated disclosure policy](https://wppoland.com/en/security-policy/) we confirm within two business days, assess within five, and patch a critical issue within seven days of confirming it.
+
 == Sieve PRO ==
 
 The free edition is the full filtering MVP, with no limits. **Sieve PRO** is built for large or conversion-focused catalogs and adds:
