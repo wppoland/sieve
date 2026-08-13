@@ -51,7 +51,7 @@ final class FacetTypeRegistry
             FacetType::RangeSlider => __('A min/max range. Used for price and other numeric values.', 'sieve'),
             FacetType::Search => __('A live search box that narrows the product grid as shoppers type.', 'sieve'),
             FacetType::Sort, FacetType::Pager, FacetType::Reset, FacetType::ActiveChips => '',
-            FacetType::StarRating => __('Visual star rows for average rating. Requires Sieve Pro for storefront rendering.', 'sieve'),
+            FacetType::StarRating => __('Filter by average rating. Renders as selectable options.', 'sieve'),
         };
     }
 }
