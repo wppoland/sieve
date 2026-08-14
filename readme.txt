@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.15
+Stable tag: 1.0.16
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,10 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
 
 == Changelog ==
+
+= 1.0.16 =
+* The Price facet now always shows as a price slider on the shop. If its type had been switched to checkboxes, radio, dropdown, swatches, hierarchy, autocomplete or A-Z index, the whole facet quietly disappeared from the storefront. The same applies to the search-box facet.
+* The range slider is now offered only for the Price source. On any other source it rendered a 0 to 0 slider and shoppers who used it were shown no products at all; those facets now show their normal option list.
 
 = 1.0.15 =
 * Corrected the star-rating facet description in the admin. It said the facet "requires Sieve Pro for storefront rendering", which is not true: the facet works and renders as selectable options in this plugin. What the paid edition adds is the visual star rows. The old wording read as though a facet you can select here does nothing until you pay.

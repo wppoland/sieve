@@ -103,7 +103,7 @@ const TYPE_HELP: Record< string, string > = {
 		'sieve'
 	),
 	range_slider: __(
-		'A min/max range. Used for price and other numeric values.',
+		'A min/max range for the price source. Other sources have no numeric values to slide over.',
 		'sieve'
 	),
 	search: __(
@@ -114,6 +114,28 @@ const TYPE_HELP: Record< string, string > = {
 
 function slugFromSource( source: string ): string {
 	return source.startsWith( 'tax:' ) ? source.slice( 4 ) : source;
+}
+
+// The Type list used to offer all nine types for every source, but the render
+// pipeline dispatches on the source: price and search facets are handed an empty
+// option list, so a Price facet set to Checkboxes rendered as nothing at all on
+// the shop, and a range slider on a taxonomy or on rating came out 0 to 0 and
+// dropped the shopper on an empty grid. Only offer what the source can render.
+function typesForSource(
+	source: string,
+	options: FacetTypeOption[]
+): FacetTypeOption[] {
+	const allowed = options.filter( ( type ) => {
+		if ( source === 'price' ) {
+			return type.value === 'range_slider';
+		}
+		if ( source === 'search' ) {
+			return type.value === 'search';
+		}
+		return type.value !== 'range_slider';
+	} );
+
+	return allowed.length ? allowed : options;
 }
 
 function App() {
@@ -508,7 +530,10 @@ function App() {
 								<SelectControl
 									label={ __( 'Type', 'sieve' ) }
 									value={ facet.type }
-									options={ typeOptions }
+									options={ typesForSource(
+										facet.source,
+										typeOptions
+									) }
 									help={ typeHelp[ facet.type ] }
 									onChange={ ( type: string ) =>
 										updateFacet( index, { type } )
