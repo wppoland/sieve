@@ -2,20 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 0.9.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sieve\n"
-"POT-Creation-Date: 2026-06-14T10:43:11+00:00\n"
-"PO-Revision-Date: 2026-06-15 00:00+0000\n"
-"Last-Translator: motylanogha <szatkowski.mariusz@gmail.com>\n"
-"Language-Team: Polish <pl@li.org>\n"
-"Language: pl_PL\n"
+"PO-Revision-Date: 2026-08-14 14:01:49+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
-"|| n%100>14) ? 1 : 2);\n"
-"X-Domain: sieve\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
+"X-Generator: GlotPress/4.0.3\n"
+"Language: pl\n"
+"Project-Id-Version: Plugins - Sieve &#8211; Faceted Filter for WooCommerce - Stable (latest release)\n"
 
 #. Plugin Name of the plugin
 #: sieve.php
@@ -75,7 +69,7 @@ msgstr "Przyciski opcji"
 
 #: src/Enum/FacetType.php:58 build/admin.js:1
 msgid "Dropdown"
-msgstr "Lista rozwijana"
+msgstr "Lista wyboru"
 
 #: src/Enum/FacetType.php:59 build/admin.js:1
 msgid "Swatches (color / image)"
@@ -458,8 +452,7 @@ msgstr "Akcesoria"
 
 #: build/admin.js:1
 msgid "Multiple choices can be selected at once. Best for most attributes."
-msgstr ""
-"Można zaznaczyć wiele opcji jednocześnie. Najlepsze dla większości atrybutów."
+msgstr "Można zaznaczyć wiele opcji jednocześnie. Najlepsze dla większości atrybutów."
 
 #: build/admin.js:1
 msgid "Only one choice at a time. Good for mutually exclusive options."
@@ -475,8 +468,7 @@ msgstr "Kwadraty z kolorem lub obrazem. Idealne dla atrybutów koloru i wzoru."
 
 #: build/admin.js:1
 msgid "A nested tree. Best for categories with parent/child levels."
-msgstr ""
-"Zagnieżdżone drzewo. Najlepsze dla kategorii z poziomami nadrzędny/podrzędny."
+msgstr "Zagnieżdżone drzewo. Najlepsze dla kategorii z poziomami nadrzędny/podrzędny."
 
 #: build/admin.js:1
 msgid ""
@@ -487,8 +479,7 @@ msgstr ""
 
 #: build/admin.js:1
 msgid "An A, Z bar that filters options by first letter. Good for brand lists."
-msgstr ""
-"Pasek A-Z filtrujący opcje według pierwszej litery. Dobry dla list marek."
+msgstr "Pasek A–Z, który filtruje opcje według pierwszej litery. Przydaje się przy listach marek."
 
 #: build/admin.js:1
 msgid "A min/max range. Used for price and other numeric values."
@@ -496,8 +487,7 @@ msgstr "Zakres min/maks. Używany dla ceny i innych wartości liczbowych."
 
 #: build/admin.js:1
 msgid "A live search box that narrows the product grid as shoppers type."
-msgstr ""
-"Pole wyszukiwania na żywo, które zawęża siatkę produktów w miarę pisania."
+msgstr "Pole wyszukiwania na żywo, które zawęża siatkę produktów w miarę pisania."
 
 #: build/admin.js:1
 msgid "Loading Sieve…"
@@ -725,21 +715,21 @@ msgstr "od %1$s%2$d/rok"
 
 #: src/Admin/ProUpsell.php:106
 msgid "Permission denied."
-msgstr "Brak uprawnień."
+msgstr "Odmowa dostępu."
 
 #. translators: %s: PRO edition name
 #: src/Admin/ProUpsell.php:132
 #, php-format
 msgid "Do more with %s"
-msgstr "Zrób więcej dzięki %s"
+msgstr "Zrób więcej z %s"
 
 #: src/Admin/ProUpsell.php:137
 msgid "Upgrade to PRO"
-msgstr "Przejdź na PRO"
+msgstr "Ulepsz do PRO"
 
 #: src/Admin/ProUpsell.php:139
 msgid "Dismiss this notice"
-msgstr "Odrzuć to powiadomienie"
+msgstr "Odrzuć powiadomienie"
 
 #. translators: %s: PRO edition name
 #: src/Admin/ProUpsell.php:157
