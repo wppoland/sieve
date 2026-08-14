@@ -41,7 +41,33 @@ final class Facet
         $source = isset($data['source']) ? self::sanitizeSource((string) $data['source']) : '';
         $type = FacetType::tryFrom(isset($data['type']) ? (string) $data['type'] : '') ?? FacetType::Checkbox;
 
-        return new self($slug, $label, $type, $source);
+        return new self($slug, $label, self::typeForSource($type, $source), $source);
+    }
+
+    /**
+     * Pins the presentation type to one the source can actually render.
+     *
+     * The builder used to offer all nine types for every source, but the render
+     * pipeline dispatches on the source: a price facet is always handed an empty
+     * option list (prices live in the numeric column), and so is a search facet.
+     * A merchant who set Price to Checkboxes saved happily and the shopper saw no
+     * price facet at all, because every option widget bails out on empty counts.
+     * The other way round, a range slider on a taxonomy or on rating came out
+     * min 0 max 0 and whatever the shopper picked was matched as a literal value,
+     * so the grid went empty. The builder no longer offers those pairings, and
+     * anything already stored is pinned here so live installs heal on read.
+     */
+    private static function typeForSource(FacetType $type, string $source): FacetType
+    {
+        if ('price' === $source) {
+            return FacetType::RangeSlider;
+        }
+
+        if ('search' === $source) {
+            return FacetType::Search;
+        }
+
+        return FacetType::RangeSlider === $type ? FacetType::Checkbox : $type;
     }
 
     /**

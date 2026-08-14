@@ -48,7 +48,11 @@ final class FacetTypeRegistry
             FacetType::Hierarchy => __('Nested categories shown as an expandable tree.', 'sieve'),
             FacetType::Autocomplete => __('A search box that filters the facet options as the shopper types.', 'sieve'),
             FacetType::AzIndex => __('An A-Z bar that filters options by first letter.', 'sieve'),
-            FacetType::RangeSlider => __('A min/max range. Used for price and other numeric values.', 'sieve'),
+            // Only the price source is stored as a number, so only price can be
+            // sliced with a slider. The old wording promised "other numeric
+            // values" and a slider on, say, average rating rendered 0 to 0 and
+            // sent the shopper to an empty grid.
+            FacetType::RangeSlider => __('A min/max range for the price source. Other sources have no numeric values to slide over.', 'sieve'),
             FacetType::Search => __('A live search box that narrows the product grid as shoppers type.', 'sieve'),
             FacetType::Sort, FacetType::Pager, FacetType::Reset, FacetType::ActiveChips => '',
             FacetType::StarRating => __('Filter by average rating. Renders as selectable options.', 'sieve'),
