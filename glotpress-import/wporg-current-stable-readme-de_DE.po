@@ -78,10 +78,10 @@ msgstr ""
 #. Found in description paragraph.
 msgid ""
 "Everything in the free edition stays free and open. Sieve PRO starts at 29 "
-"EUR per year (PLN shown at checkout)."
+"EUR per year, billed in EUR."
 msgstr ""
 "Alles in der kostenlosen Edition bleibt kostenlos und offen. Sieve PRO "
-"beginnt bei 29 EUR pro Jahr (PLN wird an der Kasse angezeigt)."
+"beginnt bei 29 EUR pro Jahr, Abrechnung in EUR."
 
 #. Found in description paragraph.
 msgid ""

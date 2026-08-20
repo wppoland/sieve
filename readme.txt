@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.16
+Stable tag: 1.0.17
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,7 +84,7 @@ The free edition is the full filtering MVP, with no limits. **Sieve PRO** is bui
 * **Star rating facet** - visual star rows for the average-rating filter
 * **Search integrations** - route predictive and in-grid search through SearchWP or Algolia
 
-Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year (PLN shown at checkout).
+Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year, billed in EUR.
 
 Compare editions and pricing: [plogins.com/sieve-pro/pricing/](https://plogins.com/sieve-pro/pricing/)
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
 
 == Changelog ==
+
+= 1.0.17 =
+* Corrected the PRO pricing line. It said the price is shown in PLN at checkout, which is not the case: the price is 29 EUR per year and the checkout charges in EUR.
 
 = 1.0.16 =
 * The Price facet now always shows as a price slider on the shop. If its type had been switched to checkboxes, radio, dropdown, swatches, hierarchy, autocomplete or A-Z index, the whole facet quietly disappeared from the storefront. The same applies to the search-box facet.
