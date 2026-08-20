@@ -1,6 +1,6 @@
 {
   "name": "@wppoland/sieve",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Sieve - fast, accessible faceted filtering for WooCommerce and WordPress",
   "private": true,
   "scripts": {
