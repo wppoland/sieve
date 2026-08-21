@@ -60,7 +60,7 @@ Sieve PRO adds advanced control and integrations for growing stores:
 * Performance dashboard: index size, catalog coverage and filter-speed benchmarks
 * Search integrations: SearchWP and Algolia, with native fallback
 
-Documentation: https://plogins.com/sieve/docs/
+Documentation: [plogins.com/sieve/docs/](https://plogins.com/sieve/docs/)
 
 = You may also like these plugins =
 
@@ -70,7 +70,7 @@ More free WooCommerce plugins from WPPoland:
 * [Plogins Waitlist](https://wordpress.org/plugins/plogins-waitlist/) - back-in-stock waitlist that emails shoppers the moment a product returns.
 * [Polski for WooCommerce](https://wordpress.org/plugins/polski/) - Polish-market compliance: GPSR, Omnibus, GDPR, invoices and storefront modules.
 
-Browse the full catalogue at https://plogins.com/ .
+Browse the full catalogue at [plogins.com/](https://plogins.com/) .
 
 Reporting a security issue: email hello@wppoland.com, and under our [coordinated disclosure policy](https://wppoland.com/en/security-policy/) we confirm within two business days, assess within five, and patch a critical issue within seven days of confirming it.
 
@@ -147,7 +147,7 @@ The full, human-readable source for the compiled assets is included in this plug
 1. `npm install`
 2. `npm run build`
 
-This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at https://github.com/wppoland/sieve.
+This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at [github.com/wppoland/sieve](https://github.com/wppoland/sieve).
 
 == Translations ==
 
