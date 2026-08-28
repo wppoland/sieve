@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.17
+Stable tag: 1.0.18
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
 
 == Changelog ==
+
+= 1.0.18 =
+* Fixed the PRO promo on the settings screen quoting a price in PLN. PRO is priced and charged in EUR, so an admin on a Polish site was shown a zloty amount and then billed in euro, and the zloty figure was a fixed conversion that drifted from the real charge as the rate moved. The promo now shows the euro price that is actually taken.
 
 = 1.0.17 =
 * Corrected the PRO pricing line. It said the price is shown in PLN at checkout, which is not the case: the price is 29 EUR per year and the checkout charges in EUR.

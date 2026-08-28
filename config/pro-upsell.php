@@ -15,7 +15,6 @@ return [
     'sellable'   => true,
     'price_from' => 29,
     'currency'   => 'EUR',
-    'price_pln'  => 129,
     'lead'       => [
         'en' => 'The modules below ship in the current PRO release.',
         'pl' => 'Poniższe moduły są dostępne w bieżącym wydaniu PRO.',
