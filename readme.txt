@@ -151,7 +151,7 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 
 == Translations ==
 
-Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
+Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
 
