@@ -6,10 +6,9 @@ declare(strict_types=1);
  * Plugin Name:       Sieve - Faceted Filter for WooCommerce
  * Plugin URI:        https://plogins.com/sieve/
  * Description:       Fast, accessible faceted filtering for WooCommerce and WordPress. Beautiful facet widgets, AJAX filtering with no page reload, a mobile filter drawer, and Core Web Vitals by design.
- * Version:           1.0.21
+ * Version:           1.0.22
  * Requires at least: 6.4
  * Requires PHP:      8.1
- * Tested up to:      7.1
  * Author:            WPPoland.com
  * Author URI:        https://wppoland.com
  * License:           GPL-2.0-or-later
@@ -26,7 +25,7 @@ namespace Sieve;
 
 defined('ABSPATH') || exit;
 
-const VERSION     = '1.0.21';
+const VERSION     = '1.0.22';
 const PLUGIN_FILE = __FILE__;
 const PLUGIN_DIR = __DIR__;
 const MIN_PHP_VERSION = '8.1.0';
