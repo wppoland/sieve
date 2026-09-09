@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 1.0.22\n"
+"Project-Id-Version: Sieve - Faceted Filter for WooCommerce 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sieve\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-09T15:07:02+00:00\n"
+"POT-Creation-Date: 2026-09-09T15:30:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sieve\n"
@@ -83,6 +83,26 @@ msgstr ""
 #: src/Admin/ProUpsell.php:153
 #, php-format
 msgid "What %s adds"
+msgstr ""
+
+#: src/Admin/SwatchTermFields.php:56
+#: src/Admin/SwatchTermFields.php:84
+msgid "Swatch colour"
+msgstr ""
+
+#: src/Admin/SwatchTermFields.php:57
+#: src/Admin/SwatchTermFields.php:86
+msgid "Hex colour used by colour swatch facets, for example #336699. Leave empty to guess it from the term name."
+msgstr ""
+
+#: src/Admin/SwatchTermFields.php:64
+#: src/Admin/SwatchTermFields.php:93
+msgid "Swatch image"
+msgstr ""
+
+#: src/Admin/SwatchTermFields.php:65
+#: src/Admin/SwatchTermFields.php:95
+msgid "Media library attachment ID, or a full image URL. Used by image swatch facets and shown instead of the colour."
 msgstr ""
 
 #: src/Elementor/FilterWidget.php:42
