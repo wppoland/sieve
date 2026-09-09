@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.22
+Stable tag: 1.0.23
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.0.23 =
+* Removed a defaults file that declared five settings the plugin never read: filter mode, mobile drawer, result counts, dependent counts and reserved results height. Nothing loaded the file and nothing stored those values, so no setting of yours changes. They describe how Sieve already works rather than anything you can switch, and leaving them in the source implied a settings screen that does not exist.
 
 = 1.0.22 =
 * "Tested up to" was declared in the plugin header as well as in this readme. WordPress.org reads the readme; declaring it in two places is how a listing ends up advertising a compatibility claim nobody wrote. The header line is gone, the readme is unchanged.
