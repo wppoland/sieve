@@ -5,6 +5,7 @@ declare(strict_types=1);
 defined('ABSPATH') || exit;
 
 use Sieve\Container;
+use Sieve\Admin\SwatchTermFields;
 use Sieve\Hook\AdminHooks;
 use Sieve\Hook\BlockHooks;
 use Sieve\Hook\FrontendHooks;
@@ -138,6 +139,7 @@ return static function (Container $c): void {
 
     // Hook subscribers.
     $c->singleton(AdminHooks::class, static fn (): AdminHooks => new AdminHooks());
+    $c->singleton(SwatchTermFields::class, static fn (): SwatchTermFields => new SwatchTermFields());
     $c->singleton(
         FrontendHooks::class,
         static fn (): FrontendHooks => new FrontendHooks(
