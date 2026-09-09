@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.23
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.0 =
+* Added: colour and image fields on product attribute terms. Swatch facets read both values off the term and no screen could set either, so an image swatch could never show an image and a colour swatch only ever worked when the term name happened to be a colour the plugin could guess. The colour field accepts a plain hex value, the image field an attachment ID or an image URL.
 
 = 1.0.23 =
 * Removed a defaults file that declared five settings the plugin never read: filter mode, mobile drawer, result counts, dependent counts and reserved results height. Nothing loaded the file and nothing stored those values, so no setting of yours changes. They describe how Sieve already works rather than anything you can switch, and leaving them in the source implied a settings screen that does not exist.
