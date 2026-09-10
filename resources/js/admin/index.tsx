@@ -20,6 +20,12 @@ import {
 	SelectControl,
 	Spinner,
 	TextControl,
+	// NumberControl is still experimental in @wordpress/components as of
+	// WP 6.8, and there is no stable equivalent: TextControl type="number"
+	// loses the spinner and the min/max clamping these two fields rely on.
+	// If a future WordPress drops the export, the two usages below are the
+	// whole blast radius.
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
@@ -143,9 +149,8 @@ function App() {
 	const [ sources, setSources ] = useState< Source[] >( [] );
 	const [ typeOptions, setTypeOptions ] =
 		useState< FacetTypeOption[] >( TYPE_OPTIONS );
-	const [ typeHelp, setTypeHelp ] = useState< Record< string, string > >(
-		TYPE_HELP
-	);
+	const [ typeHelp, setTypeHelp ] =
+		useState< Record< string, string > >( TYPE_HELP );
 	const [ indexedRows, setIndexedRows ] = useState< number >( 0 );
 	const [ newSource, setNewSource ] = useState< string >( '' );
 	const [ saving, setSaving ] = useState( false );
