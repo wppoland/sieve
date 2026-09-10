@@ -13,6 +13,7 @@
     "env:stop": "wp-env stop",
     "env:clean": "wp-env clean all",
     "capture:wporg": "node scripts/capture-wporg-screenshots.mjs",
+    "check:blocks": "npm run build:blocks && node tests/block-smoke.mjs",
     "check:wporg": "bash scripts/plugin-check.sh",
     "i18n:pot": "npm run build && wp i18n make-pot . languages/sieve.pot --exclude=node_modules,vendor,tests --domain=sieve"
   },

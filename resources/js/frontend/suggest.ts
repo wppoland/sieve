@@ -87,12 +87,12 @@ function setup( widget: HTMLElement ): void {
 	const results = widget.querySelector< HTMLElement >(
 		'[data-sieve-search-results]'
 	);
-	const status = widget.querySelector< HTMLElement >(
-		'[data-sieve-search-status]'
-	);
 	if ( ! input || ! results || ! data ) {
 		return;
 	}
+	const status = widget.querySelector< HTMLElement >(
+		'[data-sieve-search-status]'
+	);
 
 	const announce = ( message: string ): void => {
 		if ( status ) {
