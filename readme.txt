@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.2 =
+* Fixed: deleting the plugin left everything behind. Sieve had no uninstall routine at all, so its facet index table, three options and the per-user "dismiss" flag from the PRO notice stayed in the database permanently. Uninstall now removes all of them, on every site of a multisite network. The index is derived from your catalogue and is rebuilt on reinstall, so nothing you typed is lost.
 
 = 1.1.1 =
 * Housekeeping only, no change to what the plugin does. The JavaScript lint gate had been failing on 32 findings for long enough that nobody read it, so it caught nothing; it is green again. The two block editor components are now named components rather than inline methods, which is what the React rules were objecting to, and the built blocks are checked on every build to confirm they still register.
