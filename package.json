@@ -27,7 +27,7 @@
     "@wordpress/element": "^8.0.1",
     "@wordpress/env": "^11.8.1",
     "@wordpress/i18n": "^6.21.1",
-    "@wordpress/scripts": "^32.4.1",
+    "@wordpress/scripts": "^35.0.0",
     "react": "^18.3",
     "react-dom": "^18.3",
     "typescript": "^5.6",
@@ -42,6 +42,7 @@
     "minimatch": "^10.2.5",
     "serialize-javascript": "^7.0.5",
     "uuid": "^14.0.0",
-    "webpack-dev-server": "^5.2.5"
+    "webpack-dev-server": "^5.2.5",
+    "qs": ">=6.16.0"
   }
 }
