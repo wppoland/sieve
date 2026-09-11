@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.4 =
+* Changed: the PRO feature cards printed an arrow glyph in menu paths where the rest of the plugin and the documentation use a plain ">". Same navigation, one character that renders everywhere.
 
 = 1.1.3 =
 * Fixed: the predictive search box never showed suggestions. The script that powers the typeahead was not being built, so the browser asked for a file that was not in the package and got nothing. Typing in the `[sieve_search]` box, the Sieve Search block or the Elementor widget produced no dropdown, no thumbnails and no prices; it only worked as a plain search form on Enter. The script ships again, and the build now fails if any enqueued file is missing from the package.
