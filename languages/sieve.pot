@@ -114,7 +114,7 @@ msgid "Product filter"
 msgstr ""
 
 #: src/Elementor/FilterWidget.php:87
-msgid "This widget renders the full Sieve faceted filter with its results grid. Configure facets and appearance under WooCommerce → Sieve."
+msgid "This widget renders the full Sieve faceted filter with its results grid. Configure facets and appearance under WooCommerce > Sieve."
 msgstr ""
 
 #: src/Elementor/SearchWidget.php:41
