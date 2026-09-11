@@ -479,7 +479,7 @@ msgstr ""
 
 #: build/admin.js:1
 msgid "An A, Z bar that filters options by first letter. Good for brand lists."
-msgstr "Pasek A–Z, który filtruje opcje według pierwszej litery. Przydaje się przy listach marek."
+msgstr "Pasek A-Z, który filtruje opcje według pierwszej litery. Przydaje się przy listach marek."
 
 #: build/admin.js:1
 msgid "A min/max range. Used for price and other numeric values."
