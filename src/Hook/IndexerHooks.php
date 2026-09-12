@@ -18,6 +18,9 @@ use const Sieve\VERSION;
 final class IndexerHooks implements HasHooks
 {
     private const LOCK = 'sieve_indexing_lock';
+    private const CURSOR = 'sieve_index_cursor';
+
+    public const BACKFILL_HOOK = 'sieve_index_backfill';
 
     public function __construct(private readonly ProductIndexer $indexer)
     {
@@ -30,6 +33,7 @@ final class IndexerHooks implements HasHooks
         add_action('before_delete_post', [$this, 'onDelete']);
         add_action('wp_trash_post', [$this, 'onDelete']);
         add_action('admin_init', [$this, 'ensureInitialIndex']);
+        add_action(self::BACKFILL_HOOK, [$this, 'runBackfill']);
     }
 
     /**
@@ -39,6 +43,10 @@ final class IndexerHooks implements HasHooks
      * the installed VERSION is newer (so upgrading to a release that adds new row
      * types, e.g. the 0.6.0 '_search' tokens, rebuilds once) and only once
      * products exist.
+     *
+     * This only schedules the work. Indexing the whole catalog inside admin_init
+     * made every admin page load pay for it and timed the request out on a large
+     * catalog.
      */
     public function ensureInitialIndex(): void
     {
@@ -53,19 +61,54 @@ final class IndexerHooks implements HasHooks
             return;
         }
 
-        // A full indexAll() truncates and rebuilds; guard against a concurrent
-        // admin_init request doing the same at the same moment (which would race
-        // on the TRUNCATE). The lock auto-expires so a fatal mid-build cannot
-        // wedge the backfill permanently.
+        if (wp_next_scheduled(self::BACKFILL_HOOK)) {
+            return;
+        }
+
+        wp_schedule_single_event(time(), self::BACKFILL_HOOK);
+    }
+
+    /**
+     * Index one batch and hand the rest to the next cron tick. The cursor option
+     * holds the highest product ID indexed so far, so a run interrupted by a
+     * timeout or a fatal resumes where it stopped instead of starting over.
+     *
+     * ponytail: one batch per cron tick is the deliberate ceiling. It keeps each
+     * request small and needs no dependency; the cost is that a huge catalog
+     * takes many ticks to finish. Upgrade path if that ever bites: enqueue the
+     * batches with Action Scheduler (as_enqueue_async_action), which runs them
+     * back to back in its own queue runner.
+     */
+    public function runBackfill(): void
+    {
+        // Guard against two cron workers walking the catalog at once (they would
+        // race on the TRUNCATE and on the cursor). The lock auto-expires so a
+        // fatal mid-batch cannot wedge the backfill permanently.
         if (get_transient(self::LOCK)) {
             return;
         }
         set_transient(self::LOCK, 1, 5 * MINUTE_IN_SECONDS);
 
-        $this->indexer->indexAll();
-        update_option('sieve_index_ready', VERSION);
+        $cursor = get_option(self::CURSOR, false);
+        if (false === $cursor) {
+            // Start of a rebuild: clear stale rows, as the old in-request
+            // indexAll() did before walking the catalog.
+            $this->indexer->resetIndex();
+        }
 
+        $ids = $this->indexer->indexBatch((int) $cursor);
+
+        if ([] === $ids) {
+            delete_option(self::CURSOR);
+            update_option('sieve_index_ready', VERSION);
+            delete_transient(self::LOCK);
+            return;
+        }
+
+        update_option(self::CURSOR, (int) end($ids), false);
         delete_transient(self::LOCK);
+
+        wp_schedule_single_event(time(), self::BACKFILL_HOOK);
     }
 
     public function onSave(int $productId): void

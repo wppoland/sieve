@@ -44,29 +44,81 @@ final class ProductIndexer
     }
 
     /**
-     * Re-index the whole catalog. Returns the number of products indexed.
-     * Synchronous; suitable for the catalog sizes this MVP targets. Large-catalog
-     * background batching is a post-MVP concern.
+     * Products read (and held in memory) per batch. Filter
+     * 'sieve_index_batch_size' to change it on a slow or memory-tight host.
+     */
+    public const BATCH_SIZE = 200;
+
+    public static function batchSize(): int
+    {
+        $size = (int) apply_filters('sieve_index_batch_size', self::BATCH_SIZE);
+
+        return $size > 0 ? $size : self::BATCH_SIZE;
+    }
+
+    /**
+     * Clear every index row. Used before a full rebuild so row types that no
+     * longer exist (or products deleted outside WordPress) do not survive it.
+     */
+    public function resetIndex(): void
+    {
+        $this->index->truncate();
+    }
+
+    /**
+     * Index one batch of published products whose ID is greater than $afterId,
+     * in ascending ID order. Returns the IDs indexed, empty once the catalog is
+     * exhausted. A keyset cursor, not OFFSET, so a product saved mid-run cannot
+     * make the walk skip or repeat a row.
+     *
+     * @return array<int, int>
+     */
+    public function indexBatch(int $afterId, ?int $limit = null): array
+    {
+        global $wpdb;
+
+        $limit = $limit ?? self::batchSize();
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $ids = $wpdb->get_col(
+            $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product' AND post_status = 'publish' AND ID > %d ORDER BY ID ASC LIMIT %d",
+                $afterId,
+                $limit,
+            )
+        );
+
+        $ids = array_map('intval', (array) $ids);
+        foreach ($ids as $id) {
+            $this->indexProduct($id);
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Re-index the whole catalog in one request. Returns the number of products
+     * indexed. Walks the catalog in batches so memory stays flat, but it is
+     * still one request: the admin backfill runs the same batches across cron
+     * ticks instead (see IndexerHooks).
      */
     public function indexAll(): int
     {
-        $this->index->truncate();
-
-        $ids = get_posts([
-            'post_type' => 'product',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'fields' => 'ids',
-            'no_found_rows' => true,
-        ]);
+        $this->resetIndex();
 
         $count = 0;
-        foreach ($ids as $id) {
-            $this->indexProduct((int) $id);
-            $count++;
-        }
+        $cursor = 0;
 
-        return $count;
+        while (true) {
+            $ids = $this->indexBatch($cursor);
+            if ([] === $ids) {
+                return $count;
+            }
+
+            $count += count($ids);
+            $cursor = (int) end($ids);
+        }
     }
 
     /**
