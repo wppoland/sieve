@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.7
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.8 =
+* Fixed: 1.1.7 removed the annotations that mark the catalogue walk's query as a deliberate direct database call, and added the orphan-row cleanup query without any, so the package arrived at WordPress.org with 7 Plugin Check warnings where 1.1.6 had 2. No query, and no behaviour, changed in either release; the annotations are back and Plugin Check reports the same 2 warnings as 1.1.6 again.
 
 = 1.1.7 =
 * Fixed: rebuilding the index emptied it first. 1.1.6 moved the build into the background but kept the old order, clear everything and then refill, which turned a blackout that used to last one request into one that lasts the whole rebuild: on a large catalogue that is many cron ticks, and filters and predictive search return nothing for all of them. The rebuild now replaces each product's rows in place and only at the end drops what is left over from products that no longer exist, so the previous index stays readable while the new one is written over it.
