@@ -65,11 +65,26 @@ final class IndexRepository implements FacetFilterRepository
         $wpdb->delete($this->table, ['object_id' => $objectId], ['%d']);
     }
 
-    public function truncate(): void
+    /**
+     * Drop index rows whose object is no longer a published product. Returns the
+     * number of rows removed.
+     *
+     * A full walk replaces the rows of every published product in place, one
+     * product at a time, so the only stale rows it cannot reach belong to
+     * products deleted or unpublished while Sieve was not watching. Removing
+     * just those at the end is what lets a rebuild run without emptying the
+     * index first and blacking out filtering while it works.
+     */
+    public function deleteOrphans(): int
     {
         global $wpdb;
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $wpdb->query("TRUNCATE TABLE {$this->table}");
+
+        return (int) $wpdb->query(
+            "DELETE i FROM {$this->table} i"
+            . " LEFT JOIN {$wpdb->posts} p ON p.ID = i.object_id"
+            . " AND p.post_type = 'product' AND p.post_status = 'publish'"
+            . ' WHERE p.ID IS NULL'
+        );
     }
 
     public function rowCount(): int

@@ -57,12 +57,13 @@ final class ProductIndexer
     }
 
     /**
-     * Clear every index row. Used before a full rebuild so row types that no
-     * longer exist (or products deleted outside WordPress) do not survive it.
+     * Drop rows left behind by products that are no longer published. Run at the
+     * end of a full walk, which has by then replaced the rows of every product
+     * that still exists.
      */
-    public function resetIndex(): void
+    public function removeOrphans(): int
     {
-        $this->index->truncate();
+        return $this->index->deleteOrphans();
     }
 
     /**
@@ -79,10 +80,8 @@ final class ProductIndexer
 
         $limit = $limit ?? self::batchSize();
 
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         $ids = $wpdb->get_col(
             $wpdb->prepare(
-                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product' AND post_status = 'publish' AND ID > %d ORDER BY ID ASC LIMIT %d",
                 $afterId,
                 $limit,
@@ -98,26 +97,56 @@ final class ProductIndexer
     }
 
     /**
-     * Re-index the whole catalog in one request. Returns the number of products
-     * indexed. Walks the catalog in batches so memory stays flat, but it is
-     * still one request: the admin backfill runs the same batches across cron
-     * ticks instead (see IndexerHooks).
+     * Re-index the whole catalog in one request and return the number of
+     * products indexed. This is the manual rebuild behind the settings screen
+     * button, and the way to build the index on a site where cron never runs.
+     *
+     * Each product's rows are replaced in place, so filtering keeps working
+     * throughout; rows belonging to products that are gone are dropped at the
+     * end. The background backfill runs the same batches across cron ticks
+     * instead (see IndexerHooks).
      */
     public function indexAll(): int
     {
-        $this->resetIndex();
-
         $count = 0;
         $cursor = 0;
 
         while (true) {
             $ids = $this->indexBatch($cursor);
             if ([] === $ids) {
+                $this->removeOrphans();
+
                 return $count;
             }
 
             $count += count($ids);
             $cursor = (int) end($ids);
+
+            $this->forgetBatch();
+        }
+    }
+
+    /**
+     * Drop the per-request object cache between batches.
+     *
+     * Indexing a product pulls its WC_Product, its postmeta and its terms into
+     * that cache, and nothing evicts them inside a single request, so without
+     * this the peak memory of a manual rebuild still grows with the catalog no
+     * matter how small the batches are.
+     *
+     * Only the in-process cache is cleared. On a site running a persistent
+     * object cache drop-in this does nothing: core's fallback for a drop-in
+     * that has no runtime flush of its own is to flush the whole shared cache,
+     * which is not Sieve's to throw away.
+     */
+    private function forgetBatch(): void
+    {
+        global $wpdb;
+
+        $wpdb->queries = [];
+
+        if (! wp_using_ext_object_cache() && function_exists('wp_cache_flush_runtime')) {
+            wp_cache_flush_runtime();
         }
     }
 
