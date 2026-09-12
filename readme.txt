@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -155,8 +155,15 @@ Sieve is fully translatable and ships the `sieve.pot` template. Translations are
 
 == Changelog ==
 
+= 1.1.7 =
+* Fixed: rebuilding the index emptied it first. 1.1.6 moved the build into the background but kept the old order, clear everything and then refill, which turned a blackout that used to last one request into one that lasts the whole rebuild: on a large catalogue that is many cron ticks, and filters and predictive search return nothing for all of them. The rebuild now replaces each product's rows in place and only at the end drops what is left over from products that no longer exist, so the previous index stays readable while the new one is written over it.
+* Fixed: a rebuild interrupted by a plugin update never finished under the new version. The saved position did not record which version wrote it, so the new version carried on from there and every product before that point kept rows built by the old one, while the index was marked as rebuilt. The position now carries its version and is ignored when it does not match.
+* Fixed: on a site with wp-cron switched off (`DISABLE_WP_CRON`) and no system cron put in its place, 1.1.6 would have scheduled the build and never run it, leaving the index empty with nothing on screen to say so. Admin pages on such a site now index one batch inline, so the build still finishes, one batch per page load rather than the whole catalogue in one request. The "Rebuild index" button on the settings screen remains the way to do it in one go.
+* Fixed: a background tick that found the indexing lock held gave up without booking another. If a tick died mid-batch the lock outlived it, so the next tick returned and nothing was left to carry the build on. A blocked tick now schedules a retry.
+* Changed: the manual "Rebuild index" button drops the per-request object cache between batches, so its peak memory no longer grows with the catalogue. Sites running a persistent object cache drop-in are left alone, because clearing that cache is not this plugin's to do, and there a manual rebuild still grows with the catalogue.
+
 = 1.1.6 =
-* Fixed: the first index build ran inside every admin page load. On a large catalogue that single request had to read every product, so the admin was slow while the index was being built and, past a few thousand products, the request could time out and start over from scratch on the next page load. The build now runs in the background in batches of 200 products, remembers where it stopped, and resumes there instead of restarting. Nothing changes about what gets indexed. Developers can change the batch size with the `sieve_index_batch_size` filter.
+* Fixed: the first index build ran inside every admin page load. On a large catalogue that single request had to read every product, so the admin was slow while the index was being built and, past a few thousand products, the request could time out and start over from scratch on the next page load. The build now runs in the background in batches of 200 products, remembers where it stopped, and resumes there instead of restarting. The same products end up indexed, and the catalogue is now read with one direct query per batch rather than through `get_posts()`, so another plugin's `pre_get_posts` filter can no longer add to, reorder or trim the set Sieve indexes. Developers can change the batch size with the `sieve_index_batch_size` filter.
 
 = 1.1.5 =
 * Fixed: the PRO upgrade promo kept selling to people who had already bought the paid edition. Only the banner could be dismissed, so the sidebar promo and the locked feature cards followed a paying customer around for good. The promo now checks whether the paid edition is active and steps aside when it is.
