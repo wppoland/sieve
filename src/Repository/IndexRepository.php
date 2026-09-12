@@ -79,7 +79,9 @@ final class IndexRepository implements FacetFilterRepository
     {
         global $wpdb;
 
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         return (int) $wpdb->query(
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
             "DELETE i FROM {$this->table} i"
             . " LEFT JOIN {$wpdb->posts} p ON p.ID = i.object_id"
             . " AND p.post_type = 'product' AND p.post_status = 'publish'"
