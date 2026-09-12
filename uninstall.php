@@ -29,7 +29,9 @@ function sieve_uninstall_cleanup(): void
     delete_option('sieve_settings');
     delete_option('sieve_schema_version');
     delete_option('sieve_index_ready');
+    delete_option('sieve_index_cursor');
     delete_transient('sieve_indexing_lock');
+    wp_clear_scheduled_hook('sieve_index_backfill');
 
     // The index is Sieve's own table, created by its migration.
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared

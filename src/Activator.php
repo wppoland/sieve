@@ -19,6 +19,7 @@ final class Activator
         // the next admin load build the index, so facets work immediately even
         // for products that existed before the plugin was activated.
         delete_option('sieve_index_ready');
+        delete_option('sieve_index_cursor');
 
         flush_rewrite_rules();
     }
