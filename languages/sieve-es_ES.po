@@ -349,7 +349,7 @@ msgstr "Ningún producto coincide con estos filtros"
 msgid ""
 "Try removing a filter or widening your price range to see more products."
 msgstr ""
-"Intente eliminar un filtro o ampliar su rango de precios para ver más "
+"Intenta eliminar un filtro o ampliar tu rango de precios para ver más "
 "productos."
 
 #: src/Service/ResultsRenderer.php:146
@@ -426,7 +426,7 @@ msgid ""
 "semantic .sieve-* classes (.sieve-app, .sieve-facet, .sieve-chip, .sieve-"
 "search, …). Keyboard focus and high-contrast cues are still emitted."
 msgstr ""
-"El modo sin estilo no incluye ningún complemento CSS. Su tema diseña todo a "
+"El modo sin estilo no incluye ningún complemento CSS. Tu tema diseña todo a "
 "través de las clases semánticas.sieve-* (.sieve-app,.sieve-facet,.sieve-"
 "chip,.sieve-search,…). Todavía se emiten el enfoque del teclado y las "
 "señales de alto contraste."
@@ -524,7 +524,7 @@ msgstr[1] "%d productos reindexados."
 
 #: build/admin.js:1
 msgid "Place the filter anywhere with the shortcode"
-msgstr "Coloque el filtro en cualquier lugar con el código corto"
+msgstr "Coloca el filtro en cualquier lugar con el código corto"
 
 #: build/admin.js:1
 msgid "or the \"Sieve Filter\" block."
@@ -597,7 +597,7 @@ msgid ""
 "and edited products are indexed automatically."
 msgstr ""
 "Sieve mantiene un índice prediseñado para que las consultas filtradas se "
-"mantengan rápidas en catálogos grandes. Reconstrúyalo después de una "
+"mantengan rápidas en catálogos grandes. Reconstrúyelo después de una "
 "importación masiva o si los recuentos parecen obsoletos: los productos "
 "nuevos y editados se indexan automáticamente."
 
@@ -610,12 +610,12 @@ msgid ""
 "Pick a product attribute, taxonomy or field to filter by. Sources are "
 "detected from your store automatically."
 msgstr ""
-"Elija un atributo de producto, taxonomía o campo para filtrar. Las fuentes "
-"se detectan desde su tienda automáticamente."
+"Elige un atributo de producto, taxonomía o campo para filtrar. Las fuentes "
+"se detectan desde tu tienda automáticamente."
 
 #: build/admin.js:1
 msgid "Select a source…"
-msgstr "Seleccione una fuente…"
+msgstr "Selecciona una fuente…"
 
 #: build/admin.js:1
 msgid "Add"
