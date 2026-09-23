@@ -39,7 +39,7 @@ msgstr ""
 #. Author of the plugin
 #: sieve.php
 msgid "WPPoland.com"
-msgstr ""
+msgstr "WPPoland.com"
 
 #. Author URI of the plugin
 #: sieve.php
@@ -95,45 +95,45 @@ msgstr "Co dodaje %s"
 
 #: src/Admin/SwatchTermFields.php:56 src/Admin/SwatchTermFields.php:84
 msgid "Swatch colour"
-msgstr ""
+msgstr "Kolor próbki"
 
 #: src/Admin/SwatchTermFields.php:57 src/Admin/SwatchTermFields.php:86
 msgid ""
 "Hex colour used by colour swatch facets, for example #336699. Leave empty to "
 "guess it from the term name."
-msgstr ""
+msgstr "Kolor w zapisie szesnastkowym używany przez fasety z próbkami kolorów, na przykład #336699. Zostaw puste, aby został odgadnięty na podstawie nazwy terminu."
 
 #: src/Admin/SwatchTermFields.php:64 src/Admin/SwatchTermFields.php:93
 msgid "Swatch image"
-msgstr ""
+msgstr "Obraz próbki"
 
 #: src/Admin/SwatchTermFields.php:65 src/Admin/SwatchTermFields.php:95
 msgid ""
 "Media library attachment ID, or a full image URL. Used by image swatch "
 "facets and shown instead of the colour."
-msgstr ""
+msgstr "Identyfikator załącznika z biblioteki mediów albo pełny adres URL obrazu. Używany przez fasety z próbkami obrazów i pokazywany zamiast koloru."
 
 #: src/Elementor/FilterWidget.php:42
 msgid "Product Filter"
-msgstr ""
+msgstr "Filtr produktów"
 
 #: src/Elementor/FilterWidget.php:80
 msgid "Product filter"
-msgstr ""
+msgstr "Filtr produktów"
 
 #: src/Elementor/FilterWidget.php:87
 msgid ""
 "This widget renders the full Sieve faceted filter with its results grid. "
 "Configure facets and appearance under WooCommerce > Sieve."
-msgstr ""
+msgstr "Ten widżet wyświetla pełny filtr fasetowy Sieve wraz z siatką wyników. Fasety i wygląd skonfigurujesz w WooCommerce > Sieve."
 
 #: src/Elementor/SearchWidget.php:41
 msgid "Product Search"
-msgstr ""
+msgstr "Wyszukiwarka produktów"
 
 #: src/Elementor/SearchWidget.php:79
 msgid "Product search"
-msgstr ""
+msgstr "Wyszukiwarka produktów"
 
 #: src/Elementor/SearchWidget.php:85 build/blocks/search/index.js:185
 #: resources/js/blocks/search/index.js:27 build/blocks/search/index.js:88
@@ -142,19 +142,19 @@ msgstr "Tekst zastępczy"
 
 #: src/Elementor/SearchWidget.php:88
 msgid "Leave empty to use the default placeholder text."
-msgstr ""
+msgstr "Zostaw puste, aby użyć domyślnego tekstu zastępczego."
 
 #: src/Elementor/SearchWidget.php:95
 msgid "Show search button"
-msgstr ""
+msgstr "Pokaż przycisk wyszukiwania"
 
 #: src/Elementor/SearchWidget.php:97
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: src/Elementor/SearchWidget.php:98
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: src/Enum/FacetType.php:77 build/admin.js:1
 msgid "Checkboxes"
@@ -210,7 +210,7 @@ msgstr "Aktywne filtry"
 
 #: src/Enum/FacetType.php:90
 msgid "Star rating"
-msgstr ""
+msgstr "Ocena w gwiazdkach"
 
 #: src/Hook/AdminHooks.php:40 src/Hook/AdminHooks.php:41 build/admin.js:1
 msgid "Sieve"
@@ -396,25 +396,25 @@ msgstr "Kompaktowe menu wyboru. Oszczędza miejsce, gdy opcji jest wiele."
 msgid ""
 "Colour or image chips instead of text labels. Great for colour and size "
 "attributes."
-msgstr ""
+msgstr "Pola koloru lub obrazu zamiast etykiet tekstowych. Świetne do atrybutów koloru i rozmiaru."
 
 #: src/Service/FacetTypeRegistry.php:48
 msgid "Nested categories shown as an expandable tree."
-msgstr ""
+msgstr "Zagnieżdżone kategorie pokazane jako rozwijane drzewo."
 
 #: src/Service/FacetTypeRegistry.php:49
 msgid "A search box that filters the facet options as the shopper types."
-msgstr ""
+msgstr "Pole wyszukiwania, które filtruje opcje fasety w trakcie pisania przez kupującego."
 
 #: src/Service/FacetTypeRegistry.php:50
 msgid "An A-Z bar that filters options by first letter."
-msgstr ""
+msgstr "Pasek A-Z, który filtruje opcje po pierwszej literze."
 
 #: src/Service/FacetTypeRegistry.php:55 build/admin.js:1
 msgid ""
 "A min/max range for the price source. Other sources have no numeric values "
 "to slide over."
-msgstr ""
+msgstr "Zakres min/maks dla źródła ceny. Pozostałe źródła nie mają wartości liczbowych, po których dałoby się przesuwać suwak."
 
 #: src/Service/FacetTypeRegistry.php:56 build/admin.js:1
 msgid "A live search box that narrows the product grid as shoppers type."
@@ -423,7 +423,7 @@ msgstr ""
 
 #: src/Service/FacetTypeRegistry.php:58
 msgid "Filter by average rating. Renders as selectable options."
-msgstr ""
+msgstr "Filtruj po średniej ocenie. Wyświetla się jako opcje do wyboru."
 
 #: src/Service/FilterEngine.php:251
 msgid "Filters"
@@ -566,7 +566,7 @@ msgstr "Gotowy styl"
 msgid ""
 "Visual style for the filter panel. Unstyled removes plugin CSS so your theme "
 "controls everything through .sieve-* classes."
-msgstr ""
+msgstr "Styl wizualny panelu filtrów. Bez stylów usuwa CSS wtyczki, więc o wszystkim decyduje Twój motyw przez klasy .sieve-*."
 
 #: build/admin.js:1
 msgid ""
@@ -629,7 +629,7 @@ msgstr ""
 msgid ""
 "Could not load Sieve settings. Refresh the page or check that WooCommerce "
 "and the REST API are available."
-msgstr ""
+msgstr "Nie udało się wczytać ustawień Sieve. Odśwież stronę lub sprawdź, czy WooCommerce i REST API są dostępne."
 
 #: build/admin.js:1
 msgid "Loading Sieve…"
@@ -645,7 +645,7 @@ msgstr "Ustawienia zapisane."
 
 #: build/admin.js:1
 msgid "Could not save settings. Please try again."
-msgstr ""
+msgstr "Nie udało się zapisać ustawień. Spróbuj ponownie."
 
 #: build/admin.js:1
 msgid "Re-indexed %d product."
@@ -656,23 +656,23 @@ msgstr[2] "Ponownie zindeksowano %d produktów."
 
 #: build/admin.js:1
 msgid "Could not rebuild the index. Please try again."
-msgstr ""
+msgstr "Nie udało się przebudować indeksu. Spróbuj ponownie."
 
 #: build/admin.js:1
 msgid "Taxonomies"
-msgstr ""
+msgstr "Taksonomie"
 
 #: build/admin.js:1
 msgid "Attributes"
-msgstr ""
+msgstr "Atrybuty"
 
 #: build/admin.js:1
 msgid "Product fields"
-msgstr ""
+msgstr "Pola produktu"
 
 #: build/admin.js:1
 msgid "Other sources"
-msgstr ""
+msgstr "Inne źródła"
 
 #: build/admin.js:1
 msgid "Select a source…"
@@ -703,13 +703,13 @@ msgid ""
 "Sieve keeps a pre-built index so filtered queries stay fast on large "
 "catalogs. Rebuild after a bulk import or if counts look out of date, new and "
 "edited products are indexed automatically."
-msgstr ""
+msgstr "Sieve utrzymuje gotowy indeks, dzięki czemu filtrowane zapytania pozostają szybkie w dużych katalogach. Przebuduj go po imporcie masowym lub gdy liczniki wyglądają na nieaktualne, nowe i edytowane produkty indeksują się automatycznie."
 
 #: build/admin.js:1
 msgid ""
 "The index is empty. Publish WooCommerce products, then click Rebuild index "
 "before placing [sieve] on a page."
-msgstr ""
+msgstr "Indeks jest pusty. Opublikuj produkty WooCommerce, a potem kliknij Przebuduj indeks, zanim umieścisz [sieve] na stronie."
 
 #: build/admin.js:1
 msgid "Layout"
@@ -743,7 +743,7 @@ msgstr "Fasety"
 msgid ""
 "No facets yet. Pick a source below, click Add, then Save settings. Shoppers "
 "will not see filters until at least one facet is configured."
-msgstr ""
+msgstr "Nie ma jeszcze faset. Wybierz źródło poniżej, kliknij Dodaj, a potem Zapisz ustawienia. Kupujący nie zobaczą filtrów, dopóki nie skonfigurujesz przynajmniej jednej fasety."
 
 #: build/admin.js:1
 msgid "Label"
@@ -756,7 +756,7 @@ msgstr "Typ"
 #: build/admin.js:1
 msgid ""
 "Internal source key (taxonomy, attribute or product field) used by Sieve."
-msgstr ""
+msgstr "Wewnętrzny klucz źródła (taksonomia, atrybut lub pole produktu) używany przez Sieve."
 
 #: build/admin.js:1
 msgid "Move up"
