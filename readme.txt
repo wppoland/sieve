@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.9
+Stable tag: 1.1.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.10 =
+* Changed: a code comment claimed WooCommerce verifies a nonce on the add-to-cart form. That form carries no nonce, so the comment now says so. Comment correction only, no change in behaviour.
 
 = 1.1.9 =
 * Fixed: the first index build ran inside an admin page load. On a large catalogue that single request had to read every product, so the admin was slow while the index was being built and, past a few thousand products, the request could time out and start over from scratch on a later page load. The build now runs on a background cron tick in batches of 200 products, records the highest product ID it reached and carries on from there, and reads the list of products to index with one direct query per batch instead of `get_posts()`, so another plugin's `pre_get_posts` filter can no longer add to, reorder or trim the set Sieve indexes. The saved position carries the version that wrote it and is ignored when it does not match, so a build interrupted by a plugin update starts over instead of finishing with half the catalogue indexed by the previous version. A tick that finds the indexing lock held books a retry rather than dropping the build. On a site with wp-cron switched off (`DISABLE_WP_CRON`), where a scheduled event may never run at all, admin pages index one batch inline instead: one batch per page load, not the whole catalogue in one request. Developers can change the batch size with the `sieve_index_batch_size` filter.
