@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,10 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.11 =
+* Hardening: filter parameters read from the page URL by the shortcode and the block are now sanitised at the moment they are read, not only later in the URL parser.
+* Fixed: an image swatch URL containing percent-encoded characters (for example %20 for a space) lost them on save, because the value went through a text sanitiser before the URL sanitiser. The URL is now sanitised with esc_url_raw() only.
 
 = 1.1.10 =
 * Changed: a code comment claimed WooCommerce verifies a nonce on the add-to-cart form. That form carries no nonce, so the comment now says so. Comment correction only, no change in behaviour.
