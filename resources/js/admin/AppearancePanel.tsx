@@ -48,7 +48,10 @@ const PRESET_OPTIONS = [
 	{ label: __( 'Unstyled', 'sieve' ), value: 'unstyled' },
 ];
 
-const COLOR_FIELDS: Array< { key: keyof Appearance[ 'colors' ]; label: string } > = [
+const COLOR_FIELDS: Array< {
+	key: keyof Appearance[ 'colors' ];
+	label: string;
+} > = [
 	{ key: 'accent', label: __( 'Accent', 'sieve' ) },
 	{ key: 'border', label: __( 'Border', 'sieve' ) },
 	{ key: 'muted', label: __( 'Muted text', 'sieve' ) },
@@ -58,6 +61,7 @@ const COLOR_FIELDS: Array< { key: keyof Appearance[ 'colors' ]; label: string } 
 /**
  * Normalise a colour string to #rrggbb, expanding 3-digit shorthand and
  * dropping an 8-digit alpha suffix. Returns null if it cannot be parsed.
+ * @param value
  */
 function normaliseHex( value: string ): string | null {
 	const hex = value.trim().replace( /^#/, '' ).toLowerCase();
@@ -79,10 +83,16 @@ function luminance( hex: string ): number | null {
 		const c = parseInt( norm.slice( i, i + 2 ), 16 ) / 255;
 		return c <= 0.03928 ? c / 12.92 : ( ( c + 0.055 ) / 1.055 ) ** 2.4;
 	} );
-	return 0.2126 * channels[ 0 ] + 0.7152 * channels[ 1 ] + 0.0722 * channels[ 2 ];
+	return (
+		0.2126 * channels[ 0 ] + 0.7152 * channels[ 1 ] + 0.0722 * channels[ 2 ]
+	);
 }
 
-/** WCAG contrast ratio. Returns null if either colour is unparseable. */
+/**
+ * WCAG contrast ratio. Returns null if either colour is unparseable.
+ * @param a
+ * @param b
+ */
 function contrastRatio( a: string, b: string ): number | null {
 	const la = luminance( a );
 	const lb = luminance( b );
@@ -220,6 +230,8 @@ export default function AppearancePanel( { appearance, onChange }: Props ) {
  * A small, self-contained preview that mirrors the four colour variables so the
  * owner sees their choices before saving. Structural preset differences are not
  * reproduced here (those live in the frontend bundle); this previews colours.
+ * @param root0
+ * @param root0.appearance
  */
 function PreviewBox( { appearance }: { appearance: Appearance } ) {
 	const { colors } = appearance;
@@ -245,11 +257,7 @@ function PreviewBox( { appearance }: { appearance: Appearance } ) {
 				} }
 			>
 				<strong>{ __( 'Category', 'sieve' ) }</strong>
-				<Flex
-					align="center"
-					gap={ 2 }
-					style={ { margin: '0.5rem 0' } }
-				>
+				<Flex align="center" gap={ 2 } style={ { margin: '0.5rem 0' } }>
 					<FlexItem>
 						<input type="checkbox" checked readOnly />
 					</FlexItem>

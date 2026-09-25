@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 defined('ABSPATH') || exit;
 
+use Sieve\Admin\SwatchTermFields;
 use Sieve\Hook\AdminHooks;
 use Sieve\Hook\BlockHooks;
 use Sieve\Hook\FrontendHooks;
@@ -20,6 +21,10 @@ use Sieve\Shortcode\SearchShortcode;
  */
 return [
     AdminHooks::class,
+
+    // Colour and image fields on attribute terms. The swatch facet reads both
+    // metas, nothing wrote either of them.
+    SwatchTermFields::class,
     RestHooks::class,
     FrontendHooks::class,
     IndexerHooks::class,

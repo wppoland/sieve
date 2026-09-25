@@ -79,7 +79,7 @@ final class BadgeEngine
 
     /**
      * Resolve the badges that apply to a product, in priority order
-     * (manual → secondary → automatic rules), de-duplicated and capped for the
+     * (manual > secondary > automatic rules), de-duplicated and capped for the
      * given render context.
      *
      * @return list<Badge>

@@ -44,29 +44,112 @@ final class ProductIndexer
     }
 
     /**
-     * Re-index the whole catalog. Returns the number of products indexed.
-     * Synchronous; suitable for the catalog sizes this MVP targets. Large-catalog
-     * background batching is a post-MVP concern.
+     * Products read (and held in memory) per batch. Filter
+     * 'sieve_index_batch_size' to change it on a slow or memory-tight host.
+     */
+    public const BATCH_SIZE = 200;
+
+    public static function batchSize(): int
+    {
+        $size = (int) apply_filters('sieve_index_batch_size', self::BATCH_SIZE);
+
+        return $size > 0 ? $size : self::BATCH_SIZE;
+    }
+
+    /**
+     * Drop rows left behind by products that are no longer published. Run at the
+     * end of a full walk, which has by then replaced the rows of every product
+     * that still exists.
+     */
+    public function removeOrphans(): int
+    {
+        return $this->index->deleteOrphans();
+    }
+
+    /**
+     * Index one batch of published products whose ID is greater than $afterId,
+     * in ascending ID order. Returns the IDs indexed, empty once the catalog is
+     * exhausted. A keyset cursor, not OFFSET, so a product saved mid-run cannot
+     * make the walk skip or repeat a row.
+     *
+     * @return array<int, int>
+     */
+    public function indexBatch(int $afterId, ?int $limit = null): array
+    {
+        global $wpdb;
+
+        $limit = $limit ?? self::batchSize();
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $ids = $wpdb->get_col(
+            $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'product' AND post_status = 'publish' AND ID > %d ORDER BY ID ASC LIMIT %d",
+                $afterId,
+                $limit,
+            )
+        );
+
+        $ids = array_map('intval', (array) $ids);
+        foreach ($ids as $id) {
+            $this->indexProduct($id);
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Re-index the whole catalog in one request and return the number of
+     * products indexed. This is the manual rebuild behind the settings screen
+     * button, and the way to build the index on a site where cron never runs.
+     *
+     * Each product's rows are replaced in place, so filtering keeps working
+     * throughout; rows belonging to products that are gone are dropped at the
+     * end. The background backfill runs the same batches across cron ticks
+     * instead (see IndexerHooks).
      */
     public function indexAll(): int
     {
-        $this->index->truncate();
-
-        $ids = get_posts([
-            'post_type' => 'product',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'fields' => 'ids',
-            'no_found_rows' => true,
-        ]);
-
         $count = 0;
-        foreach ($ids as $id) {
-            $this->indexProduct((int) $id);
-            $count++;
-        }
+        $cursor = 0;
 
-        return $count;
+        while (true) {
+            $ids = $this->indexBatch($cursor);
+            if ([] === $ids) {
+                $this->removeOrphans();
+
+                return $count;
+            }
+
+            $count += count($ids);
+            $cursor = (int) end($ids);
+
+            $this->forgetBatch();
+        }
+    }
+
+    /**
+     * Drop the per-request object cache between batches.
+     *
+     * Indexing a product pulls its WC_Product, its postmeta and its terms into
+     * that cache, and nothing evicts them inside a single request, so without
+     * this the peak memory of a manual rebuild still grows with the catalog no
+     * matter how small the batches are.
+     *
+     * Only the in-process cache is cleared. On a site running a persistent
+     * object cache drop-in this does nothing: core's fallback for a drop-in
+     * that has no runtime flush of its own is to flush the whole shared cache,
+     * which is not Sieve's to throw away.
+     */
+    private function forgetBatch(): void
+    {
+        global $wpdb;
+
+        $wpdb->queries = [];
+
+        if (! wp_using_ext_object_cache() && function_exists('wp_cache_flush_runtime')) {
+            wp_cache_flush_runtime();
+        }
     }
 
     /**

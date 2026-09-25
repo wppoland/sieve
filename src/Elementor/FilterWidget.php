@@ -84,7 +84,7 @@ final class FilterWidget extends Widget_Base
             'notice',
             [
                 'type'            => Controls_Manager::RAW_HTML,
-                'raw'             => esc_html__('This widget renders the full Sieve faceted filter with its results grid. Configure facets and appearance under WooCommerce → Sieve.', 'sieve'),
+                'raw'             => esc_html__('This widget renders the full Sieve faceted filter with its results grid. Configure facets and appearance under WooCommerce > Sieve.', 'sieve'),
                 'content_classes' => 'elementor-descriptor',
             ]
         );

@@ -486,11 +486,11 @@ function toggleFacet( toggle: HTMLElement ): void {
  * @param input
  */
 function filterOptions( input: HTMLInputElement ): void {
-	const q = input.value.trim().toLowerCase();
 	const wrap = input.closest( '.sieve-autocomplete' );
 	if ( ! wrap ) {
 		return;
 	}
+	const q = input.value.trim().toLowerCase();
 	let visible = 0;
 	wrap.querySelectorAll< HTMLElement >( '.sieve-choice' ).forEach(
 		( item ) => {
@@ -599,10 +599,6 @@ function syncRanges( app: HTMLElement ): void {
 }
 
 function removeFilter( app: HTMLElement, slug: string, value: string ): void {
-	const facet = app.querySelector< HTMLElement >(
-		`[data-sieve-facet="${ slug }"]`
-	);
-
 	if ( 'q' === slug ) {
 		const search = app.querySelector< HTMLInputElement >( '.sieve-search' );
 		if ( search ) {
@@ -610,6 +606,10 @@ function removeFilter( app: HTMLElement, slug: string, value: string ): void {
 		}
 		return;
 	}
+
+	const facet = app.querySelector< HTMLElement >(
+		`[data-sieve-facet="${ slug }"]`
+	);
 
 	if ( ! facet ) {
 		return;
@@ -1007,17 +1007,19 @@ function snapshotDisplayFilters( facets: HTMLElement | null ): DisplayFilters {
 	const autocomplete = new Map< string, string >();
 	const az = new Map< string, string >();
 	const collapsed = new Set< string >();
-	facets?.querySelectorAll< HTMLElement >( '.sieve-facet' ).forEach( ( f ) => {
-		const toggle = f.querySelector< HTMLElement >(
-			'[data-sieve-facet-toggle]'
-		);
-		if (
-			toggle?.getAttribute( 'aria-expanded' ) === 'false' &&
-			f.dataset.sieveFacet
-		) {
-			collapsed.add( f.dataset.sieveFacet );
-		}
-	} );
+	facets
+		?.querySelectorAll< HTMLElement >( '.sieve-facet' )
+		.forEach( ( f ) => {
+			const toggle = f.querySelector< HTMLElement >(
+				'[data-sieve-facet-toggle]'
+			);
+			if (
+				toggle?.getAttribute( 'aria-expanded' ) === 'false' &&
+				f.dataset.sieveFacet
+			) {
+				collapsed.add( f.dataset.sieveFacet );
+			}
+		} );
 	facets
 		?.querySelectorAll< HTMLElement >( '.sieve-facet--autocomplete' )
 		.forEach( ( f ) => {

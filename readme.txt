@@ -2,9 +2,9 @@
 Contributors: motylanogha
 Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.13
+Stable tag: 1.1.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,7 @@ Sieve PRO adds advanced control and integrations for growing stores:
 * Performance dashboard: index size, catalog coverage and filter-speed benchmarks
 * Search integrations: SearchWP and Algolia, with native fallback
 
-Documentation: https://plogins.com/sieve/docs/
+Documentation: [plogins.com/sieve/docs/](https://plogins.com/sieve/docs/)
 
 = You may also like these plugins =
 
@@ -70,7 +70,9 @@ More free WooCommerce plugins from WPPoland:
 * [Plogins Waitlist](https://wordpress.org/plugins/plogins-waitlist/) - back-in-stock waitlist that emails shoppers the moment a product returns.
 * [Polski for WooCommerce](https://wordpress.org/plugins/polski/) - Polish-market compliance: GPSR, Omnibus, GDPR, invoices and storefront modules.
 
-Browse the full catalogue at https://plogins.com/ .
+Browse the full catalogue at [plogins.com/](https://plogins.com/) .
+
+Reporting a security issue: email hello@wppoland.com, and under our [coordinated disclosure policy](https://wppoland.com/en/security-policy/) we confirm within two business days, assess within five, and patch a critical issue within seven days of confirming it.
 
 == Sieve PRO ==
 
@@ -82,7 +84,7 @@ The free edition is the full filtering MVP, with no limits. **Sieve PRO** is bui
 * **Star rating facet** - visual star rows for the average-rating filter
 * **Search integrations** - route predictive and in-grid search through SearchWP or Algolia
 
-Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year (PLN shown at checkout).
+Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year, billed in EUR.
 
 Compare editions and pricing: [plogins.com/sieve-pro/pricing/](https://plogins.com/sieve-pro/pricing/)
 
@@ -145,13 +147,73 @@ The full, human-readable source for the compiled assets is included in this plug
 1. `npm install`
 2. `npm run build`
 
-This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at https://github.com/wppoland/sieve.
+This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). There is no obfuscation; every shipped asset can be regenerated from the included sources. The public source repository is also available at [github.com/wppoland/sieve](https://github.com/wppoland/sieve).
 
 == Translations ==
 
-Sieve includes Polish, German and Spanish translations for the plugin interface. The text domain is `sieve`, so WordPress.org language packs can also override or extend these bundled translations.
+Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.10 =
+* Changed: a code comment claimed WooCommerce verifies a nonce on the add-to-cart form. That form carries no nonce, so the comment now says so. Comment correction only, no change in behaviour.
+
+= 1.1.9 =
+* Fixed: the first index build ran inside an admin page load. On a large catalogue that single request had to read every product, so the admin was slow while the index was being built and, past a few thousand products, the request could time out and start over from scratch on a later page load. The build now runs on a background cron tick in batches of 200 products, records the highest product ID it reached and carries on from there, and reads the list of products to index with one direct query per batch instead of `get_posts()`, so another plugin's `pre_get_posts` filter can no longer add to, reorder or trim the set Sieve indexes. The saved position carries the version that wrote it and is ignored when it does not match, so a build interrupted by a plugin update starts over instead of finishing with half the catalogue indexed by the previous version. A tick that finds the indexing lock held books a retry rather than dropping the build. On a site with wp-cron switched off (`DISABLE_WP_CRON`), where a scheduled event may never run at all, admin pages index one batch inline instead: one batch per page load, not the whole catalogue in one request. Developers can change the batch size with the `sieve_index_batch_size` filter.
+* Fixed: rebuilding the index emptied it first, so filters and predictive search answered from an empty or half-filled table until the rebuild finished. The rebuild now replaces each product's rows in place and only at the end drops what is left over from products that no longer exist, so the previous index stays readable while the new one is written over it.
+* Changed: the manual "Rebuild index" button on the settings screen walks the catalogue in those same batches and drops the per-request object cache between them, so the products it has already indexed are not all held in memory at once. On a site running a persistent object cache drop-in that cache is left in place, because clearing it is not this plugin's to do.
+* Note: 1.1.6, 1.1.7 and 1.1.8 were development versions and were never published on WordPress.org. Upgrading from 1.1.5 brings all of the above at once.
+
+= 1.1.5 =
+* Fixed: the PRO upgrade promo kept selling to people who had already bought the paid edition. Only the banner could be dismissed, so the sidebar promo and the locked feature cards followed a paying customer around for good. The promo now checks whether the paid edition is active and steps aside when it is.
+* Fixed: arrow glyphs in the admin menu paths, and in the strings handed to translators. An arrow inside a translatable string makes the glyph every translator's problem and changes the layout in any locale that drops it.
+
+= 1.1.4 =
+* Changed: the PRO feature cards printed an arrow glyph in menu paths where the rest of the plugin and the documentation use a plain ">". Same navigation, one character that renders everywhere.
+
+= 1.1.3 =
+* Fixed: the predictive search box never showed suggestions. The script that powers the typeahead was not being built, so the browser asked for a file that was not in the package and got nothing. Typing in the `[sieve_search]` box, the Sieve Search block or the Elementor widget produced no dropdown, no thumbnails and no prices; it only worked as a plain search form on Enter. The script ships again, and the build now fails if any enqueued file is missing from the package.
+
+= 1.1.2 =
+* Fixed: deleting the plugin left everything behind. Sieve had no uninstall routine at all, so its facet index table, three options and the per-user "dismiss" flag from the PRO notice stayed in the database permanently. Uninstall now removes all of them, on every site of a multisite network. The index is derived from your catalogue and is rebuilt on reinstall, so nothing you typed is lost.
+
+= 1.1.1 =
+* Housekeeping only, no change to what the plugin does. The JavaScript lint gate had been failing on 32 findings for long enough that nobody read it, so it caught nothing; it is green again. The two block editor components are now named components rather than inline methods, which is what the React rules were objecting to, and the built blocks are checked on every build to confirm they still register.
+
+= 1.1.0 =
+* Added: colour and image fields on product attribute terms. Swatch facets read both values off the term and no screen could set either, so an image swatch could never show an image and a colour swatch only ever worked when the term name happened to be a colour the plugin could guess. The colour field accepts a plain hex value, the image field an attachment ID or an image URL.
+
+= 1.0.23 =
+* Removed a defaults file that declared five settings the plugin never read: filter mode, mobile drawer, result counts, dependent counts and reserved results height. Nothing loaded the file and nothing stored those values, so no setting of yours changes. They describe how Sieve already works rather than anything you can switch, and leaving them in the source implied a settings screen that does not exist.
+
+= 1.0.22 =
+* "Tested up to" was declared in the plugin header as well as in this readme. WordPress.org reads the readme; declaring it in two places is how a listing ends up advertising a compatibility claim nobody wrote. The header line is gone, the readme is unchanged.
+
+= 1.0.21 =
+* The translation template was regenerated. 29 strings added to the plugin since the template was last built were missing from it, so no translator could reach them in any language, and 4 strings the plugin no longer uses have been dropped. Nothing you see changes; what a translator can see does.
+
+= 1.0.20 =
+* Fixed: the plugin reported an older version number internally than the one it was released under. That number versions the stylesheets and scripts the admin screen loads, so a browser holding the previous files kept them after an update instead of fetching the corrected ones.
+* Fixed: the package no longer ships its own translation files. WordPress.org builds language packs from translate.wordpress.org, and a bundled catalogue shadows that pack, so a translation corrected upstream could not reach you until the next release. Your language now comes from the language pack, which is the copy that stays current.
+
+= 1.0.19 =
+* Declared compatibility with WooCommerce 11.0.
+
+= 1.0.18 =
+* Fixed the PRO promo on the settings screen quoting a price in PLN. PRO is priced and charged in EUR, so an admin on a Polish site was shown a zloty amount and then billed in euro, and the zloty figure was a fixed conversion that drifted from the real charge as the rate moved. The promo now shows the euro price that is actually taken.
+
+= 1.0.17 =
+* Corrected the PRO pricing line. It said the price is shown in PLN at checkout, which is not the case: the price is 29 EUR per year and the checkout charges in EUR.
+
+= 1.0.16 =
+* The Price facet now always shows as a price slider on the shop. If its type had been switched to checkboxes, radio, dropdown, swatches, hierarchy, autocomplete or A-Z index, the whole facet quietly disappeared from the storefront. The same applies to the search-box facet.
+* The range slider is now offered only for the Price source. On any other source it rendered a 0 to 0 slider and shoppers who used it were shown no products at all; those facets now show their normal option list.
+
+= 1.0.15 =
+* Corrected the star-rating facet description in the admin. It said the facet "requires Sieve Pro for storefront rendering", which is not true: the facet works and renders as selectable options in this plugin. What the paid edition adds is the visual star rows. The old wording read as though a facet you can select here does nothing until you pay.
+
+= 1.0.14 =
+* The PRO notice in the admin repeated an older wording of the Sieve PRO feature list and no longer matched the plugin page. Regenerated from the same source the website uses, so both say the same thing, including which admin screen each feature lives on.
 
 = 1.0.10 =
 * Translations: completed Polish, German and Spanish for the PRO upgrade panel.

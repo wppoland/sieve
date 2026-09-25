@@ -20,13 +20,18 @@ const ROOT = resolve(import.meta.dirname || new URL('.', import.meta.url).pathna
 const ENTRIES = {
     admin: 'resources/js/admin/index.tsx',
     'frontend-filter': 'resources/js/frontend/filter.ts',
+    // FrontendHooks::enqueueSearch() enqueues build/frontend-suggest.js. This
+    // entry went missing on the way to main while the PHP that loads it did
+    // not, so 1.1.2 shipped a 404 and the typeahead the readme sells never
+    // ran. assert-bundles-exist.mjs now fails the build if the two disagree.
+    'frontend-suggest': 'resources/js/frontend/suggest.ts',
 };
 
 // Bundles that need WordPress React deps in their .asset.php.
-const ASSET_PHP = new Set(['admin', 'frontend-filter']);
+const ASSET_PHP = new Set(['admin', 'frontend-filter', 'frontend-suggest']);
 
 // Framework-free bundles: emit an empty dependency list.
-const VANILLA = new Set(['frontend-filter']);
+const VANILLA = new Set(['frontend-filter', 'frontend-suggest']);
 
 const GLOBALS = {
     react: 'React',
