@@ -33,7 +33,12 @@ final class Settings
         }
 
         return apply_filters('sieve_settings', [
-            'facets' => is_array($stored['facets']) ? array_values($stored['facets']) : [],
+            // Round-trip stored facets through the value object so the builder
+            // shows the type the storefront will really render. Without it a
+            // facet saved before the type/source pairing was enforced (Price as
+            // Checkboxes, say) kept reading back as Checkboxes in the admin while
+            // the shop drew a price slider.
+            'facets' => is_array($stored['facets']) ? $this->normalizeFacets($stored['facets']) : [],
             'per_page' => isset($stored['per_page']) ? max(1, (int) $stored['per_page']) : 12,
             'columns' => isset($stored['columns']) ? max(1, (int) $stored['columns']) : 3,
             'appearance' => isset($stored['appearance']) && is_array($stored['appearance'])
@@ -48,14 +53,9 @@ final class Settings
      */
     public function save(array $value): void
     {
-        $facets = [];
-        if (isset($value['facets']) && is_array($value['facets'])) {
-            foreach ($value['facets'] as $facet) {
-                if (is_array($facet)) {
-                    $facets[] = Facet::fromArray($facet)->toArray();
-                }
-            }
-        }
+        $facets = isset($value['facets']) && is_array($value['facets'])
+            ? $this->normalizeFacets($value['facets'])
+            : [];
 
         update_option(self::OPTION, [
             'facets' => $facets,
@@ -65,6 +65,22 @@ final class Settings
                 isset($value['appearance']) && is_array($value['appearance']) ? $value['appearance'] : [],
             ),
         ]);
+    }
+
+    /**
+     * @param array<int|string, mixed> $facets
+     * @return array<int, array{slug: string, label: string, type: string, source: string}>
+     */
+    private function normalizeFacets(array $facets): array
+    {
+        $normalized = [];
+        foreach ($facets as $facet) {
+            if (is_array($facet)) {
+                $normalized[] = Facet::fromArray($facet)->toArray();
+            }
+        }
+
+        return $normalized;
     }
 
     /**

@@ -14,6 +14,8 @@ final class Deactivator
 {
     public static function deactivate(): void
     {
+        wp_clear_scheduled_hook(\Sieve\Hook\IndexerHooks::BACKFILL_HOOK);
+
         flush_rewrite_rules();
     }
 }

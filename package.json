@@ -1,6 +1,6 @@
 {
   "name": "@wppoland/sieve",
-  "version": "0.9.5",
+  "version": "1.0.17",
   "description": "Sieve - fast, accessible faceted filtering for WooCommerce and WordPress",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "env:stop": "wp-env stop",
     "env:clean": "wp-env clean all",
     "capture:wporg": "node scripts/capture-wporg-screenshots.mjs",
+    "check:blocks": "npm run build:blocks && node tests/block-smoke.mjs",
     "check:wporg": "bash scripts/plugin-check.sh",
     "i18n:pot": "npm run build && wp i18n make-pot . languages/sieve.pot --exclude=node_modules,vendor,tests --domain=sieve"
   },
@@ -27,7 +28,7 @@
     "@wordpress/element": "^8.0.1",
     "@wordpress/env": "^11.8.1",
     "@wordpress/i18n": "^6.21.1",
-    "@wordpress/scripts": "^32.4.1",
+    "@wordpress/scripts": "^35.0.0",
     "react": "^18.3",
     "react-dom": "^18.3",
     "typescript": "^5.6",
@@ -42,6 +43,7 @@
     "minimatch": "^10.2.5",
     "serialize-javascript": "^7.0.5",
     "uuid": "^14.0.0",
-    "webpack-dev-server": "^5.2.5"
+    "webpack-dev-server": "^5.2.5",
+    "qs": ">=6.16.0"
   }
 }

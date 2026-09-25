@@ -15,10 +15,14 @@ final class Activator
     {
         (new Migrator())->run();
 
-        // Force a fresh initial index on (re)activation: clearing the flag makes
-        // the next admin load build the index, so facets work immediately even
-        // for products that existed before the plugin was activated.
+        // Force a fresh index build on (re)activation: clearing the flag makes the
+        // next admin load schedule the background backfill (or, where wp-cron is
+        // switched off, index its first batch inline), so facets cover products
+        // that existed before the plugin was activated. The cursor goes too, so
+        // the build starts from the first product rather than resuming a walk
+        // that belonged to the previous installation.
         delete_option('sieve_index_ready');
+        delete_option('sieve_index_cursor');
 
         flush_rewrite_rules();
     }
