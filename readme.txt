@@ -158,6 +158,7 @@ Sieve is fully translatable and ships the `sieve.pot` template. Translations are
 = 1.1.11 =
 * Hardening: filter parameters read from the page URL by the shortcode and the block are now sanitised at the moment they are read, not only later in the URL parser.
 * Fixed: an image swatch URL containing percent-encoded characters (for example %20 for a space) lost them on save, because the value went through a text sanitiser before the URL sanitiser. The URL is now sanitised with esc_url_raw() only.
+* The package no longer carries seven shared storefront engines Sieve never loads (wishlist, quick view, add-ons, bundles, checkout, gift cards, media).
 
 = 1.1.10 =
 * Changed: a code comment claimed WooCommerce verifies a nonce on the add-to-cart form. That form carries no nonce, so the comment now says so. Comment correction only, no change in behaviour.
