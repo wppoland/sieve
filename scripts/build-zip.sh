@@ -22,5 +22,7 @@ find "${STAGE}" -name '.DS_Store' -delete
 
 # Exclude .DS_Store at the zip layer too: macOS/Spotlight can recreate it between
 # the find above and the zip, so -x is the only bulletproof guard.
+# zip -r adds to an existing archive, so a stale one keeps files the build no longer ships.
+rm -f /tmp/sieve.zip
 ( cd "${OUT_DIR}" && zip -rqX /tmp/sieve.zip sieve -x '*.DS_Store' )
 echo "Built /tmp/sieve.zip from ${STAGE}"
