@@ -124,7 +124,9 @@ final class SwatchTermFields implements HasHooks
 
         if (isset($_POST['sieve_swatch_image'])) {
             $raw = sanitize_text_field(wp_unslash((string) $_POST['sieve_swatch_image']));
-            $image = is_numeric($raw) ? (string) absint($raw) : esc_url_raw($raw);
+            // sanitize_text_field() strips %XX sequences, so a URL is taken
+            // from the unslashed input through esc_url_raw() instead.
+            $image = is_numeric($raw) ? (string) absint($raw) : esc_url_raw(wp_unslash((string) $_POST['sieve_swatch_image']));
 
             if ('' === $image || '0' === $image) {
                 delete_term_meta($termId, self::IMAGE_META);
