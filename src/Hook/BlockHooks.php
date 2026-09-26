@@ -45,8 +45,8 @@ final class BlockHooks implements HasHooks
     {
         $this->frontend->enqueue();
 
-        // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $params = wp_unslash($_GET);
+        // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only public filter state, nothing is changed.
+        $params = map_deep(wp_unslash($_GET), 'sanitize_text_field');
 
         return $this->engine->container($this->url->parse(is_array($params) ? $params : []));
     }

@@ -54,3 +54,11 @@ languages/*.mo
 languages/*.json
 languages/*.l10n.php
 languages/*.po~
+# storefront-kit engines Sieve never loads; shipping them only adds code paths
+/lib/storefront-kit/AddOns
+/lib/storefront-kit/Bundle
+/lib/storefront-kit/Checkout
+/lib/storefront-kit/GiftCard
+/lib/storefront-kit/Media
+/lib/storefront-kit/QuickView
+/lib/storefront-kit/Wishlist
