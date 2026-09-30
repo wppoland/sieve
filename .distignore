@@ -62,3 +62,4 @@ languages/*.po~
 /lib/storefront-kit/Media
 /lib/storefront-kit/QuickView
 /lib/storefront-kit/Wishlist
+/lib/storefront-kit/Compare
