@@ -23,6 +23,7 @@
 /phpstan-baseline.neon
 /playwright.config.ts
 /tsconfig.json
+/eslint.config.cjs
 /vite.config.ts
 /SPEC.md
 /README.md
