@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.12
+Stable tag: 1.1.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,13 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.13 =
+* Fixed: ticking a parent category (Clothing above Shirts) in the category tree returned no products, and the parent showed no count. A product is now indexed under every ancestor of its categories, the way a WooCommerce category archive counts it, so a parent's count includes its subcategories. The index rebuilds itself once after the update.
+* Fixed: facet counts and the price range bounds included products the grid does not show: products hidden from the catalogue, and out-of-stock products when "Hide out of stock items" is on. A count now matches the number of products the shopper gets when ticking it.
+* Fixed: on phones the filter drawer closed after every change, so only one filter could be picked per opening and the "Show results" bar was never reached. The drawer now stays open until "Show results" or a tap on the backdrop.
+* Uninstall now also removes the swatch colours and images stored on attribute terms.
+* The package no longer carries the ESLint configuration file.
 
 = 1.1.12 =
 * The package no longer carries the compare engine, which Sieve never loads.
