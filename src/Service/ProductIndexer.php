@@ -168,14 +168,33 @@ final class ProductIndexer
 
         foreach ($taxonomies as $taxonomy) {
             $terms = get_the_terms($productId, $taxonomy);
-            if (is_array($terms)) {
-                foreach ($terms as $term) {
-                    $rows[] = [
-                        'facet_slug' => $taxonomy,
-                        'value' => $term->slug,
-                        'value_num' => null,
-                    ];
+            if (! is_array($terms)) {
+                continue;
+            }
+
+            // A product in Shirts also belongs to Clothing, the way a WooCommerce
+            // category archive counts it. Indexing only the assigned term left a
+            // parent node in the tree facet with no count, and ticking it
+            // returned no products at all.
+            $slugs = [];
+            foreach ($terms as $term) {
+                $slugs[$term->slug] = true;
+                if (is_taxonomy_hierarchical($taxonomy)) {
+                    foreach (get_ancestors($term->term_id, $taxonomy, 'taxonomy') as $ancestorId) {
+                        $ancestor = get_term($ancestorId, $taxonomy);
+                        if ($ancestor instanceof \WP_Term) {
+                            $slugs[$ancestor->slug] = true;
+                        }
+                    }
                 }
+            }
+
+            foreach (array_keys($slugs) as $slug) {
+                $rows[] = [
+                    'facet_slug' => $taxonomy,
+                    'value' => (string) $slug,
+                    'value_num' => null,
+                ];
             }
         }
 
