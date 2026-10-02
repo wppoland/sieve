@@ -224,6 +224,7 @@ final class IndexRepository implements FacetFilterRepository
 
         $sql = "SELECT value, COUNT(DISTINCT object_id) AS c FROM {$this->table} WHERE facet_slug = %s";
         $params = [$facetSlug];
+        $this->excludeHiddenFromCatalog($sql, $params);
 
         if (null !== $restrictIds) {
             if (empty($restrictIds)) {
@@ -255,19 +256,49 @@ final class IndexRepository implements FacetFilterRepository
     {
         global $wpdb;
 
-        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-        $row = $wpdb->get_row(
-            $wpdb->prepare(
-                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                "SELECT MIN(value_num) AS lo, MAX(value_num) AS hi FROM {$this->table} WHERE facet_slug = %s AND value_num IS NOT NULL",
-                $facetSlug,
-            ),
-            ARRAY_A
-        );
+        $sql = "SELECT MIN(value_num) AS lo, MAX(value_num) AS hi FROM {$this->table} WHERE facet_slug = %s AND value_num IS NOT NULL";
+        $params = [$facetSlug];
+        $this->excludeHiddenFromCatalog($sql, $params);
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $row = $wpdb->get_row($wpdb->prepare($sql, $params), ARRAY_A);
 
         return [
             'min' => isset($row['lo']) ? (float) $row['lo'] : 0.0,
             'max' => isset($row['hi']) ? (float) $row['hi'] : 0.0,
         ];
+    }
+
+    /**
+     * Leave out products the shop grid never shows, so a count or a price bound
+     * cannot promise results the grid then hides. The grid query takes its tax
+     * query from WooCommerce (WC_Query::get_tax_query), which drops products
+     * excluded from the catalogue and, when "Hide out of stock items" is on,
+     * out-of-stock ones. Both are product_visibility terms, so the same terms
+     * are excluded here.
+     *
+     * @param array<int, mixed> $params
+     */
+    private function excludeHiddenFromCatalog(string &$sql, array &$params): void
+    {
+        if (! function_exists('wc_get_product_visibility_term_ids')) {
+            return;
+        }
+
+        $terms = wc_get_product_visibility_term_ids();
+        $hidden = [(int) ($terms['exclude-from-catalog'] ?? 0)];
+        if ('yes' === get_option('woocommerce_hide_out_of_stock_items')) {
+            $hidden[] = (int) ($terms['outofstock'] ?? 0);
+        }
+        $hidden = array_values(array_filter($hidden));
+        if ([] === $hidden) {
+            return;
+        }
+
+        global $wpdb;
+
+        $placeholders = implode(', ', array_fill(0, count($hidden), '%d'));
+        $sql .= " AND object_id NOT IN (SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id IN ({$placeholders}))";
+        $params = array_merge($params, $hidden);
     }
 }

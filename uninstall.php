@@ -7,8 +7,8 @@
  * permanently, on every site that ever tried it.
  *
  * Everything here is Sieve's own. The index is derived data, rebuilt from the
- * catalogue whenever the plugin is installed again, so dropping it destroys
- * nothing a merchant typed.
+ * catalogue whenever the plugin is installed again. The swatch colours and
+ * images on attribute terms are Sieve's settings too and go with it.
  *
  * Multisite-aware: the table and options are per site, the user meta is global.
  *
@@ -32,6 +32,11 @@ function sieve_uninstall_cleanup(): void
     delete_option('sieve_index_cursor');
     delete_transient('sieve_indexing_lock');
     wp_clear_scheduled_hook('sieve_index_backfill');
+
+    // Swatch colour and image on attribute terms, written by the term edit
+    // screen. Term meta lives in each site's own table.
+    delete_metadata('term', 0, 'sieve_swatch_color', '', true);
+    delete_metadata('term', 0, 'sieve_swatch_image', '', true);
 
     // The index is Sieve's own table, created by its migration.
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared

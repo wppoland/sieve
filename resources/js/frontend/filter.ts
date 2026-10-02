@@ -458,7 +458,12 @@ function onClick( app: HTMLElement, event: Event ): void {
 		return;
 	}
 
-	if ( el.closest( '[data-sieve-close]' ) ) {
+	// The open drawer's backdrop is the app's ::before, so a tap on it lands
+	// on the app element itself.
+	if (
+		el.closest( '[data-sieve-close]' ) ||
+		( el === app && app.classList.contains( 'is-drawer-open' ) )
+	) {
 		closeDrawer( app );
 	}
 }
@@ -909,7 +914,8 @@ async function run( app: HTMLElement, pushHistory = true ): Promise< void > {
 			if ( results ) {
 				results.style.minHeight = '';
 			}
-			closeDrawer( app );
+			// The drawer stays open: on a phone the shopper picks several
+			// filters, then closes it with the sticky "Show results" bar.
 		}
 	}
 }
