@@ -64,3 +64,7 @@ languages/*.po~
 /lib/storefront-kit/QuickView
 /lib/storefront-kit/Wishlist
 /lib/storefront-kit/Compare
+/lib/storefront-kit/Badge
+/lib/storefront-kit/Waitlist
+/lib/storefront-kit/Pricing
+/lib/storefront-kit/Support
