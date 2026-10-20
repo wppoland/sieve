@@ -33,6 +33,7 @@
 	grid-template-columns: 1fr;
 	gap: var(--sieve-gap);
 	color: var(--sieve-text);
+	container-type: inline-size;
 }
 
 @media (min-width: 783px) {
@@ -40,6 +41,50 @@
 		grid-template-columns: minmax(220px, 280px) 1fr;
 		align-items: start;
 	}
+}
+
+/* When container is narrow or Sieve is placed inside a widget / sidebar */
+@container (max-width: 640px) {
+	.sieve-app {
+		grid-template-columns: 1fr !important;
+	}
+}
+
+.widget .sieve-app,
+.widget-area .sieve-app,
+.sidebar .sieve-app,
+aside .sieve-app,
+.wp-block-widget-area .sieve-app,
+.elementor-widget-sieve .sieve-app,
+.elementor-widget .sieve-app,
+.sieve-app--stacked {
+	grid-template-columns: 1fr !important;
+}
+
+/* Reset theme list styling in widget areas */
+.widget .sieve-app ul,
+.widget .sieve-app ol,
+.widget-area .sieve-app ul,
+.widget-area .sieve-app ol,
+.sidebar .sieve-app ul,
+.sidebar .sieve-app ol,
+aside .sieve-app ul,
+aside .sieve-app ol,
+.sieve-app ul,
+.sieve-app ol {
+	list-style: none !important;
+	padding-left: 0 !important;
+	margin-left: 0 !important;
+}
+
+.widget .sieve-app li,
+.widget-area .sieve-app li,
+.sidebar .sieve-app li,
+aside .sieve-app li {
+	list-style: none !important;
+	border-bottom: none !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 /* ---- Facets sidebar ---- */
@@ -63,6 +108,7 @@
 
 /* Collapsible facet header: a full-width button wrapping the title with a
    rotating chevron. Progressive enhancement, without JS the body stays open. */
+.sieve-app button.sieve-facet__toggle,
 .sieve-facet__toggle {
 	display: flex;
 	align-items: center;
@@ -70,14 +116,17 @@
 	gap: 0.5rem;
 	width: 100%;
 	margin: 0 0 0.6rem;
-	padding: 0;
-	border: 0;
-	background: none;
-	color: inherit;
+	padding: 0 !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	background: transparent !important;
+	color: inherit !important;
 	font: inherit;
 	font-weight: 600;
 	cursor: pointer;
 	text-align: start;
+	letter-spacing: normal !important;
+	text-transform: none !important;
 }
 
 .sieve-facet__toggle .sieve-facet__title {
@@ -104,41 +153,85 @@
 }
 
 .sieve-choices {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
 	max-height: 16rem;
 	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: var(--sieve-border) transparent;
+}
+
+.sieve-choices::-webkit-scrollbar {
+	width: 4px;
+}
+
+.sieve-choices::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.sieve-choices::-webkit-scrollbar-thumb {
+	background: var(--sieve-border);
+	border-radius: 4px;
+}
+
+.sieve-choices::-webkit-scrollbar-thumb:hover {
+	background: var(--sieve-muted);
+}
+
+.sieve-choice {
+	margin: 0 0 2px !important;
+	padding: 0 !important;
+	list-style: none !important;
 }
 
 .sieve-choice label {
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
-	padding: 0.25rem 0.4rem;
-	margin-inline: -0.4rem;
-	border-radius: 0.35rem;
+	gap: 0.6rem;
+	padding: 0.35rem 0.5rem;
+	margin-inline: -0.5rem;
+	border-radius: 6px;
 	cursor: pointer;
 	font-size: var(--sieve-fs);
+	line-height: 1.35;
 	transition: background-color 0.12s var(--sieve-ease);
+	user-select: none;
 }
 
 .sieve-choice label:hover {
 	background: var(--sieve-surface-2);
 }
 
+.sieve-choice input:checked ~ .sieve-choice__label {
+	font-weight: 600;
+	color: var(--sieve-text);
+}
+
 .sieve-choice input {
+	flex: 0 0 auto;
+	margin: 0 !important;
+	width: 1rem;
+	height: 1rem;
 	accent-color: var(--sieve-accent);
+	cursor: pointer;
 }
 
 .sieve-choice__label {
 	flex: 1;
+	word-break: break-word;
 }
 
 .sieve-choice__count {
+	margin-inline-start: auto;
+	padding: 0.1rem 0.45rem;
+	border-radius: var(--sieve-radius-pill);
+	background: var(--sieve-surface-2);
 	color: var(--sieve-muted);
-	font-size: 0.8rem;
+	font-size: 0.75rem;
+	font-weight: 500;
 	font-variant-numeric: tabular-nums;
+	line-height: 1.2;
 }
 
 .sieve-dropdown,
@@ -174,14 +267,27 @@
 .sieve-range__min,
 .sieve-range__max {
 	width: 100%;
-	padding: 0.4rem 0.5rem;
+	padding: 0.45rem 0.6rem;
 	border: 1px solid var(--sieve-border);
-	border-radius: 6px;
-	font-size: 0.85rem;
+	border-radius: var(--sieve-radius);
+	font-size: var(--sieve-fs);
+	background: var(--sieve-surface);
+	color: var(--sieve-text);
+	transition: border-color 0.12s var(--sieve-ease), box-shadow 0.12s var(--sieve-ease);
+}
+
+.sieve-range__min:focus,
+.sieve-range__max:focus {
+	outline: none;
+	border-color: var(--sieve-accent);
+	box-shadow: 0 0 0 3px var(--sieve-accent-soft);
 }
 
 .sieve-range__sep {
 	color: var(--sieve-muted);
+	font-weight: 600;
+	flex: 0 0 auto;
+	user-select: none;
 }
 
 /* ---- Swatches ---- */
@@ -683,6 +789,24 @@
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 1.25rem 1rem;
 	}
+}
+
+/* Single column product cards in narrow containers or sidebar widgets */
+@container (max-width: 480px) {
+	.sieve-results ul.products {
+		grid-template-columns: 1fr !important;
+		gap: 1rem !important;
+	}
+}
+
+.widget .sieve-results ul.products,
+.widget-area .sieve-results ul.products,
+.sidebar .sieve-results ul.products,
+aside .sieve-results ul.products,
+.wp-block-widget-area .sieve-results ul.products,
+.elementor-widget-sieve .sieve-results ul.products {
+	grid-template-columns: 1fr !important;
+	gap: 1rem !important;
 }
 
 /* ---- Pagination ---- */

@@ -46,6 +46,7 @@ interface Settings {
 	facets: Facet[];
 	per_page: number;
 	columns: number;
+	layout?: 'sidebar' | 'stacked' | 'inline';
 	appearance: Appearance;
 }
 
@@ -105,7 +106,7 @@ const TYPE_HELP: Record< string, string > = {
 		'sieve'
 	),
 	az_index: __(
-		'An A, Z bar that filters options by first letter. Good for brand lists.',
+		'An A-Z bar that filters options by first letter. Good for brand lists.',
 		'sieve'
 	),
 	range_slider: __(
@@ -376,7 +377,7 @@ function App() {
 
 		for ( const [ group, items ] of groups ) {
 			options.push( {
-				label: `, ${ sourceGroupLabel( group ) }, `,
+				label: `--- ${ sourceGroupLabel( group ) } ---`,
 				value: `__group_${ group }`,
 				disabled: true,
 			} );
@@ -458,11 +459,49 @@ function App() {
 
 			<Panel>
 				<PanelBody
-					title={ __( 'Layout', 'sieve' ) }
+					title={ __( 'Layout & Display', 'sieve' ) }
 					initialOpen={ true }
 				>
-					<Flex>
-						<FlexItem>
+					<div style={ { marginBottom: '1rem' } }>
+						<SelectControl
+							label={ __( 'Filter layout', 'sieve' ) }
+							help={ __(
+								'Choose how the filters and the product grid are arranged on the page.',
+								'sieve'
+							) }
+							value={ settings.layout ?? 'sidebar' }
+							options={ [
+								{
+									label: __(
+										'Sidebar (filters on left, products on right)',
+										'sieve'
+									),
+									value: 'sidebar',
+								},
+								{
+									label: __(
+										'Stacked (filters above product grid)',
+										'sieve'
+									),
+									value: 'stacked',
+								},
+								{
+									label: __(
+										'Inline bar (compact horizontal filters)',
+										'sieve'
+									),
+									value: 'inline',
+								},
+							] }
+							onChange={ ( layout: string ) =>
+								update( {
+									layout: layout as Settings[ 'layout' ],
+								} )
+							}
+						/>
+					</div>
+					<Flex gap={ 4 } align="flex-start">
+						<FlexItem style={ { flex: 1 } }>
 							<NumberControl
 								label={ __( 'Products per page', 'sieve' ) }
 								help={ __(
@@ -478,7 +517,7 @@ function App() {
 								}
 							/>
 						</FlexItem>
-						<FlexItem>
+						<FlexItem style={ { flex: 1 } }>
 							<NumberControl
 								label={ __( 'Columns', 'sieve' ) }
 								help={ __(
@@ -505,11 +544,13 @@ function App() {
 				/>
 			</Panel>
 
-			<h2>{ __( 'Facets', 'sieve' ) }</h2>
+			<h2 style={ { margin: '2rem 0 0.75rem', fontSize: '18px' } }>
+				{ __( 'Facets', 'sieve' ) }
+			</h2>
 			{ settings.facets.length === 0 && (
 				<Notice status="info" isDismissible={ false }>
 					{ __(
-						'No facets yet. Pick a source below, click Add, then Save settings. Shoppers will not see filters until at least one facet is configured.',
+						'No facets yet. Pick a source below, click Add facet, then Save settings. Shoppers will not see filters until at least one facet is configured.',
 						'sieve'
 					) }
 				</Notice>
@@ -518,11 +559,88 @@ function App() {
 				<Card
 					key={ facet.slug }
 					size="small"
-					style={ { marginBottom: '0.75rem' } }
+					style={ {
+						marginBottom: '0.85rem',
+						border: '1px solid #dcdcde',
+						borderRadius: '8px',
+						boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+						overflow: 'hidden',
+					} }
 				>
-					<CardBody>
-						<Flex align="flex-end" gap={ 3 }>
-							<FlexBlock>
+					<CardHeader
+						style={ {
+							background: '#f8fafc',
+							borderBottom: '1px solid #e2e8f0',
+							padding: '8px 14px',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'space-between',
+						} }
+					>
+						<div
+							style={ {
+								display: 'flex',
+								alignItems: 'center',
+								gap: '8px',
+							} }
+						>
+							<Button
+								icon="arrow-up-alt2"
+								label={ __( 'Move up', 'sieve' ) }
+								disabled={ index === 0 }
+								onClick={ () => move( index, -1 ) }
+								size="small"
+							/>
+							<Button
+								icon="arrow-down-alt2"
+								label={ __( 'Move down', 'sieve' ) }
+								disabled={ index === settings.facets.length - 1 }
+								onClick={ () => move( index, 1 ) }
+								size="small"
+							/>
+							<strong
+								style={ {
+									fontSize: '13px',
+									color: '#1e293b',
+								} }
+							>
+								{ facet.label || facet.slug }
+							</strong>
+							<code
+								style={ {
+									fontSize: '11px',
+									padding: '2px 6px',
+									background: '#e2e8f0',
+									color: '#475569',
+									borderRadius: '4px',
+								} }
+								title={ __(
+									'Internal source key (taxonomy, attribute or product field) used by Sieve.',
+									'sieve'
+								) }
+							>
+								{ facet.source }
+							</code>
+						</div>
+						<Button
+							icon="trash"
+							isDestructive
+							label={ __( 'Remove', 'sieve' ) }
+							onClick={ () => remove( index ) }
+							size="small"
+						/>
+					</CardHeader>
+					<CardBody style={ { padding: '14px' } }>
+						<div
+							style={ {
+								display: 'grid',
+								gridTemplateColumns:
+									'repeat(auto-fit, minmax(220px, 1fr))',
+								gap: '16px',
+								alignItems: 'start',
+							} }
+						>
+							<div>
 								<TextControl
 									label={ __( 'Label', 'sieve' ) }
 									value={ facet.label }
@@ -530,8 +648,8 @@ function App() {
 										updateFacet( index, { label } )
 									}
 								/>
-							</FlexBlock>
-							<FlexBlock>
+							</div>
+							<div>
 								<SelectControl
 									label={ __( 'Type', 'sieve' ) }
 									value={ facet.type }
@@ -539,68 +657,89 @@ function App() {
 										facet.source,
 										typeOptions
 									) }
-									help={ typeHelp[ facet.type ] }
 									onChange={ ( type: string ) =>
 										updateFacet( index, { type } )
 									}
 								/>
-							</FlexBlock>
-							<FlexItem>
-								<span
-									title={ __(
-										'Internal source key (taxonomy, attribute or product field) used by Sieve.',
-										'sieve'
-									) }
-								>
-									<code>{ facet.source }</code>
-								</span>
-							</FlexItem>
-							<FlexItem>
-								<Button
-									icon="arrow-up-alt2"
-									label={ __( 'Move up', 'sieve' ) }
-									onClick={ () => move( index, -1 ) }
-								/>
-								<Button
-									icon="arrow-down-alt2"
-									label={ __( 'Move down', 'sieve' ) }
-									onClick={ () => move( index, 1 ) }
-								/>
-								<Button
-									icon="trash"
-									isDestructive
-									label={ __( 'Remove', 'sieve' ) }
-									onClick={ () => remove( index ) }
-								/>
-							</FlexItem>
-						</Flex>
+								{ typeHelp[ facet.type ] && (
+									<p
+										style={ {
+											margin: '4px 0 0',
+											fontSize: '12px',
+											color: '#64748b',
+											lineHeight: 1.4,
+										} }
+									>
+										{ typeHelp[ facet.type ] }
+									</p>
+								) }
+							</div>
+						</div>
 					</CardBody>
 				</Card>
 			) ) }
 
-			<Flex align="flex-end" gap={ 3 } style={ { marginTop: '1rem' } }>
-				<FlexBlock>
-					<SelectControl
-						label={ __( 'Add a facet', 'sieve' ) }
-						help={ __(
+			<Card
+				size="small"
+				style={ {
+					marginTop: '1.25rem',
+					marginBottom: '1.5rem',
+					border: '1px dashed #cbd5e1',
+					borderRadius: '8px',
+					background: '#f8fafc',
+				} }
+			>
+				<CardBody style={ { padding: '14px' } }>
+					<div
+						style={ {
+							fontWeight: 600,
+							fontSize: '13px',
+							marginBottom: '4px',
+							color: '#1e293b',
+						} }
+					>
+						{ __( 'Add a facet', 'sieve' ) }
+					</div>
+					<p
+						style={ {
+							margin: '0 0 10px',
+							fontSize: '12px',
+							color: '#64748b',
+						} }
+					>
+						{ __(
 							'Pick a product attribute, taxonomy or field to filter by. Sources are detected from your store automatically.',
 							'sieve'
 						) }
-						value={ newSource }
-						options={ groupedSourceOptions() }
-						onChange={ setNewSource }
-					/>
-				</FlexBlock>
-				<FlexItem>
-					<Button
-						variant="secondary"
-						onClick={ addFacet }
-						disabled={ ! newSource }
+					</p>
+					<div
+						style={ {
+							display: 'flex',
+							gap: '10px',
+							alignItems: 'center',
+						} }
 					>
-						{ __( 'Add', 'sieve' ) }
-					</Button>
-				</FlexItem>
-			</Flex>
+						<div style={ { flex: 1 } }>
+							<SelectControl
+								value={ newSource }
+								options={ groupedSourceOptions() }
+								onChange={ setNewSource }
+								aria-label={ __( 'Select a source', 'sieve' ) }
+							/>
+						</div>
+						<Button
+							variant="secondary"
+							onClick={ addFacet }
+							disabled={
+								! newSource ||
+								newSource.startsWith( '__group_' )
+							}
+						>
+							{ __( 'Add facet', 'sieve' ) }
+						</Button>
+					</div>
+				</CardBody>
+			</Card>
 
 			<div style={ { marginTop: '1.5rem' } }>
 				<Button
