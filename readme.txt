@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.14
+Stable tag: 1.1.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,11 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.1.15 =
+* Fixed: admin facet builder card layout and appearance color picker alignment.
+* Fixed: filter presentation in widget areas and sidebars now strictly maintains a single-column layout, resetting theme-specific list bullets and button styles.
+* Fixed: frontend filter UI refinements, including pill-style count badges, improved range slider inputs and placeholders, and thin scrollbars for choice lists.
 
 = 1.1.14 =
 * Fixed: the package shipped shared badge, waitlist, pricing and support code that Sieve never uses. Next to Marks or Waitlist, that copy could load in place of theirs and break them. It is no longer included.

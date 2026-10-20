@@ -267,10 +267,10 @@ final class FacetRenderer
             '<div class="sieve-range" data-min="%1$s" data-max="%2$s">'
                 . '<div class="sieve-range__inputs">'
                 . '<label class="screen-reader-text" for="sieve-%3$s-min">%8$s</label>'
-                . '<input type="number" id="sieve-%3$s-min" class="sieve-range__min" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%4$s">'
-                . '<span class="sieve-range__sep" aria-hidden="true">, </span>'
+                . '<input type="number" id="sieve-%3$s-min" class="sieve-range__min" placeholder="%8$s" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%4$s">'
+                . '<span class="sieve-range__sep" aria-hidden="true">-</span>'
                 . '<label class="screen-reader-text" for="sieve-%3$s-max">%9$s</label>'
-                . '<input type="number" id="sieve-%3$s-max" class="sieve-range__max" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%5$s">'
+                . '<input type="number" id="sieve-%3$s-max" class="sieve-range__max" placeholder="%9$s" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%5$s">'
                 . '</div>'
                 . '<input type="hidden" name="%6$s" class="sieve-range__value" value="%7$s">'
                 . '</div>',

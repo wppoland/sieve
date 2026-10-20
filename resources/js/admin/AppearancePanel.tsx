@@ -10,7 +10,6 @@ import {
 	Button,
 	Card,
 	CardBody,
-	ColorPicker,
 	Flex,
 	FlexBlock,
 	FlexItem,
@@ -158,35 +157,88 @@ export default function AppearancePanel( { appearance, onChange }: Props ) {
 
 			{ ! isUnstyled && (
 				<>
-					<Flex
-						gap={ 4 }
-						align="flex-start"
-						wrap
-						style={ { marginTop: '1rem' } }
+					<div
+						style={ {
+							display: 'grid',
+							gridTemplateColumns:
+								'repeat(auto-fit, minmax(200px, 1fr))',
+							gap: '12px',
+							marginTop: '1rem',
+							marginBottom: '1rem',
+						} }
 					>
 						{ COLOR_FIELDS.map( ( field ) => (
-							<FlexItem key={ field.key }>
-								<div
+							<div
+								key={ field.key }
+								style={ {
+									border: '1px solid #dcdcde',
+									borderRadius: '6px',
+									padding: '10px 12px',
+									background: '#ffffff',
+								} }
+							>
+								<label
+									htmlFor={ `sieve-color-${ field.key }` }
 									style={ {
-										fontSize: '11px',
+										display: 'block',
+										fontSize: '12px',
 										fontWeight: 600,
-										textTransform: 'uppercase',
-										marginBottom: '0.25rem',
+										color: '#1e293b',
+										marginBottom: '8px',
 									} }
 								>
-									{ field.label }{ ' ' }
-									<code>{ colors[ field.key ] }</code>
+									{ field.label }
+								</label>
+								<div
+									style={ {
+										display: 'flex',
+										alignItems: 'center',
+										gap: '8px',
+									} }
+								>
+									<input
+										id={ `sieve-color-${ field.key }` }
+										type="color"
+										value={
+											normaliseHex( colors[ field.key ] ) ??
+											'#000000'
+										}
+										onChange={ ( e ) =>
+											setColor( field.key, e.target.value )
+										}
+										style={ {
+											width: '38px',
+											height: '38px',
+											padding: '2px',
+											border: '1px solid #8c8f94',
+											borderRadius: '4px',
+											cursor: 'pointer',
+											background: '#fff',
+											flexShrink: 0,
+										} }
+										aria-label={ field.label }
+									/>
+									<input
+										type="text"
+										value={ colors[ field.key ] }
+										onChange={ ( e ) =>
+											setColor( field.key, e.target.value )
+										}
+										placeholder="#000000"
+										style={ {
+											fontFamily: 'monospace',
+											fontSize: '13px',
+											padding: '0 8px',
+											height: '38px',
+											border: '1px solid #8c8f94',
+											borderRadius: '4px',
+											width: '100%',
+										} }
+									/>
 								</div>
-								<ColorPicker
-									color={ colors[ field.key ] }
-									onChange={ ( value: string ) =>
-										setColor( field.key, value )
-									}
-									enableAlpha={ false }
-								/>
-							</FlexItem>
+							</div>
 						) ) }
-					</Flex>
+					</div>
 
 					{ accentRatio !== null && accentRatio < 4.5 && (
 						<Notice
