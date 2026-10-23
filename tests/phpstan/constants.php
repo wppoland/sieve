@@ -11,6 +11,8 @@ namespace {
     if (! defined('ABSPATH')) {
         define('ABSPATH', '/tmp/wordpress/');
     }
+    defined('COOKIEPATH') || define('COOKIEPATH', '/');
+    defined('COOKIE_DOMAIN') || define('COOKIE_DOMAIN', '');
     // WC_VERSION is provided by the WooCommerce stubs bootstrap file.
 }
 
