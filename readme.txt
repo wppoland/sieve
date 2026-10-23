@@ -8,7 +8,7 @@ Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Fast, accessible faceted product filtering for WooCommerce: AJAX filters, a mobile drawer, and Core Web Vitals by design.
+Help shoppers find the right product fast: filter by category, price and stock, see live counts, and get results without a page reload.
 
 == Description ==
 
@@ -20,6 +20,8 @@ Filtering that feels instant:
 
 * AJAX filtering with no page reload, and shareable, bookmarkable URLs
 * Live dependent counts that update as filters are applied
+* Dual-handle price slider kept in sync with the minimum and maximum fields, and usable with the keyboard
+* Options with no matches hidden, or shown dimmed with a count of 0 (your choice)
 * Active-filter chips, one-click reset, sorting and pagination built in
 
 Every facet type you need:
@@ -139,6 +141,8 @@ Yes. This plugin is compatible with WordPress Multisite. Network activate it or 
 1. Facet builder: configure product facets, index rebuild status, and storefront layout settings.
 2. Appearance customizer: style presets, brand colors, border styling, and live preview.
 3. Facet management: add new taxonomy or attribute facets, reorder controls, and adjust filter types.
+4. Drag the price handles and the grid refilters; categories with nothing in that range stay in place, dimmed at 0.
+5. Ticking On sale with "Show dimmed" on: options with no matching products are greyed out and disabled.
 
 == Development ==
 
