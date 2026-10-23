@@ -780,6 +780,14 @@ aside .sieve-app li {
 	gap: 1.75rem 1.5rem;
 }
 
+/* Theme clearfix pseudo-elements (Storefront, WooCommerce: content " ";
+ * display: table) become grid items and leave an empty first cell. */
+.sieve-results ul.products::before,
+.sieve-results ul.products::after {
+	content: none !important;
+	display: none !important;
+}
+
 .sieve-results ul.products li.product {
 	width: auto !important;
 	margin: 0 !important;
