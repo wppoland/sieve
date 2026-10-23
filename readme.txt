@@ -136,9 +136,9 @@ Yes. This plugin is compatible with WordPress Multisite. Network activate it or 
 
 == Screenshots ==
 
-1. Faceted filtering on a product page: categories, price range, availability and on-sale facets with live dependent counts, active-filter chips and a results grid.
-2. Mobile filter drawer with a sticky "Show results" bar.
-3. The facet builder: add, reorder and retype facets, set the layout, and rebuild the index.
+1. Facet builder: configure product facets, index rebuild status, and storefront layout settings.
+2. Appearance customizer: style presets, brand colors, border styling, and live preview.
+3. Facet management: add new taxonomy or attribute facets, reorder controls, and adjust filter types.
 
 == Development ==
 
