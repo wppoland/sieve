@@ -131,6 +131,19 @@ final class FacetCountService
     }
 
     /**
+     * Every value of $universe absent from $counts, added with count 0. The
+     * renderer shows those as disabled options (the "show dimmed" setting).
+     *
+     * @param array<string, int> $counts
+     * @param array<string, int> $universe
+     * @return array<string, int>
+     */
+    public static function withZeroes(array $counts, array $universe): array
+    {
+        return array_replace(array_fill_keys(array_keys($universe), 0), $counts);
+    }
+
+    /**
      * @param array<string, string> $filters
      * @param array<int, int>|null $searchIds
      */

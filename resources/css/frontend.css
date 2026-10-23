@@ -258,6 +258,108 @@ aside .sieve-app li {
 }
 
 /* ---- Range ---- */
+/* Two native range inputs stacked on one track. The inputs ignore the pointer
+   and only their thumbs take it, so either thumb can be grabbed. The filled
+   segment is painted from --sieve-lo / --sieve-hi (set server side, then by JS),
+   inset by half a thumb so it lines up with the thumb centres. */
+.sieve-range__slider {
+	--sieve-thumb: 1.125rem;
+	--sieve-range-dir: to right;
+	position: relative;
+	height: 1.5rem;
+	margin: 0.25rem 0 0.75rem;
+}
+
+.sieve-range__slider:dir(rtl) {
+	--sieve-range-dir: to left;
+}
+
+.sieve-range__slider::before {
+	content: "";
+	position: absolute;
+	inset-inline: calc(var(--sieve-thumb) / 2);
+	top: 50%;
+	height: 4px;
+	transform: translateY(-50%);
+	border-radius: var(--sieve-radius-pill);
+	background: linear-gradient(
+		var(--sieve-range-dir),
+		var(--sieve-border) var(--sieve-lo, 0%),
+		var(--sieve-accent) var(--sieve-lo, 0%),
+		var(--sieve-accent) var(--sieve-hi, 100%),
+		var(--sieve-border) var(--sieve-hi, 100%)
+	);
+}
+
+.sieve-range__thumb {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: none;
+	pointer-events: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+.sieve-range__thumb--max,
+.sieve-range__slider.is-min-top .sieve-range__thumb--min {
+	z-index: 2;
+}
+
+.sieve-range__slider.is-min-top .sieve-range__thumb--max {
+	z-index: 1;
+}
+
+.sieve-range__thumb::-webkit-slider-runnable-track {
+	height: 100%;
+	background: none;
+}
+
+.sieve-range__thumb::-moz-range-track {
+	background: none;
+}
+
+.sieve-range__thumb::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	pointer-events: auto;
+	width: var(--sieve-thumb);
+	height: var(--sieve-thumb);
+	margin-top: calc((1.5rem - var(--sieve-thumb)) / 2);
+	border: 2px solid var(--sieve-accent);
+	border-radius: 50%;
+	background: var(--sieve-surface);
+	box-shadow: 0 1px 3px rgba(17, 24, 39, 0.2);
+	cursor: grab;
+}
+
+.sieve-range__thumb::-moz-range-thumb {
+	pointer-events: auto;
+	box-sizing: border-box;
+	width: var(--sieve-thumb);
+	height: var(--sieve-thumb);
+	border: 2px solid var(--sieve-accent);
+	border-radius: 50%;
+	background: var(--sieve-surface);
+	box-shadow: 0 1px 3px rgba(17, 24, 39, 0.2);
+	cursor: grab;
+}
+
+.sieve-range__thumb:focus {
+	outline: none;
+}
+
+.sieve-range__thumb:focus-visible::-webkit-slider-thumb {
+	box-shadow: 0 0 0 4px var(--sieve-accent-soft), 0 0 0 2px var(--sieve-accent);
+}
+
+.sieve-range__thumb:focus-visible::-moz-range-thumb {
+	box-shadow: 0 0 0 4px var(--sieve-accent-soft), 0 0 0 2px var(--sieve-accent);
+}
+
 .sieve-range__inputs {
 	display: flex;
 	align-items: center;
@@ -1104,4 +1206,22 @@ aside .sieve-results ul.products,
 }
 .sieve-app[data-sieve-style="soft"] .sieve-page {
 	border-radius: 6px;
+}
+
+/* ---- Options with no matching products ("Show dimmed" setting) ---- */
+.sieve-choice.is-empty > label,
+.sieve-tree__item.is-empty > label,
+.sieve-swatch.is-empty > label {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
+.sieve-choice.is-empty > label:hover,
+.sieve-tree__item.is-empty > label:hover {
+	background: none;
+}
+
+.sieve-choice.is-empty input,
+.sieve-tree__item.is-empty > label input {
+	cursor: not-allowed;
 }

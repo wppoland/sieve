@@ -273,6 +273,13 @@ final class FilterEngine
     {
         $allCounts = $this->counts->batchCounts($facets, $filters, $searchIds);
 
+        // "Show dimmed": the unfiltered value set (one batched query) supplies
+        // the options the current selection rules out, merged in as count 0.
+        $config = $this->settings->all();
+        $universe = 'show' === Settings::zeroCounts($config['zero_counts'] ?? null)
+            ? $this->counts->batchCounts($facets, [], null)
+            : [];
+
         $html = '';
         foreach ($facets as $facet) {
             if ($facet->isSearch()) {
@@ -289,7 +296,10 @@ final class FilterEngine
                 continue;
             }
 
-            $counts = $allCounts[$facet->slug] ?? $this->counts->countsFor($facet, $facets, $filters, $searchIds);
+            $counts = FacetCountService::withZeroes(
+                $allCounts[$facet->slug] ?? $this->counts->countsFor($facet, $facets, $filters, $searchIds),
+                $universe[$facet->slug] ?? [],
+            );
             $html .= $this->facetRenderer->render($facet, $counts, $selected);
         }
 

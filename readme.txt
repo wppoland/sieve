@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.1.15
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,13 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.2.0 =
+* New: the price filter has a dual-handle range slider, kept in sync with the minimum and maximum fields. Both handles work with the keyboard (arrow keys, Page Up, Page Down, Home, End).
+* New: setting "Options with no matches" under Layout & Display. Hide (the default) removes options that would return no products; Show dimmed keeps them in place, greyed out and disabled with a count of 0.
+* Fixed: the Filter layout setting was not saved and fell back to Sidebar.
+* Fixed: clearing a price field no longer sends an invalid price range.
+* Improved: facet counts are fetched in one batched query instead of one query per facet.
 
 = 1.1.15 =
 * Fixed: admin facet builder card layout and appearance color picker alignment.
