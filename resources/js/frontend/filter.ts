@@ -8,6 +8,7 @@
  * yields to the main thread to protect INP.
  */
 import '../../css/frontend.css';
+import { clampPair, percent } from './range';
 
 interface SieveData {
 	restUrl: string;
@@ -96,6 +97,15 @@ function setup( app: HTMLElement ): void {
 		if ( target.hasAttribute( 'data-sieve-filter-options' ) ) {
 			return;
 		}
+		// A price number field already scheduled the fetch on input. Its change
+		// fires again on blur, and the facets swap blurs it, which sent the same
+		// request twice and pushed a duplicate history entry (Back did nothing).
+		if (
+			target.classList.contains( 'sieve-range__min' ) ||
+			target.classList.contains( 'sieve-range__max' )
+		) {
+			return;
+		}
 		if (
 			target.closest( '[data-sieve-facets]' ) ||
 			target.closest( '[data-sieve-sort]' )
@@ -109,6 +119,12 @@ function setup( app: HTMLElement ): void {
 		const target = event.target as HTMLElement;
 		if ( target.hasAttribute( 'data-sieve-filter-options' ) ) {
 			filterOptions( target as HTMLInputElement );
+			return;
+		}
+		// A dragged thumb fires input on every step: mirror it into the number
+		// inputs only. The fetch waits for change (pointer release or a key).
+		if ( target.classList.contains( 'sieve-range__thumb' ) ) {
+			onThumb( target as HTMLInputElement );
 			return;
 		}
 		if (
@@ -578,29 +594,86 @@ function closeDrawer( app: HTMLElement ): void {
 
 /**
  * Mirror the two price number inputs into the hidden facet value, clearing it
- * when the range spans the full bounds so an untouched slider adds no filter.
+ * when the range spans the full bounds so an untouched slider adds no filter,
+ * and move the slider thumbs to match.
  * @param app
  */
 function syncRanges( app: HTMLElement ): void {
-	app.querySelectorAll< HTMLElement >( '.sieve-range' ).forEach(
-		( range ) => {
-			const minEl =
-				range.querySelector< HTMLInputElement >( '.sieve-range__min' );
-			const maxEl =
-				range.querySelector< HTMLInputElement >( '.sieve-range__max' );
-			const hidden = range.querySelector< HTMLInputElement >(
-				'.sieve-range__value'
-			);
-			if ( ! minEl || ! maxEl || ! hidden ) {
-				return;
-			}
-			const lo = parseFloat( minEl.value );
-			const hi = parseFloat( maxEl.value );
-			const bMin = parseFloat( range.dataset.min ?? '0' );
-			const bMax = parseFloat( range.dataset.max ?? '0' );
-			hidden.value = lo <= bMin && hi >= bMax ? '' : `${ lo }-${ hi }`;
-		}
+	app.querySelectorAll< HTMLElement >( '.sieve-range' ).forEach( syncRange );
+}
+
+function syncRange( range: HTMLElement ): void {
+	const minEl =
+		range.querySelector< HTMLInputElement >( '.sieve-range__min' );
+	const maxEl =
+		range.querySelector< HTMLInputElement >( '.sieve-range__max' );
+	const hidden = range.querySelector< HTMLInputElement >(
+		'.sieve-range__value'
 	);
+	if ( ! minEl || ! maxEl || ! hidden ) {
+		return;
+	}
+	const bMin = parseFloat( range.dataset.min ?? '0' );
+	const bMax = parseFloat( range.dataset.max ?? '0' );
+	const [ lo, hi ] = clampPair(
+		parseFloat( minEl.value ),
+		parseFloat( maxEl.value ),
+		bMin,
+		bMax,
+		'min'
+	);
+	hidden.value = lo <= bMin && hi >= bMax ? '' : `${ lo }-${ hi }`;
+
+	const slider = range.querySelector< HTMLElement >( '.sieve-range__slider' );
+	const minThumb = slider?.querySelector< HTMLInputElement >(
+		'.sieve-range__thumb--min'
+	);
+	const maxThumb = slider?.querySelector< HTMLInputElement >(
+		'.sieve-range__thumb--max'
+	);
+	if ( ! slider || ! minThumb || ! maxThumb ) {
+		return;
+	}
+	minThumb.value = String( lo );
+	maxThumb.value = String( hi );
+	const loPct = percent( lo, bMin, bMax );
+	slider.style.setProperty( '--sieve-lo', `${ loPct }%` );
+	slider.style.setProperty( '--sieve-hi', `${ percent( hi, bMin, bMax ) }%` );
+	// Thumbs at the same spot: the one that can still move must be on top.
+	slider.classList.toggle( 'is-min-top', loPct > 50 );
+}
+
+/**
+ * A slider thumb moved: keep it behind the other thumb, copy both values into
+ * the number inputs, then sync the hidden value and the track fill.
+ * @param thumb
+ */
+function onThumb( thumb: HTMLInputElement ): void {
+	const range = thumb.closest< HTMLElement >( '.sieve-range' );
+	const minThumb = range?.querySelector< HTMLInputElement >(
+		'.sieve-range__thumb--min'
+	);
+	const maxThumb = range?.querySelector< HTMLInputElement >(
+		'.sieve-range__thumb--max'
+	);
+	const minEl =
+		range?.querySelector< HTMLInputElement >( '.sieve-range__min' );
+	const maxEl =
+		range?.querySelector< HTMLInputElement >( '.sieve-range__max' );
+	if ( ! range || ! minThumb || ! maxThumb || ! minEl || ! maxEl ) {
+		return;
+	}
+	const moved = thumb === minThumb ? 'min' : 'max';
+	const [ lo, hi ] = clampPair(
+		parseFloat( minThumb.value ),
+		parseFloat( maxThumb.value ),
+		parseFloat( range.dataset.min ?? '0' ),
+		parseFloat( range.dataset.max ?? '0' ),
+		moved
+	);
+	minEl.value = String( lo );
+	maxEl.value = String( hi );
+	syncRange( range );
 }
 
 function removeFilter( app: HTMLElement, slug: string, value: string ): void {
@@ -636,6 +709,9 @@ function removeFilter( app: HTMLElement, slug: string, value: string ): void {
 		if ( hidden ) {
 			hidden.value = '';
 		}
+		if ( range ) {
+			syncRange( range );
+		}
 		return;
 	}
 
@@ -668,9 +744,17 @@ function resetAll( app: HTMLElement ): void {
 	).forEach( ( select ) => {
 		select.value = '';
 	} );
-	app.querySelectorAll< HTMLInputElement >( '.sieve-range__value' ).forEach(
-		( hidden ) => {
-			hidden.value = '';
+	app.querySelectorAll< HTMLElement >( '.sieve-range' ).forEach(
+		( range ) => {
+			const minEl =
+				range.querySelector< HTMLInputElement >( '.sieve-range__min' );
+			const maxEl =
+				range.querySelector< HTMLInputElement >( '.sieve-range__max' );
+			if ( minEl && maxEl ) {
+				minEl.value = range.dataset.min ?? '';
+				maxEl.value = range.dataset.max ?? '';
+			}
+			syncRange( range );
 		}
 	);
 	const sort = app.querySelector< HTMLSelectElement >( '[data-sieve-sort]' );
@@ -979,7 +1063,26 @@ function applyFragments( app: HTMLElement, payload: FilterResponse ): void {
 	const caret = focused
 		? { start: focused.selectionStart, end: focused.selectionEnd }
 		: null;
+	// Same for a price range the shopper is using (a focused thumb or number
+	// field): the live node keeps focus and any value typed since the request
+	// left, so a key press on the slider does not drop keyboard focus.
+	const pageActive = app.ownerDocument.activeElement;
+	const liveRange =
+		pageActive && facets?.contains( pageActive )
+			? pageActive.closest< HTMLElement >( '.sieve-range' )
+			: null;
+	const rangeSlug =
+		liveRange?.closest< HTMLElement >( '[data-sieve-facet]' )?.dataset
+			.sieveFacet ?? '';
 	setHtml( app, '[data-sieve-facets]', payload.facets_html );
+	if ( liveRange && rangeSlug ) {
+		facets
+			?.querySelector< HTMLElement >(
+				`[data-sieve-facet="${ CSS.escape( rangeSlug ) }"] .sieve-range`
+			)
+			?.replaceWith( liveRange );
+		( pageActive as HTMLElement ).focus();
+	}
 	if ( liveSearch ) {
 		const placeholder = facets?.querySelector< HTMLElement >(
 			'[data-sieve-search]'

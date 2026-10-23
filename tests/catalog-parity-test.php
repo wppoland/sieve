@@ -146,6 +146,7 @@ namespace {
     }
 
     function apply_filters(string $hook, $value) { return $value; }
+    function wp_json_encode($data) { return json_encode($data); }
 }
 
 namespace Sieve\Support {
@@ -160,8 +161,13 @@ namespace {
     // The facet-filter contract IndexRepository implements lives in the
     // bundled storefront kit; only the interface is needed here.
     require __DIR__ . '/../lib/storefront-kit/Filter/FacetFilterRepository.php';
+    require __DIR__ . '/../lib/storefront-kit/Filter/FacetFilterResolver.php';
+    require __DIR__ . '/../src/Enum/FacetType.php';
+    require __DIR__ . '/../src/Model/Facet.php';
     require __DIR__ . '/../src/Repository/IndexRepository.php';
     require __DIR__ . '/../src/Service/ProductIndexer.php';
+    require __DIR__ . '/../src/Service/FilterService.php';
+    require __DIR__ . '/../src/Service/FacetCountService.php';
 
     $failures = [];
     $check = static function (bool $ok, string $what) use (&$failures): void {
@@ -197,6 +203,36 @@ namespace {
     $index->numericBounds('price');
     $sql = (string) end($GLOBALS['sieve_test']['sql']);
     $check(str_contains($sql, 'NOT IN (SELECT object_id FROM wp_term_relationships'), 'price slider bounds leave hidden products out');
+
+    // batchedValueCounts assertions
+    $check([] === $index->batchedValueCounts([], [3, 4]), 'batchedValueCounts returns empty array on empty facet slugs');
+    $check([] === $index->batchedValueCounts(['product_cat'], []), 'batchedValueCounts returns empty array on empty matching IDs');
+
+    $index->batchedValueCounts(['product_cat', 'pa_color'], [3, 4]);
+    $sql = (string) end($GLOBALS['sieve_test']['sql']);
+    $check(str_contains($sql, 'WHERE facet_slug IN (product_cat, pa_color)'), 'batched counts query combines facet slugs');
+    $check(str_contains($sql, 'AND object_id IN (3, 4)'), 'batched counts query restricts by matching object ids');
+    $check(str_contains($sql, 'GROUP BY facet_slug, value'), 'batched counts query groups by facet_slug and value');
+    $check(str_contains($sql, 'term_taxonomy_id IN (' . SIEVE_TEST_EXCLUDE_FROM_CATALOG . ', ' . SIEVE_TEST_OUTOFSTOCK . ')'), 'batched counts leave hidden products out');
+
+    // FacetCountService batching across active taxonomy facets
+    $filterService = new \Sieve\Service\FilterService($index, new \WPPoland\StorefrontKit\Filter\FacetFilterResolver());
+    $countService = new \Sieve\Service\FacetCountService($index, $filterService);
+
+    $catFacet = new \Sieve\Model\Facet('cat', 'Category', \Sieve\Enum\FacetType::Checkbox, 'tax:product_cat');
+    $colorFacet = new \Sieve\Model\Facet('color', 'Color', \Sieve\Enum\FacetType::Checkbox, 'tax:pa_color');
+    $facetsList = [$catFacet, $colorFacet];
+
+    $queryCountBefore = count($GLOBALS['sieve_test']['sql']);
+    $batchedResult = $countService->batchCounts($facetsList, []);
+    $queriesRun = count($GLOBALS['sieve_test']['sql']) - $queryCountBefore;
+
+    $check(1 === $queriesRun, 'batchCounts runs exactly 1 SQL query for multiple taxonomy facets');
+    $check(isset($batchedResult['cat']) && isset($batchedResult['color']), 'batchCounts returns keyed counts for each facet slug');
+
+    $countService->countsFor($catFacet, $facetsList, []);
+    $countService->countsFor($colorFacet, $facetsList, []);
+    $check(1 === (count($GLOBALS['sieve_test']['sql']) - $queryCountBefore), 'subsequent countsFor calls hit the memo and run 0 additional queries');
 
     if ([] !== $failures) {
         fwrite(STDERR, count($failures) . " failure(s)\n");

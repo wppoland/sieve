@@ -29,7 +29,8 @@
         "cs": "phpcs --standard=phpcs.xml.dist",
         "cs:fix": "phpcbf --standard=phpcs.xml.dist",
         "analyse": "phpstan analyse -c phpstan.neon.dist --memory-limit=2G",
-        "test:batching": "php tests/index-batching-test.php"
+        "test:batching": "php tests/index-batching-test.php",
+        "test:zero-counts": "php tests/zero-counts-test.php"
     },
     "config": {
         "allow-plugins": {
