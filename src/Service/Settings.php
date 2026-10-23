@@ -45,6 +45,7 @@ final class Settings
                 ? $this->appearance->normalize($stored['appearance'])
                 : $this->appearance->defaults(),
             'layout' => isset($stored['layout']) ? sanitize_key((string) $stored['layout']) : 'sidebar',
+            'zero_counts' => self::zeroCounts($stored['zero_counts'] ?? null),
         ]);
     }
 
@@ -64,7 +65,19 @@ final class Settings
             'appearance' => $this->appearance->normalize(
                 isset($value['appearance']) && is_array($value['appearance']) ? $value['appearance'] : [],
             ),
+            // layout was read by all() and the admin screen but never written here,
+            // so the Filter layout choice fell back to Sidebar on every save.
+            'layout' => isset($value['layout']) ? sanitize_key((string) $value['layout']) : 'sidebar',
+            'zero_counts' => self::zeroCounts($value['zero_counts'] ?? null),
         ]);
+    }
+
+    /**
+     * Options with no matching products: 'hide' (the default) or 'show' dimmed.
+     */
+    public static function zeroCounts(mixed $value): string
+    {
+        return 'show' === $value ? 'show' : 'hide';
     }
 
     /**
@@ -157,6 +170,7 @@ final class Settings
             'columns' => 3,
             'appearance' => $this->appearance->defaults(),
             'layout' => 'sidebar',
+            'zero_counts' => 'hide',
         ]);
     }
 }
