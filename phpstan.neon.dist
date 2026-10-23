@@ -7,6 +7,7 @@ parameters:
         - sieve.php
         - src
         - config
+        - lib
     excludePaths:
         - vendor/
     bootstrapFiles:
