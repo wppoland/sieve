@@ -248,6 +248,61 @@ final class IndexRepository implements FacetFilterRepository
     }
 
     /**
+     * Count of distinct objects per value across multiple facets, optionally restricted
+     * to a candidate object set.
+     *
+     * @param array<int, string> $facetSlugs
+     * @param array<int, int>|null $matchingObjectIds Candidate object IDs, or null if unrestricted.
+     * @return array<string, array<string, int>> [facet_slug => [value => count]]
+     */
+    public function batchedValueCounts(array $facetSlugs, ?array $matchingObjectIds = null): array
+    {
+        $facetSlugs = array_values(array_unique(array_filter(array_map('strval', $facetSlugs), static fn ($s): bool => '' !== $s)));
+        if ([] === $facetSlugs) {
+            return [];
+        }
+
+        if (null !== $matchingObjectIds) {
+            $matchingObjectIds = array_values(array_unique(array_map('intval', array_filter($matchingObjectIds))));
+            if ([] === $matchingObjectIds) {
+                return [];
+            }
+        }
+
+        global $wpdb;
+
+        $slugPlaceholders = implode(', ', array_fill(0, count($facetSlugs), '%s'));
+        $sql = "SELECT facet_slug, value, COUNT(DISTINCT object_id) AS c FROM {$this->table} WHERE facet_slug IN ({$slugPlaceholders})";
+        $params = $facetSlugs;
+        $this->excludeHiddenFromCatalog($sql, $params);
+
+        if (null !== $matchingObjectIds) {
+            $idPlaceholders = implode(', ', array_fill(0, count($matchingObjectIds), '%d'));
+            $sql .= " AND object_id IN ({$idPlaceholders})";
+            $params = array_merge($params, $matchingObjectIds);
+        }
+
+        $sql .= ' GROUP BY facet_slug, value';
+
+        // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $rows = $wpdb->get_results($wpdb->prepare($sql, $params), ARRAY_A);
+
+        $counts = [];
+        foreach ($facetSlugs as $slug) {
+            $counts[$slug] = [];
+        }
+
+        foreach ((array) $rows as $row) {
+            $slug = (string) ($row['facet_slug'] ?? '');
+            if (isset($counts[$slug])) {
+                $counts[$slug][(string) ($row['value'] ?? '')] = (int) ($row['c'] ?? 0);
+            }
+        }
+
+        return $counts;
+    }
+
+    /**
      * Min and max numeric bounds for a facet (e.g. price slider range).
      *
      * @return array{min: float, max: float}

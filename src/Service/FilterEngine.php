@@ -271,6 +271,8 @@ final class FilterEngine
      */
     private function renderFacets(array $facets, array $filters, string $search, ?array $searchIds): string
     {
+        $allCounts = $this->counts->batchCounts($facets, $filters, $searchIds);
+
         $html = '';
         foreach ($facets as $facet) {
             if ($facet->isSearch()) {
@@ -287,7 +289,7 @@ final class FilterEngine
                 continue;
             }
 
-            $counts = $this->counts->countsFor($facet, $facets, $filters, $searchIds);
+            $counts = $allCounts[$facet->slug] ?? $this->counts->countsFor($facet, $facets, $filters, $searchIds);
             $html .= $this->facetRenderer->render($facet, $counts, $selected);
         }
 
