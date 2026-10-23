@@ -16,6 +16,8 @@ use Sieve\Model\Facet;
  */
 final class FacetRenderer
 {
+    private const DISABLED = ' disabled aria-disabled="true"';
+
     /**
      * @param array<string, int> $counts        value => count (already dependent)
      * @param array<int, string> $selected       currently selected values
@@ -122,16 +124,18 @@ final class FacetRenderer
         $items = '';
         foreach ($this->sortValues($facet, $counts) as $value) {
             $checked = in_array($value, $selected, true);
+            $empty = $this->isEmptyOption($counts[$value], $checked);
             $items .= sprintf(
-                '<li class="sieve-choice"><label><input type="%1$s" name="%2$s" value="%3$s"%4$s>'
+                '<li class="sieve-choice%7$s"><label><input type="%1$s" name="%2$s" value="%3$s"%4$s>'
                     . '<span class="sieve-choice__label">%5$s</span>'
                     . '<span class="sieve-choice__count">%6$s</span></label></li>',
                 esc_attr($inputType),
                 esc_attr($name),
                 esc_attr($value),
-                $checked ? ' checked' : '',
+                ($checked ? ' checked' : '') . ($empty ? self::DISABLED : ''),
                 esc_html($this->valueLabel($facet, $value)),
                 esc_html(number_format_i18n($counts[$value])),
+                $empty ? ' is-empty' : '',
             );
         }
 
@@ -237,7 +241,8 @@ final class FacetRenderer
             $options .= sprintf(
                 '<option value="%1$s"%2$s>%3$s (%4$s)</option>',
                 esc_attr($value),
-                selected($current, $value, false),
+                selected($current, $value, false)
+                    . ($this->isEmptyOption($counts[$value], $current === (string) $value) ? self::DISABLED : ''),
                 esc_html($this->valueLabel($facet, $value)),
                 esc_html(number_format_i18n($counts[$value])),
             );
@@ -256,15 +261,42 @@ final class FacetRenderer
      */
     private function renderRange(Facet $facet, array $selected, ?array $bounds): string
     {
-        $min = $bounds['min'] ?? 0.0;
-        $max = $bounds['max'] ?? 0.0;
+        // Whole-unit bounds, so step="1" reaches both ends of the slider and the
+        // number inputs (a 9.99 minimum would otherwise offer 9.99, 10.99, ...).
+        $min = floor($bounds['min'] ?? 0.0);
+        $max = ceil($bounds['max'] ?? 0.0);
         $current = $selected[0] ?? '';
         $parts = explode('-', $current, 2);
         $curMin = isset($parts[0]) && '' !== $parts[0] ? (float) $parts[0] : $min;
         $curMax = isset($parts[1]) && '' !== $parts[1] ? (float) $parts[1] : $max;
 
+        // Two native range inputs overlaid on one track: arrow keys, Page Up/Down,
+        // Home and End come from the browser. The number inputs and the hidden
+        // value stay the source of truth (no-JS form, URL state); the frontend
+        // script keeps all four in step. No track when there is nothing to slide.
+        $slider = '';
+        if ($max > $min) {
+            $lo = max(0.0, min(100.0, ($curMin - $min) / ($max - $min) * 100));
+            $hi = max(0.0, min(100.0, ($curMax - $min) / ($max - $min) * 100));
+            $slider = sprintf(
+                '<div class="sieve-range__slider%7$s" style="--sieve-lo:%5$s%%;--sieve-hi:%6$s%%">'
+                    . '<input type="range" class="sieve-range__thumb sieve-range__thumb--min" min="%1$s" max="%2$s" step="1" value="%3$s" aria-label="%8$s">'
+                    . '<input type="range" class="sieve-range__thumb sieve-range__thumb--max" min="%1$s" max="%2$s" step="1" value="%4$s" aria-label="%9$s">'
+                    . '</div>',
+                esc_attr((string) $min),
+                esc_attr((string) $max),
+                esc_attr((string) $curMin),
+                esc_attr((string) $curMax),
+                esc_attr((string) round($lo, 2)),
+                esc_attr((string) round($hi, 2)),
+                $lo > 50 ? ' is-min-top' : '',
+                esc_attr__('Minimum price', 'sieve'),
+                esc_attr__('Maximum price', 'sieve'),
+            );
+        }
+
         return sprintf(
-            '<div class="sieve-range" data-min="%1$s" data-max="%2$s">'
+            '<div class="sieve-range" data-min="%1$s" data-max="%2$s">%10$s'
                 . '<div class="sieve-range__inputs">'
                 . '<label class="screen-reader-text" for="sieve-%3$s-min">%8$s</label>'
                 . '<input type="number" id="sieve-%3$s-min" class="sieve-range__min" placeholder="%8$s" inputmode="decimal" min="%1$s" max="%2$s" step="1" value="%4$s">'
@@ -283,6 +315,7 @@ final class FacetRenderer
             esc_attr($current),
             esc_html__('Minimum price', 'sieve'),
             esc_html__('Maximum price', 'sieve'),
+            $slider,
         );
     }
 
@@ -336,20 +369,22 @@ final class FacetRenderer
         foreach ($this->sortValues($facet, $counts) as $value) {
             $checked = in_array($value, $selected, true);
             $label = $this->valueLabel($facet, $value);
+            $empty = $this->isEmptyOption($counts[$value], $checked);
 
             $items .= sprintf(
-                '<li class="sieve-swatch"><label title="%5$s">'
+                '<li class="sieve-swatch%8$s"><label title="%5$s">'
                     . '<input type="checkbox" class="sieve-swatch__input screen-reader-text" name="%1$s" value="%2$s"%3$s>'
                     . '%4$s'
                     . '<span class="sieve-swatch__label">%6$s</span>'
                     . '<span class="sieve-swatch__count">%7$s</span></label></li>',
                 esc_attr($name),
                 esc_attr($value),
-                $checked ? ' checked' : '',
+                ($checked ? ' checked' : '') . ($empty ? self::DISABLED : ''),
                 $this->swatchVisual($taxonomy, $value, $label),
                 esc_attr($label),
                 esc_html($label),
                 esc_html(number_format_i18n($counts[$value])),
+                $empty ? ' is-empty' : '',
             );
         }
 
@@ -517,22 +552,36 @@ final class FacetRenderer
             $term = $present[$id];
             $count = $counts[$term->slug] ?? 0;
             $checked = in_array($term->slug, $selected, true);
+            // Only a value present in $counts with 0 is "no matches"; an ancestor
+            // added for the tree shape has no entry and stays a plain node.
+            $empty = isset($counts[$term->slug]) && $this->isEmptyOption($count, $checked);
             $sub = $this->renderTreeLevel($id, $children, $present, $counts, $selected, $name);
 
             $items .= sprintf(
-                '<li class="sieve-tree__item"><label><input type="checkbox" name="%1$s" value="%2$s"%3$s>'
+                '<li class="sieve-tree__item%7$s"><label><input type="checkbox" name="%1$s" value="%2$s"%3$s>'
                     . '<span class="sieve-choice__label">%4$s</span>'
                     . '<span class="sieve-choice__count">%5$s</span></label>%6$s</li>',
                 esc_attr($name),
                 esc_attr($term->slug),
-                $checked ? ' checked' : '',
+                ($checked ? ' checked' : '') . ($empty ? self::DISABLED : ''),
                 esc_html($term->name),
-                $count > 0 ? esc_html(number_format_i18n($count)) : '',
+                $count > 0 || $empty ? esc_html(number_format_i18n($count)) : '',
                 $sub,
+                $empty ? ' is-empty' : '',
             );
         }
 
         return '<ul class="sieve-tree" role="group">' . $items . '</ul>';
+    }
+
+    /**
+     * A value with no matching products under the current selection. Only
+     * present when the "show dimmed" setting merged it in; a selected one stays
+     * enabled so the shopper can still clear it.
+     */
+    private function isEmptyOption(int $count, bool $selected): bool
+    {
+        return 0 === $count && ! $selected;
     }
 
     /**

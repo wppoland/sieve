@@ -47,6 +47,7 @@ interface Settings {
 	per_page: number;
 	columns: number;
 	layout?: 'sidebar' | 'stacked' | 'inline';
+	zero_counts?: 'hide' | 'show';
 	appearance: Appearance;
 }
 
@@ -496,6 +497,29 @@ function App() {
 							onChange={ ( layout: string ) =>
 								update( {
 									layout: layout as Settings[ 'layout' ],
+								} )
+							}
+						/>
+					</div>
+					<div style={ { marginBottom: '1rem' } }>
+						<SelectControl
+							label={ __( 'Options with no matches', 'sieve' ) }
+							help={ __(
+								'What to do with a filter option that would return no products for the current selection. Hide removes it from the list; Show dimmed keeps it in place, greyed out with a count of 0, so the list does not jump around.',
+								'sieve'
+							) }
+							value={ settings.zero_counts ?? 'hide' }
+							options={ [
+								{ label: __( 'Hide', 'sieve' ), value: 'hide' },
+								{
+									label: __( 'Show dimmed', 'sieve' ),
+									value: 'show',
+								},
+							] }
+							onChange={ ( zeroCounts: string ) =>
+								update( {
+									zero_counts:
+										zeroCounts as Settings[ 'zero_counts' ],
 								} )
 							}
 						/>
