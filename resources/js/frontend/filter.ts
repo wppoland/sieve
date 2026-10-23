@@ -97,6 +97,15 @@ function setup( app: HTMLElement ): void {
 		if ( target.hasAttribute( 'data-sieve-filter-options' ) ) {
 			return;
 		}
+		// A price number field already scheduled the fetch on input. Its change
+		// fires again on blur, and the facets swap blurs it, which sent the same
+		// request twice and pushed a duplicate history entry (Back did nothing).
+		if (
+			target.classList.contains( 'sieve-range__min' ) ||
+			target.classList.contains( 'sieve-range__max' )
+		) {
+			return;
+		}
 		if (
 			target.closest( '[data-sieve-facets]' ) ||
 			target.closest( '[data-sieve-sort]' )
