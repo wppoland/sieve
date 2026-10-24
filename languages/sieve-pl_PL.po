@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Sieve &#8211; Faceted Filter for WooCommerce - "
 "Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sieve\n"
-"POT-Creation-Date: 2026-09-09T15:30:51+00:00\n"
+"POT-Creation-Date: 2026-10-23T11:30:18+00:00\n"
 "PO-Revision-Date: 2026-08-14 14:01:49+0000\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -64,31 +64,31 @@ msgid ""
 msgstr "Sieve wymaga WooCommerce %1$s lub nowszego. Używasz WooCommerce %2$s."
 
 #. translators: 1: currency symbol, 2: yearly price
-#: src/Admin/ProUpsell.php:70
+#: src/Admin/ProUpsell.php:77
 #, php-format
 msgid "from %1$s%2$d/yr"
 msgstr "od %1$s%2$d/rok"
 
-#: src/Admin/ProUpsell.php:102
+#: src/Admin/ProUpsell.php:109
 msgid "Permission denied."
 msgstr "Odmowa dostępu."
 
 #. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:128
+#: src/Admin/ProUpsell.php:135
 #, php-format
 msgid "Do more with %s"
 msgstr "Zrób więcej z %s"
 
-#: src/Admin/ProUpsell.php:133
+#: src/Admin/ProUpsell.php:140
 msgid "Upgrade to PRO"
 msgstr "Ulepsz do PRO"
 
-#: src/Admin/ProUpsell.php:135
+#: src/Admin/ProUpsell.php:142
 msgid "Dismiss this notice"
 msgstr "Odrzuć powiadomienie"
 
 #. translators: %s: PRO edition name
-#: src/Admin/ProUpsell.php:153
+#: src/Admin/ProUpsell.php:160
 #, php-format
 msgid "What %s adds"
 msgstr "Co dodaje %s"
@@ -101,7 +101,10 @@ msgstr "Kolor próbki"
 msgid ""
 "Hex colour used by colour swatch facets, for example #336699. Leave empty to "
 "guess it from the term name."
-msgstr "Kolor w zapisie szesnastkowym używany przez fasety z próbkami kolorów, na przykład #336699. Zostaw puste, aby został odgadnięty na podstawie nazwy terminu."
+msgstr ""
+"Kolor w zapisie szesnastkowym używany przez fasety z próbkami kolorów, na "
+"przykład #336699. Zostaw puste, aby został odgadnięty na podstawie nazwy "
+"terminu."
 
 #: src/Admin/SwatchTermFields.php:64 src/Admin/SwatchTermFields.php:93
 msgid "Swatch image"
@@ -111,7 +114,9 @@ msgstr "Obraz próbki"
 msgid ""
 "Media library attachment ID, or a full image URL. Used by image swatch "
 "facets and shown instead of the colour."
-msgstr "Identyfikator załącznika z biblioteki mediów albo pełny adres URL obrazu. Używany przez fasety z próbkami obrazów i pokazywany zamiast koloru."
+msgstr ""
+"Identyfikator załącznika z biblioteki mediów albo pełny adres URL obrazu. "
+"Używany przez fasety z próbkami obrazów i pokazywany zamiast koloru."
 
 #: src/Elementor/FilterWidget.php:42
 msgid "Product Filter"
@@ -125,7 +130,9 @@ msgstr "Filtr produktów"
 msgid ""
 "This widget renders the full Sieve faceted filter with its results grid. "
 "Configure facets and appearance under WooCommerce > Sieve."
-msgstr "Ten widżet wyświetla pełny filtr fasetowy Sieve wraz z siatką wyników. Fasety i wygląd skonfigurujesz w WooCommerce > Sieve."
+msgstr ""
+"Ten widżet wyświetla pełny filtr fasetowy Sieve wraz z siatką wyników. "
+"Fasety i wygląd skonfigurujesz w WooCommerce > Sieve."
 
 #: src/Elementor/SearchWidget.php:41
 msgid "Product Search"
@@ -135,8 +142,8 @@ msgstr "Wyszukiwarka produktów"
 msgid "Product search"
 msgstr "Wyszukiwarka produktów"
 
-#: src/Elementor/SearchWidget.php:85 build/blocks/search/index.js:185
-#: resources/js/blocks/search/index.js:27 build/blocks/search/index.js:88
+#: src/Elementor/SearchWidget.php:85 build/blocks/search/index.js:184
+#: resources/js/blocks/search/index.js:26 build/blocks/search/index.js:87
 msgid "Placeholder"
 msgstr "Tekst zastępczy"
 
@@ -250,7 +257,7 @@ msgstr "%d produktów"
 msgid "No results"
 msgstr "Brak wyników"
 
-#: src/Hook/FrontendHooks.php:95 src/Service/FacetRenderer.php:314
+#: src/Hook/FrontendHooks.php:95 src/Service/FacetRenderer.php:347
 msgid "Product suggestions"
 msgstr "Sugestie produktów"
 
@@ -302,7 +309,7 @@ msgstr "Tag produktu"
 msgid "Attribute: %s"
 msgstr "Atrybut: %s"
 
-#: src/Service/FacetCatalog.php:39 src/Service/Settings.php:139
+#: src/Service/FacetCatalog.php:39 src/Service/Settings.php:152
 msgid "Price"
 msgstr "Cena"
 
@@ -310,8 +317,8 @@ msgstr "Cena"
 msgid "Stock status"
 msgstr "Stan magazynowy"
 
-#: src/Service/FacetCatalog.php:41 src/Service/FacetRenderer.php:98
-#: src/Service/Settings.php:151
+#: src/Service/FacetCatalog.php:41 src/Service/FacetRenderer.php:100
+#: src/Service/Settings.php:164
 msgid "On sale"
 msgstr "W promocji"
 
@@ -324,7 +331,7 @@ msgid "Search box"
 msgstr "Pole wyszukiwania"
 
 #. translators: %s: number of stars.
-#: src/Service/FacetRenderer.php:101
+#: src/Service/FacetRenderer.php:103
 #, php-format
 msgid "%s star"
 msgid_plural "%s stars"
@@ -332,50 +339,50 @@ msgstr[0] "%s gwiazdka"
 msgstr[1] "%s gwiazdki"
 msgstr[2] "%s gwiazdek"
 
-#: src/Service/FacetRenderer.php:160
+#: src/Service/FacetRenderer.php:164
 msgid "Filter options"
 msgstr "Opcje filtra"
 
 #. translators: %s: facet label.
-#: src/Service/FacetRenderer.php:162
+#: src/Service/FacetRenderer.php:166
 #, php-format
 msgid "Filter %s options"
 msgstr "Filtruj opcje: %s"
 
-#: src/Service/FacetRenderer.php:203
+#: src/Service/FacetRenderer.php:207
 msgid "All"
 msgstr "Wszystkie"
 
-#: src/Service/FacetRenderer.php:214
+#: src/Service/FacetRenderer.php:218
 msgid "Filter options by first letter"
 msgstr "Filtruj opcje według pierwszej litery"
 
-#: src/Service/FacetRenderer.php:234
+#: src/Service/FacetRenderer.php:238
 msgid "Any"
 msgstr "Dowolne"
 
-#: src/Service/FacetRenderer.php:284
+#: src/Service/FacetRenderer.php:293 src/Service/FacetRenderer.php:316
 msgid "Minimum price"
 msgstr "Cena minimalna"
 
-#: src/Service/FacetRenderer.php:285
+#: src/Service/FacetRenderer.php:294 src/Service/FacetRenderer.php:317
 msgid "Maximum price"
 msgstr "Cena maksymalna"
 
-#: src/Service/FacetRenderer.php:311 src/Service/SearchRenderer.php:101
+#: src/Service/FacetRenderer.php:344 src/Service/SearchRenderer.php:101
 #: src/Service/SearchRenderer.php:102 build/admin.js:1
 msgid "Search products"
 msgstr "Szukaj produktów"
 
-#: src/Service/FacetRenderer.php:566
+#: src/Service/FacetRenderer.php:615
 msgid "In stock"
 msgstr "Dostępny"
 
-#: src/Service/FacetRenderer.php:567
+#: src/Service/FacetRenderer.php:616
 msgid "Out of stock"
 msgstr "Niedostępny"
 
-#: src/Service/FacetRenderer.php:568
+#: src/Service/FacetRenderer.php:617
 msgid "On backorder"
 msgstr "Na zamówienie"
 
@@ -396,7 +403,9 @@ msgstr "Kompaktowe menu wyboru. Oszczędza miejsce, gdy opcji jest wiele."
 msgid ""
 "Colour or image chips instead of text labels. Great for colour and size "
 "attributes."
-msgstr "Pola koloru lub obrazu zamiast etykiet tekstowych. Świetne do atrybutów koloru i rozmiaru."
+msgstr ""
+"Pola koloru lub obrazu zamiast etykiet tekstowych. Świetne do atrybutów "
+"koloru i rozmiaru."
 
 #: src/Service/FacetTypeRegistry.php:48
 msgid "Nested categories shown as an expandable tree."
@@ -404,7 +413,9 @@ msgstr "Zagnieżdżone kategorie pokazane jako rozwijane drzewo."
 
 #: src/Service/FacetTypeRegistry.php:49
 msgid "A search box that filters the facet options as the shopper types."
-msgstr "Pole wyszukiwania, które filtruje opcje fasety w trakcie pisania przez kupującego."
+msgstr ""
+"Pole wyszukiwania, które filtruje opcje fasety w trakcie pisania przez "
+"kupującego."
 
 #: src/Service/FacetTypeRegistry.php:50
 msgid "An A-Z bar that filters options by first letter."
@@ -414,7 +425,9 @@ msgstr "Pasek A-Z, który filtruje opcje po pierwszej literze."
 msgid ""
 "A min/max range for the price source. Other sources have no numeric values "
 "to slide over."
-msgstr "Zakres min/maks dla źródła ceny. Pozostałe źródła nie mają wartości liczbowych, po których dałoby się przesuwać suwak."
+msgstr ""
+"Zakres min/maks dla źródła ceny. Pozostałe źródła nie mają wartości "
+"liczbowych, po których dałoby się przesuwać suwak."
 
 #: src/Service/FacetTypeRegistry.php:56 build/admin.js:1
 msgid "A live search box that narrows the product grid as shoppers type."
@@ -441,44 +454,44 @@ msgstr "Filtry produktów"
 msgid "Results pages"
 msgstr "Strony wyników"
 
-#: src/Service/FilterEngine.php:318
+#: src/Service/FilterEngine.php:330
 msgid "Default sorting"
 msgstr "Sortowanie domyślne"
 
-#: src/Service/FilterEngine.php:319
+#: src/Service/FilterEngine.php:331
 msgid "Sort by popularity"
 msgstr "Sortuj według popularności"
 
-#: src/Service/FilterEngine.php:320
+#: src/Service/FilterEngine.php:332
 msgid "Sort by average rating"
 msgstr "Sortuj według średniej oceny"
 
-#: src/Service/FilterEngine.php:321
+#: src/Service/FilterEngine.php:333
 msgid "Sort by latest"
 msgstr "Sortuj według najnowszych"
 
-#: src/Service/FilterEngine.php:322
+#: src/Service/FilterEngine.php:334
 msgid "Sort by price: low to high"
 msgstr "Sortuj według ceny: od najniższej"
 
-#: src/Service/FilterEngine.php:323
+#: src/Service/FilterEngine.php:335
 msgid "Sort by price: high to low"
 msgstr "Sortuj według ceny: od najwyższej"
 
-#: src/Service/FilterEngine.php:339
+#: src/Service/FilterEngine.php:351
 msgid "Sort products"
 msgstr "Sortuj produkty"
 
-#: src/Service/FilterEngine.php:356
+#: src/Service/FilterEngine.php:368
 msgid "Clear all"
 msgstr "Wyczyść wszystko"
 
-#: src/Service/FilterEngine.php:396
+#: src/Service/FilterEngine.php:408
 msgid "Active filters:"
 msgstr "Aktywne filtry:"
 
 #. translators: %s: the active filter being removed.
-#: src/Service/FilterEngine.php:411
+#: src/Service/FilterEngine.php:423
 #, php-format
 msgid "Remove filter: %s"
 msgstr "Usuń filtr: %s"
@@ -510,11 +523,11 @@ msgstr[2] "%s produktów"
 msgid "Product search results"
 msgstr "Wyniki wyszukiwania produktów"
 
-#: src/Service/Settings.php:133 build/admin.js:1
+#: src/Service/Settings.php:146 build/admin.js:1
 msgid "Category"
 msgstr "Kategoria"
 
-#: src/Service/Settings.php:145
+#: src/Service/Settings.php:158
 msgid "Availability"
 msgstr "Dostępność"
 
@@ -566,7 +579,9 @@ msgstr "Gotowy styl"
 msgid ""
 "Visual style for the filter panel. Unstyled removes plugin CSS so your theme "
 "controls everything through .sieve-* classes."
-msgstr "Styl wizualny panelu filtrów. Bez stylów usuwa CSS wtyczki, więc o wszystkim decyduje Twój motyw przez klasy .sieve-*."
+msgstr ""
+"Styl wizualny panelu filtrów. Bez stylów usuwa CSS wtyczki, więc o wszystkim "
+"decyduje Twój motyw przez klasy .sieve-*."
 
 #: build/admin.js:1
 msgid ""
@@ -620,16 +635,16 @@ msgstr ""
 "długich list opcji."
 
 #: build/admin.js:1
-msgid "An A, Z bar that filters options by first letter. Good for brand lists."
+msgid "An A-Z bar that filters options by first letter. Good for brand lists."
 msgstr ""
-"Pasek A-Z, który filtruje opcje według pierwszej litery. Przydaje się przy "
-"listach marek."
 
 #: build/admin.js:1
 msgid ""
 "Could not load Sieve settings. Refresh the page or check that WooCommerce "
 "and the REST API are available."
-msgstr "Nie udało się wczytać ustawień Sieve. Odśwież stronę lub sprawdź, czy WooCommerce i REST API są dostępne."
+msgstr ""
+"Nie udało się wczytać ustawień Sieve. Odśwież stronę lub sprawdź, czy "
+"WooCommerce i REST API są dostępne."
 
 #: build/admin.js:1
 msgid "Loading Sieve…"
@@ -703,17 +718,62 @@ msgid ""
 "Sieve keeps a pre-built index so filtered queries stay fast on large "
 "catalogs. Rebuild after a bulk import or if counts look out of date, new and "
 "edited products are indexed automatically."
-msgstr "Sieve utrzymuje gotowy indeks, dzięki czemu filtrowane zapytania pozostają szybkie w dużych katalogach. Przebuduj go po imporcie masowym lub gdy liczniki wyglądają na nieaktualne, nowe i edytowane produkty indeksują się automatycznie."
+msgstr ""
+"Sieve utrzymuje gotowy indeks, dzięki czemu filtrowane zapytania pozostają "
+"szybkie w dużych katalogach. Przebuduj go po imporcie masowym lub gdy "
+"liczniki wyglądają na nieaktualne, nowe i edytowane produkty indeksują się "
+"automatycznie."
 
 #: build/admin.js:1
 msgid ""
 "The index is empty. Publish WooCommerce products, then click Rebuild index "
 "before placing [sieve] on a page."
-msgstr "Indeks jest pusty. Opublikuj produkty WooCommerce, a potem kliknij Przebuduj indeks, zanim umieścisz [sieve] na stronie."
+msgstr ""
+"Indeks jest pusty. Opublikuj produkty WooCommerce, a potem kliknij Przebuduj "
+"indeks, zanim umieścisz [sieve] na stronie."
 
 #: build/admin.js:1
-msgid "Layout"
-msgstr "Układ"
+msgid "Layout & Display"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Filter layout"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Choose how the filters and the product grid are arranged on the page."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Sidebar (filters on left, products on right)"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Stacked (filters above product grid)"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Inline bar (compact horizontal filters)"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Options with no matches"
+msgstr ""
+
+#: build/admin.js:1
+msgid ""
+"What to do with a filter option that would return no products for the "
+"current selection. Hide removes it from the list; Show dimmed keeps it in "
+"place, greyed out with a count of 0, so the list does not jump around."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Hide"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Show dimmed"
+msgstr ""
 
 #: build/admin.js:1
 msgid "Products per page"
@@ -741,22 +801,9 @@ msgstr "Fasety"
 
 #: build/admin.js:1
 msgid ""
-"No facets yet. Pick a source below, click Add, then Save settings. Shoppers "
-"will not see filters until at least one facet is configured."
-msgstr "Nie ma jeszcze faset. Wybierz źródło poniżej, kliknij Dodaj, a potem Zapisz ustawienia. Kupujący nie zobaczą filtrów, dopóki nie skonfigurujesz przynajmniej jednej fasety."
-
-#: build/admin.js:1
-msgid "Label"
-msgstr "Etykieta"
-
-#: build/admin.js:1
-msgid "Type"
-msgstr "Typ"
-
-#: build/admin.js:1
-msgid ""
-"Internal source key (taxonomy, attribute or product field) used by Sieve."
-msgstr "Wewnętrzny klucz źródła (taksonomia, atrybut lub pole produktu) używany przez Sieve."
+"No facets yet. Pick a source below, click Add facet, then Save settings. "
+"Shoppers will not see filters until at least one facet is configured."
+msgstr ""
 
 #: build/admin.js:1
 msgid "Move up"
@@ -767,8 +814,23 @@ msgid "Move down"
 msgstr "Przenieś w dół"
 
 #: build/admin.js:1
+msgid ""
+"Internal source key (taxonomy, attribute or product field) used by Sieve."
+msgstr ""
+"Wewnętrzny klucz źródła (taksonomia, atrybut lub pole produktu) używany "
+"przez Sieve."
+
+#: build/admin.js:1
 msgid "Remove"
 msgstr "Usuń"
+
+#: build/admin.js:1
+msgid "Label"
+msgstr "Etykieta"
+
+#: build/admin.js:1
+msgid "Type"
+msgstr "Typ"
 
 #: build/admin.js:1
 msgid "Add a facet"
@@ -783,35 +845,39 @@ msgstr ""
 "filtrować. Źródła są wykrywane w Twoim sklepie automatycznie."
 
 #: build/admin.js:1
-msgid "Add"
-msgstr "Dodaj"
+msgid "Select a source"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Add facet"
+msgstr ""
 
 #: build/admin.js:1
 msgid "Save settings"
 msgstr "Zapisz ustawienia"
 
-#: build/blocks/search/index.js:183 resources/js/blocks/search/index.js:25
-#: build/blocks/search/index.js:86
+#: build/blocks/search/index.js:182 resources/js/blocks/search/index.js:24
+#: build/blocks/search/index.js:85
 msgid "Search settings"
 msgstr "Ustawienia wyszukiwania"
 
-#: build/blocks/search/index.js:191 resources/js/blocks/search/index.js:33
-#: build/blocks/search/index.js:94
+#: build/blocks/search/index.js:190 resources/js/blocks/search/index.js:32
+#: build/blocks/search/index.js:93
 msgid "Show submit button"
 msgstr "Pokaż przycisk wysyłania"
 
-#: build/blocks/search/index.js:197 resources/js/blocks/search/index.js:38
-#: build/blocks/search/index.js:99
+#: build/blocks/search/index.js:196 resources/js/blocks/search/index.js:37
+#: build/blocks/search/index.js:98
 msgid "Max results"
 msgstr "Maks. wyników"
 
-#: build/blocks/search/index.js:205 resources/js/blocks/search/index.js:45
-#: build/blocks/search/index.js:106
+#: build/blocks/search/index.js:204 resources/js/blocks/search/index.js:44
+#: build/blocks/search/index.js:105
 msgid "Minimum characters"
 msgstr "Minimalna liczba znaków"
 
-#: build/blocks/search/index.js:213 resources/js/blocks/search/index.js:53
-#: build/blocks/search/index.js:114
+#: build/blocks/search/index.js:212 resources/js/blocks/search/index.js:52
+#: build/blocks/search/index.js:113
 msgid "In-stock products only"
 msgstr "Tylko produkty dostępne"
 
@@ -874,6 +940,26 @@ msgstr "autouzupełnianie"
 msgctxt "block keyword"
 msgid "product"
 msgstr "produkt"
+
+#~ msgid ""
+#~ "An A, Z bar that filters options by first letter. Good for brand lists."
+#~ msgstr ""
+#~ "Pasek A-Z, który filtruje opcje według pierwszej litery. Przydaje się "
+#~ "przy listach marek."
+
+#~ msgid "Layout"
+#~ msgstr "Układ"
+
+#~ msgid ""
+#~ "No facets yet. Pick a source below, click Add, then Save settings. "
+#~ "Shoppers will not see filters until at least one facet is configured."
+#~ msgstr ""
+#~ "Nie ma jeszcze faset. Wybierz źródło poniżej, kliknij Dodaj, a potem "
+#~ "Zapisz ustawienia. Kupujący nie zobaczą filtrów, dopóki nie "
+#~ "skonfigurujesz przynajmniej jednej fasety."
+
+#~ msgid "Add"
+#~ msgstr "Dodaj"
 
 #~ msgid "WPPoland"
 #~ msgstr "WPPoland"
