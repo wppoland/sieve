@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,7 +70,7 @@ More free WooCommerce plugins from WPPoland:
 
 * [Plogins Tiers](https://wordpress.org/plugins/plogins-tiers/) - quantity and volume pricing tiers with a server-rendered price table.
 * [Plogins Waitlist](https://wordpress.org/plugins/plogins-waitlist/) - back-in-stock waitlist that emails shoppers the moment a product returns.
-* [Polski for WooCommerce](https://wordpress.org/plugins/polski/) - Polish-market compliance: GPSR, Omnibus, GDPR, invoices and storefront modules.
+* [Polski for WooCommerce](https://wordpress.org/plugins/polski/) - tools for Polish-market rules: GPSR, Omnibus, GDPR, invoices and storefront modules. It does not make a shop compliant on its own.
 
 Browse the full catalogue at [plogins.com/](https://plogins.com/) .
 
@@ -158,6 +158,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.2.3 =
+* Readme: the Polski for WooCommerce cross-link no longer calls it "Polish-market compliance"; it describes tools for Polish-market rules that do not make a shop compliant on their own.
 
 = 1.2.2 =
 * Fixed: on Storefront and other themes with a clearfix on the product list, the product grid started with an empty cell in the top-left corner.
