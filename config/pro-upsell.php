@@ -12,6 +12,8 @@ defined('ABSPATH') || exit;
 return [
     'name'       => 'Sieve PRO',
     'url'        => 'https://plogins.com/sieve-pro/pricing/',
+    'campaign'   => 'sieve',
+    'locales'    => ['pl', 'de'],
     'sellable'   => true,
     'price_from' => 29,
     'currency'   => 'EUR',
