@@ -16,7 +16,7 @@
     "autoload": {
         "psr-4": {
             "Sieve\\": "src/",
-            "WPPoland\\StorefrontKit\\": "lib/storefront-kit/"
+            "Sieve\\Vendor\\StorefrontKit\\": "lib/storefront-kit/"
         }
     },
     "scripts": {

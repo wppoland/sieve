@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPPoland\StorefrontKit\Filter;
+namespace Sieve\Vendor\StorefrontKit\Filter;
 
 /**
  * Neutral facet ID resolution: AND across facet sets, optional search constraint.

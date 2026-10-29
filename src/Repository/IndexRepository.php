@@ -6,7 +6,7 @@ namespace Sieve\Repository;
 
 defined('ABSPATH') || exit;
 
-use WPPoland\StorefrontKit\Filter\FacetFilterRepository;
+use Sieve\Vendor\StorefrontKit\Filter\FacetFilterRepository;
 
 /**
  * Read/write access to the Sieve index table (wp_sieve_index). Filtered queries

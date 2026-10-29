@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPPoland\StorefrontKit\Filter;
+namespace Sieve\Vendor\StorefrontKit\Filter;
 
 /**
  * Namespace-neutral facet filter orchestration (powers Sieve and future consumers).

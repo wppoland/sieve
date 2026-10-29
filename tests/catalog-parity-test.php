@@ -216,7 +216,7 @@ namespace {
     $check(str_contains($sql, 'term_taxonomy_id IN (' . SIEVE_TEST_EXCLUDE_FROM_CATALOG . ', ' . SIEVE_TEST_OUTOFSTOCK . ')'), 'batched counts leave hidden products out');
 
     // FacetCountService batching across active taxonomy facets
-    $filterService = new \Sieve\Service\FilterService($index, new \WPPoland\StorefrontKit\Filter\FacetFilterResolver());
+    $filterService = new \Sieve\Service\FilterService($index, new \Sieve\Vendor\StorefrontKit\Filter\FacetFilterResolver());
     $countService = new \Sieve\Service\FacetCountService($index, $filterService);
 
     $catFacet = new \Sieve\Model\Facet('cat', 'Category', \Sieve\Enum\FacetType::Checkbox, 'tax:product_cat');
