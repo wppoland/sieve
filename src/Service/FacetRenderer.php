@@ -441,6 +441,12 @@ final class FacetRenderer
             return '';
         }
         $color = get_term_meta($term->term_id, 'sieve_swatch_color', true);
+        if (! is_string($color) || '' === trim($color)) {
+            $fallback = get_term_meta($term->term_id, 'swatch_color', true);
+            if (is_string($fallback) && '' !== trim($fallback)) {
+                $color = $fallback;
+            }
+        }
         return is_string($color) ? trim($color) : '';
     }
 
@@ -451,6 +457,12 @@ final class FacetRenderer
             return '';
         }
         $image = get_term_meta($term->term_id, 'sieve_swatch_image', true);
+        if (! $image) {
+            $fallbackId = absint(get_term_meta($term->term_id, 'swatch_image_id', true));
+            if ($fallbackId > 0) {
+                $image = $fallbackId;
+            }
+        }
         if (is_numeric($image)) {
             $url = wp_get_attachment_image_url((int) $image, 'thumbnail');
             return is_string($url) ? $url : '';
