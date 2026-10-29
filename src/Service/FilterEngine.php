@@ -7,7 +7,7 @@ namespace Sieve\Service;
 defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
-use WPPoland\StorefrontKit\Filter\FacetFilterEngine;
+use Sieve\Vendor\StorefrontKit\Filter\FacetFilterEngine;
 
 /**
  * The single source of truth for a filter render. Both the initial server-side

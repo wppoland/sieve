@@ -32,7 +32,7 @@ use Sieve\Service\SearchResolver;
 use Sieve\Service\Settings;
 use Sieve\Service\SuggestService;
 use Sieve\Service\UrlService;
-use WPPoland\StorefrontKit\Filter\FacetFilterResolver;
+use Sieve\Vendor\StorefrontKit\Filter\FacetFilterResolver;
 use Sieve\Shortcode\FilterShortcode;
 use Sieve\Shortcode\SearchShortcode;
 

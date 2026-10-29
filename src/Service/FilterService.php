@@ -8,7 +8,7 @@ defined('ABSPATH') || exit;
 
 use Sieve\Model\Facet;
 use Sieve\Repository\IndexRepository;
-use WPPoland\StorefrontKit\Filter\FacetFilterResolver;
+use Sieve\Vendor\StorefrontKit\Filter\FacetFilterResolver;
 
 /**
  * Resolves the set of product IDs that satisfy the active filter selection by

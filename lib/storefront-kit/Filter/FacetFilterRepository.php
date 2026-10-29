@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace WPPoland\StorefrontKit\Filter;
+namespace Sieve\Vendor\StorefrontKit\Filter;
 
 /**
  * Host-owned facet index (table name and schema stay in the adapter).

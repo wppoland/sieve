@@ -6,7 +6,7 @@ namespace Sieve\Service;
 
 defined('ABSPATH') || exit;
 
-use WPPoland\StorefrontKit\Filter\FacetFilterEngine;
+use Sieve\Vendor\StorefrontKit\Filter\FacetFilterEngine;
 
 /**
  * Wires {@see FacetFilterEngine} with Sieve settings, index resolution and
