@@ -14,7 +14,7 @@ use Sieve\Support\Normalizer;
  *
  * Every product is fully indexed across all known sources (taxonomies, global
  * attributes, price, stock, on-sale, rating) regardless of which facets are
- * currently configured. That makes adding or removing a facet a zero-cost
+ * currently configured. Add-ons append their own rows via sieve_index_rows. That makes adding or removing a facet a zero-cost
  * settings change with no re-index required.
  */
 final class ProductIndexer
@@ -35,7 +35,21 @@ final class ProductIndexer
             return;
         }
 
-        $this->index->reindexObject($productId, $this->rowsForProduct($product));
+        $rows = $this->rowsForProduct($product);
+
+        /**
+         * Filters the index rows of one product before they are written.
+         *
+         * Add rows for a source Sieve does not index itself, such as a product
+         * meta field ("meta:{key}" facets): facet_slug is the facet's index key,
+         * value a string for option facets and value_num a number for ranges.
+         *
+         * @param array<int, array{facet_slug: string, value: string, value_num: float|null}> $rows
+         * @param \WC_Product $product Published product being indexed.
+         */
+        $filtered = apply_filters('sieve_index_rows', $rows, $product);
+
+        $this->index->reindexObject($productId, is_array($filtered) ? $filtered : $rows);
     }
 
     public function removeProduct(int $productId): void

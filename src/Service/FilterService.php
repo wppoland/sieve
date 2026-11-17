@@ -47,8 +47,8 @@ final class FilterService
                 continue;
             }
 
-            $sets[] = $facet->isPrice()
-                ? $this->resolvePrice($facet, $raw)
+            $sets[] = $facet->isRange()
+                ? $this->resolveRange($facet, $raw)
                 : $this->index->objectsForValues($facet->indexKey(), $this->splitValues($raw));
         }
 
@@ -58,7 +58,7 @@ final class FilterService
     /**
      * @return array<int, int>
      */
-    private function resolvePrice(Facet $facet, string $raw): array
+    private function resolveRange(Facet $facet, string $raw): array
     {
         [$min, $max] = $this->parseRange($raw);
         return $this->index->objectsForRange($facet->indexKey(), $min, $max);

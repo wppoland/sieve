@@ -291,7 +291,7 @@ final class FilterEngine
             $raw = $filters[$facet->slug] ?? '';
             $selected = '' !== $raw ? explode(',', $raw) : [];
 
-            if ($facet->isPrice()) {
+            if ($facet->isRange()) {
                 $html .= $this->facetRenderer->render($facet, [], $selected, $this->counts->priceBounds($facet));
                 continue;
             }
@@ -383,7 +383,7 @@ final class FilterEngine
                 continue;
             }
 
-            if ($facet->isPrice()) {
+            if ($facet->isRange()) {
                 $chips .= $this->chip($facet->slug, '', $raw);
                 continue;
             }

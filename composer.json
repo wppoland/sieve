@@ -25,7 +25,8 @@
         "analyse": "phpstan analyse -c phpstan.neon.dist --memory-limit=2G",
         "test:batching": "php tests/index-batching-test.php",
         "test:zero-counts": "php tests/zero-counts-test.php",
-        "test:swatch": "php tests/swatch-fallback-test.php"
+        "test:swatch": "php tests/swatch-fallback-test.php",
+        "test:meta-source": "php tests/meta-source-test.php"
     },
     "config": {
         "allow-plugins": {

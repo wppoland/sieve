@@ -121,6 +121,10 @@ const TYPE_HELP: Record< string, string > = {
 };
 
 function slugFromSource( source: string ): string {
+	if ( source.startsWith( 'meta:' ) ) {
+		// "meta:_price_per_m2" becomes "price_per_m2" in the URL.
+		return source.slice( 5 ).replace( /^_+/, '' ).toLowerCase();
+	}
 	return source.startsWith( 'tax:' ) ? source.slice( 4 ) : source;
 }
 
@@ -139,6 +143,10 @@ function typesForSource(
 		}
 		if ( source === 'search' ) {
 			return type.value === 'search';
+		}
+		// A meta field can be numeric (slider) or a list of labels.
+		if ( source.startsWith( 'meta:' ) ) {
+			return type.value !== 'search';
 		}
 		return type.value !== 'range_slider';
 	} );
