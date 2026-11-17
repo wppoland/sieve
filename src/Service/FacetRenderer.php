@@ -604,7 +604,10 @@ final class FacetRenderer
      */
     private function sortValues(Facet $facet, array $counts): array
     {
-        $values = array_keys($counts);
+        // PHP turns a numeric-string key ("42", a size slug or a meta value)
+        // into an int, which valueLabel() rejects with a TypeError and which
+        // never matches a selected value in a strict in_array().
+        $values = array_map('strval', array_keys($counts));
 
         if ('stock' === $facet->source) {
             $order = ['instock', 'onbackorder', 'outofstock'];

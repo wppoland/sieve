@@ -89,6 +89,10 @@ namespace {
     }
 
     function sanitize_text_field($s): string { return trim((string) $s); }
+    function esc_attr($s): string { return (string) $s; }
+    function esc_html($s): string { return (string) $s; }
+    function number_format_i18n($n): string { return (string) $n; }
+    function wp_unique_id(string $p = ''): string { return $p . '1'; }
 
     function add_filter(string $hook, callable $cb): void
     {
@@ -120,6 +124,8 @@ namespace {
     require __DIR__ . '/../src/Repository/IndexRepository.php';
     require __DIR__ . '/../src/Service/ProductIndexer.php';
     require __DIR__ . '/../src/Service/FilterService.php';
+    require __DIR__ . '/../src/Service/UrlService.php';
+    require __DIR__ . '/../src/Service/FacetRenderer.php';
 
     use Sieve\Enum\FacetType;
     use Sieve\Model\Facet;
@@ -189,6 +195,10 @@ namespace {
     $GLOBALS['sieve_test']['rows'] = [];
     (new \Sieve\Service\ProductIndexer($index))->indexProduct(5);
     $check($GLOBALS['sieve_test']['rows'] === $baseline, 'a filter returning a non-array falls back to the built-in rows');
+
+    // Numeric values as options: PHP stores the "10" key as an int.
+    $html = (new \Sieve\Service\FacetRenderer())->render($metaBox, ['10' => 2, '12.50' => 1], ['10']);
+    $check(str_contains($html, 'value="10" checked') && str_contains($html, 'value="12.50"'), 'a facet with integer-like values renders and keeps the selection checked');
 
     if ([] !== $failures) {
         fwrite(STDERR, count($failures) . " failure(s)\n");
