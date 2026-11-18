@@ -95,6 +95,19 @@ final class FacetRenderer
             return $value;
         }
 
+        if (null !== $facet->metaKey()) {
+            /**
+             * Filters the label of one value of a meta field facet, shown in its
+             * options and in the active chip ("min-max" for a range facet).
+             * Return plain text; it is escaped on output.
+             *
+             * @param string $label Label, the stored value by default.
+             * @param Facet  $facet Meta field facet.
+             * @param string $value Stored value, or the raw "min-max" of a range.
+             */
+            return (string) apply_filters('sieve_meta_value_label', $value, $facet, $value);
+        }
+
         return match ($facet->source) {
             'stock' => $this->stockLabel($value),
             'on_sale' => __('On sale', 'sieve'),
@@ -617,6 +630,12 @@ final class FacetRenderer
 
         if ('rating' === $facet->source) {
             rsort($values, SORT_NUMERIC);
+            return $values;
+        }
+
+        // Meta values are mostly numbers: "8, 10, 12", not "10, 12, 8".
+        if (null !== $facet->metaKey()) {
+            usort($values, 'strnatcasecmp');
             return $values;
         }
 

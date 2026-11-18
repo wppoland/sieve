@@ -384,7 +384,8 @@ final class FilterEngine
             }
 
             if ($facet->isRange()) {
-                $chips .= $this->chip($facet->slug, '', $raw);
+                // Price keeps the raw "min-max"; a meta range may add its unit.
+                $chips .= $this->chip($facet->slug, '', $this->facetRenderer->valueLabel($facet, $raw));
                 continue;
             }
 

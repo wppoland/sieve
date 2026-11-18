@@ -64,9 +64,9 @@ final class Facet
     private static function typeForSource(FacetType $type, string $source): FacetType
     {
         // A meta field can hold numbers (a slider) or labels (options), so the
-        // stored type stands.
+        // stored type stands, except the search box, which the index cannot back.
         if (str_starts_with($source, self::META_PREFIX)) {
-            return $type;
+            return FacetType::Search === $type ? FacetType::Checkbox : $type;
         }
 
         if ('price' === $source) {

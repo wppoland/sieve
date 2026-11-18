@@ -14,8 +14,9 @@ use Sieve\Support\Normalizer;
  *
  * Every product is fully indexed across all known sources (taxonomies, global
  * attributes, price, stock, on-sale, rating) regardless of which facets are
- * currently configured. Add-ons append their own rows via sieve_index_rows. That makes adding or removing a facet a zero-cost
- * settings change with no re-index required.
+ * currently configured. That makes adding or removing a facet a zero-cost
+ * settings change with no re-index required. Add-ons append their own rows
+ * through the sieve_index_rows filter.
  */
 final class ProductIndexer
 {

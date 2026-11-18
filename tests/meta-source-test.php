@@ -80,7 +80,16 @@ namespace {
     function wc_get_product($id) { return new WC_Product(); }
     function wc_get_attribute_taxonomy_names(): array { return []; }
     function get_the_terms($id, string $taxonomy) { return false; }
-    function get_option(string $name, $default = false) { return $default; }
+    function get_option(string $name, $default = false) { return $GLOBALS['sieve_test']['options'][$name] ?? $default; }
+    function update_option(string $name, $value, $autoload = null): bool { $GLOBALS['sieve_test']['options'][$name] = $value; return true; }
+    function delete_option(string $name): bool { unset($GLOBALS['sieve_test']['options'][$name]); return true; }
+    function wp_count_posts(string $type): object { return (object) ['publish' => 3]; }
+    function wp_next_scheduled(string $hook) { return $GLOBALS['sieve_test']['scheduled'][$hook] ?? false; }
+    function wp_schedule_single_event(int $ts, string $hook): bool { $GLOBALS['sieve_test']['scheduled'][$hook] = $ts; return true; }
+    function add_action(string $hook, callable $cb): void { $GLOBALS['sieve_test']['filters'][$hook][] = $cb; }
+    function do_action(string $hook, ...$args): void { foreach ($GLOBALS['sieve_test']['filters'][$hook] ?? [] as $cb) { $cb(...$args); } }
+    function get_term_by($field, $value, $taxonomy) { return false; }
+    function __($s, $d = null) { return $s; }
     function wc_get_product_visibility_term_ids(): array { return []; }
 
     function sanitize_key($key): string
@@ -108,6 +117,10 @@ namespace {
     }
 }
 
+namespace Sieve {
+    const VERSION = '1.3.0';
+}
+
 namespace Sieve\Support {
     final class Normalizer
     {
@@ -126,6 +139,8 @@ namespace {
     require __DIR__ . '/../src/Service/FilterService.php';
     require __DIR__ . '/../src/Service/UrlService.php';
     require __DIR__ . '/../src/Service/FacetRenderer.php';
+    require __DIR__ . '/../src/Contract/HasHooks.php';
+    require __DIR__ . '/../src/Hook/IndexerHooks.php';
 
     use Sieve\Enum\FacetType;
     use Sieve\Model\Facet;
@@ -199,6 +214,28 @@ namespace {
     // Numeric values as options: PHP stores the "10" key as an int.
     $html = (new \Sieve\Service\FacetRenderer())->render($metaBox, ['10' => 2, '12.50' => 1], ['10']);
     $check(str_contains($html, 'value="10" checked') && str_contains($html, 'value="12.50"'), 'a facet with integer-like values renders and keeps the selection checked');
+
+    $metaSearch = Facet::fromArray(['slug' => 'x', 'type' => 'search', 'source' => 'meta:_coverage']);
+    $check(FacetType::Checkbox === $metaSearch->type, 'a meta facet cannot be a search box (heals to checkboxes)');
+
+    // Value labels: meta options sort naturally and an add-on may label them.
+    $renderer = new \Sieve\Service\FacetRenderer();
+    $html = $renderer->render($metaBox, ['12' => 1, '8' => 1, '10' => 1], []);
+    $check(strpos($html, 'value="8"') < strpos($html, 'value="10"') && strpos($html, 'value="10"') < strpos($html, 'value="12"'), 'meta options sort as numbers: 8, 10, 12');
+    $priceLabelBefore = $renderer->valueLabel($price, '10-50');
+    add_filter('sieve_meta_value_label', static fn (string $label, Facet $facet, string $value): string => $label . ' zl/m2');
+    $check('45.50 zl/m2' === $renderer->valueLabel($metaBox, '45.50'), 'sieve_meta_value_label labels a meta value');
+    $check(str_contains($renderer->render($metaBox, ['45.50' => 1], []), '>45.50 zl/m2<'), 'the option label carries the add-on label');
+    $check('10-50' === $priceLabelBefore && '10-50' === $renderer->valueLabel($price, '10-50'), 'price labels ignore the meta label filter');
+
+    // Rebuild API for add-ons.
+    $hooks = new \Sieve\Hook\IndexerHooks(new \Sieve\Service\ProductIndexer($index));
+    $hooks->registerHooks();
+    $GLOBALS['sieve_test']['options'] = ['sieve_index_ready' => '9.9.9', 'sieve_index_cursor' => '9.9.9:42'];
+    do_action('sieve_request_reindex');
+    $opts = $GLOBALS['sieve_test']['options'];
+    $check('0' === ($opts['sieve_index_ready'] ?? null) && ! isset($opts['sieve_index_cursor']), 'sieve_request_reindex resets the index version and drops a half-done cursor');
+    $check(isset($GLOBALS['sieve_test']['scheduled']['sieve_index_backfill']), 'sieve_request_reindex schedules the background rebuild');
 
     if ([] !== $failures) {
         fwrite(STDERR, count($failures) . " failure(s)\n");
