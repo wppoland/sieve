@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,7 @@ Sieve PRO adds advanced control and integrations for growing stores:
 * A/B layout testing to find the filter layout that converts best
 * Performance dashboard: index size, catalog coverage and filter-speed benchmarks
 * Search integrations: SearchWP and Algolia, with native fallback
+* Meta field facets: filter by a numeric product meta field another plugin writes, such as a price per square metre, as a range slider or checkboxes with a unit
 
 Documentation: [plogins.com/sieve/docs/](https://plogins.com/sieve/docs/)
 
@@ -85,6 +86,7 @@ The free edition is the full filtering MVP, with no limits. **Sieve PRO** is bui
 * **A/B layout testing** - rotate filter-panel layouts and product grid columns with impression tracking
 * **Star rating facet** - visual star rows for the average-rating filter
 * **Search integrations** - route predictive and in-grid search through SearchWP or Algolia
+* **Meta field facets** - filter by a numeric product meta field another plugin writes, such as a price per square metre, as a range slider or checkboxes with a unit, step and decimals (needs Sieve 1.3.0)
 
 Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year, billed in EUR.
 
@@ -158,6 +160,9 @@ This uses Vite (admin and front-end scripts) and @wordpress/scripts (blocks). Th
 Sieve is fully translatable and ships the `sieve.pot` template. Translations are delivered by WordPress.org language packs from translate.wordpress.org, which is where Polish, German and Spanish are being contributed; the package itself carries no compiled translation files.
 
 == Changelog ==
+
+= 1.3.1 =
+* Readme: PRO features documented.
 
 = 1.3.0 =
 * New: product meta fields as a facet source (`meta:{key}`), shown as a range slider or as checkboxes. Sieve itself indexes no meta: an add-on supplies the values through the new `sieve_index_rows` filter, can label them (`sieve_meta_value_label`) and can ask for a full index rebuild with `do_action( 'sieve_request_reindex' )`.
