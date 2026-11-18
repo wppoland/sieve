@@ -626,7 +626,9 @@ function App() {
 							<Button
 								icon="arrow-down-alt2"
 								label={ __( 'Move down', 'sieve' ) }
-								disabled={ index === settings.facets.length - 1 }
+								disabled={
+									index === settings.facets.length - 1
+								}
 								onClick={ () => move( index, 1 ) }
 								size="small"
 							/>
