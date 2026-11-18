@@ -200,11 +200,15 @@ export default function AppearancePanel( { appearance, onChange }: Props ) {
 										id={ `sieve-color-${ field.key }` }
 										type="color"
 										value={
-											normaliseHex( colors[ field.key ] ) ??
-											'#000000'
+											normaliseHex(
+												colors[ field.key ]
+											) ?? '#000000'
 										}
 										onChange={ ( e ) =>
-											setColor( field.key, e.target.value )
+											setColor(
+												field.key,
+												e.target.value
+											)
 										}
 										style={ {
 											width: '38px',
@@ -222,7 +226,10 @@ export default function AppearancePanel( { appearance, onChange }: Props ) {
 										type="text"
 										value={ colors[ field.key ] }
 										onChange={ ( e ) =>
-											setColor( field.key, e.target.value )
+											setColor(
+												field.key,
+												e.target.value
+											)
 										}
 										placeholder="#000000"
 										style={ {

@@ -20,9 +20,13 @@ use Sieve\Enum\FacetType;
  *   - "on_sale"         products currently on sale
  *   - "rating"          rounded average rating
  *   - "search"          free-text product search (handled by the query, not the index)
+ *   - "meta:{key}"      a product meta field. FREE only knows the format; the rows
+ *                       come from an add-on through the sieve_index_rows filter.
  */
 final class Facet
 {
+    public const META_PREFIX = 'meta:';
+
     public function __construct(
         public readonly string $slug,
         public readonly string $label,
@@ -59,6 +63,12 @@ final class Facet
      */
     private static function typeForSource(FacetType $type, string $source): FacetType
     {
+        // A meta field can hold numbers (a slider) or labels (options), so the
+        // stored type stands, except the search box, which the index cannot back.
+        if (str_starts_with($source, self::META_PREFIX)) {
+            return FacetType::Search === $type ? FacetType::Checkbox : $type;
+        }
+
         if ('price' === $source) {
             return FacetType::RangeSlider;
         }
@@ -107,6 +117,25 @@ final class Facet
         return 'price' === $this->source;
     }
 
+    /**
+     * Product meta key behind this facet, or null when it is not meta-based.
+     */
+    public function metaKey(): ?string
+    {
+        return str_starts_with($this->source, self::META_PREFIX) ? substr($this->source, strlen(self::META_PREFIX)) : null;
+    }
+
+    /**
+     * Whether the facet filters on the numeric index column (a min-max range)
+     * rather than on stored values. Price always does; a meta facet does when
+     * it is shown as a range slider. Every other source is pinned off the
+     * slider by typeForSource(), so this is isPrice() for them.
+     */
+    public function isRange(): bool
+    {
+        return $this->isPrice() || (null !== $this->metaKey() && FacetType::RangeSlider === $this->type);
+    }
+
     public function isSearch(): bool
     {
         return 'search' === $this->source;
@@ -114,6 +143,14 @@ final class Facet
 
     private static function sanitizeSource(string $source): string
     {
+        // Meta keys are case-sensitive and often start with an underscore, so
+        // sanitize_key() (which lowercases) would point at another field. The
+        // index column is VARCHAR(100), hence the cap.
+        if (str_starts_with($source, self::META_PREFIX)) {
+            $key = (string) preg_replace('/[^A-Za-z0-9_\-]/', '', substr($source, strlen(self::META_PREFIX)));
+            return '' === $key ? '' : self::META_PREFIX . substr($key, 0, 100 - strlen(self::META_PREFIX));
+        }
+
         if (str_starts_with($source, 'tax:')) {
             return 'tax:' . sanitize_key(substr($source, 4));
         }

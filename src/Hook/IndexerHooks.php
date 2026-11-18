@@ -34,6 +34,20 @@ final class IndexerHooks implements HasHooks
         add_action('wp_trash_post', [$this, 'onDelete']);
         add_action('admin_init', [$this, 'ensureInitialIndex']);
         add_action(self::BACKFILL_HOOK, [$this, 'runBackfill']);
+        add_action('sieve_request_reindex', [$this, 'requestReindex']);
+    }
+
+    /**
+     * Rebuild the whole index in the background, for an add-on whose rows
+     * change with its own settings (do_action('sieve_request_reindex')).
+     * The cursor goes too: resuming a walk that is half done would leave the
+     * products before it with rows built under the old settings.
+     */
+    public function requestReindex(): void
+    {
+        delete_option(self::CURSOR);
+        update_option('sieve_index_ready', '0');
+        $this->ensureInitialIndex();
     }
 
     /**

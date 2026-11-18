@@ -42,7 +42,7 @@ final class FacetCountService
         $groups = [];
 
         foreach ($facets as $facet) {
-            if ($facet->isSearch() || $facet->isPrice()) {
+            if ($facet->isSearch() || $facet->isRange()) {
                 continue;
             }
 

@@ -291,7 +291,7 @@ final class FilterEngine
             $raw = $filters[$facet->slug] ?? '';
             $selected = '' !== $raw ? explode(',', $raw) : [];
 
-            if ($facet->isPrice()) {
+            if ($facet->isRange()) {
                 $html .= $this->facetRenderer->render($facet, [], $selected, $this->counts->priceBounds($facet));
                 continue;
             }
@@ -383,8 +383,9 @@ final class FilterEngine
                 continue;
             }
 
-            if ($facet->isPrice()) {
-                $chips .= $this->chip($facet->slug, '', $raw);
+            if ($facet->isRange()) {
+                // Price keeps the raw "min-max"; a meta range may add its unit.
+                $chips .= $this->chip($facet->slug, '', $this->facetRenderer->valueLabel($facet, $raw));
                 continue;
             }
 
