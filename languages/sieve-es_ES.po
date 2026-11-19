@@ -151,7 +151,8 @@ msgstr "Marcador de posición"
 
 #: src/Elementor/SearchWidget.php:88
 msgid "Leave empty to use the default placeholder text."
-msgstr "Déjalo vacío para usar el texto de ejemplo predeterminado."
+msgstr ""
+"Déjalo vacío para usar el texto del marcador de posición predeterminado."
 
 #: src/Elementor/SearchWidget.php:95
 msgid "Show search button"
@@ -650,7 +651,7 @@ msgid ""
 "Could not load Sieve settings. Refresh the page or check that WooCommerce "
 "and the REST API are available."
 msgstr ""
-"No se pudo cargar la configuración de Sieve. Recarga la página o comprueba "
+"No se pudieron cargar los ajustes de Sieve. Recarga la página o comprueba "
 "que WooCommerce y la API REST estén disponibles."
 
 #: build/admin.js:1
@@ -663,11 +664,11 @@ msgstr "Esa faceta ya está añadida."
 
 #: build/admin.js:1
 msgid "Settings saved."
-msgstr "Configuración guardada."
+msgstr "Ajustes guardados."
 
 #: build/admin.js:1
 msgid "Could not save settings. Please try again."
-msgstr "No se pudo guardar la configuración. Inténtalo de nuevo."
+msgstr "No se pudieron guardar los ajustes. Inténtalo de nuevo."
 
 #: build/admin.js:1
 msgid "Re-indexed %d product."
@@ -815,7 +816,7 @@ msgid ""
 "Shoppers will not see filters until at least one facet is configured."
 msgstr ""
 "Todavía no hay facetas. Elige una fuente abajo, haz clic en «Añadir faceta» "
-"y luego en «Guardar configuración». Los clientes no verán filtros hasta que "
+"y luego en «Guardar ajustes». Los clientes no verán filtros hasta que "
 "configures al menos una faceta."
 
 #: build/admin.js:1
@@ -867,12 +868,12 @@ msgstr "Añadir faceta"
 
 #: build/admin.js:1
 msgid "Save settings"
-msgstr "Guardar configuración"
+msgstr "Guardar ajustes"
 
 #: build/blocks/search/index.js:182 resources/js/blocks/search/index.js:24
 #: build/blocks/search/index.js:85
 msgid "Search settings"
-msgstr "Configuración de búsqueda"
+msgstr "Ajustes de búsqueda"
 
 #: build/blocks/search/index.js:190 resources/js/blocks/search/index.js:32
 #: build/blocks/search/index.js:93
