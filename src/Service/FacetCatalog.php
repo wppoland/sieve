@@ -24,6 +24,9 @@ final class FacetCatalog
         // Core product taxonomies.
         $sources[] = $this->entry('tax:product_cat', __('Product category', 'sieve'), 'checkbox', 'taxonomy');
         $sources[] = $this->entry('tax:product_tag', __('Product tag', 'sieve'), 'checkbox', 'taxonomy');
+        if (taxonomy_exists('product_brand')) {
+            $sources[] = $this->entry('tax:product_brand', __('Product brand', 'sieve'), 'checkbox', 'taxonomy');
+        }
 
         // Global product attributes (pa_*).
         if (function_exists('wc_get_attribute_taxonomies')) {
