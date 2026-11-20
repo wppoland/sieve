@@ -13,7 +13,7 @@ return [
     'name'       => 'Sieve PRO',
     'url'        => 'https://plogins.com/sieve-pro/pricing/',
     'campaign'   => 'sieve',
-    'locales'    => ['pl', 'de'],
+    'locales'    => ['pl', 'de', 'es'],
     'sellable'   => true,
     'price_from' => 29,
     'currency'   => 'EUR',
