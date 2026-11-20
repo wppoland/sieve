@@ -14,7 +14,7 @@ use Sieve\Enum\FacetType;
  * A facet has a URL-facing slug (also the query var suffix), a display label, a
  * presentation type (FacetType), and a data source string that tells the indexer
  * and resolver where its values come from. Source formats:
- *   - "tax:{taxonomy}"  product_cat, product_tag, pa_* attribute taxonomies
+ *   - "tax:{taxonomy}"  product_cat, product_tag, product_brand, pa_* attribute taxonomies
  *   - "price"           numeric price range
  *   - "stock"           stock status (instock / outofstock / onbackorder)
  *   - "on_sale"         products currently on sale

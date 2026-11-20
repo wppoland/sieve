@@ -209,6 +209,11 @@ namespace {
         return [];
     }
 
+    function taxonomy_exists(string $taxonomy): bool
+    {
+        return false;
+    }
+
     function get_the_terms(int $id, string $taxonomy)
     {
         return false;

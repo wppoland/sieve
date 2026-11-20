@@ -175,8 +175,13 @@ final class ProductIndexer
         $rows = [];
         $productId = $product->get_id();
 
-        // Taxonomies: categories, tags, and every global attribute (pa_*).
+        // Taxonomies: categories, tags, WooCommerce brands, and every global
+        // attribute (pa_*). product_brand is core since WooCommerce 9.6 and is
+        // hierarchical, so it gets the same ancestor rows as categories below.
         $taxonomies = ['product_cat', 'product_tag'];
+        if (taxonomy_exists('product_brand')) {
+            $taxonomies[] = 'product_brand';
+        }
         if (function_exists('wc_get_attribute_taxonomy_names')) {
             $taxonomies = array_merge($taxonomies, wc_get_attribute_taxonomy_names());
         }

@@ -79,6 +79,7 @@ namespace {
 
     function wc_get_product($id) { return new WC_Product(); }
     function wc_get_attribute_taxonomy_names(): array { return []; }
+    function taxonomy_exists(string $taxonomy): bool { return false; }
     function get_the_terms($id, string $taxonomy) { return false; }
     function get_option(string $name, $default = false) { return $GLOBALS['sieve_test']['options'][$name] ?? $default; }
     function update_option(string $name, $value, $autoload = null): bool { $GLOBALS['sieve_test']['options'][$name] = $value; return true; }

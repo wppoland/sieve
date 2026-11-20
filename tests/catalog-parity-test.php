@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 /**
- * Fails if a facet count can promise products the grid does not show.
+ * Fails if a facet count can promise products the grid does not show, or if
+ * WooCommerce brands (product_brand) are not indexed and offered like categories.
  *
  * Two shapes, both found on a live store in the 2026-10-02 review:
  *
@@ -27,7 +28,7 @@ namespace {
     const SIEVE_TEST_EXCLUDE_FROM_CATALOG = 7;
     const SIEVE_TEST_OUTOFSTOCK = 9;
 
-    $GLOBALS['sieve_test'] = ['rows' => [], 'sql' => [], 'hide_oos' => 'no'];
+    $GLOBALS['sieve_test'] = ['rows' => [], 'sql' => [], 'hide_oos' => 'no', 'brands' => true];
 
     final class Sieve_Test_Wpdb
     {
@@ -87,11 +88,14 @@ namespace {
     }
 
     // Clothing (10) > Shirts (11) > Tees (12); Accessories (20) has no parent.
+    // Brands: Acme (30) > Acme Kids (31).
     $GLOBALS['sieve_test_terms'] = [
         10 => new WP_Term(10, 'clothing', 0),
         11 => new WP_Term(11, 'shirts', 10),
         12 => new WP_Term(12, 'tees', 11),
         20 => new WP_Term(20, 'accessories', 0),
+        30 => new WP_Term(30, 'acme', 0),
+        31 => new WP_Term(31, 'acme-kids', 30),
     ];
 
     class WC_Product
@@ -109,13 +113,19 @@ namespace {
 
     function wc_get_product($id) { return new WC_Product(); }
     function wc_get_attribute_taxonomy_names(): array { return []; }
-    function is_taxonomy_hierarchical(string $taxonomy): bool { return 'product_cat' === $taxonomy; }
+    function is_taxonomy_hierarchical(string $taxonomy): bool { return in_array($taxonomy, ['product_cat', 'product_brand'], true); }
+    function taxonomy_exists(string $taxonomy): bool { return 'product_brand' === $taxonomy && $GLOBALS['sieve_test']['brands']; }
+    function __($text, $domain = null) { return $text; }
 
     function get_the_terms($id, string $taxonomy)
     {
         $t = $GLOBALS['sieve_test_terms'];
         // Assigned to the grandchild and, redundantly, to its own parent.
-        return 'product_cat' === $taxonomy ? [$t[12], $t[11], $t[20]] : false;
+        return match ($taxonomy) {
+            'product_cat' => [$t[12], $t[11], $t[20]],
+            'product_brand' => [$t[31]],
+            default => false,
+        };
     }
 
     function get_ancestors(int $id, string $taxonomy, string $type = ''): array
@@ -168,6 +178,7 @@ namespace {
     require __DIR__ . '/../src/Service/ProductIndexer.php';
     require __DIR__ . '/../src/Service/FilterService.php';
     require __DIR__ . '/../src/Service/FacetCountService.php';
+    require __DIR__ . '/../src/Service/FacetCatalog.php';
 
     $failures = [];
     $check = static function (bool $ok, string $what) use (&$failures): void {
@@ -189,6 +200,21 @@ namespace {
     $check(in_array('clothing', $cats, true), 'a product in a grandchild category is indexed under the top-level parent');
     $check(in_array('shirts', $cats, true), 'and under the intermediate parent');
     $check($cats === ['accessories', 'clothing', 'shirts', 'tees'], 'each category is indexed once, even when assigned twice (' . implode(',', $cats) . ')');
+
+    $brands = static fn (): array => array_values(array_map(
+        static fn (array $r): string => (string) $r['value'],
+        array_filter($GLOBALS['sieve_test']['rows'], static fn (array $r): bool => 'product_brand' === $r['facet_slug'])
+    ));
+    $catalogSources = static fn (): array => array_column((new \Sieve\Service\FacetCatalog())->available(), 'source');
+
+    $check($brands() === ['acme-kids', 'acme'], 'a product of a sub-brand is indexed under the brand and its parent (' . implode(',', $brands()) . ')');
+    $check(in_array('tax:product_brand', $catalogSources(), true), 'the facet builder offers product_brand as a source when the taxonomy exists');
+
+    $GLOBALS['sieve_test']['brands'] = false;
+    $GLOBALS['sieve_test']['rows'] = [];
+    (new \Sieve\Service\ProductIndexer($index))->indexProduct(5);
+    $check([] === $brands(), 'no brand rows when the product_brand taxonomy does not exist');
+    $check(! in_array('tax:product_brand', $catalogSources(), true), 'and the facet builder does not offer it');
 
     $index->valueCounts('product_cat');
     $sql = (string) end($GLOBALS['sieve_test']['sql']);

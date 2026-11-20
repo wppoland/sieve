@@ -306,6 +306,10 @@ msgstr "categoría de producto"
 msgid "Product tag"
 msgstr "Etiqueta de producto"
 
+#: src/Service/FacetCatalog.php:28
+msgid "Product brand"
+msgstr "Marca de producto"
+
 #. translators: %s: attribute label.
 #: src/Service/FacetCatalog.php:33
 #, php-format
