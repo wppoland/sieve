@@ -113,7 +113,7 @@ function setup( widget: HTMLElement ): void {
 
 	const close = (): void => {
 		results.hidden = true;
-		results.innerHTML = '';
+		results.replaceChildren();
 		input.setAttribute( 'aria-expanded', 'false' );
 		input.removeAttribute( 'aria-activedescendant' );
 		announce( '' );

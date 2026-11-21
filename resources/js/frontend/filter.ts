@@ -208,7 +208,7 @@ function setupSearchCombobox(
 
 	const close = (): void => {
 		listbox.hidden = true;
-		listbox.innerHTML = '';
+		listbox.replaceChildren();
 		input.setAttribute( 'aria-expanded', 'false' );
 		input.removeAttribute( 'aria-activedescendant' );
 		options = [];
