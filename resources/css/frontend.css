@@ -1038,14 +1038,31 @@ aside .sieve-results ul.products,
    accent/border/muted tokens the store owner controls, so a custom accent keeps
    working in the dark. Scoped to the default border value so a store that has
    set a bespoke (light) border palette is left untouched. */
-@media (prefers-color-scheme: dark) {
+/* Dark values follow the page's color-scheme (set by the theme), not the OS.
+   Custom properties accept any value, so the light-dark() tokens sit behind
+   @supports: older browsers keep the plain light tokens above. */
+@supports (color: light-dark(white, black)) {
 	.sieve-app {
-		--sieve-surface: #1f2329;
-		--sieve-surface-2: #2a2f37;
-		--sieve-text: #e5e7eb;
-		--sieve-border: #3a4049;
-		--sieve-muted: #9aa3af;
-		--sieve-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5);
+		--sieve-surface: light-dark(#ffffff, #1f2329);
+		--sieve-surface-2: light-dark(#f3f4f6, #2a2f37);
+		--sieve-text: light-dark(#111827, #e5e7eb);
+		--sieve-border: light-dark(#e2e4e7, #3a4049);
+		--sieve-muted: light-dark(#6b7280, #9aa3af);
+		--sieve-shadow: 0 1px 2px light-dark(rgba(17, 24, 39, 0.06), rgba(0, 0, 0, 0.4)), 0 8px 24px light-dark(rgba(17, 24, 39, 0.08), rgba(0, 0, 0, 0.5));
+	}
+}
+
+/* Fallback for browsers without light-dark(): the previous OS-based dark mode. */
+@supports not (color: light-dark(white, black)) {
+	@media (prefers-color-scheme: dark) {
+		.sieve-app {
+			--sieve-surface: #1f2329;
+			--sieve-surface-2: #2a2f37;
+			--sieve-text: #e5e7eb;
+			--sieve-border: #3a4049;
+			--sieve-muted: #9aa3af;
+			--sieve-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5);
+		}
 	}
 }
 
