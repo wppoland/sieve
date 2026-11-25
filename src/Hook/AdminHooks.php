@@ -30,8 +30,20 @@ final class AdminHooks implements HasHooks
     public function registerHooks(): void
     {
         add_action('admin_menu', [$this, 'registerMenu']);
+        add_filter('plugin_action_links_' . plugin_basename(\Sieve\PLUGIN_FILE), [$this, 'actionLinks']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue']);
         add_action('admin_post_' . ProUpsell::ACTION, [$this->upsell(), 'handleDismiss']);
+    }
+
+    /**
+     * @param array<int|string, string> $links
+     * @return array<int|string, string>
+     */
+    public function actionLinks(array $links): array
+    {
+        array_unshift($links, sprintf('<a href="%s">%s</a>', esc_url(admin_url('admin.php?page=' . 'sieve')), esc_html__('Sieve', 'sieve')));
+
+        return $links;
     }
 
     public function registerMenu(): void
