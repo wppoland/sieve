@@ -61,7 +61,7 @@ final class FilterEngine
         // the same id set into the grid query and every dependent count so the
         // grid, the counts and the dropdown can never disagree. null = search
         // inactive, [] = matched nothing, int[] = ids.
-        $searchIds = $this->resolver->resolve($request['search']);
+        $searchIds = $this->restrict($request, $this->resolver->resolve($request['search']));
 
         $resolved = $this->filter->resolve($facets, $filters, null, $searchIds);
         $results = $this->resultsRenderer->render(
@@ -76,7 +76,7 @@ final class FilterEngine
         );
 
         return [
-            'facets_html' => $this->renderFacets($facets, $filters, $request['search'], $searchIds),
+            'facets_html' => $this->renderFacets($facets, $filters, $request['search'], $searchIds, $this->restrict($request, null)),
             'toolbar_html' => $this->renderToolbar($facets, $filters, $request, $results['count_text']),
             'results_html' => $results['html'],
             'pagination_html' => $this->renderPagination($request['paged'], $results['max_pages']),
@@ -91,7 +91,7 @@ final class FilterEngine
      */
     public function resolveObjectIds(array $request): ?array
     {
-        $searchIds = $this->resolver->resolve($request['search']);
+        $searchIds = $this->restrict($request, $this->resolver->resolve($request['search']));
 
         return $this->filter->resolve(
             $this->facetsForRequest($request),
@@ -106,13 +106,14 @@ final class FilterEngine
      */
     public function renderFacetsForRequest(array $request): string
     {
-        $searchIds = $this->resolver->resolve($request['search']);
+        $searchIds = $this->restrict($request, $this->resolver->resolve($request['search']));
 
         return $this->renderFacets(
             $this->facetsForRequest($request),
             $request['filters'],
             $request['search'],
             $searchIds,
+            $this->restrict($request, null),
         );
     }
 
@@ -164,6 +165,37 @@ final class FilterEngine
         $config = $this->settings->all();
 
         return max(1, (int) $config['columns']);
+    }
+
+    /**
+     * On a category archive only that category's products are in play: the
+     * grid, the counts and the dimmed options all read from the same subset,
+     * the way the WooCommerce archive itself lists them.
+     *
+     * @param array{context?: array<string, mixed>} $request
+     * @param array<int, int>|null $ids Search ids (null = no constraint).
+     * @return array<int, int>|null
+     */
+    private function restrict(array $request, ?array $ids): ?array
+    {
+        $categoryId = (int) ($request['context']['category_id'] ?? 0);
+
+        /**
+         * Whether a filter on a category archive lists only that category's products.
+         *
+         * @param bool $scope      Default true.
+         * @param int  $categoryId Archive category term ID.
+         */
+        if ($categoryId < 1 || ! apply_filters('sieve_scope_to_category', true, $categoryId)) {
+            return $ids;
+        }
+
+        $scope = $this->filter->categoryScope($categoryId);
+        if (null === $scope) {
+            return $ids;
+        }
+
+        return null === $ids ? $scope : array_values(array_intersect($ids, $scope));
     }
 
     private function kitEngine(): ?FacetFilterEngine
@@ -268,8 +300,9 @@ final class FilterEngine
      * @param array<string, string> $filters
      * @param array<int, int>|null $searchIds Resolved once in run() and threaded
      *        here so counts are search-aware without recomputing per facet.
+     * @param array<int, int>|null $universeIds Products the dimmed options come from (null = whole catalogue).
      */
-    private function renderFacets(array $facets, array $filters, string $search, ?array $searchIds): string
+    private function renderFacets(array $facets, array $filters, string $search, ?array $searchIds, ?array $universeIds = null): string
     {
         $allCounts = $this->counts->batchCounts($facets, $filters, $searchIds);
 
@@ -277,7 +310,7 @@ final class FilterEngine
         // the options the current selection rules out, merged in as count 0.
         $config = $this->settings->all();
         $universe = 'show' === Settings::zeroCounts($config['zero_counts'] ?? null)
-            ? $this->counts->batchCounts($facets, [], null)
+            ? $this->counts->batchCounts($facets, [], $universeIds)
             : [];
 
         $html = '';

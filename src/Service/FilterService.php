@@ -17,6 +17,9 @@ use Sieve\Vendor\StorefrontKit\Filter\FacetFilterResolver;
  */
 final class FilterService
 {
+    /** @var array<int, array<int, int>|null> One index read per category and request. */
+    private array $categoryScopes = [];
+
     public function __construct(
         private readonly IndexRepository $index,
         private readonly FacetFilterResolver $resolver,
@@ -53,6 +56,22 @@ final class FilterService
         }
 
         return $this->resolver->resolve($sets, $searchIds);
+    }
+
+    /**
+     * Products in a category or any of its subcategories (the index stores
+     * ancestor rows), or null when the term does not exist.
+     *
+     * @return array<int, int>|null
+     */
+    public function categoryScope(int $categoryId): ?array
+    {
+        if (! array_key_exists($categoryId, $this->categoryScopes)) {
+            $term = get_term($categoryId, 'product_cat');
+            $this->categoryScopes[$categoryId] = $term instanceof \WP_Term ? $this->index->objectsForValues('product_cat', [$term->slug]) : null;
+        }
+
+        return $this->categoryScopes[$categoryId];
     }
 
     /**
