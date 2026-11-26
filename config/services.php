@@ -8,6 +8,7 @@ use Sieve\Container;
 use Sieve\Admin\SwatchTermFields;
 use Sieve\Hook\AdminHooks;
 use Sieve\Hook\BlockHooks;
+use Sieve\Hook\ArchiveHooks;
 use Sieve\Hook\FrontendHooks;
 use Sieve\Hook\IndexerHooks;
 use Sieve\Hook\RestHooks;
@@ -166,6 +167,10 @@ return static function (Container $c): void {
             $c->get(UrlService::class),
             $c->get(FrontendHooks::class),
         ),
+    );
+    $c->singleton(
+        ArchiveHooks::class,
+        static fn (): ArchiveHooks => new ArchiveHooks($c->get(FilterEngine::class), $c->get(UrlService::class)),
     );
     $c->singleton(
         BlockHooks::class,

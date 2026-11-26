@@ -6,6 +6,7 @@ defined('ABSPATH') || exit;
 
 use Sieve\Admin\SwatchTermFields;
 use Sieve\Hook\AdminHooks;
+use Sieve\Hook\ArchiveHooks;
 use Sieve\Hook\BlockHooks;
 use Sieve\Hook\FrontendHooks;
 use Sieve\Hook\IndexerHooks;
@@ -30,6 +31,7 @@ return [
     IndexerHooks::class,
     FilterShortcode::class,
     BlockHooks::class,
+    ArchiveHooks::class,
     SearchShortcode::class,
     SearchBlockHooks::class,
     ElementorWidgets::class,
