@@ -4,7 +4,7 @@ Tags: woocommerce, filter, faceted search, product filter, ajax filter
 Requires at least: 6.4
 Tested up to: 7.2
 Requires PHP: 8.1
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -161,9 +161,12 @@ Sieve is fully translatable and ships the `sieve.pot` template. Translations are
 
 == Changelog ==
 
-= 1.3.7 =
+= 1.3.8 =
 * Fixed: a filter placed on a product category archive listed and counted products from the whole shop. It now lists only that category and its subcategories, like the archive itself. Developers can turn this off with the `sieve_scope_to_category` filter.
 * New: a filter address opened directly (a shared link or a search engine) also filters the shop or category page's own product list, so the page shows the filtered products before any script runs. Turn off with the `sieve_filter_archive_query` filter.
+
+= 1.3.7 =
+* Fixed: the Sieve Filter and Sieve Search blocks are styled in the block editor the same way as on the storefront, including the store colors; the "unstyled" appearance stays unstyled there too.
 
 = 1.3.6 =
 * Plugins list shows a shortcut to the settings screen.
