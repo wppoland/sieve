@@ -29,14 +29,6 @@ final class FrontendHooks implements HasHooks
     private const A11Y_SHIM = '.sieve-app :focus-visible,.sieve-search :focus-visible{outline:2px solid Highlight;outline-offset:2px}'
         . '@media (forced-colors:active){.sieve-az__letter.is-active,.sieve-search__item.is-active{outline:2px solid Highlight;outline-offset:-2px}}';
 
-    private bool $registered = false;
-
-    private bool $searchRegistered = false;
-
-    private bool $filterInlined = false;
-
-    private bool $searchInlined = false;
-
     private bool $a11yRegistered = false;
 
     public function __construct(
@@ -49,14 +41,37 @@ final class FrontendHooks implements HasHooks
     {
         add_action('wp_enqueue_scripts', [$this, 'register']);
         add_action('wp_enqueue_scripts', [$this, 'registerSearch']);
+        // The blocks preview through ServerSideRender, whose REST render never reaches the editor document.
+        add_action('enqueue_block_assets', [$this, 'enqueueEditorStyles']);
+    }
+
+    /**
+     * Give the block editor the same stylesheets and colours the storefront
+     * gets, without the behaviour bundles.
+     */
+    public function enqueueEditorStyles(): void
+    {
+        if (! is_admin()) {
+            return;
+        }
+        $this->register();
+        $this->registerSearch();
+
+        $appearance = $this->appearance->resolveFrom($this->settings->all());
+        if ('unstyled' === $appearance['preset']) {
+            return;
+        }
+
+        $this->enqueueStyle('sieve-frontend', 'filter', $appearance);
+        $this->enqueueStyle('sieve-search', 'search', $appearance);
     }
 
     public function register(): void
     {
-        if ($this->registered) {
+        // Checked on the registry, not a flag: the editor canvas collects its assets in a fresh one.
+        if (wp_style_is('sieve-frontend', 'registered')) {
             return;
         }
-        $this->registered = true;
 
         $asset = $this->asset('frontend-filter');
 
@@ -106,10 +121,9 @@ final class FrontendHooks implements HasHooks
      */
     public function registerSearch(): void
     {
-        if ($this->searchRegistered) {
+        if (wp_style_is('sieve-search', 'registered')) {
             return;
         }
-        $this->searchRegistered = true;
 
         $asset = $this->asset('frontend-suggest');
 
@@ -150,9 +164,7 @@ final class FrontendHooks implements HasHooks
      */
     public function enqueue(): void
     {
-        if (! $this->registered) {
-            $this->register();
-        }
+        $this->register();
 
         $appearance = $this->appearance->resolveFrom($this->settings->all());
 
@@ -165,16 +177,7 @@ final class FrontendHooks implements HasHooks
         }
 
         wp_enqueue_script('sieve-frontend');
-        wp_enqueue_style('sieve-frontend');
-
-        // Per-store colour overrides, inlined once per page right after the sheet.
-        if (! $this->filterInlined && ! $appearance['isDefault']) {
-            $css = $this->appearance->colorBlock('filter', $appearance['colors']);
-            if ('' !== $css) {
-                wp_add_inline_style('sieve-frontend', $css);
-            }
-            $this->filterInlined = true;
-        }
+        $this->enqueueStyle('sieve-frontend', 'filter', $appearance);
     }
 
     /**
@@ -183,9 +186,7 @@ final class FrontendHooks implements HasHooks
      */
     public function enqueueSearch(): void
     {
-        if (! $this->searchRegistered) {
-            $this->registerSearch();
-        }
+        $this->registerSearch();
 
         $appearance = $this->appearance->resolveFrom($this->settings->all());
 
@@ -196,14 +197,27 @@ final class FrontendHooks implements HasHooks
         }
 
         wp_enqueue_script('sieve-search');
-        wp_enqueue_style('sieve-search');
+        $this->enqueueStyle('sieve-search', 'search', $appearance);
+    }
 
-        if (! $this->searchInlined && ! $appearance['isDefault']) {
-            $css = $this->appearance->colorBlock('search', $appearance['colors']);
-            if ('' !== $css) {
-                wp_add_inline_style('sieve-search', $css);
-            }
-            $this->searchInlined = true;
+    /**
+     * Enqueue a stylesheet plus the per-store colour overrides, inlined once per
+     * page right after the sheet.
+     *
+     * @param 'filter'|'search' $scope
+     * @param array{preset: string, colors: array<string, string>, isDefault: bool} $appearance
+     */
+    private function enqueueStyle(string $handle, string $scope, array $appearance): void
+    {
+        wp_enqueue_style($handle);
+
+        if ($appearance['isDefault'] || false !== wp_styles()->get_data($handle, 'after')) {
+            return;
+        }
+
+        $css = $this->appearance->colorBlock($scope, $appearance['colors']);
+        if ('' !== $css) {
+            wp_add_inline_style($handle, $css);
         }
     }
 
