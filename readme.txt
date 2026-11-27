@@ -61,6 +61,7 @@ Sieve PRO adds advanced control and integrations for growing stores:
 * A/B layout testing to find the filter layout that converts best
 * Performance dashboard: index size, catalog coverage and filter-speed benchmarks
 * Search integrations: SearchWP and Algolia, with native fallback
+* SEO filter pages: chosen "category + one value" pages (for example a category filtered by one brand) become indexable with their own title, H1, canonical address and Yoast SEO sitemap entry; every other filtered address gets noindex, follow
 * Meta field facets: filter by a numeric product meta field another plugin writes, such as a price per square metre, as a range slider or checkboxes with a unit
 
 Documentation: [plogins.com/sieve/docs/](https://plogins.com/sieve/docs/)
@@ -86,6 +87,7 @@ The free edition is the full filtering MVP, with no limits. **Sieve PRO** is bui
 * **A/B layout testing** - rotate filter-panel layouts and product grid columns with impression tracking
 * **Star rating facet** - visual star rows for the average-rating filter
 * **Search integrations** - route predictive and in-grid search through SearchWP or Algolia
+* **SEO filter pages** - make chosen "category + one value" pages indexable with their own title, H1 and canonical address, list them in the Yoast SEO sitemap, and set every other filtered address to noindex, follow
 * **Meta field facets** - filter by a numeric product meta field another plugin writes, such as a price per square metre, as a range slider or checkboxes with a unit, step and decimals (needs Sieve 1.3.0)
 
 Everything in the free edition stays free and open. Sieve PRO starts at 29 EUR per year, billed in EUR.
@@ -118,6 +120,9 @@ No. Filtering happens via AJAX with the URL kept in sync so results are shareabl
 
 = What can shoppers filter by? =
 Sieve can filter WooCommerce products by categories, tags, attributes, price, stock status, on-sale state and a keyword search field. It also supports range sliders, searchable options, color/image swatches, active-filter chips and sorting.
+
+= Does a filter on a category page list the whole shop? =
+No. On a product category archive the filter lists and counts only that category and its subcategories, like the archive itself. A filter address opened directly, from a shared link or a search engine, also filters the page's own product list before any script runs.
 
 = Is it fast on large stores? =
 Yes. Sieve builds a product filter index, so AJAX filter requests do not need to run slow live joins for every category, attribute and price query.
