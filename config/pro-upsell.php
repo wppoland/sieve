@@ -28,7 +28,7 @@ return [
         ],
         [
             'en' => ['title' => 'Conditional rules', 'desc' => 'Sieve > Conditional rules: hide selected facets on category archives, the main shop page or for chosen customer roles.'],
-            'pl' => ['title' => 'Reguły warunkowe', 'desc' => 'Sieve > Zasady warunkowe: ukrywaj wybrane filtry na archiwach kategorii, stronie sklepu lub dla wybranych ról klientów.'],
+            'pl' => ['title' => 'Reguły warunkowe', 'desc' => 'Sieve > Reguły warunkowe: ukrywaj wybrane filtry na archiwach kategorii, stronie sklepu lub dla wybranych ról klientów.'],
         ],
         [
             'en' => ['title' => 'A/B layout testing', 'desc' => 'Sieve > Layout tests: filter panel layout variants (sidebar, stacked, inline) and grid column counts with impression tracking.'],
